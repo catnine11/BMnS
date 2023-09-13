@@ -3,25 +3,25 @@
 <!-- MyBatis 설정 파일 -->
 <configuration>
 	
-<!-- 	<typeAliases> -->
-<!-- 		<typeAlias type="com.gd.bmss.AskBoardVo" alias="AskBoardVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.Book_StatusVo" alias="BStatusVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.BookInfoVo" alias="BInfoVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.BorrowVo" alias="BorrowVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.FileVo" alias="FileVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.HopeBoardVo" alias="HopeBoardVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.NoticeBoardVo" alias="NoticeBoardVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.OrderVo" alias="OrderVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.PayStatusVo" alias="PayStatusVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.PayVo" alias="PayVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.RehopeVo" alias="RehopeVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.ReplyVo" alias="ReplyVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.ReserveVo" alias="ReserveVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.SearchVo" alias="SearchVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.SocialVo" alias="SocialVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.StockVo" alias="StockVo"/> -->
-<!-- 		<typeAlias type="com.gd.bmss.UserVo" alias="UserVo"/> -->
-<!-- 	</typeAliases> -->
+	<typeAliases>
+		<typeAlias type="com.gd.bmss.vo.AskBoardVo" alias="AskBoardVo"/>
+		<typeAlias type="com.gd.bmss.vo.Book_StatusVo" alias="BStatusVo"/>
+		<typeAlias type="com.gd.bmss.vo.BookInfoVo" alias="BInfoVo"/>
+		<typeAlias type="com.gd.bmss.vo.BorrowVo" alias="BorrowVo"/>
+		<typeAlias type="com.gd.bmss.vo.FileVo" alias="FileVo"/>
+		<typeAlias type="com.gd.bmss.vo.HopeBoardVo" alias="HopeBoardVo"/>
+		<typeAlias type="com.gd.bmss.vo.NoticeBoardVo" alias="NoticeBoardVo"/>
+		<typeAlias type="com.gd.bmss.vo.OrderVo" alias="OrderVo"/>
+		<typeAlias type="com.gd.bmss.vo.PayStatusVo" alias="PayStatusVo"/>
+		<typeAlias type="com.gd.bmss.vo.PayVo" alias="PayVo"/>
+		<typeAlias type="com.gd.bmss.vo.RehopeVo" alias="RehopeVo"/>
+		<typeAlias type="com.gd.bmss.vo.ReplyVo" alias="ReplyVo"/>
+		<typeAlias type="com.gd.bmss.vo.ReserveVo" alias="ReserveVo"/>
+		<typeAlias type="com.gd.bmss.vo.SearchVo" alias="SearchVo"/>
+		<typeAlias type="com.gd.bmss.vo.SocialVo" alias="SocialVo"/>
+		<typeAlias type="com.gd.bmss.vo.StockVo" alias="StockVo"/>
+		<typeAlias type="com.gd.bmss.vo.UserVo" alias="UserVo"/>
+	</typeAliases>
 	
 	
 <mappers>

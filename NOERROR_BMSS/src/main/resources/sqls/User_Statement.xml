@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gd.bmss.mapper.IUserDaoImpl">
+<mapper namespace="com.gd.bmss.mapper.UserDaoImpl">
+
+<insert id="joinUser" parameterType="UserVo">
+	<selectKey keyProperty="user_id" resultType="java.lang.Integer" order="BEFORE">
+		SELECT USER_SEQ_SEQUENCE.NEXTVAL AS USER_ID FROM DUAL
+	</selectKey>
+	INSERT INTO BOOK_USERINFO(USER_ID,
+												 USER_NAME,
+												 USER_EMAIL,
+												 USER_PASSWORD, 
+												 USER_BIRTH, 
+												 USER_PHONE, 
+												 USER_ADDRESS, 
+												 USER_AUTH, 
+												 USER_DELFLAG, 
+												 GUBUN, 
+												 USER_JOINDATE  
+												 )
+				VALUES (#{user_id}, 
+								#{user_name}, 
+								#{user_email}, 
+								#{user_password}, 
+								#{user_birth}, 
+								#{user_phone}, 
+								#{user_address},
+								'U', 
+								'N',
+								'nomal',
+								SYSDATE
+								)
+</insert>
+	
+<insert id="joinSocial">
+	<selectKey keyProperty="social_id" resultType="java.lang.Integer" order="BEFORE">
+		SELECT USER_SEQ_SEQUENCE.NEXTVAL AS USER_ID FROM DUAL
+	</selectKey>
+	INSERT INTO BOOK_SOCIALINFO(SOCIAL_ID, 
+														SOCIAL_NAME, 
+														SOCIAL_EMAIL, 
+														SOCIAL_PHONE, 
+														SOCIAL_TOKEN, 
+														SOCIAL_AUTH
+														)
+					VALUES(#{social_id}, 
+								#{social_name}, 
+								#{social_email}, 
+								#{social_phone},
+								#{social_token}, 
+								'U'
+								)
+</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </mapper>
