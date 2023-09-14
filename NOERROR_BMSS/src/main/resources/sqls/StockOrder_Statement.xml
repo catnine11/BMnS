@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="OrderAndStock">
+<mapper namespace="com.gd.bmss.mapper.OrderDaoImpl">
 
-<insert id="normalToStock" >
-<selectKey order="BEFORE" keyProperty="BOOK_SEQ">
+
+<select id="selectStockable" resultType="BStatusVo">
  <![CDATA[
   SELECT  X.BOOK_SEQ FROM
 (SELECT  B.BOOK_SEQ, B.STATUS_TITLE, B.STATUS_CODE, A.RETURN_DATE, B.BOOK_CODE,
@@ -14,11 +14,28 @@
            OR RETURN_DATE IS NULL)
            AND STATUS_CODE = 'A') X
 WHERE X.BOOK_COUNT > 1 ]]>
-</selectKey>
+</select>
 
-UPDATE BOOK_STATUS SET STATUS CODE='B' WHERE BOOK_SEQ IN(#{book_seq})
 
+<!-- 파라미터 타입 무엇으로 할지  -->
+<update id="normalToStock">
+  UPDATE BOOK_STATUS SET STATUS_CODE='B' WHERE BOOK_SEQ IN
+  <foreach collection="list" item="book_seq" open="(" separator="," close=")">
+    #{book_seq}
+  </foreach>
+</update>
+
+
+<insert id="addStock">
+INSERT INTO BOOK_STOCK
+(STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)
+VALUES
+<foreach collection="list" item="book_seq" separator=",">
+    (STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0)
+ </foreach>
 </insert>
+
+
 
 
 
