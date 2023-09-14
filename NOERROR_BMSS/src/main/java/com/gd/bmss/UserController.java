@@ -115,7 +115,7 @@ public class UserController {
 		}
 	}
 	
-	/*
+	/*/
 	 * 세션확인
 	 */
 	@RequestMapping(value = "/afterLogin.do",method = RequestMethod.POST)

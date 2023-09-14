@@ -276,7 +276,7 @@ html,body {
 }
 </style>
 
-
+<%@include file="header.jsp" %>
 </head>
 <body>
 <div class="form-structor">
@@ -311,4 +311,5 @@ window.onload = function(){
 }
 
 </script>
+<%@include file="footer.jsp" %>
 </html>
