@@ -1,5 +1,7 @@
 package com.gd.bmss.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -31,4 +33,8 @@ public class UserVo {
 	private String penalty_date;
 	private String user_joindate;
 	private String gubun;
+	
+	private List<ReserveVo> reserveVo; 
+	private List<BorrowVo> borrowVo;
+	
 }

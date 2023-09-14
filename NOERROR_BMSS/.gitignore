@@ -26,3 +26,4 @@ data-sources.json
 .project-settings.json
 /.dbeaver
 .dbeaver/data-sources.json
+project-metadata.json
