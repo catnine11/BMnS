@@ -30,7 +30,7 @@ public class Book_StatusVo {
 	private String status_title;
 	private String book_code;
 
-	private List<BorrowVo> brwVo;
-	private List<ReserveVo> rsvVo;
+	private List<BorrowVo> borwVo;
+	private List<ReserveVo> resvVo;
 
 }
