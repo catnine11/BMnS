@@ -1,5 +1,7 @@
 package com.gd.bmss.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public int joinSocial(UserVo vo) {
 		return 0;
+	}
+
+	@Override
+	public UserVo login(Map<String, Object> map) {
+	    log.info("@@@@@@@@@@@@@Service###로그인 login@@@@@@@@@@@@@@@");
+	    return dao.login( map);
 	}
 
 }

@@ -296,67 +296,19 @@ html,body {
   </div>
   </form>
   
- 
-  
 </div>
-
-
-
-
-
-<!-- 	  <table> -->
-<!--         <tr> -->
-<!--             <th>이름</th> -->
-<!--             <td><input type="text" name="user_name"></td> -->
-<!--         </tr> -->
-<!--         <tr> -->
-<!--             <th>주소</th> -->
-<!--             <td><input type="text" id="address" name="address" readonly /><input type="button" id="address_kakao" value="검색"></td> -->
-<!--         </tr> -->
-<!--         <tr> -->
-<!--             <th>상세 주소</th> -->
-<!--             <td><input type="text" name="address_detail" /></td> -->
-<!--         </tr> -->
-<!--     </table> -->
 </body>
 <script>
-onload = function(){
-    document.getElementById("user_address").addEventListener("click", function(){ 
+window.onload = function(){
+    document.getElementById("address").addEventListener("click", function(){ 
         new daum.Postcode({
             oncomplete: function(data) {
-                document.getElementById("user_address").value = data.address; 
+                document.getElementById("address").value = data.address; 
                 document.querySelector("input[name=addressDetail]").focus(); 
             }
         }).open();
     });
 }
 
-
-const loginBtn = document.getElementById('login');
-const signupBtn = document.getElementById('signup');
-
-loginBtn.addEventListener('click', (e) => {
-  let parent = e.target.parentNode.parentNode;
-  Array.from(e.target.parentNode.parentNode.classList).find((element) => {
-    if(element !== "slide-up") {
-      parent.classList.add('slide-up')
-    }else{
-      signupBtn.parentNode.classList.add('slide-up')
-      parent.classList.remove('slide-up')
-    }
-  });
-});
-
-signupBtn.addEventListener('click', (e) => {
-  let parent = e.target.parentNode;
-  Array.from(e.target.parentNode.classList).find((element) => {
-    if(element !== "slide-up") {
-      parent.classList.add('slide-up')
-    }else{
-      loginBtn.parentNode.parentNode.classList.add('slide-up')
-      parent.classList.remove('slide-up')
-    }
-  });
-});
 </script>
 </html>

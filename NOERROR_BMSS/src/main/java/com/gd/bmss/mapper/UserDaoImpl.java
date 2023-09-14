@@ -1,5 +1,6 @@
 package com.gd.bmss.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -27,7 +28,47 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public UserVo login(Map<String, Object> map) {
-		return sql.selectOne("com.gd.bmss.mapper.login",map);
+	    return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.login", map);
+	}
+
+	@Override
+	public int emailCheck(String email) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.emailCheck",email);
+	}
+
+	@Override
+	public int updateUser(UserVo vo) {
+		return sql.update("com.gd.bmss.mapper.UserDaoImpl.updateUser",vo);
+	}
+
+	@Override
+	public List<SocialVo> selectSocial() {
+		return sql.selectList("com.gd.bmss.mapper.UserDaoImpl.selectSocial");
+	}
+
+	@Override
+	public SocialVo detailSocial(String id) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.detailSocial",id);
+	}
+
+	@Override
+	public List<UserVo> selectUser() {
+		return sql.selectList("com.gd.bmss.mapper.UserDaoImpl.selectUser");
+	}
+
+	@Override
+	public UserVo detailUser(String id) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.detailUser",id);
+	}
+
+	@Override
+	public String findEmail(Map<String, Object> map) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.findEmail",map);
+	}
+
+	@Override
+	public String findPassword(Map<String, Object> map) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.findPassword",map);
 	}
 
 }

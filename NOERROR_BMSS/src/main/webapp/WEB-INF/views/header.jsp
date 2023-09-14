@@ -64,6 +64,10 @@ ul {
 .navtab:hover {
 	color: #a4a2a2;
 }
+img{
+	height: 50px;
+	width: 40px;
+}
 </style>
 </head>
 <body>
@@ -73,9 +77,11 @@ ul {
 				<div class="site">
 					<div class="login">
 						<a id="login" href="./login.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">로그인</a>
+						<a id="logout" href="./logout.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">로그아웃</a>
 					</div>
 					<div class="join">
 						<a id="join" href="./join.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">회원가입</a>
+						<a id="myInfo" href="./detailUser.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">내정보</a>
 					</div>
 				</div>
 			</div>
@@ -85,7 +91,7 @@ ul {
 			<div id="heads">
 				<div id="Banner" style="overflow: auto"></div>
 				<ul class="tab">
-					<li class="nav-menu"><a class="menu" href="http://localhost8080/noerrorbmss" ><img class="logo" src="./img/BMSS아이콘.png">NOERROR 책check</a></li>
+					<li class="nav-menu"><a class="menu" href="/noerrorbmss" ><img class="logo" src="./img/BMSS아이콘.png">NOERROR 책check</a></li>
 					<li><a class="navtab" id="navdrop" href="#">자료검색</a></li>
 					<li><a class="navtab" id="navdrop" href="#">이용안내</a></li>
 					<li><a class="navtab" id="navdrop" href="#">도서관소식</a></li>
@@ -96,5 +102,37 @@ ul {
 		</nav>
 
 	</header>
+	<script type="text/javascript">
+	window.onload = function() {
+	    var loginButton = document.getElementById("login");
+	    var logoutButton = document.getElementById("logout");
+	    var joinButton = document.getElementById("join");
+	    var myInfoButton = document.getElementById("myInfo");
+
+	    checkSession();
+	    
+	    function checkSession() {
+	        var userSession = sessionStorage.getItem("loginVo");
+	        console.log(userSession);
+	        if (userSession) {
+	            loginButton.style.display = "none"; 
+	            joinButton.style.display = "none"; 
+	            logoutButton.style.display = "block"; 
+	            myInfoButton.style.display = "block"; 
+	        } else {
+	            loginButton.style.display = "block"; 
+	            joinButton.style.display = "block"; 
+	            logoutButton.style.display = "none"; 
+	            myInfoButton.style.display = "none"; 
+	        }
+	    }
+	    
+	    logoutButton.onclick = function() {
+	        sessionStorage.removeItem("loginVo");
+	        checkSession();
+	    }
+	}
+
+	</script>
 </body>
 </html>
