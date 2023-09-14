@@ -2,4 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="OrderAndStock">
 
+<insert id="normalToStock" >
+<selectKey order="BEFORE" keyProperty="BOOK_SEQ">
+ <![CDATA[
+  SELECT  X.BOOK_SEQ FROM
+(SELECT  B.BOOK_SEQ, B.STATUS_TITLE, B.STATUS_CODE, A.RETURN_DATE, B.BOOK_CODE,
+           COUNT(*) OVER (PARTITION BY B.BOOK_CODE) AS BOOK_COUNT
+    FROM BOOK_BORROW A
+    RIGHT JOIN BOOK_STATUS B ON A.BOOK_SEQ = B.BOOK_SEQ
+    WHERE (RETURN_DATE <= TO_DATE('20230913' || '000000', 'YYYYMMDDHH24MISS') - 1
+           OR RETURN_DATE IS NULL)
+           AND STATUS_CODE = 'A') X
+WHERE X.BOOK_COUNT > 1 ]]>
+</selectKey>
+
+UPDATE BOOK_STATUS SET STATUS CODE='B' WHERE BOOK_SEQ IN(#{book_seq})
+
+</insert>
+
+
+
 </mapper>
