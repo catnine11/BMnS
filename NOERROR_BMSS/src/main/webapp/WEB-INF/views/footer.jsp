@@ -36,7 +36,7 @@
 		<div id="fmenu"><img class="logo" src="./img/BMSS아이콘.png">NOERROR 책check</div><br>
 	
 	
-		<p id="ft_last">ⓒTEAM NOERROR BMSS GooDee Project</p>
+		<p id="ft_last">&copy;TEAM NOERROR BMSS GooDee Project</p>
 	
 	
 	</footer>

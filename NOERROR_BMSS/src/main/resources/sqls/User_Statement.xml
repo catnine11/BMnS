@@ -52,7 +52,11 @@
 								)
 </insert>
 
-
+<select id="login" resultType="UserVo">
+	SELECT USER_ID, USER_NAME ,USER_EMAIL ,USER_AUTH ,USER_DELFLAG ,USER_PHONE,USER_BIRTH,PENALTY_DATE,USER_JOINDATE,GUBUN 
+		FROM BOOK_USERINFO u 
+	WHERE USER_EMAIL = #{user_email} AND USER_PASSWORD = #{user_password}
+</select>
 
 
 

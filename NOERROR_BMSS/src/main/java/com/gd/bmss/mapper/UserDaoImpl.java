@@ -1,5 +1,7 @@
 package com.gd.bmss.mapper;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,11 @@ public class UserDaoImpl implements IUserDao {
 	@Override
 	public int joinSocial(SocialVo vo) {
 		return sql.insert("com.gd.bmss.mapper.UserDaoImpl.joinSocial",vo);
+	}
+
+	@Override
+	public UserVo login(Map<String, Object> map) {
+		return sql.selectOne("com.gd.bmss.mapper.login",map);
 	}
 
 }
