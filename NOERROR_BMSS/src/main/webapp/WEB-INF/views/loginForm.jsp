@@ -1,33 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NOERROR</title>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<title>제목</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
 <style type="text/css">
-	@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
-
 html,body {
   position: relative;
   min-height: 100vh;
   background-color: #E1E8EE;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-.form-structor {
+	.form-structor {
   background-color: #222;
   border-radius: 15px;
   height: 600px;
   width: 400px;
   position: relative;
   overflow: hidden;
+  margin-left: 35%;
   
   &::after {
     content: '';
@@ -201,8 +204,8 @@ html,body {
           outline: none;
           box-shadow: none;
           display: block;
-          height: 30px;
-          line-height: 30px;
+          height: 40px;
+          line-height: 40px;
           padding: 8px 15px;
           border-bottom: 1px solid #eee;
           width: 100%;
@@ -275,88 +278,26 @@ html,body {
   }
 }
 </style>
-
-
 </head>
+<%@include file="header.jsp"%>
 <body>
 <div class="form-structor">
-	<form action="./regist.do" method="post">
+
+	<form action="./loginForm.do" method="post">
   <div class="signup">
-    <h2 class="form-title" id="signup">Sign up</h2>
+    <h2 class="form-title" id="signup">Login</h2>
     <div class="form-holder">
-      <input type="text" class="input" name="user_name" placeholder="이름" required="required"/>
-      <input type="email" class="input" name="user_email" placeholder="이메일" required="required"/>
-      <input type="password" class="input" name="user_password" placeholder="비밀번호" required="required"/>
-      <input type="text" class="input" name="user_phone" placeholder="핸드폰 번호 -를 뺴고 입력해주세요" required="required">
-      <input type="text" class="input" name="user_birth" placeholder="생년월일 8자리" required="required">
-      <input type="text" class="input" id="address" name="user_address" readonly placeholder="주소" required="required"/>
-      <input type="text" class="input" name="addressDetail" placeholder="상세주소" required="required"/>
+      <input id="email" type="email" class="input" name="user_email" placeholder="이메일" required="required"/>
+      <input id="password" type="password" class="input" name="user_password" placeholder="비밀번호" required="required"/>
     </div>
-    <button type="submit" class="submit-btn">Sign up</button>
+    <button type="submit" class="submit-btn">Login</button>
   </div>
   </form>
-  
- 
-  
-</div>
 
-
-
-
-
-<!-- 	  <table> -->
-<!--         <tr> -->
-<!--             <th>이름</th> -->
-<!--             <td><input type="text" name="user_name"></td> -->
-<!--         </tr> -->
-<!--         <tr> -->
-<!--             <th>주소</th> -->
-<!--             <td><input type="text" id="address" name="address" readonly /><input type="button" id="address_kakao" value="검색"></td> -->
-<!--         </tr> -->
-<!--         <tr> -->
-<!--             <th>상세 주소</th> -->
-<!--             <td><input type="text" name="address_detail" /></td> -->
-<!--         </tr> -->
-<!--     </table> -->
+  </div>
 </body>
-<script>
-onload = function(){
-    document.getElementById("user_address").addEventListener("click", function(){ 
-        new daum.Postcode({
-            oncomplete: function(data) {
-                document.getElementById("user_address").value = data.address; 
-                document.querySelector("input[name=addressDetail]").focus(); 
-            }
-        }).open();
-    });
-}
+<%@include file="footer.jsp"%>
+<script type="text/javascript">
 
-
-const loginBtn = document.getElementById('login');
-const signupBtn = document.getElementById('signup');
-
-loginBtn.addEventListener('click', (e) => {
-  let parent = e.target.parentNode.parentNode;
-  Array.from(e.target.parentNode.parentNode.classList).find((element) => {
-    if(element !== "slide-up") {
-      parent.classList.add('slide-up')
-    }else{
-      signupBtn.parentNode.classList.add('slide-up')
-      parent.classList.remove('slide-up')
-    }
-  });
-});
-
-signupBtn.addEventListener('click', (e) => {
-  let parent = e.target.parentNode;
-  Array.from(e.target.parentNode.classList).find((element) => {
-    if(element !== "slide-up") {
-      parent.classList.add('slide-up')
-    }else{
-      loginBtn.parentNode.parentNode.classList.add('slide-up')
-      parent.classList.remove('slide-up')
-    }
-  });
-});
 </script>
 </html>
