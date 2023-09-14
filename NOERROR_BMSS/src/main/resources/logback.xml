@@ -20,11 +20,11 @@
     </appender>
 
     <logger name="org.springframework" level="INFO"/>
-    <logger name="com.gd.bmss" level="DEBUG"/>
+    <logger name="com.gd.bmss" level="TRACE"/>
     <logger name="jdbc.sqlonly" level="TRACE" />
     <logger name="jdbc.resultsettable" level="TRACE" />
 
-    <root level="debug">
+    <root level="trace">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>

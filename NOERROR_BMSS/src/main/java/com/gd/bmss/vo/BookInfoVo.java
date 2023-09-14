@@ -42,4 +42,5 @@ public class BookInfoVo {
 
 	private List<Book_StatusVo> bsVo;
 
+	
 }

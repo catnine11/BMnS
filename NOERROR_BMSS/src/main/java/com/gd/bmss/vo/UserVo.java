@@ -34,7 +34,7 @@ public class UserVo {
 	private String user_joindate;
 	private String gubun;
 	
-	private List<ReserveVo> reserveVo; 
-	private List<BorrowVo> borrowVo;
+	private List<BorrowVo> borwVo;
+	private List<ReserveVo> resvVo; 
 	
 }
