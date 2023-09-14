@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gd.bmss.mapper.UserDaoImpl">
 
+<!-- 회원가입 -->
 <insert id="joinUser" parameterType="UserVo">
 	<selectKey keyProperty="user_id" resultType="java.lang.Integer" order="BEFORE">
 		SELECT USER_SEQ_SEQUENCE.NEXTVAL AS USER_ID FROM DUAL
@@ -32,6 +33,7 @@
 								)
 </insert>
 	
+	<!-- 회원가입 -->
 <insert id="joinSocial">
 	<selectKey keyProperty="social_id" resultType="java.lang.Integer" order="BEFORE">
 		SELECT USER_SEQ_SEQUENCE.NEXTVAL AS USER_ID FROM DUAL
@@ -52,23 +54,66 @@
 								)
 </insert>
 
+<!-- 로그인 -->
 <select id="login" resultType="UserVo">
 	SELECT USER_ID, USER_NAME ,USER_EMAIL ,USER_AUTH ,USER_DELFLAG ,USER_PHONE,USER_BIRTH,PENALTY_DATE,USER_JOINDATE,GUBUN 
 		FROM BOOK_USERINFO u 
 	WHERE USER_EMAIL = #{user_email} AND USER_PASSWORD = #{user_password}
 </select>
 
+<!-- 중복회원 검사 -->
+<select id="emailCheck" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+		FROM BOOK_USERINFO
+	WHERE USER_EMAIL = #{user_email}
+</select>
 
+<!-- 정보수정 -->
+<update id="updateUser">
+	UPDATE BOOK_USERINFO
+		SET USER_PASSWORD=#{user_password}, USER_ADDRESS=#{user_address}
+	WHERE USER_ID=#{user_id} AND GUBUN = 'nomal'
+</update>
 
+<!-- 관리자가 소셜조회 -->
+<select id="selectSocial" resultType="SocialVo">
+	SELECT SOCIAL_ID ,SOCIAL_NAME, SOCIAL_EMAIL, SOCIAL_PHONE,SOCIAL_GUBUN
+FROM BOOK_SOCIALINFO
+</select>
 
+<!-- 상세조회 -->
+<select id="detailSocial" resultType="SocialVo">
+	SELECT SOCIAL_NAME, SOCIAL_EMAIL, SOCIAL_PHONE,SOCIAL_GUBUN
+FROM BOOK_SOCIALINFO
+WHERE SOCIAL_ID =  #{social_id}
+</select>
 
+<!-- 회원리스트조회    -->
+<select id="selectUser" resultType="UserVo">
+SELECT USER_ID , USER_NAME, USER_EMAIL, USER_BIRTH, USER_PHONE, USER_ADDRESS,GUBUN , PENALTY_DATE, USER_JOINDATE
+FROM BOOK_USERINFO
+</select>
 
+<!-- 회원상세조회    -->
+<select id="detailUser" resultType="UserVo">
+SELECT USER_NAME, USER_EMAIL, USER_BIRTH, USER_PHONE, USER_ADDRESS, PENALTY_DATE, USER_JOINDATE
+FROM BOOK_USERINFO
+WHERE USER_ID = #{user_id}
+</select>
 
+<!-- EMAIL찾기 -->
+<select id="findEmail" resultType="java.lang.String" parameterType="java.util.Map">
+	SELECT USER_EMAIL 
+		FROM BOOK_USERINFO
+	WHERE USER_NAME =#{user_name} AND USER_PHONE =#{user_phone}
+</select>
 
-
-
-
-
+<!-- PASSWORD찾기 -->
+<select id="findPassword" resultType="java.lang.String">
+SELECT USER_PASSWORD 
+	FROM BOOK_USERINFO
+WHERE USER_EMAIL =#{user_email} AND USER_PHONE =#{user_phone}
+</select>
 
 
 

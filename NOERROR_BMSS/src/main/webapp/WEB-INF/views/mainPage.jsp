@@ -15,7 +15,7 @@ body{
 <%@include file="header.jsp" %>
 <body>
 	
-
+${sessionScope.loginVo}
 	<div style="background-color: #D9E5FF">
 		<div>
 			<a>아 귀찮다</a>

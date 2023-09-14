@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript" src="./js/login.js"></script>
 <style type="text/css">
 html,body {
   position: relative;
@@ -283,17 +283,18 @@ html,body {
 <body>
 <div class="form-structor">
 
-	<form action="./loginForm.do" method="post">
+	<form action="./loginCheck.do" method="post">
   <div class="signup">
     <h2 class="form-title" id="signup">Login</h2>
     <div class="form-holder">
-      <input id="email" type="email" class="input" name="user_email" placeholder="이메일" required="required"/>
-      <input id="password" type="password" class="input" name="user_password" placeholder="비밀번호" required="required"/>
+      <input id="email" type="email" class="input" name="user_email" placeholder="이메일"/>
+      <input id="password" type="password" class="input" name="user_password" placeholder="비밀번호" />
     </div>
     <button type="submit" class="submit-btn">Login</button>
   </div>
   </form>
 
+  ${loginVo}
   </div>
 </body>
 <%@include file="footer.jsp"%>
