@@ -54,12 +54,21 @@
 								)
 </insert>
 
+<!-- 소셜아이디 중복검사 -->
 <select id="checkEmail" resultType="java.lang.Integer">
 	SELECT COUNT(SOCIAL_EMAIL)
 FROM(SELECT DISTINCT SOCIAL_EMAIL
 			FROM (SELECT SOCIAL_EMAIL FROM BOOK_SOCIALINFO))
 WHERE SOCIAL_EMAIL = #{social_email}
 </select>
+
+<!-- 리프레시토큰 업데이트 -->
+<update id="updateRetoken">
+	UPDATE BOOK_SOCIALINFO
+		SET SOCIAL_TOKEN = #{social_token}
+	WHERE SOCIAL_ID = #{social_id}
+</update>
+
 <!-- 로그인 -->
 <select id="login" resultType="UserVo">
 	SELECT USER_ID, USER_NAME ,USER_EMAIL ,USER_AUTH ,USER_DELFLAG ,USER_PHONE,USER_BIRTH,PENALTY_DATE,USER_JOINDATE,GUBUN 
@@ -89,7 +98,7 @@ FROM BOOK_SOCIALINFO
 
 <!-- 상세조회 -->
 <select id="detailSocial" resultType="SocialVo">
-	SELECT SOCIAL_NAME, SOCIAL_EMAIL, SOCIAL_PHONE,SOCIAL_GUBUN
+	SELECT SOCIAL_ID,SOCIAL_NAME, SOCIAL_EMAIL, SOCIAL_PHONE,SOCIAL_GUBUN
 FROM BOOK_SOCIALINFO
 WHERE SOCIAL_ID =  #{social_id}
 </select>
@@ -123,7 +132,7 @@ WHERE USER_EMAIL =#{user_email} AND USER_PHONE =#{user_phone}
 
 <!-- 소셜회원고유번호 가져오기 -->
 <select id="getSId" resultType="java.lang.Integer">
-        SELECT SOCIAL_ID FROM BOOK_SOCIALINFO WHERE SOCIAL_TOKEN = #{social_token}
+        SELECT SOCIAL_ID FROM BOOK_SOCIALINFO WHERE SOCIAL_EMAIL = #{social_email} AND SOCIAL_GUBUN = #{social_gubun}
     </select>
 
 

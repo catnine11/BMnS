@@ -304,8 +304,8 @@ html,body {
   <button type="button" class="submit-btn" onclick="location.href='./findEmail.do'">이메일 찾기</button>
   <button type="button" class="submit-btn" onclick="location.href='./findPassword.do'">이메일 찾기</button>
   <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;" src="./img/kakao.png" onclick="location.href='<%=vo.getKakaoUrl()+"&client_id="+cvo.getKakaoClientID()+"&redirect_uri="+vo.getKakaoRedirect()+"&state="+state%>'"><br>
-  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;"src="./img/btnW_완성형.png" onclick="location.href='<%=vo.getNaverUrl()+"&client_id="+cvo.getNaverClientID()+"&redirect_uri="+vo.getNaverRedirect()+"&state="+state%>"><br>
-  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px;"src="./img/googlel.png" onclick=""><br>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;"src="./img/btnW_완성형.png" onclick="location.href='<%=vo.getNaverUrl()+"&client_id="+cvo.getNaverClientID()+"&redirect_uri="+vo.getNaverRedirect()+"&state="+state%>'"><br>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px;"src="./img/googlel.png" onclick="location.href='<%=vo.getGoogleUrl()+"&client_id="+cvo.getGoogleClientID()+"&redirect_uri="+vo.getGoogleRedirect()+"&state="+state%>'"><br>
   </div>
   </form>
   </div>

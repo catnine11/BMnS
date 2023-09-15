@@ -16,6 +16,9 @@ public interface IUserDao {
 	//로그인
 		public UserVo login(Map<String, Object> map);
 		
+	//리프레시토큰 최신화
+		public int updateRetoken(SocialVo vo);
+		
 	//중복회원검사
 		public int emailCheck(String email);
 		
@@ -28,7 +31,7 @@ public interface IUserDao {
 		public List<SocialVo> selectSocial();
 		
 	//상세조회
-		public SocialVo detailSocial(String id);
+		public SocialVo detailSocial(int id);
 		
 	//회원리스트조회
 		public List<UserVo> selectUser();

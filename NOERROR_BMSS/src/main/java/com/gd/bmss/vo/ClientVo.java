@@ -11,8 +11,8 @@ public class ClientVo {
 	private String kakaoSecretCode ="MY07Ei9euhaZ7x83T2Sw2bjCloNpjLgc";
 	
 	//구글
-	private String googleClientID ="313828412770-itm2c23ia7n0e46kdjh7nldlt0kquvd3.apps.googleusercontent.com";
-	private String googleSecretCode ="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";
+	private String googleClientID ="841705976266-rvkbte35vkov3qob7c7ae0inqj5casjl.apps.googleusercontent.com";
+	private String googleSecretCode ="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";
 	
 	public String getNaverClientID() {
 		return naverClientID;

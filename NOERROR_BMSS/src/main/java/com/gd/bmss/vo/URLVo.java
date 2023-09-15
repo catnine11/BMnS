@@ -16,7 +16,7 @@ public class URLVo {
 	//리다이렉트 URL
 	private String naverRedirect = "http://localhost:8080/noerrorbmss/callBackNaverLogin.do";
 	private String kakaoRedirect = "http://localhost:8080/noerrorbmss/callBackKAKAOLogin.do";
-	private String googleRedirect = "http://localhost:8080/oAuthModeul/callbackgoogle.do";
+	private String googleRedirect = "http://localhost:8080/noerrorbmss/callbackgoogle.do";
 
 	//토큰 요청 URL
 	private String getNaverTokenUrl="https://nid.naver.com/oauth2.0/token?grant_type=authorization_code";

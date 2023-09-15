@@ -15,4 +15,6 @@ public interface IUserService {
 	
 	public int getSId(SocialVo vo);
 	
+	public int updateRetoken(SocialVo vo);
+	
 }
