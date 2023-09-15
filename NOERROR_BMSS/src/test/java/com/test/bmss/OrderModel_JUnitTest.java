@@ -117,7 +117,7 @@ public class OrderModel_JUnitTest {
 	public void getStocks() {
 		
 		
-List<StockVo>	list	=dao.getStocks();
+		List<StockVo>	list	=dao.getStocks();
 		assertNotNull(list);
 	}
 	
