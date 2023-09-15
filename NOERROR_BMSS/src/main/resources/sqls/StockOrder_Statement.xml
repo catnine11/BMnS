@@ -52,12 +52,12 @@ WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
 #{stock_number}
 </foreach>
 </delete>
-	<resultMap type="" id="">
-	<result column="" property=""/>
-	<result column="" property=""/>
-	<result column="" property=""/>
+<!-- 	<resultMap type="" id=""> -->
+<!-- 	<result column="" property=""/> -->
+<!-- 	<result column="" property=""/> -->
+<!-- 	<result column="" property=""/> -->
 	
-	</resultMap>
+<!-- 	</resultMap> -->
 	
 	
 <select id="getStocks">
