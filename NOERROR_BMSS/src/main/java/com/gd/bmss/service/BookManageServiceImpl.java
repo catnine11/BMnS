@@ -26,6 +26,12 @@ public class BookManageServiceImpl implements IBookManageService {
 	}
 
 	@Override
+	public List<BookInfoVo> getAllBookUserGenre() {
+		log.info("@@@@@@@@@@@BookManageServiceImpl getAllBookAdmin 회원의 장르별 조회");
+		return dao.getAllBookUserGenre();
+	}
+	
+	@Override
 	public List<BookInfoVo> getAllBookAdmin() {
 		log.info("@@@@@@@@@@@BookManageServiceImpl getAllBookAdmin 관리자의 장르별 전체 조회");
 		return dao.getAllBookAdmin();
@@ -54,7 +60,7 @@ public class BookManageServiceImpl implements IBookManageService {
 		log.info("@@@@@@@@@@@BookManageServiceImpl updateBook 크롤링으로 등록업뎃", infoVo);
 		return dao.updateBook(infoVo);
 	}
-	
+
 	
 	
 }

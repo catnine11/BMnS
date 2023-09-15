@@ -9,6 +9,15 @@
 <head>
 <meta charset="UTF-8">
 <title>NOERROR 책</title>
+<style type="text/css">
+	#thumbnail{
+		width: 30%;
+ 		height: 30%;
+	}
+</style>
+<script type="text/javascript">
+
+</script>
 </head>
 <%@include file="header.jsp" %>
 <body>
@@ -27,8 +36,8 @@
 <!-- </table> -->
 
 <div class="container">
-	<div class="selectGenre">
-		<div>
+	<form action="./bookListUserGenre.do" method="post">
+		<div class="selectGenre">
 			<select class="Genre">
 				<option>전체</option>
 				<option>총류</option>
@@ -43,19 +52,21 @@
 				<option>역사</option>
 			</select>
 		</div>
+	</form>
 		<div>
 			<ul class="imgList">
+			<c:forEach items="${lists}" var="book">
 				<li>
 					<a>
-						<img alt="" src="">
+						<img id="thumbnail" src="${book.thumbnail}" onclick="/bookDetail.do?book_code="+${book.book_code}>
 					</a>
 					<div>
 					
 					</div>
 				</li>
+			</c:forEach>
 			</ul>
 		</div>
-	</div>
 </div>
 
 
