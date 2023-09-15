@@ -6,15 +6,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.log;
-import org.slf4j.logFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gd.bmss.mapper.IUserDao;
@@ -37,7 +37,7 @@ public class GoogleController {
 	private IUserDao dao;
 	
 	@RequestMapping(value = "/callbackgoogle.do")
-	public String googlCallBack(String code, String state,HttpSession session) {
+	public String googlCallBack(String code, String state,HttpSession session, Model model) {
 		log.info("Welcome HomeController > googlCallBack");
 	    log.info("Code : {}", code);
 	    log.info("state : {}", state);
@@ -91,10 +91,10 @@ public class GoogleController {
 				    		 sVo.setSocial_phone("NO PHONE");
 				    		 sVo.setSocial_token(accToken);
 				    		 sVo.setSocial_gubun(gubun);
-				    		 int id = dao.getSId(sVo);
 				    		 int n = dao.checkEmail(sVo);
 				    		 if(n!=0) {
 				    			 UserVo loginVo = new UserVo();
+				    			 int id = dao.getSId(sVo);
 				    			 loginVo = dao.detailUser(id);
 				    			 log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 				    			 session.setAttribute("loginVo", loginVo);
@@ -102,6 +102,7 @@ public class GoogleController {
 				    			 return "redirect:/";
 				    		 }else {
 				    			 dao.joinSocial(sVo);
+				    			 int id = dao.getSId(sVo);
 					    			UserVo loginVo = dao.detailUser(id);
 					    			log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 					    			session.setAttribute("loginVo", loginVo);

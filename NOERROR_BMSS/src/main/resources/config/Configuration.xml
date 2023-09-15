@@ -29,8 +29,8 @@
 	<mapper resource="sqls/StockOrder_Statement.xml"/>
 	<mapper resource="sqls/Pay_Statement.xml"/>
 	<mapper resource="sqls/BookManage_Statement.xml"/>
-	<mapper resource="sqls/BookLending_Statement.xml"/>
 	<mapper resource="sqls/Board_Statement.xml"/>
+	<mapper resource="sqls/BookLending_Statement.xml"/>
 </mappers>
 
 </configuration>

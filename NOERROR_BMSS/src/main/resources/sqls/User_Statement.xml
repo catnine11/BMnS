@@ -43,14 +43,16 @@
 														SOCIAL_EMAIL, 
 														SOCIAL_PHONE, 
 														SOCIAL_TOKEN, 
-														SOCIAL_AUTH
+														SOCIAL_AUTH,
+														SOCIAL_GUBUN
 														)
 					VALUES(#{social_id}, 
 								#{social_name}, 
 								#{social_email}, 
 								#{social_phone},
 								#{social_token}, 
-								'U'
+								'U',
+								#{social_gubun}
 								)
 </insert>
 
@@ -94,6 +96,7 @@ WHERE SOCIAL_EMAIL = #{social_email}
 <select id="selectSocial" resultType="SocialVo">
 	SELECT SOCIAL_ID ,SOCIAL_NAME, SOCIAL_EMAIL, SOCIAL_PHONE,SOCIAL_GUBUN
 FROM BOOK_SOCIALINFO
+ORDER BY 1
 </select>
 
 <!-- 상세조회 -->
@@ -107,6 +110,7 @@ WHERE SOCIAL_ID =  #{social_id}
 <select id="selectUser" resultType="UserVo">
 SELECT USER_ID , USER_NAME, USER_EMAIL, USER_BIRTH, USER_PHONE, USER_ADDRESS,GUBUN , PENALTY_DATE, USER_JOINDATE
 FROM BOOK_USERINFO
+ORDER BY 1
 </select>
 
 <!-- 회원상세조회    -->

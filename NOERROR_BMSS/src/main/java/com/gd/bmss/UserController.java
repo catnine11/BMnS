@@ -2,6 +2,7 @@ package com.gd.bmss;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gd.bmss.mapper.IUserDao;
 import com.gd.bmss.service.IUserService;
 import com.gd.bmss.vo.UserVo;
 
@@ -38,8 +40,17 @@ public class UserController {
 	@Autowired
 	private IUserService service;
 	
+	@Autowired
+	private IUserDao dao;
+	
+	/*
+	 * 관리자페이지 이동
+	 */
 	@RequestMapping(value = "/adminPage.do")
-	public String adminPage() {
+	public String adminPage(Model model) {
+		log.info("@@@@@@@@@@@@@@@관리자화면 이동@@@@@@@@@@@@@@@");
+		List<UserVo> lists = dao.selectUser();
+		model.addAttribute("lists",lists);
 		return "adminPage";
 	}
 	
