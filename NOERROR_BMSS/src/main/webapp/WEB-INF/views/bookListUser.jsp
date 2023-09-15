@@ -8,13 +8,55 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도서 전체조회(회원)</title>
+<title>NOERROR 책</title>
 </head>
 <%@include file="header.jsp" %>
 <body>
 <%-- ${lists} --%>
 
+<!-- <table> -->
+<!-- 	<thead> -->
+<!-- 		<tr> -->
+<!-- 			<td colspan="2">장르 선택</td> -->
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<!-- 			<th>장르</th> -->
+<!-- 			<th>썸네일</th> -->
+<!-- 		</tr> -->
+<!-- 	</thead> -->
+<!-- </table> -->
 
+<div class="container">
+	<div class="selectGenre">
+		<div>
+			<select class="Genre">
+				<option>전체</option>
+				<option>총류</option>
+				<option>철학</option>
+				<option>종교</option>
+				<option>사회과학</option>
+				<option>자연과학</option>
+				<option>기술과학</option>
+				<option>예술</option>
+				<option>언어</option>
+				<option>문학</option>
+				<option>역사</option>
+			</select>
+		</div>
+		<div>
+			<ul class="imgList">
+				<li>
+					<a>
+						<img alt="" src="">
+					</a>
+					<div>
+					
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 
 
 </body>
