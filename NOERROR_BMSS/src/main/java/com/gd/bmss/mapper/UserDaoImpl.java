@@ -47,7 +47,7 @@ public class UserDaoImpl implements IUserDao {
 	}
 
 	@Override
-	public SocialVo detailSocial(String id) {
+	public SocialVo detailSocial(int id) {
 		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.detailSocial",id);
 	}
 
@@ -79,5 +79,10 @@ public class UserDaoImpl implements IUserDao {
 	@Override
 	public int getSId(SocialVo vo) {
 		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.getSId",vo);
+	}
+	
+	@Override
+	public int updateRetoken(SocialVo vo) {
+		return sql.update("com.gd.bmss.mapper.UserDaoImpl.updateRetoken",vo);
 	}
 }

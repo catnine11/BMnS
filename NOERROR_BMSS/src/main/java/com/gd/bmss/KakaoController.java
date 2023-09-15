@@ -82,13 +82,9 @@ public class KakaoController {
 		    	  String refreshToken = jnode.get("refresh_token").toString();
 		    	  JsonNode info = getkakaoInfo(accToken);
 			    	 if(info!=null) {
-			    		 log.info("전발 받은 회원 정보 :{} ",info);
-			    		 //값을 추출하기
+			    		 log.info("@@@@@@@@@@@@@@@@전달 받은 회원 정보 :{}@@@@@@@@@@@@@@@@@@@@@@@@@@ ",info);
 			    		 String email = info.get("kakao_account").get("email").asText();
-//			    		 String name = info.get("kakao_account").get("name").asText();
 			    		 String nickname = info.get("properties").get("nickname").asText();
-//			    		 String mobile = info.get("kakao_account").get("phone_number").asText();
-//			    		 mobile = mobile.replace("+82","0").replace(" ","");
 			    		 String birth = info.path("kakao_account").path("birthyear").asText()+"-"
 			    				 		+info.path("kakao_account").path("birthday").asText().substring(0,2)
 			    				 		+"-"
@@ -98,12 +94,15 @@ public class KakaoController {
 			    		 SocialVo sVo = new SocialVo();
 			    		 sVo.setSocial_email(email);
 			    		 sVo.setSocial_name(nickname);
-			    		 sVo.setSocial_token(refreshToken);
+			    		 sVo.setSocial_token(accToken);
+			    		 sVo.setSocial_phone("NO PHONE");
 			    		 sVo.setSocial_gubun(gubun);
-			    		 int id = dao.getSId(sVo);
 			    		 int n = dao.checkEmail(sVo);
+			    		 int id = dao.getSId(sVo);
 			    		 if(n!=0) {
-			    			 UserVo loginVo = dao.detailUser(id);
+//			    			 dao.updateRetoken(dao.detailSocial(id));
+			    			 UserVo loginVo = new UserVo();
+			    			 loginVo = dao.detailUser(id);
 			    			 log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 			    			 session.setAttribute("loginVo", loginVo);
 			    			 session.setAttribute("info", sVo);

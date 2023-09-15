@@ -41,5 +41,11 @@ public class UserServiceImpl implements IUserService {
 		log.info("@@@@@@@@@@@@@@회원 고유번호 찾기 getSId @@@@@@@@@@@@@@@@");
 		return dao.getSId(vo);
 	}
+	
+	@Override
+	public int updateRetoken(SocialVo vo) {
+		log.info("@@@@@@@@@@@@@@ 토큰 업데이트 updateRetoken @@@@@@@@@@@@@@@@");
+		return dao.updateRetoken(vo);
+	}
 
 }

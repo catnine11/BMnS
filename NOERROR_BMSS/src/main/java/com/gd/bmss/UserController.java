@@ -38,6 +38,11 @@ public class UserController {
 	@Autowired
 	private IUserService service;
 	
+	@RequestMapping(value = "/adminPage.do")
+	public String adminPage() {
+		return "adminPage";
+	}
+	
 	/*
 	 * 약관동의 이동
 	 */

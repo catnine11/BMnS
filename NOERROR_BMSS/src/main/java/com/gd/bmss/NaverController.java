@@ -78,15 +78,15 @@ public class NaverController {
 		    		 sVo.setSocial_phone(phone);
 		    		 sVo.setSocial_token(refreshToken);
 		    		 sVo.setSocial_gubun(gubun);
-		    		 int id = dao.getSId(sVo)+1;
+		    		 int id = dao.getSId(sVo);
 		    		 int n = dao.checkEmail(sVo);
 		    		 if(n!=0) {
-//		    			 dao.updateNaver(vo);
+//		    			 dao.updateRetoken(sVo);
 		    			 UserVo loginVo = new UserVo();
 		    			 loginVo = dao.detailUser(id);
 		    			 log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 		    			 session.setAttribute("loginVo", loginVo);
-		    			 session.setAttribute("info", sVo);  //소셜 값 확인용 나중에 주석
+		    			 session.setAttribute("info", sVo);  
 		    			 return "redirect:/";
 		    		 }else {
 		    			dao.joinSocial(sVo);
