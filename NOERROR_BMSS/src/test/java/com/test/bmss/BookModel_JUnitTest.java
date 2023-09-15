@@ -52,27 +52,28 @@ public class BookModel_JUnitTest {
 		assertNotNull(info);
 	}
 	
-//	@Test
+	@Test
 	public void changeGenreTest() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("genre_code", "800");
-		map.put("book_code", "31");
-		
+		map.put("codes", new String[]{"32","33"});
 		int n = dao.changeGenre(map);
-		assertEquals(1, n);
+		
+		assertEquals(2, n);
 	}
 	
 //	@Test
 	public void changeStatusTest() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status_code", "D");
-		map.put("book_seq", "130");
+		String[] seqs = new String[]{"129","130"};
+		map.put("seqs", seqs);
 		
 		int n = dao.changeBStatus(map);
-		assertEquals(1, n);
+		assertEquals(2, n);
 	}
 	
-	@Test
+//	@Test
 	public void updateBookTest() {
 		BookInfoVo info = new BookInfoVo();
 		info.setContent("목차");

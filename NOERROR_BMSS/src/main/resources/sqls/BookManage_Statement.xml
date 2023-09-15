@@ -43,6 +43,16 @@
 			FROM BOOKINFO b JOIN BOOK_GENRE bg 
 			USING (GENRE_CODE)
 		)
+	ORDER BY PUBLISH_DATE DESC 
+</select>
+
+<select id="getAllBookUserGenre" resultMap="bInfoMap">
+	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER
+	FROM (
+			SELECT GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, THUMBNAIL
+			FROM BOOKINFO b JOIN BOOK_GENRE bg 
+			USING (GENRE_CODE)
+		)
 	WHERE GENRE_CODE = #{GENRE_CODE}
 	ORDER BY PUBLISH_DATE DESC 
 </select>
@@ -67,17 +77,20 @@
 <update id="changeGenre" parameterType="java.util.Map">
 	UPDATE BOOKINFO
 	SET GENRE_CODE=#{genre_code}
-	WHERE BOOK_CODE=#{book_code}
+	WHERE BOOK_CODE IN
+	<foreach collection="codes" item="book_code" open="(" separator="," close=")">
+		#{book_code}
+	</foreach>
 </update>
 
 <!-- 상태변경 -->
 <update id="changeBStatus" parameterType="java.util.Map">
 	UPDATE BOOK_STATUS
-SET STATUS_CODE=#{status_code}
-WHERE BOOK_SEQ=(SELECT BOOK_SEQ
-				FROM BOOK_STATUS bs
-				JOIN BOOKINFO  b USING(BOOK_CODE)
-				WHERE BOOK_CODE = #{book_code})
+	SET STATUS_CODE=#{status_code}
+	WHERE BOOK_SEQ IN
+	<foreach collection="seqs" item="book_seq" open="(" separator="," close=")">
+		#{book_seq}
+	</foreach>
 </update>
 
 <!-- 도서등록 -->

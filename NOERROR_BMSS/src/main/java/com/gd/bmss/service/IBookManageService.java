@@ -9,6 +9,8 @@ public interface IBookManageService {
 
 	//장르별 전체조회 /회원
 	public List<BookInfoVo> getAllBookUser();
+	public List<BookInfoVo> getAllBookUserGenre();
+	
 	//장르별 전체조회 /관리자
 	public List<BookInfoVo> getAllBookAdmin();
 	//상세조회

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.gd.bmss.service.IBookManageService;
 import com.gd.bmss.vo.BookInfoVo;
@@ -34,14 +35,15 @@ public class BookManageController {
 	 */
 	@GetMapping(value = "/bookListUser.do")
 	public String bookListUser(Model model) {
-		log.info("Welcome BookManageController 도서전체조회-회원 bookListUser");
+		log.info("Welcome BookManageController 회원의 도서전체조회창 이동");
 		List<BookInfoVo> lists = service.getAllBookUser();
-		
-//		for (BookInfoVo vo : lists) {
-//			vo.get
-//			
-//		}
 		model.addAttribute("lists", lists);
+		
+		return "bookListUser";
+	}
+	
+	@PostMapping(value = "/bookListUserGenre.do")
+	public String bookListUserGenre() {
 		
 		return "bookListUser";
 	}
@@ -54,7 +56,13 @@ public class BookManageController {
 	/*
 	 * 상세조회
 	 */
-	
+	@GetMapping(value = "/bookDetail.do")
+	public String bookDetail(Model model) {
+		log.info("Welcome BookManageController 도서상세화면창 이동");
+		
+		
+		return "bookDetail";
+	}
 	
 	/*
 	 * 장르변경
