@@ -37,13 +37,14 @@
 
 <!-- 전체조회(장르별) /회원 -->
 <select id="getAllBookUser" resultMap="bInfoMap">
-	SELECT GENRE_NAME, THUMBNAIL 
+	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER
 	FROM (
 			SELECT GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, THUMBNAIL
 			FROM BOOKINFO b JOIN BOOK_GENRE bg 
 			USING (GENRE_CODE)
 		)
-	ORDER BY GENRE_CODE, PUBLISH_DATE DESC 
+	WHERE GENRE_CODE = #{GENRE_CODE}
+	ORDER BY PUBLISH_DATE DESC 
 </select>
 
 <!-- 전체조회(장르별) /관리자 -->
@@ -72,8 +73,11 @@
 <!-- 상태변경 -->
 <update id="changeBStatus" parameterType="java.util.Map">
 	UPDATE BOOK_STATUS
-	SET STATUS_CODE=#{status_code}
-	WHERE BOOK_SEQ=#{book_seq}
+SET STATUS_CODE=#{status_code}
+WHERE BOOK_SEQ=(SELECT BOOK_SEQ
+				FROM BOOK_STATUS bs
+				JOIN BOOKINFO  b USING(BOOK_CODE)
+				WHERE BOOK_CODE = #{book_code})
 </update>
 
 <!-- 도서등록 -->
