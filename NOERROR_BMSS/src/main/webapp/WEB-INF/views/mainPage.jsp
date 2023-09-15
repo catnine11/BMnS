@@ -15,10 +15,9 @@ body{
 <%@include file="header.jsp" %>
 <body>
 	
-${sessionScope.loginVo}
-<hr>
-${sessionScope.info }
-<button onclick="location.href='adminPage.do'" value="관리자페이지"></button>
+<%-- ${sessionScope.loginVo} --%>
+<!-- <hr> -->
+<%-- ${sessionScope.info } --%>
 	<div style="background-color: #D9E5FF">
 		<div>
 			<a>아 귀찮다</a>

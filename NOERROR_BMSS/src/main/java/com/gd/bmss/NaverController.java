@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gd.bmss.mapper.IUserDao;
@@ -35,7 +37,7 @@ public class NaverController {
 
 
 	@RequestMapping(value = "/callBackNaverLogin.do")
-	public String naverCallBack(String code, String state,HttpSession session) {
+	public String naverCallBack(String code, String state,HttpSession session, Model model) {
 		
 		log.info("@@@@@@@@@@@@@@ naverCallBack 응답 @@@@@@@@@@@@@@");
 		String tokenUrl = uvo.getGetNaverTokenUrl(code, state);

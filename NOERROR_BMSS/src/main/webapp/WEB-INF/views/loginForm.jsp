@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제목</title>
+<title>로그인</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -35,6 +35,8 @@ html,body {
   position: relative;
   overflow: hidden;
   margin-left: 35%;
+  margin-bottom: 30px;
+  margin-top: 30px;
   
   &::after {
     content: '';
@@ -111,7 +113,7 @@ html,body {
         height: 30px;
         line-height: 30px;
         padding: 8px 15px;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #ccc;
         width: 100%;
         font-size: 12px;
         

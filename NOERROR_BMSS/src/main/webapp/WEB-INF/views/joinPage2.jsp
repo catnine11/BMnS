@@ -13,7 +13,6 @@ html,body {
   position: relative;
   min-height: 100vh;
   background-color: #E1E8EE;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
@@ -28,6 +27,9 @@ html,body {
   width: 400px;
   position: relative;
   overflow: hidden;
+  margin-left: 35%;
+  margin-bottom: 30px;
+  margin-top: 30px;
   
   &::after {
     content: '';

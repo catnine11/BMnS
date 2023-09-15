@@ -1,3 +1,4 @@
+<%@page import="com.gd.bmss.vo.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,20 +69,52 @@ img{
 	height: 50px;
 	width: 40px;
 }
+#head{
+	position: relative;
+	background: #fff;
+	border-bottom: 1px solid #e1e1e1;
+}
 </style>
+<%
+	UserVo loginVo = (UserVo)session.getAttribute("loginVo");
+%>
 </head>
 <body>
 	<header>
+	고유번호 | 이름&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 구분<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginVo.user_id} &nbsp;| ${sessionScope.loginVo.user_name} | ${loginVo.user_email} | ${loginVo.gubun}
 		<div id="snb">
 			<div id="siteMenu" class="siteMenu">
 				<div class="site">
 					<div class="login">
+					<%
+					if(loginVo == null){
+						%>
 						<a id="login" href="./login.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">로그인</a>
+						<%
+					}else{
+						%>						
 						<a id="logout" href="./logout.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">로그아웃</a>
+						<%
+					}
+					%>
 					</div>
 					<div class="join">
+					<%
+					if(loginVo == null){
+						%>
 						<a id="join" href="./join.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">회원가입</a>
+						<%
+					}else if(loginVo.getUser_auth().equalsIgnoreCase("A")){
+						%>	
+						<a id = "admin" href = "./adminPage.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">회원관리</a>
+						<%
+					}else{
+						%>
 						<a id="myInfo" href="./detailUser.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">내정보</a>
+						<%
+					}
+					%>
 					</div>
 				</div>
 			</div>
@@ -100,41 +133,6 @@ img{
 				</ul>
 			</div>
 		</nav>
-
 	</header>
-	<script type="text/javascript">
-// 	window.onload = function() {
-// 	    var loginButton = document.getElementById("login");
-// 	    var logoutButton = document.getElementById("logout");
-// 	    var joinButton = document.getElementById("join");
-// 	    var myInfoButton = document.getElementById("myInfo");
-
-// 	    checkSession();
-	    
-// 	    function checkSession() {
-// 	        var userSession = sessionStorage.getItem("loginVo");
-// 	        var socialSession = sessionStorage.getItem("info");
-// 	        console.log(userSession);
-// 	        if (userSession || socialSession) {
-// 	            loginButton.style.display = "none"; 
-// 	            joinButton.style.display = "none"; 
-// 	            logoutButton.style.display = "block"; 
-// 	            myInfoButton.style.display = "block"; 
-// 	        } else {
-// 	            loginButton.style.display = "block"; 
-// 	            joinButton.style.display = "block"; 
-// 	            logoutButton.style.display = "none"; 
-// 	            myInfoButton.style.display = "none"; 
-// 	        }
-// 	    }
-	    
-// 	    logoutButton.onclick = function() {
-// 	        sessionStorage.removeItem("loginVo");
-// 	        sessionStorage.removeItem("info");
-// 	        checkSession();
-// 	    }
-// 	}
-
-	</script>
 </body>
 </html>
