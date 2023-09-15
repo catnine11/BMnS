@@ -54,6 +54,12 @@
 								)
 </insert>
 
+<select id="checkEmail" resultType="java.lang.Integer">
+	SELECT COUNT(SOCIAL_EMAIL)
+FROM(SELECT DISTINCT SOCIAL_EMAIL
+			FROM (SELECT SOCIAL_EMAIL FROM BOOK_SOCIALINFO))
+WHERE SOCIAL_EMAIL = #{social_email}
+</select>
 <!-- 로그인 -->
 <select id="login" resultType="UserVo">
 	SELECT USER_ID, USER_NAME ,USER_EMAIL ,USER_AUTH ,USER_DELFLAG ,USER_PHONE,USER_BIRTH,PENALTY_DATE,USER_JOINDATE,GUBUN 
@@ -96,7 +102,7 @@ FROM BOOK_USERINFO
 
 <!-- 회원상세조회    -->
 <select id="detailUser" resultType="UserVo">
-SELECT USER_NAME, USER_EMAIL, USER_BIRTH, USER_PHONE, USER_ADDRESS, PENALTY_DATE, USER_JOINDATE
+SELECT USER_ID, USER_NAME, USER_EMAIL, USER_BIRTH, USER_PHONE, USER_ADDRESS, USER_AUTH,USER_DELFLAG, PENALTY_DATE, USER_JOINDATE,GUBUN
 FROM BOOK_USERINFO
 WHERE USER_ID = #{user_id}
 </select>
@@ -115,8 +121,10 @@ SELECT USER_PASSWORD
 WHERE USER_EMAIL =#{user_email} AND USER_PHONE =#{user_phone}
 </select>
 
-
-
+<!-- 소셜회원고유번호 가져오기 -->
+<select id="getSId" resultType="java.lang.Integer">
+        SELECT SOCIAL_ID FROM BOOK_SOCIALINFO WHERE SOCIAL_TOKEN = #{social_token}
+    </select>
 
 
 

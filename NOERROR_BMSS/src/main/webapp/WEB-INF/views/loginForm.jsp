@@ -1,3 +1,7 @@
+<%@page import="java.math.BigInteger"%>
+<%@page import="java.security.SecureRandom"%>
+<%@page import="com.gd.bmss.vo.ClientVo"%>
+<%@page import="com.gd.bmss.vo.URLVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -278,6 +282,12 @@ html,body {
   }
 }
 </style>
+<%
+		URLVo vo = new URLVo();
+		ClientVo cvo = new ClientVo();
+		SecureRandom random = new SecureRandom();
+		String state = new BigInteger(130, random).toString();
+	%>
 </head>
 <%@include file="header.jsp"%>
 <body>
@@ -291,10 +301,13 @@ html,body {
       <input id="password" type="password" class="input" name="user_password" placeholder="비밀번호" />
     </div>
     <button type="submit" class="submit-btn">Login</button>
+  <button type="button" class="submit-btn" onclick="location.href='./findEmail.do'">이메일 찾기</button>
+  <button type="button" class="submit-btn" onclick="location.href='./findPassword.do'">이메일 찾기</button>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;" src="./img/kakao.png" onclick="location.href='<%=vo.getKakaoUrl()+"&client_id="+cvo.getKakaoClientID()+"&redirect_uri="+vo.getKakaoRedirect()+"&state="+state%>'"><br>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;"src="./img/btnW_완성형.png" onclick="location.href='<%=vo.getNaverUrl()+"&client_id="+cvo.getNaverClientID()+"&redirect_uri="+vo.getNaverRedirect()+"&state="+state%>"><br>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px;"src="./img/googlel.png" onclick=""><br>
   </div>
   </form>
-
-  ${loginVo}
   </div>
 </body>
 <%@include file="footer.jsp"%>

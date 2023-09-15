@@ -57,7 +57,7 @@ public class UserDaoImpl implements IUserDao {
 	}
 
 	@Override
-	public UserVo detailUser(String id) {
+	public UserVo detailUser(int id) {
 		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.detailUser",id);
 	}
 
@@ -71,4 +71,13 @@ public class UserDaoImpl implements IUserDao {
 		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.findPassword",map);
 	}
 
+	@Override
+	public int checkEmail(SocialVo vo) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.checkEmail",vo);
+	}
+
+	@Override
+	public int getSId(SocialVo vo) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.getSId",vo);
+	}
 }

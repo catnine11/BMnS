@@ -19,6 +19,8 @@ public interface IUserDao {
 	//중복회원검사
 		public int emailCheck(String email);
 		
+		public int checkEmail(SocialVo vo);
+		
 	//정보수정
 		public int updateUser(UserVo vo);
 		
@@ -32,12 +34,15 @@ public interface IUserDao {
 		public List<UserVo> selectUser();
 		
 	//회원상세조회
-		public UserVo detailUser(String id);
+		public UserVo detailUser(int id);
 		
 	//Email찾기
 		public String findEmail(Map<String, Object> map);
 		
 	//비밀번호찾기
 		public String findPassword(Map<String,Object> map);
+		
+	//소셜고유번호찾기
+		public int getSId(SocialVo vo);
 		
 }
