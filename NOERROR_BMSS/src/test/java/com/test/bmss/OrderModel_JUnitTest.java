@@ -97,19 +97,36 @@ public class OrderModel_JUnitTest {
 //	@Test
 	public void sellAbleMany() {
 		List<Integer> stock_number = new ArrayList<Integer>();
+		
 		stock_number.add(7);
 		stock_number.add(8);
 		stock_number.add(9);
 		dao.sellAbleMany(stock_number);
 	}
 	
-	@Test
+//	@Test
 	public void stocksDel() {
 		String[] chks = {"10","20","30"};
 		Map<String, String[]> map =new HashMap<String, String[]>();
 		map.put("nums",chks);
 		int n =dao.stocksDel(map);
 		assertEquals(3, n);
+	}
+	
+//	@Test
+	public void getStocks() {
+		
+		
+List<StockVo>	list	=dao.getStocks();
+		assertNotNull(list);
+	}
+	
+	@Test
+	public void priceChange() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("price", "10000");
+		map.put("number", "1");
+		dao.priceChange(map);
 	}
 	
 	

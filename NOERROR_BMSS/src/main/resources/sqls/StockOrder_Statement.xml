@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gd.bmss.mapper.StockDaoImpl">
 
-
+<!-- 재고 조건 만족하는 도서 조회  -->
 <select id="selectStockable" resultType="BStatusVo">
  <![CDATA[
   SELECT  X.BOOK_SEQ FROM
@@ -10,14 +10,14 @@
            COUNT(*) OVER (PARTITION BY B.BOOK_CODE) AS BOOK_COUNT
     FROM BOOK_BORROW A
     RIGHT JOIN BOOK_STATUS B ON A.BOOK_SEQ = B.BOOK_SEQ
-    WHERE (RETURN_DATE <= TO_DATE('20230913' || '000000', 'YYYYMMDDHH24MISS') - 60
+    WHERE (RETURN_DATE <= TO_DATE('20230913' || '000000', 'YYYYMMDDHH24MISS') -60
            OR RETURN_DATE IS NULL)
            AND STATUS_CODE = 'A') X
 WHERE X.BOOK_COUNT > 1 ]]>
 </select>
 
 
-<!-- 파라미터 타입 String -->
+<!-- 재고 상태로 변경  -->
 <update id="normalToStock">
   UPDATE BOOK_STATUS SET STATUS_CODE='B' WHERE BOOK_SEQ IN
   <foreach collection="list" item="book_seq" open="(" separator="," close=")">
@@ -27,7 +27,7 @@ WHERE X.BOOK_COUNT > 1 ]]>
 
 
 
-
+<!-- 재고 추가  -->
 <insert id="addStock" parameterType="StockVo">
   INSERT INTO BOOK_STOCK
   (STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)
@@ -37,14 +37,14 @@ WHERE X.BOOK_COUNT > 1 ]]>
 <update id="sellAble">
 UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER =#{stock_number}
 </update>
-
+<!-- 판매 불가->판매가능 다중 상태 업데이트 -->
 <update id="sellAbleMany">
 UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER IN
 <foreach collection="list" item="stock_number" open="(" separator="," close=")" >
 #{stock_number}
 </foreach>
 </update>
-
+<!-- 재고목록 다중 삭제 -->
 <delete id="stocksDel">
 DELETE FROM BOOK_STOCK
 WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
@@ -52,19 +52,28 @@ WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
 #{stock_number}
 </foreach>
 </delete>
-<!-- 	<resultMap type="" id=""> -->
-<!-- 	<result column="" property=""/> -->
-<!-- 	<result column="" property=""/> -->
-<!-- 	<result column="" property=""/> -->
 	
-<!-- 	</resultMap> -->
+	<resultMap type="StockVo" id="StockMap">
+    <result column="STOCK_NUMBER" property="stock_number"/>
+    <result column="SELL_STATUS" property="sell_status"/>
+    <result column="STBOOK_SEQ" property="book_seq"/>    
+    <result column="BOOK_PRICE" property="book_price"/>
+    <result column="STATUS_TITLE" property="status_title"/>
+    <result column="STATUS_CODE" property="status_code"/> 
+    <result column="BOOK_CODE" property="book_code"/>
+	</resultMap>
 	
-	
-<select id="getStocks">
+	<!-- 재고 목록 조회  -->
+<select id="getStocks" resultMap="StockMap">
 
-SELECT STOCK_NUMBER,STATUS_TITLE,SELL_STATUS ,BT.BOOK_SEQ,STATUS_CODE,BOOK_CODE,BOOK_PRICE 
+SELECT STOCK_NUMBER,STATUS_TITLE,SELL_STATUS ,BT.BOOK_SEQ AS STBOOK_SEQ,STATUS_CODE,BOOK_CODE,BOOK_PRICE 
 FROM BOOK_STOCK BT LEFT JOIN BOOK_STATUS bs ON BT.BOOK_SEQ =BS.BOOK_SEQ WHERE STATUS_CODE='B'
 
 </select>
+
+<update id="priceChange">
+UPDATE BOOK_STOCK SET BOOK_PRICE=#{price} WHERE STOCK_NUMBER =#{number}
+</update>
+
 
 </mapper>

@@ -34,7 +34,7 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 		return n; 
 	}
 
-
+	
 	@Override
 	public int addStock(StockVo seq) {
 		int n =	sql.insert(NS+"addStock",seq);
@@ -62,4 +62,15 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 		return n;
 	}
 
+
+	@Override
+	public List<StockVo> getStocks() {
+	List<StockVo>	list =sql.selectList(NS+"getStocks");
+		return list;
+	}
+@Override
+	public int priceChange(Map<String, String> map) {
+		int n =sql.update(NS+"priceChange",map);
+	return n;
+	}
 }
