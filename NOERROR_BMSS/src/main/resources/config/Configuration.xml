@@ -4,7 +4,7 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias type="com.gd.bmss.vo.AskBoardVo" alias="AskBoardVo"/>
+<!-- 		<typeAlias type="com.gd.bmss.vo.AskBoardVo" alias="AskBoardVo"/> -->
 		<typeAlias type="com.gd.bmss.vo.Book_StatusVo" alias="BStatusVo"/>
 		<typeAlias type="com.gd.bmss.vo.BookInfoVo" alias="BInfoVo"/>
 		<typeAlias type="com.gd.bmss.vo.BorrowVo" alias="BorrowVo"/>

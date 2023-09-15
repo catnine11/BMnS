@@ -103,35 +103,37 @@ img{
 
 	</header>
 	<script type="text/javascript">
-	window.onload = function() {
-	    var loginButton = document.getElementById("login");
-	    var logoutButton = document.getElementById("logout");
-	    var joinButton = document.getElementById("join");
-	    var myInfoButton = document.getElementById("myInfo");
+// 	window.onload = function() {
+// 	    var loginButton = document.getElementById("login");
+// 	    var logoutButton = document.getElementById("logout");
+// 	    var joinButton = document.getElementById("join");
+// 	    var myInfoButton = document.getElementById("myInfo");
 
-	    checkSession();
+// 	    checkSession();
 	    
-	    function checkSession() {
-	        var userSession = sessionStorage.getItem("loginVo");
-	        console.log(userSession);
-	        if (userSession) {
-	            loginButton.style.display = "none"; 
-	            joinButton.style.display = "none"; 
-	            logoutButton.style.display = "block"; 
-	            myInfoButton.style.display = "block"; 
-	        } else {
-	            loginButton.style.display = "block"; 
-	            joinButton.style.display = "block"; 
-	            logoutButton.style.display = "none"; 
-	            myInfoButton.style.display = "none"; 
-	        }
-	    }
+// 	    function checkSession() {
+// 	        var userSession = sessionStorage.getItem("loginVo");
+// 	        var socialSession = sessionStorage.getItem("info");
+// 	        console.log(userSession);
+// 	        if (userSession || socialSession) {
+// 	            loginButton.style.display = "none"; 
+// 	            joinButton.style.display = "none"; 
+// 	            logoutButton.style.display = "block"; 
+// 	            myInfoButton.style.display = "block"; 
+// 	        } else {
+// 	            loginButton.style.display = "block"; 
+// 	            joinButton.style.display = "block"; 
+// 	            logoutButton.style.display = "none"; 
+// 	            myInfoButton.style.display = "none"; 
+// 	        }
+// 	    }
 	    
-	    logoutButton.onclick = function() {
-	        sessionStorage.removeItem("loginVo");
-	        checkSession();
-	    }
-	}
+// 	    logoutButton.onclick = function() {
+// 	        sessionStorage.removeItem("loginVo");
+// 	        sessionStorage.removeItem("info");
+// 	        checkSession();
+// 	    }
+// 	}
 
 	</script>
 </body>

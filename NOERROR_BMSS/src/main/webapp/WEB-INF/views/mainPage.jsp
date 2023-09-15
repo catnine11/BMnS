@@ -16,6 +16,8 @@ body{
 <body>
 	
 ${sessionScope.loginVo}
+<hr>
+${sessionScope.info }
 	<div style="background-color: #D9E5FF">
 		<div>
 			<a>아 귀찮다</a>
