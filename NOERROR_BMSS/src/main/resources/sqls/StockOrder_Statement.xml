@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gd.bmss.mapper.OrderDaoImpl">
+<mapper namespace="com.gd.bmss.mapper.StockDaoImpl">
 
 
 <select id="selectStockable" resultType="BStatusVo">
@@ -10,14 +10,14 @@
            COUNT(*) OVER (PARTITION BY B.BOOK_CODE) AS BOOK_COUNT
     FROM BOOK_BORROW A
     RIGHT JOIN BOOK_STATUS B ON A.BOOK_SEQ = B.BOOK_SEQ
-    WHERE (RETURN_DATE <= TO_DATE('20230913' || '000000', 'YYYYMMDDHH24MISS') - 1
+    WHERE (RETURN_DATE <= TO_DATE('20230913' || '000000', 'YYYYMMDDHH24MISS') - 60
            OR RETURN_DATE IS NULL)
            AND STATUS_CODE = 'A') X
 WHERE X.BOOK_COUNT > 1 ]]>
 </select>
 
 
-<!-- 파라미터 타입 무엇으로 할지  -->
+<!-- 파라미터 타입 String -->
 <update id="normalToStock">
   UPDATE BOOK_STATUS SET STATUS_CODE='B' WHERE BOOK_SEQ IN
   <foreach collection="list" item="book_seq" open="(" separator="," close=")">
@@ -26,17 +26,45 @@ WHERE X.BOOK_COUNT > 1 ]]>
 </update>
 
 
-<insert id="addStock">
-INSERT INTO BOOK_STOCK
-(STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)
-VALUES
-<foreach collection="list" item="book_seq" separator=",">
-    (STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0)
- </foreach>
+
+
+<insert id="addStock" parameterType="StockVo">
+  INSERT INTO BOOK_STOCK
+  (STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)
+  VALUES(STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0)
 </insert>
+<!-- 판매 불가->판매가능 상태 업데이트 -->
+<update id="sellAble">
+UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER =#{stock_number}
+</update>
 
+<update id="sellAbleMany">
+UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER IN
+<foreach collection="list" item="stock_number" open="(" separator="," close=")" >
+#{stock_number}
+</foreach>
+</update>
 
+<delete id="stocksDel">
+DELETE FROM BOOK_STOCK
+WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
+<foreach collection="nums" item="stock_number" open="(" separator="," close=")">
+#{stock_number}
+</foreach>
+</delete>
+	<resultMap type="" id="">
+	<result column="" property=""/>
+	<result column="" property=""/>
+	<result column="" property=""/>
+	
+	</resultMap>
+	
+	
+<select id="getStocks">
 
+SELECT STOCK_NUMBER,STATUS_TITLE,SELL_STATUS ,BT.BOOK_SEQ,STATUS_CODE,BOOK_CODE,BOOK_PRICE 
+FROM BOOK_STOCK BT LEFT JOIN BOOK_STATUS bs ON BT.BOOK_SEQ =BS.BOOK_SEQ WHERE STATUS_CODE='B'
 
+</select>
 
 </mapper>

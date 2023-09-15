@@ -20,6 +20,11 @@ public class StockVo {
 private int	stock_number  ;
 private String sell_status   ;
 private int	book_seq      ;
-private int	book_price    ;
+private int	book_price   ;
+public StockVo(int book_seq) {
+	super();
+	this.book_seq = book_seq;
+}
 		
+
 }
