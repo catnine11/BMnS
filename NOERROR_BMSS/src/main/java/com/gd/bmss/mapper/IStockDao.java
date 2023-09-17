@@ -9,12 +9,20 @@ import com.gd.bmss.vo.StockVo;
 public interface IStockDao {
 	
 	public List<Book_StatusVo>selectStockable();
-	public int normalToStock(List<String>book_seq);
+	public int normalToStocks();
 	public int addStock(StockVo book_seq);
-	public int sellAble(String stock_number);
+	
+	
+//	public List<StockVo> normalToStockst();
+//	public List<StockVo> addStock(StockVo book_seq);
+//	
+	
+	public int sellAble(Map<String, Object> map);
 	public int sellAbleMany(List<Integer>stock_number );
 	public int  stocksDel(Map<String, String[]> stock_number);
 	public List<StockVo>getStocks();
 	public int priceChange(Map<String, String> map);
+	
+	public boolean normalToStock(Book_StatusVo vo);
 
 }

@@ -15,22 +15,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.gd.bmss.mapper.IOrderDao;
 import com.gd.bmss.mapper.IStockDao;
 import com.gd.bmss.service.IStockService;
 import com.gd.bmss.vo.Book_StatusVo;
+import com.gd.bmss.vo.OrderVo;
 import com.gd.bmss.vo.StockVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
+
 public class OrderModel_JUnitTest {
 	@Autowired
-	private SqlSessionTemplate Sqlsession;
+	private SqlSessionTemplate sql;
 	
 	@Autowired
 	private IStockDao dao;
 	
 	@Autowired
 	private IStockService service;
+	
+	
+	@Autowired
+	private IOrderDao odao;
 	
 //	@Test
 	public void test() {
@@ -45,16 +52,16 @@ public class OrderModel_JUnitTest {
 	}
 	
 //	@Test
-	public void normalToStock() {
+	public void normalToStocks() {
 		
-		List<Book_StatusVo>lists=	service.selectStockable();
-		List<String> list = new ArrayList<String>();
-			for (Book_StatusVo bookseq : lists) {
-				String bookSeq = bookseq.getBook_seq();
-			list.add(bookSeq);
-	
-			}
-			int n =dao.normalToStock(list);
+		
+//		List<String> list = new ArrayList<String>();
+//			for (Book_StatusVo bookseq : lists) {
+//				String bookSeq = bookseq.getBook_seq();
+//			list.add(bookSeq);
+//	
+//			}
+			int n =dao.normalToStocks();
 			System.out.println(n);
 				
 		
@@ -85,13 +92,16 @@ public class OrderModel_JUnitTest {
 			System.out.println(n);
 			list.add(bookSeq);
 		}
-	int m=	service.normalToStock(list);
+//	int m=	service.normalToStocks(list);
 		
-		System.out.println(m);
+//		System.out.println(m);
 	}
 //	@Test
 	public void sellAble() {
-		dao.sellAble("5");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status","N");
+		map.put("num","1");
+		dao.sellAble(map);
 		
 	}
 //	@Test
@@ -121,14 +131,74 @@ public class OrderModel_JUnitTest {
 		assertNotNull(list);
 	}
 	
-	@Test
+//	@Test
 	public void priceChange() {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("price", "10000");
 		map.put("number", "1");
 		dao.priceChange(map);
 	}
+//	@Test
+	public void normalToStock() {
+		Book_StatusVo vo = new Book_StatusVo();
+		vo.setBook_seq("11");
+		vo.setStatus_code("D");
+		dao.normalToStock(vo);
+		 
+		 
+	}
 	
+//	@Test
+	public void addOrder() {
+		OrderVo vo = new OrderVo();
+		vo.setStock_number(4);
+		vo.setOrder_number(10000);
+		vo.setUser_id(2);
+		
+		odao.addOrder(vo);
+	}
+	
+//	@Test
+	public void getAllOrder () {
+		List<OrderVo> list	=odao.getAllOrder();
+	assertNotNull(list);
+	}
+
+		
+
+//	@Test
+	public void getDetailOrder () {
+		List<OrderVo> list	=odao.getDetailOrder("2");
+		assertNotNull(list);
+	}
+
+	@Test
+	public void updateAddr () {
+		Map<String, Object>map = new HashMap<String, Object>();
+		map.put("address", "우리집애 왜왔니");
+		map.put("id", 2);
+		odao.updateAddr(map);
+		
+	}
+	
+	@Test
+	public void delOrder() {
+		
+	int n=	odao.delOrder("1");
+		assertEquals(1, n);
+	}
+	
+	
+	@Test
+	public void delOrders() {
+		List<String> list = new ArrayList<String>();
+		list.add("2");
+		list.add("3");
+		
+			odao.delOrders(list);
+		
+	}
+
 	
 	
 }

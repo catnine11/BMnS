@@ -27,10 +27,20 @@ private int	book_price   ;
 private String status_title;
 private String status_code;
 private int book_code;
+
 public StockVo(int book_seq) {
 	super();
 	this.book_seq = book_seq;
 }
-		
+
+public StockVo(int book_seq, String status_code) {
+	super();
+	this.book_seq = book_seq;
+	this.status_code = status_code;
+}
+
+
+	
+
 
 }

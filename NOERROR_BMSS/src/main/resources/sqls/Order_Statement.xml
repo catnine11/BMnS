@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gd.bmss.mapper.OrderDaoImpl">
+
+
+
+<insert id="addOrder" parameterType="OrderVo">
+<selectKey keyProperty="order_price" order="BEFORE" resultType="java.lang.Integer" > 
+SELECT BOOK_PRICE AS ORDER_PRICE FROM BOOK_STOCK WHERE STOCK_NUMBER =#{stock_number}
+</selectKey>
+INSERT INTO NOER.BOOK_ORDER
+(STOCK_NUMBER, ORDER_NUMBER, ORDER_QUANTITY, ORDER_PRICE, ORDER_DATE, PAY_STATUS, USER_ID)
+VALUES(#{stock_number}, #{order_number}, 1, #{order_price}, (CURRENT_DATE), 1, #{user_id})
+</insert>
+
+<select id="getAllOrder" resultType="OrderVo">
+SELECT A.STOCK_NUMBER, A.ORDER_NUMBER, A.ORDER_DATE, A.ORDER_QUANTITY, A.ORDER_PRICE,
+A.PAY_STATUS, A.USER_ID,USER_ADDRESS
+FROM BOOK_ORDER A
+JOIN BOOK_USERINFO B ON A.USER_ID = B.USER_ID
+</select>
+
+
+<select id="getDetailOrder" resultType="OrderVo" >
+SELECT STOCK_NUMBER, ORDER_NUMBER, ORDER_QUANTITY , ORDER_PRICE,
+  PAY_STATUS, USER_ID  FROM BOOK_ORDER WHERE USER_ID=#{user_id}
+</select>
+
+<update id="updateAddr">
+UPDATE BOOK_USERINFO SET USER_ADDRESS=#{address} WHERE USER_ID =#{id}
+</update>
+
+<delete id="delOrder">
+DELETE FROM BOOK_ORDER bo WHERE STOCK_NUMBER =#{stock_number}
+</delete>
+<delete id="delOrders">
+DELETE FROM BOOK_ORDER bo WHERE STOCK_NUMBER IN
+<foreach collection="list" item="stock_number"  open="(" separator="," close=")">
+#{stock_number}
+</foreach>
+</delete>
+
+
+</mapper>

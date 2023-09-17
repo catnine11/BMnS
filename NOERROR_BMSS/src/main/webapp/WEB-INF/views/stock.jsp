@@ -6,94 +6,70 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="UTF-8">
-<script
-  src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
 <title>재고</title>
 </head>
-<%@include file="header.jsp"%>
 
+<%@include file="header.jsp"%>
 
 <style>
 table{
-	margin:200px auto;
+
+margin:100px auto;
+text-align: center;
 }
+
+
 </style>
 <body>
-	<form action="./changeStatus.do" method="get">
-	<table>
-		<tr>
+
+<div>
+<form action="./stocksDel.do" method="post">
+	<table id="container">
+		<tr id="stocklist">
+		<td><input type="checkbox" name="allChk"> </td>
 			<td>재고목록</td>
 			<td>도서명</td>
 			<td>도서상태</td>
 			<td>판매 가능여부</td>
 			<td>관리번호</td>
 			<td>도서 가격</td>
-	</tr>
-	
-	
-			<c:forEach var="a" items="${list}">
-				<tr>
-					<td id="stockNum">${a.stock_number}</td>
-					<td>${a.status_title}</td>
-					<td>${a.status_code}</td>
-				   <td>
-            <select id="chStatus" onchange="changeStatus()">
-                <option value="N" ${a.sell_status == 'N' ? 'selected' : ''}>판매불가</option>
-                <option value="Y" ${a.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>
-            </select>
-        </td>
-					<td><input id="price"type="number" name="price" value="${a.book_price}" ></td>
-				</tr>
-			</c:forEach>
-		</table>
+		</tr>
+		<c:forEach var="a" items="${list}">
+			<tr>
+			<td><input type="checkbox" name="delChk" value="${a.stock_number}"></td>
+				<td><input id=number type="hidden" name=num
+					value="${a.stock_number}">
+				</td>
+				<td class="stockNum">${a.stock_number}</td>
+				<td>${a.status_title}</td>
+				<td><select class="cbs" name="status_code">
+						<option value="A" ${a.status_code=='A' ? 'selected' : ''}>일반</option>
+						<option value="B" ${a.status_code=='B' ? 'selected' : ''}>재고</option>
+						<option value="C" ${a.status_code=='C' ? 'selected' : ''}>분실</option>
+						<option value="D" ${a.status_code=='D' ? 'selected' : ''}>예정</option>
+				</select></td>
+
+				<td><select class="ss" name="sellStatus">
+						<option value="N" ${a.sell_status == 'N' ? 'selected' : ''}>판매불가</option>
+						<option value="Y" ${a.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>
+				</select></td>
+				<td><input id="price" type="number" 
+				name="price"
+					value="${a.book_price}" ></td>
+			</tr>
+		</c:forEach>
+		<tr><td><input type="submit" value="삭제"> </td></tr>
+	</table>
 	</form>
+	</div>
 	
-	<script type="text/javascript">
+<script type="text/javascript" src="./js/stock.js" ></script>
 	
-	
-	$(document).ready(function(){
-	    
-		
-		$("input[name='price']").on("keyup", function(event) {
-	        if (event.key === "Enter") {
-	        	 var stockNum = $(this).closest("tr").find("#stockNum").text(); 
-	             var price = $(this).val(); 
-
-	            $.ajax({
-	                url: "./changePrice.do",
-	                type: "post",
-	                data: { stockNum: stockNum, price: price },
-	                success: function(data) {
-	                    alert("값이 변경되었습니다.");
-	                },
-	                error: function() {
-	                    response.alert("오류발생");
-	                }
-	            });
-	        }
-	    });
-	});
-	
-
-	</script>
-<script>
-function changeStatus(){
-var select=document.getElementById("chStatus")
-var value =select.value;
-
-$.ajax(function(){
-	type:"post",
-	url:"./".
-	
-})
-}
-
-</script>
-
 </body>
 <%@include file="footer.jsp"%>
 </html>
