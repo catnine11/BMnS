@@ -68,11 +68,15 @@ ul {
 img{
 	height: 50px;
 	width: 40px;
+	margin-top: 20px;
 }
 #head{
 	position: relative;
 	background: #fff;
 	border-bottom: 1px solid #e1e1e1;
+}
+.nav-menu{
+margin-bottom: 20px;
 }
 </style>
 <%
@@ -124,7 +128,9 @@ img{
 			<div id="heads">
 				<div id="Banner" style="overflow: auto"></div>
 				<ul class="tab">
-					<li class="nav-menu"><a class="menu" href="/NOERROR_BMSS" ><img class="logo" src="./img/BMSS아이콘.png">NOERROR 책check</a></li>
+
+					<li class="nav-menu"><a id="imgMenu" class="menu" href="/NOERROR_BMSS" ><img class="logo" src="./img/BMSS아이콘.png"></a><a id="imenu" class="menu" href="/noerrorbmss" >NOERROR 책check</a></li>
+
 					<li><a class="navtab" id="navdrop" href="#">자료검색</a></li>
 					<li><a class="navtab" id="navdrop" href="#">이용안내</a></li>
 					<li><a class="navtab" id="navdrop" href="#">도서관소식</a></li>

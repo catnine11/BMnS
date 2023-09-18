@@ -14,7 +14,7 @@ body{
 </head>
 <%@include file="header.jsp" %>
 <body>
-	
+	<h2><a href="./adminPage.do">관리자페이지</a></h2>
 <%-- ${sessionScope.loginVo} --%>
 <!-- <hr> -->
 <%-- ${sessionScope.info } --%>

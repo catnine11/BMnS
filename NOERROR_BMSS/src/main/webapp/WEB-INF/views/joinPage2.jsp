@@ -286,7 +286,7 @@ html,body {
 </head>
 <body>
 <div class="form-structor">
-	<form action="./regist.do" method="post">
+	<form id="signupForm" action="./regist.do" method="post">
   <div class="signup">
     <h2 class="form-title" id="signup">Sign up</h2>
     <div class="form-holder">
@@ -309,7 +309,22 @@ html,body {
   </form>
   
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+	  $("#signupForm").submit(function(event) {
+	    event.preventDefault();
+	    var email = $("#email").val();
+	    var verified = localStorage.getItem('verified');
 
+	    if (verified === "true") {
+	      this.submit();
+	      alert("회원가입이 완료되었습니다. 로그인 해주세요.");
+	    } else {
+	      alert("이메일 인증을 먼저 완료해주세요.");
+	    }
+	  });
+	});
+</script>
 
 </body>
 <%@include file="footer.jsp" %>
