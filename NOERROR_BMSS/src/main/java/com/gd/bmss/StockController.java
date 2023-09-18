@@ -79,24 +79,48 @@ public class StockController {
 		
 	}
 	
-	@PostMapping("/stocksDel.do")
-	public String stocksDel(String delChk,HttpServletResponse resp) throws IOException {
+	@PostMapping(value="/selectStockable.do")
+	public String selectStockable() {
 		
-		Map<String, String[]> map =new HashMap<String, String[]>();
-		if(delChk.length()!=1) {
-			String [] nums =delChk.split(",");
-			map.put("nums", nums);
-			System.out.println(map);
-		dao.stocksDel(map);
-		return "redirect:/stocklist.do";
-		}
-			String [] nums = {delChk};
-			map.put("nums", nums);
-			dao.stocksDel(map);
-			
-			return "redirect:/stocklist.do";
+		return"selectStockableList";
+	}
+	
+	@RequestMapping(value="/booksDetail.do",method =RequestMethod.POST)
+	public String booksDetail() {
+	
+		return"";
+	}
+		
+	
+	
+	
+	@PostMapping("/stocksDel.do")
+	public String stocksDel(String[] delChk,HttpServletResponse resp) throws IOException {
+		System.out.println("stocksDel.do");
+		System.out.println(delChk.length);
+			Map<String, String[]> map =new HashMap<String, String[]>();
+		
+		
+//		if(delChk!=null && delChk.length()>1) {
+//			String [] nums =delChk.split(",");
+//			map.put("nums", nums);
+//			System.out.println(map);
+//		dao.stocksDel(map);
+//		return "redirect:/stocklist.do";
+//		}else if(delChk.length()==0) {
 //			
-			
+//			String [] nums = {delChk};
+//			map.put("nums", nums);
+//			dao.stocksDel(map);
+//			
+//			return "redirect:/stocklist.do";
+//		}
+//		return "redirect:/stocklist.do";
+//		}
+	return "";
+	
+//			
+	
 		
 //			else if(delChk==null) {
 //			resp.setCharacterEncoding("UTF-8");
@@ -108,11 +132,11 @@ public class StockController {
 //			return"redirect:/stocklist.do";
 //		}
 
-	
+	}
 		
 	
 	}
 
 	
 	
-}
+
