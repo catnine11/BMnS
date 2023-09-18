@@ -10,17 +10,22 @@
 <meta charset="UTF-8">
 <title>NOERROR 책</title>
 <style type="text/css">
+
 	#thumbnail{
-		width: 20%;
- 		height: 20%;
+		width: 15%;
+ 		height: 15%;
+ 		cursor: pointer;
+	}
+	
+	ul{
+		list-style: none;
 	}
 	
 	.imgList li{
 		position: relative;
-		display: bolck;
+		display: block;
 		box-sizing: border-box;
-		cursor: pointer;
-/* 		float: left; */
+/*    		float: left;    */
 		
 	}
 	
@@ -32,79 +37,92 @@
  		padding: 20%;
  		width: 100%;
  		text-align: center;
- 		display: none;
+  		display: hidden; 
  	}
 </style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 	function genreList(){
-		 var selectedGenre = $("#genreSelect").val();
-		 
-		 $.ajax({
-		        type: "POST",
-		        url: "./bookListUserGenre.do",
-		        data: { genre: selectedGenre }, // 선택한 장르를 서버로 보내기
-		        success: function (data) {
-		            // 서버로부터 받은 데이터로 도서 목록 업데이트
-		            $("#bookList").html(data);
-		        },
-		        error: function () {
-		            alert("도서 목록을 불러오는 중 오류가 발생했습니다.");
-		        }
-		    });
+		var selectedGenre = $("#genreSelect").val();
+		console.log(selectedGenre);
+		
+		$.ajax({
+			url: "./bookListUserGenre.do",
+			type: "post",
+			data: { selectedGenre: selectedGenre},
+			dataType: "json",
+			success: function (data) {
+// 				console.log(data);
+// 				console.log(data.selectGenre);
+// 				console.log(data.selectGenre[0]);
+// 				console.log(data.selectGenre.length);
+				
+				$("#bookList").html("");
+				var html = "";
+				
+				for (var i = 0; i < data.selectGenre.length; i++) {
+				    var book = data.selectGenre[i];
+				
+				html+="<ul class='imgList'>";
+				html+="<li>";
+				html+="	<div class='over'>";
+				html+="		<strong>"+book.title+"</strong>";
+				html+="		<span>"+book.author+"</span>";
+				html+="		<p>"+book.publisher+"</p>";
+				html+="	</div>";
+				html+="	<a>";
+				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='location.href='./bookDetail.do?book_code="+book.book_code+">";
+				html+="	</a>";
+				html+="</li>";
+				html+="</ul>";
+				}
+				$('#bookList').html(html);
+
+			},
+			error: function () {
+				alert("도서 목록을 불러오는 중 오류가 발생했습니다.");
+			}
+		});
 	}
+	
+	
 </script>
 </head>
 <%@include file="header.jsp" %>
 <body>
-<%-- ${lists} --%>
-
-<!-- <table> -->
-<!-- 	<thead> -->
-<!-- 		<tr> -->
-<!-- 			<td colspan="2">장르 선택</td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<!-- 			<th>장르</th> -->
-<!-- 			<th>썸네일</th> -->
-<!-- 		</tr> -->
-<!-- 	</thead> -->
-<!-- </table> -->
-
 <div class="container">
-		<div class="selectGenre">
-			<select class="genreSelect" name="selectedGenre" onchange="genreList()">
-				<option>전체</option>
-				<option>총류</option>
-				<option>철학</option>
-				<option>종교</option>
-				<option>사회과학</option>
-				<option>자연과학</option>
-				<option>기술과학</option>
-				<option>예술</option>
-				<option>언어</option>
-				<option>문학</option>
-				<option>역사</option>
-			</select>
-		</div>
-		<div>
-			<ul class="imgList">
-			<c:forEach items="${lists}" var="book">
-				<li>
-					<div class="over">
-						<strong>${book.title}</strong>
-						<span>${book.author}</span>
-						<p>${book.publisher}</p>
-					</div>
-					<a>
-						<img id="thumbnail" src="${book.thumbnail}" onclick="location.href='/bookDetail.do?book_code=' + '${book.book_code}'">
-					</a>
-					<div>
-					
-					</div>
-				</li>
-			</c:forEach>
-			</ul>
-		</div>
+	<div class="selectGenre">
+		<select id="genreSelect" class="Genre" name="selectedGenre" onchange="genreList()">
+			<option>전체</option>
+			<option>총류</option>
+			<option>철학</option>
+			<option>종교</option>
+			<option>사회과학</option>
+			<option>자연과학</option>
+			<option>기술과학</option>
+			<option>예술</option>
+			<option>언어</option>
+			<option>문학</option>
+			<option>역사</option>
+		</select>
+	</div>
+	<div id="bookList">
+		<ul class="imgList">
+		<c:forEach items="${lists}" var="book">
+			<li>
+				<div class="over">
+					<strong>${book.title}</strong>
+					<span>${book.author}</span>
+					<p>${book.publisher}</p>
+				</div>
+				<a>
+					<img id="thumbnail" src="${book.thumbnail}" onclick="location.href='./bookDetail.do?book_code=${book.book_code}'">
+				</a>
+			</li>
+		</c:forEach>
+		</ul>
+	</div>
+		
 </div>
 
 
