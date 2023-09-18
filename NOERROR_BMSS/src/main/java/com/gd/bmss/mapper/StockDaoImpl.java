@@ -82,6 +82,13 @@ public boolean normalToStock(Book_StatusVo vo) {
 }
 
 
+@Override
+public List<StockVo> booksDetail() {
+	List<StockVo> list =sql.selectList(NS+"booksDetail");
+	return list;
+}
+
+
 //@Override
 //public List<StockVo> normalToStockst() {
 //		sql.update(NS+"normalToStocks")	;
