@@ -11,9 +11,29 @@
 <title>NOERROR 책</title>
 <style type="text/css">
 	#thumbnail{
-		width: 30%;
- 		height: 30%;
+		width: 20%;
+ 		height: 20%;
 	}
+	
+	.imgList li{
+		position: relative;
+		display: bolck;
+		box-sizing: border-box;
+		cursor: pointer;
+/* 		float: left; */
+		
+	}
+	
+ 	.imgList li .over{
+ 		position: absolute;
+ 		top: 0;
+ 		left: 0;
+ 		bottom: 0;
+ 		padding: 20%;
+ 		width: 100%;
+ 		text-align: center;
+ 		display: none;
+ 	}
 </style>
 <script type="text/javascript">
 
@@ -38,7 +58,7 @@
 <div class="container">
 	<form action="./bookListUserGenre.do" method="post">
 		<div class="selectGenre">
-			<select class="Genre">
+			<select class="Genre" name="selectedGenre">
 				<option>전체</option>
 				<option>총류</option>
 				<option>철학</option>
@@ -57,6 +77,11 @@
 			<ul class="imgList">
 			<c:forEach items="${lists}" var="book">
 				<li>
+					<div class="over">
+						<strong>${book.title}</strong>
+						<span>${book.author}</span>
+						<p>${book.publisher}</p>
+					</div>
 					<a>
 						<img id="thumbnail" src="${book.thumbnail}" onclick="/bookDetail.do?book_code="+${book.book_code}>
 					</a>

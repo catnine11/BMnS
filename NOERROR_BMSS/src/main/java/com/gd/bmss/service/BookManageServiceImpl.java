@@ -26,9 +26,9 @@ public class BookManageServiceImpl implements IBookManageService {
 	}
 
 	@Override
-	public List<BookInfoVo> getAllBookUserGenre() {
-		log.info("@@@@@@@@@@@BookManageServiceImpl getAllBookAdmin 회원의 장르별 조회");
-		return dao.getAllBookUserGenre();
+	public List<BookInfoVo> getAllBookUserGenre(String genre_name) {
+		log.info("@@@@@@@@@@@BookManageServiceImpl getAllBookAdmin 회원의 장르별 조회 {}",  genre_name);
+		return dao.getAllBookUserGenre(genre_name);
 	}
 	
 	@Override
@@ -39,19 +39,19 @@ public class BookManageServiceImpl implements IBookManageService {
 
 	@Override
 	public BookInfoVo getOneBook(String book_code) {
-		log.info("@@@@@@@@@@@BookManageServiceImpl getOneBook 상세조회", book_code);
+		log.info("@@@@@@@@@@@BookManageServiceImpl getOneBook 상세조회 {}", book_code);
 		return dao.getOneBook(book_code);
 	}
 
 	@Override
 	public int changeGenre(Map<String, Object> map) {
-		log.info("@@@@@@@@@@@BookManageServiceImpl changeGenre 장르변경", map);
+		log.info("@@@@@@@@@@@BookManageServiceImpl changeGenre 장르변경 {}", map);
 		return dao.changeGenre(map);
 	}
 
 	@Override
 	public int changeBStatus(Map<String, Object> map) {
-		log.info("@@@@@@@@@@@BookManageServiceImpl changeBStatus 상태변경", map);
+		log.info("@@@@@@@@@@@BookManageServiceImpl changeBStatus 상태변경 {}", map);
 		return dao.changeBStatus(map);
 	}
 
