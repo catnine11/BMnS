@@ -1,15 +1,18 @@
 package com.gd.bmss;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.service.IBookManageService;
 import com.gd.bmss.vo.BookInfoVo;
@@ -44,26 +47,37 @@ public class BookManageController {
 	}
 	
 	@PostMapping(value = "/bookListUserGenre.do")
-	public String bookListUserGenre(Model model, @RequestParam("selectedGenre") String selectedGenre) {
-		log.info("Welcome BookManageController 회원의 도서전체조회창-장르별 조회 이동");
+	@ResponseBody
+	public Map<String, Object> bookListUserGenre(Model model, @RequestParam String selectedGenre) {
+		log.info("Welcome BookManageController 회원의 도서전체조회창-장르별 조회");
 		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
-		model.addAttribute(genreLists);
 		
-		return "bookListUser";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("selectGenre", genreLists);
+		return map;
 	}
 	
 	/*
 	 * 관리자의 장르별 전체 조회
 	 */
+	@GetMapping(value = "/bookListAdmin.do")
+	public String bookListAdmin(Model model) {
+		log.info("Welcome BookManageController 관리자의 도서전체조회창");
+		List<BookInfoVo> lists = service.getAllBookAdmin();
+		model.addAttribute( "lists", lists);
+		
+		return "bookListAdmin";
+	}
 	
 	
 	/*
 	 * 상세조회
 	 */
 	@GetMapping(value = "/bookDetail.do")
-	public String bookDetail(Model model) {
+	public String bookDetail(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
-		
+		BookInfoVo detailList = service.getOneBook(book_code);
+		model.addAttribute("detailList", detailList);
 		
 		return "bookDetail";
 	}
@@ -71,6 +85,24 @@ public class BookManageController {
 	/*
 	 * 장르변경
 	 */
+	@RequestMapping(value = "/changeGenre.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public String changeGenre(Model model,
+				@RequestParam("selectedGenre") String selectedGenre,
+				@RequestParam("chkBook") List<String> selectedBooks) {
+//				@RequestParam String[] chkBook) {
+		log.info("Welcome BookManageController 장르변경");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("selectedGenre", selectedGenre);
+		map.put("codes", selectedBooks);
+		
+		service.changeGenre(map);
+		
+		List<BookInfoVo> updatedBookList = service.getAllBookAdmin(); // 예시로 사용한 메서드 이름이므로 실제 메서드명에 맞게 수정하세요
+	    model.addAttribute("lists", updatedBookList);
+		
+		return "redirect:/bookListAdmin.do";
+	}
 	
 	
 	/*
