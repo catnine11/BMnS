@@ -24,5 +24,7 @@ public interface IStockDao {
 	public int priceChange(Map<String, String> map);
 	
 	public boolean normalToStock(Book_StatusVo vo);
+	
+	public List<StockVo> booksDetail();
 
 }

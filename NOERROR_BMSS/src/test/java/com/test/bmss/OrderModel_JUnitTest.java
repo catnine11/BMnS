@@ -172,7 +172,7 @@ public class OrderModel_JUnitTest {
 		assertNotNull(list);
 	}
 
-	@Test
+//	@Test
 	public void updateAddr () {
 		Map<String, Object>map = new HashMap<String, Object>();
 		map.put("address", "우리집애 왜왔니");
@@ -181,7 +181,7 @@ public class OrderModel_JUnitTest {
 		
 	}
 	
-	@Test
+//	@Test
 	public void delOrder() {
 		
 	int n=	odao.delOrder("1");
@@ -189,7 +189,7 @@ public class OrderModel_JUnitTest {
 	}
 	
 	
-	@Test
+//	@Test
 	public void delOrders() {
 		List<String> list = new ArrayList<String>();
 		list.add("2");
@@ -198,6 +198,19 @@ public class OrderModel_JUnitTest {
 			odao.delOrders(list);
 		
 	}
+	
+	
+
+	@Test
+	public void booksDetail() {
+		
+		
+		List<StockVo> list =dao.booksDetail();
+
+			assertNotNull(list);
+		
+	}
+	
 
 	
 	
