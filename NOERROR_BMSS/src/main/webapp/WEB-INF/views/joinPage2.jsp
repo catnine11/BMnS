@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>NOERROR</title>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="./js/joinPage2.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style type="text/css">
 	@import url("https://fonts.googleapis.com/css?family=Fira+Sans");
 
@@ -286,32 +290,27 @@ html,body {
   <div class="signup">
     <h2 class="form-title" id="signup">Sign up</h2>
     <div class="form-holder">
-      <input type="text" class="input" name="user_name" placeholder="이름" required="required"/>
-      <input type="email" class="input" name="user_email" placeholder="이메일" required="required"/>
-      <input type="password" class="input" name="user_password" placeholder="비밀번호" required="required"/>
-      <input type="text" class="input" name="user_phone" placeholder="핸드폰 번호 -를 뺴고 입력해주세요" required="required">
-      <input type="text" class="input" name="user_birth" placeholder="생년월일 8자리" required="required">
-      <input type="text" class="input" id="address" name="user_address" readonly placeholder="주소" required="required"/>
-      <input type="text" class="input" name="addressDetail" placeholder="상세주소" required="required"/>
+      <input type="text" class="input" id="name" name="user_name" placeholder="이름" />
+      <input type="text" class="input" id="email" name="user_email" placeholder="이메일" />
+       <div class="container" style="padding: 0px;">
+    <div class="btn btn__secondary" style="background-color: #E1E8EE;" onclick="emailChk()"><p style="margin: 0px; font-size: 10px; color: #999">이메일인증</p></div>
+	</div>
+      <input type="password" class="input" id="password" name="user_password" placeholder="비밀번호" />
+      <input type="text" class="input" id="phone" name="user_phone" placeholder="핸드폰 번호 -를 뺴고 입력해주세요" >
+      <div class="container" style="padding: 0px;">
+    <div class="btn btn__secondary" style="background-color: #E1E8EE;" onclick="phoneChk()"><p style="margin: 0px; font-size: 10px; color: #999">휴대폰인증</p></div>
+	</div>
+      <input type="text" class="input" id="birth" name="user_birth" placeholder="생년월일 8자리" >
+      <input type="text" class="input" id="address" name="user_address" readonly placeholder="주소" />
+      <input type="text" class="input" id="dAddress" name="addressDetail" placeholder="상세주소" />
     </div>
-    <button type="submit" class="submit-btn">Sign up</button>
+    <button type="submit" class="submit-btn" onclick="return checkInfo()">Sign up</button>
   </div>
   </form>
   
 </div>
-</body>
-<script>
-window.onload = function(){
-    document.getElementById("address").addEventListener("click", function(){ 
-        new daum.Postcode({
-            oncomplete: function(data) {
-                document.getElementById("address").value = data.address; 
-                document.querySelector("input[name=addressDetail]").focus(); 
-            }
-        }).open();
-    });
-}
 
-</script>
+
+</body>
 <%@include file="footer.jsp" %>
 </html>
