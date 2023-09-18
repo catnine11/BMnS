@@ -236,8 +236,8 @@ public class BookModel_JUnitTest {
 	
 	@Test
 	public void CancelReserveCron() {
-//		boolean isc = service.CancelReserveCron();
-//		assertTrue(isc);
+		boolean isc = service.CancelReserveCron();
+		assertTrue(isc);
 	}
 	
 //	@Test

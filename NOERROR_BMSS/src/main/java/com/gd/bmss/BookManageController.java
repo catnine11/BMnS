@@ -1,5 +1,6 @@
 package com.gd.bmss;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,22 +84,22 @@ public class BookManageController {
 	}
 	
 	/*
-	 * 장르변경
+	 * 장르변경 chkBook, selectedGenre
 	 */
 	@RequestMapping(value = "/changeGenre.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public String changeGenre(Model model,
-				@RequestParam("selectedGenre") String selectedGenre,
-				@RequestParam("chkBook") List<String> selectedBooks) {
-//				@RequestParam String[] chkBook) {
-		log.info("Welcome BookManageController 장르변경");
+	public String changeGenre(Model model, String[] chkBook, String selectedGenre) {
+		log.info("Welcome BookManageController 장르변경 ");
+		log.info("Welcome BookManageController 장르변경 parameter : {} {}", Arrays.toString(chkBook), selectedGenre);
+		
+		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("selectedGenre", selectedGenre);
-		map.put("codes", selectedBooks);
+		map.put("genre_code", selectedGenre);
+		map.put("codes", chkBook);
 		
 		service.changeGenre(map);
 		
-		List<BookInfoVo> updatedBookList = service.getAllBookAdmin(); // 예시로 사용한 메서드 이름이므로 실제 메서드명에 맞게 수정하세요
+		List<BookInfoVo> updatedBookList = service.getAllBookAdmin(); 
 	    model.addAttribute("lists", updatedBookList);
 		
 		return "redirect:/bookListAdmin.do";
