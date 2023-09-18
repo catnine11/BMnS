@@ -29,8 +29,8 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 
 
 	@Override
-	public int normalToStock(List<String> seq) {
-			int n=sql.update(NS+"normalToStock",seq);
+	public int normalToStocks() {
+			int n=sql.update(NS+"normalToStocks");
 		return n; 
 	}
 
@@ -43,8 +43,8 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 
 
 	@Override
-	public int sellAble(String stock_number) {
-	int n =	sql.update(NS+"sellAble",stock_number);
+	public int sellAble(Map<String, Object>map) {
+	int n =	sql.update(NS+"sellAble",map);
 		return n;
 	}
 
@@ -73,4 +73,19 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 		int n =sql.update(NS+"priceChange",map);
 	return n;
 	}
+
+
+@Override
+public boolean normalToStock(Book_StatusVo vo) {
+		int n=sql.update(NS+"normalToStock",vo);
+	return (n>0)?true:false;
+}
+
+
+//@Override
+//public List<StockVo> normalToStockst() {
+//		sql.update(NS+"normalToStocks")	;
+//	List<StockVo> updatedStockList = sql.selectList(NS + "normalToStocks");
+//	return updatedStockList;
+//}
 }

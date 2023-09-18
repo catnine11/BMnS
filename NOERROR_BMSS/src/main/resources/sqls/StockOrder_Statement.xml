@@ -18,12 +18,23 @@ WHERE X.BOOK_COUNT > 1 ]]>
 
 
 <!-- 재고 상태로 변경  -->
-<update id="normalToStock">
-  UPDATE BOOK_STATUS SET STATUS_CODE='B' WHERE BOOK_SEQ IN
-  <foreach collection="list" item="book_seq" open="(" separator="," close=")">
-    #{book_seq}
-  </foreach>
+<update id="normalToStocks">
+  UPDATE BOOK_STATUS SET STATUS_CODE='B' WHERE BOOK_SEQ IN(<![CDATA[
+  SELECT  X.BOOK_SEQ FROM
+(SELECT  B.BOOK_SEQ, B.STATUS_TITLE, B.STATUS_CODE, A.RETURN_DATE, B.BOOK_CODE,
+           COUNT(*) OVER (PARTITION BY B.BOOK_CODE) AS BOOK_COUNT
+    FROM BOOK_BORROW A
+    RIGHT JOIN BOOK_STATUS B ON A.BOOK_SEQ = B.BOOK_SEQ
+    WHERE (RETURN_DATE <= TO_DATE('20230913' || '000000', 'YYYYMMDDHH24MISS') -60
+           OR RETURN_DATE IS NULL)
+           AND STATUS_CODE = 'A') X
+WHERE X.BOOK_COUNT > 1 ]]>)
 </update>
+
+<update id="normalToStock" parameterType="BStatusVo" >
+  UPDATE BOOK_STATUS SET STATUS_CODE=#{status_code} WHERE BOOK_SEQ =#{book_seq}
+</update>
+
 
 
 
@@ -33,9 +44,11 @@ WHERE X.BOOK_COUNT > 1 ]]>
   (STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)
   VALUES(STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0)
 </insert>
+
+
 <!-- 판매 불가->판매가능 상태 업데이트 -->
 <update id="sellAble">
-UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER =#{stock_number}
+UPDATE BOOK_STOCK SET SELL_STATUS =#{status} WHERE STOCK_NUMBER =#{num}
 </update>
 <!-- 판매 불가->판매가능 다중 상태 업데이트 -->
 <update id="sellAbleMany">
@@ -66,7 +79,7 @@ WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
 	<!-- 재고 목록 조회  -->
 <select id="getStocks" resultMap="StockMap">
 SELECT STOCK_NUMBER,STATUS_TITLE,SELL_STATUS ,BT.BOOK_SEQ AS STBOOK_SEQ,STATUS_CODE,BOOK_CODE,BOOK_PRICE 
-FROM BOOK_STOCK BT LEFT JOIN BOOK_STATUS bs ON BT.BOOK_SEQ =BS.BOOK_SEQ WHERE STATUS_CODE='B'
+FROM BOOK_STOCK BT LEFT JOIN BOOK_STATUS bs ON BT.BOOK_SEQ =BS.BOOK_SEQ 
 </select>
 
 <update id="priceChange">
