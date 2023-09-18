@@ -112,11 +112,16 @@ input:focus ~ .highlight {
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
-var urlParams = new URLSearchParams(window.location.search);
-var userEmail = urlParams.get('email');
-var thisEmail = document.getElementById("email").value;
-thisEmail = userEmail; // 이메일 받아오는거 수정해야함
-console.log(userEmail);
+window.onload = function() {
+  const sendData = JSON.parse(localStorage.getItem('sendData'));
+
+  if (sendData && sendData.email) {
+    const thisEmail = document.getElementById('email');
+    thisEmail.value = sendData.email;
+console.log(thisEmail.value);
+  }
+};
+
 $(document).ready(function() {
     $("#emailForm").submit(function(event) {
         event.preventDefault();
@@ -139,6 +144,36 @@ $(document).ready(function() {
             }
         });
     });
+    
+    $("#confirmBtn").click(function(event) {
+        event.preventDefault();
+        var confirmNum = $("input[name='confirmNum']").val();
+        var email = $("input[name='email']").val();
+
+        $.ajax({
+            url: "./verifyCode.do",
+            type: "POST",
+            data: {
+                email: email,
+                confirmNum: confirmNum
+            },
+            success: function(response) {
+                if (response === "Success") {
+                    console.log(confirmNum);
+                    alert("인증이 완료되었습니다.");
+                    localStorage.setItem('verified', 'true');
+                    window.close();
+                } else {
+                    alert("인증번호가 일치하지 않습니다.");
+                    console.log(confirmNum);
+                }
+            },
+            error: function() {
+                alert("인증번호 확인 중 오류가 발생했습니다.");
+                console.log(confirmNum);
+            }
+        });
+    });
 });
 </script>
 </head>
@@ -146,7 +181,7 @@ $(document).ready(function() {
   <div class="container">
     <form id="emailForm" action="./sendRandomCode.do" method="post">
       <div class="group">      
-        <input id="email" type="text" required >
+        <input id="email"  name="email" type="text" required>
         <span class="highlight"></span>
         <span class="bar"></span>
         <label>이메일</label>
@@ -158,13 +193,13 @@ $(document).ready(function() {
 
     <form id="verifyCodeForm" action="./verifyCode.do" method="post">
       <div class="group">      
-        <input type="text" required name="confirmNum">
+        <input type="text" required name="confirmNum"> 
         <span class="highlight"></span>
         <span class="bar"></span>
         <label>인증번호</label>
       </div>
       <div id="bD">
-        <button type="submit">인증번호확인</button>
+        <button type="submit" id="confirmBtn">인증번호확인</button>
       </div>
     </form>
   </div>

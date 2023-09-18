@@ -30,8 +30,10 @@
 
 	<dependencies>
 
+	
+
 		<!-- 사용자 라이브러리 groupId는 물리적 폴더, artifactId는 파일(-version) -->
-		<!--<dependency>
+		 <!--<dependency>
 			<groupId>com.spring.util</groupId>
 			<artifactId>servletAlert0.0.1</artifactId>
 			<version>1.0</version>
@@ -254,6 +256,14 @@
          <artifactId>jsoup</artifactId>
          <version>1.16.1</version>
       </dependency>
+
+	<!-- coolsms -->
+		<dependency>
+    <groupId>net.nurigo</groupId>
+    <artifactId>sdk</artifactId>
+    <version>4.2.7</version>
+</dependency>
+
 
 	</dependencies>
 

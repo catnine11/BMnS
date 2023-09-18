@@ -7,9 +7,7 @@ window.onload = function(){
             }
         }).open();
     });
-}
-
-
+};
 function checkInfo(){
 	var name = document.getElementById("name").value;
 	var email = document.getElementById("email").value;
@@ -82,24 +80,36 @@ function checkInfo(){
 	}
 	
 
+//$(document).ready(function() {
+//  $("#signupForm").submit(function(event) {
+//    event.preventDefault();
+//    var verified = localStorage.getItem('verified');
+//    console.log(verified);
+//    if (verified === "true") {
+//      this.submit();
+//alert("회원가입이 완료되었습니다 로그인 해주세요");
+//    } else {
+//      alert("이메일 인증을 먼저 완료해주세요.");
+//    }
+//  });
+//});
 
-
-alert("회원가입이 완료되었습니다 로그인 해주세요");
-}
+};
 
 
 
 function emailChk() {
- 
     var width = '700';
     var height = '500';
     var left = Math.ceil(( window.screen.width - width )/2);
     var top = Math.ceil(( window.screen.height - height )/2); 
- 	var userEmail = document.getElementById("email").value;
-
-    window.open('./emailChk.do?email='+userEmail, '이메일인증', 'width='+ width +', height='+ height +', left=' + left + ', top='+ top );
+// 	var userEmail = opener.document.getElementById("email").value;
+	const userEmail = document.getElementById('email').value;
+	const sendData = { email: userEmail };
+	localStorage.setItem('sendData', JSON.stringify(sendData));
+    window.open('./emailChk.do', '이메일인증', 'width='+ width +', height='+ height +', left=' + left + ', top='+ top );
  
-}
+};
 
 
 
