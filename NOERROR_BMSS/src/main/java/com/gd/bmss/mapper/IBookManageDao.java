@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.gd.bmss.vo.BookInfoVo;
-
+/**
+ * 도서관리 인터페이스
+ * @author 남가람
+ * @since 2023.09.14.
+ */
 public interface IBookManageDao {
 
 	//장르별 전체조회 /회원
 	public List<BookInfoVo> getAllBookUser();
-	public List<BookInfoVo> getAllBookUserGenre();
+	public List<BookInfoVo> getAllBookUserGenre(String genre_name);
 	
 	//장르별 전체조회 /관리자
 	public List<BookInfoVo> getAllBookAdmin();

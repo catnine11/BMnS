@@ -25,8 +25,8 @@ public class BookManageDaoImpl implements IBookManageDao {
 	}
 
 	@Override
-	public List<BookInfoVo> getAllBookUserGenre() {
-		return session.selectList(NS+"getAllBookUserGenre");
+	public List<BookInfoVo> getAllBookUserGenre(String genre_name) {
+		return session.selectList(NS+"getAllBookUserGenre", genre_name);
 	}
 	
 	@Override

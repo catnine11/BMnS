@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.bmss.service.IBookManageService;
 import com.gd.bmss.vo.BookInfoVo;
@@ -43,7 +44,10 @@ public class BookManageController {
 	}
 	
 	@PostMapping(value = "/bookListUserGenre.do")
-	public String bookListUserGenre() {
+	public String bookListUserGenre(Model model, @RequestParam("selectedGenre") String selectedGenre) {
+		log.info("Welcome BookManageController 회원의 도서전체조회창-장르별 조회 이동");
+		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
+		model.addAttribute(genreLists);
 		
 		return "bookListUser";
 	}

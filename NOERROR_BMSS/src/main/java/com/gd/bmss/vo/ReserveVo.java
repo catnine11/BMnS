@@ -11,6 +11,7 @@ import lombok.ToString;
 
 /**
  * 예약(BOOK_RESERVE)테이블의 Vo
+ * 
  * @author NGR
  * @since 2023.09.14.
  */
@@ -21,13 +22,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ReserveVo {
-	
-	private String reserve_seq   ;
-	private String reserve_title ;
-	private Date reserve_date  ;
-	private String reserve_status;
-	private String user_id       ;
-	private String book_seq      ;
 
-	
+	private String reserve_seq;
+	private String reserve_title;
+//	private Date reserve_date  ;
+	private String reserve_date;
+	private String reserve_status;
+	private String user_id;
+	private String book_seq;
+
 }

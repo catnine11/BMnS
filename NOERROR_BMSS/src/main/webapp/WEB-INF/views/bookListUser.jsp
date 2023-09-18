@@ -11,12 +11,47 @@
 <title>NOERROR 책</title>
 <style type="text/css">
 	#thumbnail{
-		width: 30%;
- 		height: 30%;
+		width: 20%;
+ 		height: 20%;
 	}
+	
+	.imgList li{
+		position: relative;
+		display: bolck;
+		box-sizing: border-box;
+		cursor: pointer;
+/* 		float: left; */
+		
+	}
+	
+ 	.imgList li .over{
+ 		position: absolute;
+ 		top: 0;
+ 		left: 0;
+ 		bottom: 0;
+ 		padding: 20%;
+ 		width: 100%;
+ 		text-align: center;
+ 		display: none;
+ 	}
 </style>
 <script type="text/javascript">
-
+	function genreList(){
+		 var selectedGenre = $("#genreSelect").val();
+		 
+		 $.ajax({
+		        type: "POST",
+		        url: "./bookListUserGenre.do",
+		        data: { genre: selectedGenre }, // 선택한 장르를 서버로 보내기
+		        success: function (data) {
+		            // 서버로부터 받은 데이터로 도서 목록 업데이트
+		            $("#bookList").html(data);
+		        },
+		        error: function () {
+		            alert("도서 목록을 불러오는 중 오류가 발생했습니다.");
+		        }
+		    });
+	}
 </script>
 </head>
 <%@include file="header.jsp" %>
@@ -36,9 +71,8 @@
 <!-- </table> -->
 
 <div class="container">
-	<form action="./bookListUserGenre.do" method="post">
 		<div class="selectGenre">
-			<select class="Genre">
+			<select class="genreSelect" name="selectedGenre" onchange="genreList()">
 				<option>전체</option>
 				<option>총류</option>
 				<option>철학</option>
@@ -52,13 +86,17 @@
 				<option>역사</option>
 			</select>
 		</div>
-	</form>
 		<div>
 			<ul class="imgList">
 			<c:forEach items="${lists}" var="book">
 				<li>
+					<div class="over">
+						<strong>${book.title}</strong>
+						<span>${book.author}</span>
+						<p>${book.publisher}</p>
+					</div>
 					<a>
-						<img id="thumbnail" src="${book.thumbnail}" onclick="/bookDetail.do?book_code="+${book.book_code}>
+						<img id="thumbnail" src="${book.thumbnail}" onclick="location.href='/bookDetail.do?book_code=' + '${book.book_code}'">
 					</a>
 					<div>
 					

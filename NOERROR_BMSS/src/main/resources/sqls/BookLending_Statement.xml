@@ -47,14 +47,14 @@
 </resultMap>
 
 <!-- 대출신청 -->
-<insert id="borrowBook" parameterType="BorrowVo">
+<insert id="insertBorrow" parameterType="BorrowVo">
 INSERT INTO BOOK_BORROW
 (BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ)
-VALUES(BORROW_SEQ.NEXTVAL, #{start_date}, #{return_date} , #{renew}, 'N' , 'Y' , #{user_id}, #{book_seq})
+VALUES(BORROW_SEQ.NEXTVAL, #{borrow_title}, #{start_date}, #{return_date} ,  'N' , 'Y' , #{user_id}, #{book_seq})
 </insert>
 
 <!-- 대출불가능한 경우 1.예약중이거나 대출중이거나 도서상태가 일반이 아님 -->
-<select id="notBorrow1" resultMap="bStatusMap">
+<select id="borrowNotOk" resultMap="bStatusMap">
 SELECT BOOK_SEQ
 FROM BOOK_STATUS bs
 LEFT JOIN BOOK_BORROW bb USING(BOOK_SEQ)
@@ -73,28 +73,24 @@ WHERE bu.USER_ID =#{user_id}
 </select>
 
 <!-- 회원의 대출가능 잔여권수 판단 -->
-<select id="count" resultMap="borrowMap">
+<!-- <select id="countBorrow" resultMap="borrowMap"> -->
+<select id="countBorrow" resultType="java.lang.Integer">
 SELECT COUNT(*)
 	FROM BOOK_BORROW bb 
-	WHERE RETURN_DATE >SYSDATE
+	JOIN BOOK_USERINFO bu USING(USER_ID)
+	WHERE BORROW_STATUS = 'Y'
 	AND USER_ID =#{user_id}
 </select>
 
 <!-- 예약자의 대출신청 //트랜잭션//////물어볼것 -->
-<select id="borrowForReserver" resultMap="bStatusMap">
-SELECT BOOK_SEQ, bb.USER_ID
-FROM BOOK_STATUS bs
-LEFT JOIN BOOK_BORROW bb USING(BOOK_SEQ)
-LEFT JOIN BOOK_RESERVE br USING(BOOK_SEQ)
-WHERE bb.BORROW_STATUS ='N'
-AND br.RESERVE_STATUS ='Y'
-AND STATUS_CODE ='A'
+<select id="borrowReserver" resultMap="bStatusMap">
+
 </select>
 
 <!-- 트랜잭션/예약취소 -->
-<delete id="deleteReserve">
+<delete id="deleteReserveAfterBorrow">
 DELETE FROM BOOK_RESERVE
-WHERE RESERVE_SEQ=#{reserve_seq}
+WHERE BOOK_SEQ=#{book_seq}
 </delete>
 
 <!-- 대출 조회 : 관리자의 전체회원 대출현황 조회 -->
@@ -135,9 +131,9 @@ AND USER_ID =#{user_id}
 ORDER BY BORROW_SEQ
 </select>
 
-<!-- 대출 조회 : 관리자의 회원대출내역 조회 -->
+<!-- 대출 조회 : 관리자의 특정회원대출내역 조회 -->
 <select id="getAllBorrow" resultMap="borrowMap">
-SELECT BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS, USER_ID, BOOK_SEQ
+SELECT USER_ID, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS, BOOK_SEQ
 FROM BOOK_BORROW
 JOIN BOOK_USERINFO bu 
 USING(USER_ID)
@@ -160,13 +156,17 @@ ORDER BY BORROW_SEQ
 
 <!-- 반납 신청 -->
 <update id="returnBook" parameterType="java.util.Map">
-UPDATE BOOK_BORROW
-SET RETURN_DATE= SYSDATE, BORROW_STATUS='N'
-WHERE BOOK_SEQ= #{book_seq}
+	UPDATE BOOK_BORROW
+	SET RETURN_DATE= SYSDATE, BORROW_STATUS='N'
+	<!-- WHERE BOOK_SEQ= #{book_seq} -->
+	WHERE BOOK_SEQ IN 
+	<foreach collection="seqs" item="book_seq" open="(" separator="," close=")">
+		#{book_seq}
+	</foreach>
 </update>
 
 <!-- 연장신청 -->
-<update id="renewBook" parameterType="java.util.Map">
+<update id="renewBook">
 <![CDATA[
 UPDATE BOOK_BORROW
 SET RETURN_DATE = RETURN_DATE + 7, RENEW = 'Y'
@@ -176,6 +176,7 @@ WHERE BOOK_SEQ = (SELECT BOOK_SEQ
 					WHERE (br.RESERVE_STATUS IS NULL OR br.RESERVE_STATUS ='N') AND RENEW = 'N'
 					AND BORROW_STATUS ='Y'
 					AND RETURN_DATE - SYSDATE < 7
+					AND RETURN_DATE - SYSDATE > 0
 					AND BOOK_SEQ = #{book_seq})
 ]]>
 </update>
@@ -183,7 +184,7 @@ WHERE BOOK_SEQ = (SELECT BOOK_SEQ
 
 
 <!-- 예약신청 -->
-<insert id="reserveBook" parameterType="ReserveVo">
+<insert id="insertReserve" parameterType="ReserveVo">
 INSERT INTO BOOK_RESERVE
 (RESERVE_SEQ, RESERVE_TITLE, RESERVE_DATE, RESERVE_STATUS, USER_ID, BOOK_SEQ)
 VALUES(RESERVE_SEQ.NEXTVAL, #{reserve_title}, #{reserve_date}, 'Y' , #{user_id}, #{book_seq})
@@ -203,33 +204,43 @@ AND bs.STATUS_CODE='A'
 </select>
 
 <!-- 잔여예약권수 -->
-<select id="countReserve" resultMap="reserveMap">
-<![CDATA[
+<select id="countReserve" resultType="java.lang.Integer">
 SELECT COUNT(*)
-	FROM BOOK_RESERVE br JOIN BOOK_BORROW bb USING(BOOK_SEQ)
-	WHERE RESERVE_DATE < SYSDATE
-	AND br.USER_ID =#{user_id}
-]]>
+	FROM BOOK_RESERVE br
+	JOIN BOOK_USERINFO bu ON br.USER_ID = bu.USER_ID
+	WHERE  br.USER_ID =#{user_id}
+	AND RESERVE_STATUS = 'Y'
 </select>
 
  <!-- 회원의 예약취소 --> 
-<!-- <update id=""> -->
-<!-- UPDATE BOOK_RESERVE -->
-<!-- SET RESERVE_STATUS='N'  -->
-<!-- WHERE RESERVE_SEQ=7 -->
-<!-- </update> -->
+<update id="cancelMyReserve" parameterType="java.util.Map">
+UPDATE BOOK_RESERVE
+SET RESERVE_STATUS='N' 
+WHERE BOOK_SEQ= (SELECT BOOK_SEQ
+				FROM BOOK_RESERVE br
+				JOIN BOOK_USERINFO bu USING(USER_ID)
+				WHERE USER_ID = #{user_id}
+				AND BOOK_SEQ=#{book_seq})
+AND RESERVE_STATUS ='Y'
+</update>
 
 <!-- 스케줄러 자동 취소 -->
-<update id="CancelForCron" parameterType="java.util.Map">
+<update id="CancelReserveForCron">
 <![CDATA[
 UPDATE BOOK_RESERVE
 SET RESERVE_STATUS='N' 
 WHERE BOOK_SEQ =(SELECT br.BOOK_SEQ 
 				FROM BOOK_RESERVE br JOIN BOOK_BORROW bb ON br.BOOK_SEQ =bb.BOOK_SEQ 
-				WHERE RETURN_DATE+2 <SYSDATE)
+				WHERE RETURN_DATE+2 <SYSDATE
+				AND RESERVE_STATUS='Y')
 		]]>
 </update>
 
+<!-- 스케줄러 예약취소 자동삭제 -->
+<delete id="deleteReserveForCron">
+DELETE FROM BOOK_RESERVE
+WHERE RESERVE_STATUS = 'N'
+</delete>
 
 <!-- 예약현황조회 : 관리자의 전체회원 -->
 <select id="getAllReserveNow" resultMap="reserveMap">
