@@ -47,9 +47,9 @@
 						<!-- 				<td style="width: 5%"><a class="text-reset">asdasd</a></td> -->
 						<td style="width: 7%" class="text-center">${lists.user_id}</td>
 						<td style="width: 10%" class="text-center">${lists.user_name}</td>
-						<td style="width: 30%" class="text-center">${lists.user_email}</td>
+						<td style="width: 20%" class="text-center">${lists.user_email}</td>
 						<td style="width: 10%" class="text-center">${lists.user_phone}</td>
-						<td style="width: 10%" class="text-center">${lists.user_address}</td>
+						<td style="width: 20%" class="text-center">${lists.user_address}</td>
 						<td style="width: 10%" class="text-center">${lists.user_joindate}</td>
 						<td style="width: 10%" class="text-center">${lists.penalty_date}</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
