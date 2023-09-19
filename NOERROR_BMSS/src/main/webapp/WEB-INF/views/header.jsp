@@ -129,7 +129,7 @@ margin-bottom: 20px;
 				<div id="Banner" style="overflow: auto"></div>
 				<ul class="tab">
 
-					<li class="nav-menu"><a id="imgMenu" class="menu" href="/NOERROR_BMSS" ><img class="logo" src="./img/BMSS아이콘.png"></a><a id="imenu" class="menu" href="/noerrorbmss" >NOERROR 책check</a></li>
+					<li class="nav-menu"><a id="imgMenu" class="menu" href="/NOERROR_BMSS" ><img class="logo" src="./img/BMSS아이콘.png"></a><a id="imenu" class="menu" href="/NOERROR_BMSS" >NOERROR 책check</a></li>
 
 					<li><a class="navtab" id="navdrop" href="#">자료검색</a></li>
 					<li><a class="navtab" id="navdrop" href="#">이용안내</a></li>
