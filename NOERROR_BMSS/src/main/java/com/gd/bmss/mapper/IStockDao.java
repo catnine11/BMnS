@@ -25,6 +25,6 @@ public interface IStockDao {
 	
 	public boolean normalToStock(Book_StatusVo vo);
 	
-	public List<StockVo> booksDetail();
+	public List<StockVo> booksDetail(String seq);
 
 }

@@ -1,4 +1,77 @@
 
+$(document).ready(function(){
+	$(".detailTD").on("click",function(){
+    var seq = $(this).closest('td').find(".booksDetail").val();
+    console.log(seq);
+    
+    $.ajax({
+      method: "post",
+      url: "./booksDetail.do",
+      data: {seq:seq},
+      dataType: "json",
+      success: function(data){
+	console.log(data)
+//	JSON.stringify(data);
+	
+
+
+ 	$("#stockDel").html("");
+ 		html="";
+ 		html+=""
+html+="	<table>                                                                                                     ";
+html+="		<tr>                                                                                                    ";
+html+="			<td><input type='checkbox' name='allChk'></td>                                                      ";
+html+="			<td>재고번호</td>                                                                                   ";
+html+="			<td>도서명</td>                                                                                     ";
+html+="			<td>도서상태</td>                                                                                   ";
+html+="			<td>판매가능 여부</td>                                                                              ";
+html+="			<td>도서 가격</td>                                                                                  ";
+html+="		</tr>                                                                                                   ";
+		for (let i=0; i<data.length; i++)    {       
+			var books =data.seq[i];                                                
+html+="			<tr>                                                                                                ";
+html+="				<td><input type='checkbox' name='delChk'                                                        ";
+html+="					value='"+books.book_code+"'></td>                                                             ";
+html+="				<td class='stockNum'>"+books.stock_number+"</td>                                                     ";
+html+="				<td>${a.status_title}</td>                                                                      ";
+html+="				<td><select class='changeBookStatus' name='status_code'>                                        ";
+html+="						<option value='A' ("+status_code+" === 'D') ? 'selected' : ''>일반</option>                 ";
+html+="						<option value='B' ("+status_code+" === 'D') ? 'selected' : ''>재고</option>                 ";
+html+="						<option value='C' ("+status_code+" === 'D') ? 'selected' : ''>분실</option>                 ";
+html+="						<option value='D' ("+status_code+" === 'D') ? 'selected' : ''>예정</option>                 ";
+html+="				</select></td>                                                                 ";
+html+="				<td><select class='sellStatus' name='sellStatus'>                                               ";
+html+="						<option value='N' ("+sell_status+" == 'N' ? 'selected' : '')>판매불가</option>           ";
+html+="						<option value='Y' ("+sell_status+" 'Y' ? 'selected' : '')>판매가능</option>           ";
+html+="				</select></td>                                                                                  ";
+html+="				<td><input class='price' type='number' name='price'                                             ";
+html+="					value='"+book_price+"'></td>                                                               ";
+html+="				<td><input class='chPrice' type='button' value='가격 변경'></td>                                ";
+html+="			</tr>                                                                                               ";
+ }                                                                                         
+html+="	<tr>	<td><input type='submit' value='삭제' ></td></tr>                                                   ";
+html+="		</table>                                                                                                ";
+ 	
+ 	
+ 	
+       
+        
+      },
+      error: function(){
+      }
+    });
+  })
+});
+
+
+
+
+
+
+
+
+
+
 	$(document).ready(
 			function() {
 				$("input[name='price']").on(
@@ -154,4 +227,3 @@ function delStock(){
 	}
 	
 }
-

@@ -111,6 +111,18 @@ function emailChk() {
  
 };
 
+function phoneChk(){
+	var width = '700';
+    var height = '500';
+    var left = Math.ceil(( window.screen.width - width )/2);
+    var top = Math.ceil(( window.screen.height - height )/2); 
+    const userPhone = document.getElementById('phone').value;
+	const sendData = { phone: userPhone };
+	localStorage.setItem('sendData', JSON.stringify(sendData));
+    window.open('./phoneChk.do', '휴대폰인증', 'width='+ width +', height='+ height +', left=' + left + ', top='+ top );
+ 
+}
+
 
 
 

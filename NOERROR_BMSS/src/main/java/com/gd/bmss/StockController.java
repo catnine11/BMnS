@@ -86,10 +86,16 @@ public class StockController {
 	}
 	
 	@RequestMapping(value="/booksDetail.do",method =RequestMethod.POST)
-	public String booksDetail() {
+	@ResponseBody
+	public List<StockVo> booksDetail(Model model, String seq) {
+		
+	List<StockVo>	list=dao.booksDetail(seq);
 	
-		return"";
+		model.addAttribute("detailList",list);
+		return list;
 	}
+	
+
 		
 	
 	
