@@ -10,14 +10,29 @@ $(document).ready(function(){
       data: {seq:seq},
       dataType: "json",
       success: function(data){
-	console.log(data)
-//	JSON.stringify(data);
+	// new Array(); length 
+	//json 객체 
+//	  console.log(data.length)
+//	  console.log(data[0]);
+//	  for(let obj of data){
+//			console.log(obj.stock_number,
+//			obj.sell_status,
+//			obj.book_seq,
+//			obj.book_price,
+//			obj.status_title,
+//			obj.status_code,
+//			obj.book_code)
+//		}
+//		
+		
+	  
+
 	
 
 
  	$("#stockDel").html("");
  		html="";
- 		html+=""
+html+=""
 html+="	<table>                                                                                                     ";
 html+="		<tr>                                                                                                    ";
 html+="			<td><input type='checkbox' name='allChk'></td>                                                      ";
@@ -27,32 +42,33 @@ html+="			<td>도서상태</td>                                                 
 html+="			<td>판매가능 여부</td>                                                                              ";
 html+="			<td>도서 가격</td>                                                                                  ";
 html+="		</tr>                                                                                                   ";
-		for (let i=0; i<data.length; i++)    {       
-			var books =data.seq[i];                                                
+		for (let obj of data)    {    
+			   
 html+="			<tr>                                                                                                ";
 html+="				<td><input type='checkbox' name='delChk'                                                        ";
-html+="					value='"+books.book_code+"'></td>                                                             ";
-html+="				<td class='stockNum'>"+books.stock_number+"</td>                                                     ";
-html+="				<td>${a.status_title}</td>                                                                      ";
+html+="					value='"+obj.book_code+"'></td>                                                             ";
+html+="				<td class='stockNum'>"+obj.stock_number+"</td>                                                     ";
+html+="				<td>"+obj.status_title+"</td>                                                                      ";
 html+="				<td><select class='changeBookStatus' name='status_code'>                                        ";
-html+="						<option value='A' ("+status_code+" === 'D') ? 'selected' : ''>일반</option>                 ";
-html+="						<option value='B' ("+status_code+" === 'D') ? 'selected' : ''>재고</option>                 ";
-html+="						<option value='C' ("+status_code+" === 'D') ? 'selected' : ''>분실</option>                 ";
-html+="						<option value='D' ("+status_code+" === 'D') ? 'selected' : ''>예정</option>                 ";
+html+="						<option value='A' ("+obj.status_code+" === 'D') ? 'selected' : ''>일반</option>                 ";
+html+="						<option value='B' ("+obj.status_code+" === 'D') ? 'selected' : ''>재고</option>                 ";
+html+="						<option value='C' ("+obj.status_code+" === 'D') ? 'selected' : ''>분실</option>                 ";
+html+="						<option value='D' ("+obj.status_code+" === 'D') ? 'selected' : ''>예정</option>                 ";
 html+="				</select></td>                                                                 ";
 html+="				<td><select class='sellStatus' name='sellStatus'>                                               ";
-html+="						<option value='N' ("+sell_status+" == 'N' ? 'selected' : '')>판매불가</option>           ";
-html+="						<option value='Y' ("+sell_status+" 'Y' ? 'selected' : '')>판매가능</option>           ";
+html+="						<option value='N' ("+obj.sell_status+" == 'N' ? 'selected' : '')>판매불가</option>           ";
+html+="						<option value='Y' ("+obj.sell_status+" 'Y' ? 'selected' : '')>판매가능</option>           ";
 html+="				</select></td>                                                                                  ";
 html+="				<td><input class='price' type='number' name='price'                                             ";
-html+="					value='"+book_price+"'></td>                                                               ";
+html+="					value='"+obj.book_price+"'></td> "; 
+html+="					<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>";                                                             
 html+="				<td><input class='chPrice' type='button' value='가격 변경'></td>                                ";
 html+="			</tr>                                                                                               ";
  }                                                                                         
 html+="	<tr>	<td><input type='submit' value='삭제' ></td></tr>                                                   ";
 html+="		</table>                                                                                                ";
  	
- 	
+ $("#stockDel").html(html);	
  	
        
         
@@ -70,49 +86,44 @@ html+="		</table>                                                               
 
 
 
+//<td><input class='chPrice' type='button' value='가격 변경'></td>      
 
+	
+			
+			$("#stockDel").on("click", "input.chPrice", function() {
+    var price= $(this).closest('tr').find('.price').val() // 값을 가져올 때 val() 대신 text() 사용
+	var stockNum=$(this).closest('tr').find('.stockNum').text();
+//    	console.log()
 
-	$(document).ready(
-			function() {
-				$("input[name='price']").on(
-						"keyup",
-						function(event) {
-							if (event.key === "Enter") {
-								event.preve
-						
-								var stockNum = $(this).closest("tr").find(
-										".stockNum").text()
-								var price = $(this).val();
-								
-								console.log(price);
-								$.ajax({
-									url : "./changePrice.do",
-									type : "post",
-									data : {
-										stockNum : stockNum,
-										price : price
-									},
-									dataType:'json',
-									success : function(data) {
-										console.log(data);
+//    var stockNum = $(this).closest("tr").find(".stockNum").text(); // 주석 해제
+    // var price = $(this).val(); // 주석 해제
 
-									
-										console.log(data);
-										alert("가격이 변경되었습니다.");
-									},
-									error : function() {
-										alert("가격변경 실패");
-									}
-								});
-							}
-						});
-			});
+//    console.log(stockNum); // 주석 해제
+    // console.log(price); // 주석 해제
+
+    $.ajax({
+        url: "./changePrice.do",
+        type: "post",
+        data: {
+            stockNum: stockNum,
+            price: price // 변경된 부분
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            alert("가격이 변경되었습니다.");
+        },
+        error: function() {
+            alert("가격변경 실패");
+        }
+    });
+});
 			
 			
-	$(document).ready(function(){
-		$("select[name='sellStatus']").on("change",function(){
-			var status=$(this).closest("tr").find(".ss").find("option:selected").val();
-			var num =$(this).closest("tr").find(".stockNum").text();
+	
+		$("#stockDel").on("change","select.sellStatus",function(){
+			var status=$(this).closest("tr").find(".sellStatus").find("option:selected").val();
+			var num =$(this).closest("tr").find(".book_seq").val();
 			console.log(status)
 			console.log(num);
 			$.ajax({
@@ -133,18 +144,18 @@ html+="		</table>                                                               
 			
 		})
 		
-	})
 
-	
-	$(document).ready(function(){
-		$("select[name='status_code']").on("change",function(){
-			var status_code=$(this).closest('tr').find('.cbs').find("option:selected").val();
-			var book_seq=$(this).closest('tr').find('.book_seq').val();
-			var book_tr=$(this).closest('tr');
+
+//	<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>"; 
+
+		$("#stockDel").on("change","select.changeBookStatus",function(){
+			var status_code=$(this).closest('tr').find('.changeBookStatus').find("option:selected").val();
+			var book_seq=$(this).closest("tr").find(".book_seq").val();
+//			var book_tr=$(this).closest('tr');
 			
 			console.log("도서상태 : ", status_code);
 			console.log("도서seq: ",book_seq);
-			console.log("도서tr: ",book_tr);
+//			console.log("도서tr: ",book_tr);
 			$.ajax({
 				method:"post",
 				url:"./chageBookStatus.do",
@@ -152,7 +163,7 @@ html+="		</table>                                                               
 				success:function(){
 					alert("도서상태 변경을 완료했습니다.");
 					if(status_code !="B"){
-						book_tr.remove();
+//						book_tr.remove();
 					}
 					
 					
@@ -166,7 +177,6 @@ html+="		</table>                                                               
 		})
 		
 		
-	})
 	
 	$(document).ready(function(){
 		$("input[name='allChk']").click(function(event){
