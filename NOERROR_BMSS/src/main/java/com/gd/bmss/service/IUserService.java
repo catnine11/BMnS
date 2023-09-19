@@ -17,4 +17,5 @@ public interface IUserService {
 	
 	public int updateRetoken(SocialVo vo);
 	
+	public int emailCheck(String email);
 }

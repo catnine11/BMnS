@@ -315,12 +315,18 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    var email = $("#email").val();
 	    var verified = localStorage.getItem('verified');
-
-	    if (verified === "true") {
+	    var confirm = localStorage.getItem('confirm');
+		console.log(verified);
+		console.log(confirm);
+	    if (verified == null) {
+	      alert("이메일 인증을 먼저 완료해 주세요.");
+	    }else if(confirm == null){
+	    	alert("휴대폰 인증을 먼저 완료해 주세요")
+	    }else {
+	    	localStorage.removeItem('verified');
+	    	localStorage.removeItem('confirm');
 	      this.submit();
-	      alert("회원가입이 완료되었습니다. 로그인 해주세요.");
-	    } else {
-	      alert("이메일 인증을 먼저 완료해주세요.");
+	      alert("회원가입이 완료되었습니다. 로그인 해주세요@.");
 	    }
 	  });
 	});

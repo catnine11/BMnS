@@ -50,7 +50,7 @@ html,body {
   
   .signup {
     position: absolute;
-    top: 43%;
+    top: 45%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     width: 65%;
@@ -99,7 +99,7 @@ html,body {
       border-radius: 15px;
       background-color: #fff;
       overflow: hidden;
-      margin-top: 50px;
+      margin-top: 20px;
       opacity: 1;
       visibility: visible;
       -webkit-transition: all .3s ease;
@@ -199,7 +199,7 @@ html,body {
         background-color: #fff;
         border: 1px solid #eee;
         overflow: hidden;
-        margin-top: 50px;
+        margin-top: 20px;
         opacity: 1;
         visibility: visible;
         -webkit-transition: all .3s ease;
@@ -302,17 +302,23 @@ html,body {
       <input id="password" type="password" class="input" name="user_password" placeholder="비밀번호" />
     </div>
     <button type="submit" class="submit-btn">Login</button>
-  <button type="button" class="submit-btn" onclick="location.href='./findEmail.do'">이메일 찾기</button>
-  <button type="button" class="submit-btn" onclick="location.href='./findPassword.do'">이메일 찾기</button>
-  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;" src="./img/kakao.png" onclick="location.href='<%=vo.getKakaoUrl()+"&client_id="+cvo.getKakaoClientID()+"&redirect_uri="+vo.getKakaoRedirect()+"&state="+state%>'"><br>
-  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-bottom: 15px;"src="./img/btnW_완성형.png" onclick="location.href='<%=vo.getNaverUrl()+"&client_id="+cvo.getNaverClientID()+"&redirect_uri="+vo.getNaverRedirect()+"&state="+state%>'"><br>
-  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px;"src="./img/googlel.png" onclick="location.href='<%=vo.getGoogleUrl()+"&client_id="+cvo.getGoogleClientID()+"&redirect_uri="+vo.getGoogleRedirect()+"&state="+state%>'"><br>
+  <button type="button" class="submit-btn" onclick="findEmail()">이메일 찾기</button>
+  <button type="button" class="submit-btn" onclick="location.href='./findPassword.do'">비밀번호 찾기</button>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px; margin-bottom: 15px;" src="./img/kakao.png" onclick="location.href='<%=vo.getKakaoUrl()+"&client_id="+cvo.getKakaoClientID()+"&redirect_uri="+vo.getKakaoRedirect()+"&state="+state%>'"><br>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px; margin-bottom: 15px;"src="./img/btnW_완성형.png" onclick="location.href='<%=vo.getNaverUrl()+"&client_id="+cvo.getNaverClientID()+"&redirect_uri="+vo.getNaverRedirect()+"&state="+state%>'"><br>
+  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px;" src="./img/googlel.png" onclick="location.href='<%=vo.getGoogleUrl()+"&client_id="+cvo.getGoogleClientID()+"&redirect_uri="+vo.getGoogleRedirect()+"&state="+state%>'"><br>
   </div>
   </form>
   </div>
 </body>
 <%@include file="footer.jsp"%>
 <script type="text/javascript">
-
+	function findEmail(){
+		var width = '350';
+	    var height = '400';
+	    var left = Math.ceil(( window.screen.width - width )/2);
+	    var top = Math.ceil(( window.screen.height - height )/2); 
+	    window.open('./findEmail.do', '이메일찾기', 'width='+ width +', height='+ height +', left=' + left + ', top='+ top );
+	}
 </script>
 </html>

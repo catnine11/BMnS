@@ -79,10 +79,12 @@ public class UserController {
 		String address = (String)req.getParameter("user_address")+"\t"+(String)req.getParameter("addressDetail");
 		vo.setUser_address(address);
 		 String verified = (String) session.getAttribute("verified");
-		 log.info("@@@@@@@@@@@@@@@@전달받은 값 true or false : {}@@@@@@@@@@@@@@@@@@@", verified);
-//		    if (verified != null && verified.equals("true")) {
-		        int n = service.joinUser(vo);
-		        log.info("@@@@@@@@@@@@@@@전달받은 값 0 or other : {}@@@@@@@@@@@@@@@", n);
+		 log.info("@@@@@@@@@@@@@@@@전달받은 verified값 true or false : {}@@@@@@@@@@@@@@@@@@@", verified);
+		        int m = service.emailCheck(req.getParameter("user_email"));
+		        log.info("@@@@@@@@@@@@@@@전달받은 emailCheck 값 0 or other : {}@@@@@@@@@@@@@@@", m);
+		        if(m == 0) {
+		        	int n = service.joinUser(vo);
+		        	log.info("@@@@@@@@@@@@@@@전달받은 joinUser값 0 or other : {}@@@@@@@@@@@@@@@", n);
 		        if (n == 1) {
 		            session.removeAttribute("verified");
 		            return "redirect:/login.do";
@@ -91,13 +93,12 @@ public class UserController {
 		            response.getWriter().println("<script>alert('회원가입에 실패 하셨습니다'); location.href='http://localhost:8080/NOERROR_BMSS';</script>");
 		            return null;
 		        }
+		    }else {
+		    	response.setContentType("text/html; charset=utf-8;");
+		    	response.getWriter().println("<script>alert('이미 가입된 회원입니다\\n로그인 페이지로 이동합니다'); location.href='/NOERROR_BMSS/login.do';</script>");
+		    	return null;
 		    }
-//		    else {
-//		        response.setContentType("text/html; charset=utf-8;");
-//		        response.getWriter().println("<script>alert('인증이 완료되지 않았습니다.'); location.href='javascript:history.back()'</script>");
-//		        return null;
-//		    }
-//	}
+	}
 	
 	/*
 	 * 로그인화면 이동, -> mainPage이동
@@ -111,19 +112,6 @@ public class UserController {
 	/*
 	 * 로그인폼
 	 */
-//	@RequestMapping(value = "/loginCheck.do")
-//	@ResponseBody
-//	public ResponseEntity<?> loginCheckText(@RequestBody Map<String, Object> map,HttpSession session){
-//		log.info("@@@@@@@@@@@@@@@UserController 로그인 정보 조회  : {}@@@@@@@@@@@@@@@",map);
-//		
-//		UserVo vo = service.login(map);
-//		if(vo != null) {
-//			session.setAttribute("loginVo", vo);
-//			return ResponseEntity.ok().body(vo);
-//		} else {
-//			return new ResponseEntity<String>("등록 오류입니다", HttpStatus.BAD_REQUEST);
-//		}
-//	}
 	@PostMapping("/loginCheck.do")
 	public String login(HttpSession session, Model model, HttpServletRequest req) {
 //		String email = (String) model.getAttribute("user_email");
@@ -160,5 +148,14 @@ public class UserController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	/*
+	 * 이메일 찾기
+	 */
+	@RequestMapping(value = "/findEmail.do")
+	public String findEmail() {
+		log.info("@@@@@@@@@@@@@@@이메일 찾기 이동@@@@@@@@@@@@@@@");
+		return "findEmail";
 	}
 }
