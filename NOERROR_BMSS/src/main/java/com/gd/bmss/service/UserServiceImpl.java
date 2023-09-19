@@ -1,7 +1,9 @@
 package com.gd.bmss.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.gd.bmss.vo.SocialVo;
 import com.gd.bmss.vo.UserVo;
 
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.message.model.Message;
 
 @Service
 @Slf4j
@@ -47,5 +50,12 @@ public class UserServiceImpl implements IUserService {
 		log.info("@@@@@@@@@@@@@@ 토큰 업데이트 updateRetoken @@@@@@@@@@@@@@@@");
 		return dao.updateRetoken(vo);
 	}
+
+	@Override
+	public int emailCheck(String email) {
+		log.info("@@@@@@@@@@@@@@ 중복회원검사 emailCheck @@@@@@@@@@@@@@@@");
+		return dao.emailCheck(email);
+	}
+	
 
 }

@@ -20,10 +20,6 @@ function checkInfo(){
 	var pwdChk = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
 	var phoneChk = /^\d{9,11}$/;
 	console.log("입력된 값 이름:",name,"\n","이메일 :",email,"\n","비번 :",password,"\n","전번 :",phone,"\n","생일 :",birth,"\n","주소 :",address,dAddress);
-//	if(name.value == null || email.value == null || password.value == null || phone.value == null || birth.value == null || address.value == null || dAddress.value == null){
-//		alert("정보를 모두 입력해야 회원가입이 가능합니다");
-//		return false;
-//	}
 	if(name == ""){
 		alert("이름을 작성해 주세요");
 		document.getElementById("name").focus();
@@ -80,19 +76,6 @@ function checkInfo(){
 	}
 	
 
-//$(document).ready(function() {
-//  $("#signupForm").submit(function(event) {
-//    event.preventDefault();
-//    var verified = localStorage.getItem('verified');
-//    console.log(verified);
-//    if (verified === "true") {
-//      this.submit();
-//alert("회원가입이 완료되었습니다 로그인 해주세요");
-//    } else {
-//      alert("이메일 인증을 먼저 완료해주세요.");
-//    }
-//  });
-//});
 
 };
 

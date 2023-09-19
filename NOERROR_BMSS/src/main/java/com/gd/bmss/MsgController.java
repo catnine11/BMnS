@@ -28,7 +28,7 @@ import retrofit2.http.GET;
 
 @Controller
 @Slf4j
-public class MailController {
+public class MsgController {
 
 	
 	@Autowired
@@ -99,7 +99,7 @@ public class MailController {
 		String randomCode = randomCode();
 		String msgText = "NOERROR 책check 인증번호는\t" + randomCode +"\t 입니다 \n\n 인증번호를 입력해 주세요";
 		message.setFrom("01094792650");
-		message.setTo("01094792650");
+		message.setTo(phone);
 		message.setText(msgText);
 		
 		try {
@@ -113,8 +113,8 @@ public class MailController {
 			return "Error";
 		} catch (Exception e) {
 			System.out.println("@@@@@@@@@@@@@" + e.getMessage() + "@@@@@@@@@@@@@@");
+			return "Error";
 		} 
-		return "Error";
 	}
 	
 	@PostMapping(value = "/confirm.do")

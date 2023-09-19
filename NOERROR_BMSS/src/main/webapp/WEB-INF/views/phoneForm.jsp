@@ -123,7 +123,7 @@ console.log(thisPhone.value);
 };
 
 $(document).ready(function() {
-    $("#phoneForm").submit(function(event) {
+    $("#phoneForm").click(function(event) {
         event.preventDefault();
         var phone = $("input[name='phone']").val();
         $.ajax({
@@ -163,7 +163,7 @@ $(document).ready(function() {
                 if (response === "Success") {
                     console.log(confirmNum);
                     alert("인증이 완료되었습니다.");
-                    localStorage.setItem('verified', 'true');
+                    localStorage.setItem('confirm', 'true');
                     window.close();
                 } else {
                     alert("인증번호가 일치하지 않습니다.");

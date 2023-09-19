@@ -82,7 +82,7 @@ WHERE SOCIAL_EMAIL = #{social_email}
 <select id="emailCheck" resultType="java.lang.Integer">
 	SELECT COUNT(*)
 		FROM BOOK_USERINFO
-	WHERE USER_EMAIL = #{user_email}
+	WHERE USER_EMAIL = #{user_email} AND GUBUN='nomal'
 </select>
 
 <!-- 정보수정 -->
