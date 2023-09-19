@@ -26,5 +26,7 @@ public interface IBookManageDao {
 	//크롤링으로 도서등록
 	public int updateBook(BookInfoVo infoVo);
 	
+	//도서등록
+	
 	
 }

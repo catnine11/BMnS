@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NOERROR 책</title>
+<title>NOERROR 책 목록</title>
 <style type="text/css">
 
 	#thumbnail{
@@ -35,9 +35,9 @@
  		left: 0;
  		bottom: 0;
  		padding: 20%;
- 		width: 100%;
+ 		width: 100px;
  		text-align: center;
-  		display: hidden; 
+  		display: none; 
  	}
 </style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -47,15 +47,15 @@
 		console.log(selectedGenre);
 		
 		$.ajax({
-			url: "./bookListUserGenre.do",
+			url: "./bookListGenre.do",
 			type: "post",
-			data: { selectedGenre: selectedGenre},
+			data: {selectedGenre: selectedGenre},
 			dataType: "json",
 			success: function (data) {
-// 				console.log(data);
-// 				console.log(data.selectGenre);
-// 				console.log(data.selectGenre[0]);
-// 				console.log(data.selectGenre.length);
+				console.log(data);
+				console.log(data.selectGenre);
+				console.log(data.selectGenre[0]);
+				console.log(data.selectGenre.length);
 				
 				$("#bookList").html("");
 				var html = "";
@@ -84,7 +84,6 @@
 			}
 		});
 	}
-	
 	
 </script>
 </head>
