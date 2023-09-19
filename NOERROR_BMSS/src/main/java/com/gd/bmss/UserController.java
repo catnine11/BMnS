@@ -88,7 +88,7 @@ public class UserController {
 		            return "redirect:/login.do";
 		        } else {
 		            response.setContentType("text/html; charset=utf-8;");
-		            response.getWriter().println("<script>alert('회원가입에 실패 하셨습니다'); location.href='http://localhost:8080/noerrorbmss';</script>");
+		            response.getWriter().println("<script>alert('회원가입에 실패 하셨습니다'); location.href='http://localhost:8080/NOERROR_BMSS';</script>");
 		            return null;
 		        }
 		    }
@@ -153,7 +153,7 @@ public class UserController {
 			SpringUtils.servletAlert(response, "잘못된 접근입니다", "loginForm.do");
 			return "";
 		} else {
-			return "redirect:/http://localhost:8080/noerrorbmss";
+			return "redirect:/http://localhost:8080/NOERROR_BMSS";
 		}
 	}
 	@GetMapping("/logout.do")
