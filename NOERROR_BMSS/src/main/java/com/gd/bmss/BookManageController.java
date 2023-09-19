@@ -47,10 +47,10 @@ public class BookManageController {
 		return "bookListUser";
 	}
 	
-	@PostMapping(value = "/bookListUserGenre.do")
+	@PostMapping(value = "/bookListGenre.do")
 	@ResponseBody
-	public Map<String, Object> bookListUserGenre(Model model, @RequestParam String selectedGenre) {
-		log.info("Welcome BookManageController 회원의 도서전체조회창-장르별 조회");
+	public Map<String, Object> bookListGenre(Model model, @RequestParam String selectedGenre) {
+		log.info("Welcome BookManageController 도서전체조회창-장르별 조회");
 		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -78,23 +78,23 @@ public class BookManageController {
 	public String bookDetail(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
 		BookInfoVo detailList = service.getOneBook(book_code);
-		model.addAttribute("detailList", detailList);
+		model.addAttribute("lists", detailList);
 		
 		return "bookDetail";
 	}
 	
 	/*
-	 * 장르변경 chkBook, selectedGenre
+	 * 장르변경 chkBook, selectedChangeGenre
 	 */
 	@RequestMapping(value = "/changeGenre.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public String changeGenre(Model model, String[] chkBook, String selectedGenre) {
+	public String changeGenre(Model model, String[] chkBook, String selectedChangeGenre) {
 		log.info("Welcome BookManageController 장르변경 ");
-		log.info("Welcome BookManageController 장르변경 parameter : {} {}", Arrays.toString(chkBook), selectedGenre);
+		log.info("Welcome BookManageController 장르변경 parameter : {} {}", Arrays.toString(chkBook), selectedChangeGenre);
 		
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("genre_code", selectedGenre);
+		map.put("genre_code", selectedChangeGenre);
 		map.put("codes", chkBook);
 		
 		service.changeGenre(map);
@@ -109,6 +109,11 @@ public class BookManageController {
 	/*
 	 * 도서상태변경
 	 */
+	public String changeBStatus() {
+		log.info("Welcome BookManageController 도서상태변경 ");
+		
+		return "redirect:/bookListAdmin.do";
+	}
 	
 	
 

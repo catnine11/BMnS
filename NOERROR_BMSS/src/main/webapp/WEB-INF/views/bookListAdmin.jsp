@@ -6,67 +6,137 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>NOERROR 책 목록-관리자</title>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+	function genreList(){
+		var selectedGenre = $("#genreSelect").val();
+		console.log(selectedGenre);
+		
+		$.ajax({
+			url: "./bookListGenre.do",
+			type: "post",
+			data: {selectedGenre: selectedGenre},
+			dataType: "json",
+			success: function (data) {
+				console.log(data);
+				console.log(data.selectGenre);
+				console.log(data.selectGenre[0]);
+				console.log(data.selectGenre.length);
+				
+				$("#bookList").html("");
+				var html = "";
+				
+				for (var i = 0; i < data.selectGenre.length; i++) {
+				    var book = data.selectGenre[i];
+				
+				html+="<ul class='imgList'>";
+				html+="<li>";
+				html+="	<div class='over'>";
+				html+="		<strong>"+book.title+"</strong>";
+				html+="		<span>"+book.author+"</span>";
+				html+="		<p>"+book.publisher+"</p>";
+				html+="	</div>";
+				html+="	<a>";
+				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='location.href='./bookDetail.do?book_code="+book.book_code+">";
+				html+="	</a>";
+				html+="</li>";
+				html+="</ul>";
+				}
+				$('#bookList').html(html);
 
+			},
+			error: function () {
+				alert("도서 목록을 불러오는 중 오류가 발생했습니다.");
+			}
+		});
+	}
+	
+</script>
 </head>
 <%@include file="header.jsp" %>
 <body>
 	<div class="container">
-<!-- 		<form action="./changeGenre.do" id="genreChangeForm" method="post" onsubmit="return changeGenre()"> -->
-		<form action="./changeGenre.do" id="genreChangeForm" method="post" onsubmit="return changeGenre();">
 		<div class="selectGenre">
-			<select id="genreSelect" class="Genre" name="selectedGenre">
-				<option value="">전체</option>
-				<option value="000">총류</option>
-				<option value="100">철학</option>
-				<option value="200">종교</option>
-				<option value="300">사회과학</option>
-				<option value="400">자연과학</option>
-				<option value="500">기술과학</option>
-				<option value="600">예술</option>
-				<option value="700">언어</option>
-				<option value="800">문학</option>
-				<option value="900">역사</option>
+			<select id="genreSelect" class="Genre" name="selectedGenre" onchange="genreList()">
+				<option>전체</option>
+				<option>총류</option>
+				<option>철학</option>
+				<option>종교</option>
+				<option>사회과학</option>
+				<option>자연과학</option>
+				<option>기술과학</option>
+				<option>예술</option>
+				<option>언어</option>
+				<option>문학</option>
+				<option>역사</option>
 			</select>
-			<button type="submit">변경</button>
 		</div>
-		<div>
-			<table>
-				<tbody>
-					<c:forEach items="${lists}" var="book">
-						<tr>
-							<td>
-								<input type="checkbox" id="chkBook" name="chkBook" value="${book.book_code}">
-							</td>
-							<td>${book.book_code}</td>
-							<td>
-								<img src="${book.thumbnail}" onclick="location.href='./bookDetail.do?book_code=${book.book_code}'">
-							</td>
-							<td>${book.genre_name}</td>
-							<td>${book.title}</td>
-							<td>${book.author}</td>
-							<td>${book.publisher}</td>
-							<td>${book.publish_date}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+		<form action="./changeGenre.do" id="genreChangeForm" method="post" onsubmit="return changeGenre();">
+			<div>
+			<h3>장르를 변경할 도서를 체크하고 변경버튼을 눌러주세요</h3>
+				<select id="genreChange" class="Genre" name="selectedChangeGenre">
+<!-- 					<option value="">전체</option> -->
+					<option value="000">총류</option>
+					<option value="100">철학</option>
+					<option value="200">종교</option>
+					<option value="300">사회과학</option>
+					<option value="400">자연과학</option>
+					<option value="500">기술과학</option>
+					<option value="600">예술</option>
+					<option value="700">언어</option>
+					<option value="800">문학</option>
+					<option value="900">역사</option>
+				</select>
+				<button type="submit">장르변경</button>
+			</div>
+			<div id="bookList">
+				<table>
+					<tbody>
+						<c:forEach items="${lists}" var="book">
+							<tr>
+								<td>
+									<input type="checkbox" name="chkBook" value="${book.book_code}">
+								</td>
+								<td>${book.book_code}</td>
+								<td>
+									<img src="${book.thumbnail}">
+								</td>
+								<td>${book.genre_name}</td>
+								<td>${book.title}</td>
+								<td>${book.author}</td>
+								<td>${book.publisher}</td>
+								<td>${book.publish_date}</td>
+								<td>
+									<input type="button" value="도서 상세" onclick="location.href='./bookDetail.do?book_code=${book.book_code}'">
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</form>
 	</div>
 </body>
+<%@include file="footer.jsp" %>
 <script type="text/javascript">
 
-
-
 	function changeGenre(){
-		//1 id가 genreChangeForm인 값이 "" 없는 경우 
-		//2.chkBook name을 가진 dom을 찾아서 checked가 true인 갯수가 1개 이상인 경우 
-		// if문에 1번2번 조건이라면 return false
+		//1 id가 genreChange인 값이 "" 없는 경우 
+		//2.chkBook name을 가진 dom을 찾아서 checked가 true인 개수가 1개 이상인 경우 
+		// if문이 1번2번 조건이라면 return false
+		
+		var select = document.getElementById("genreChange");
+		var idx = select.selectedIndex;
+		var opt = select.options[idx];
+		console.log("선택된 옵션값: " + opt.value);
+		console.log("선택된 옵션의 텍스트: " + opt.text);
+		if(opt.value == ""){
+			alert("전체로는 장르를 변경할 수 없습니다.");
+			return false;
+		}
 		
 		var chks = document.getElementsByName("chkBook");
-		
 		var cnt = 0;
 		for(let c of chkBook){
 			if(c.checked){
@@ -74,27 +144,13 @@
 				console.log("cnt");
 			}
 		}
-		
 		if(cnt ==0){
 			alert("한 개 이상의 글을 선택해 주세요");
 			return false;
 		}
 		
-		var all = document.getElementById("genreSelect");
-			
-		
-		var selectedOption = document.getElementById("genreSelect")
-		var idx = selectedIndex.selectedIndex;
-		var opt = selectedOption.options[idx];
-		
-		console.log("선택된 옵션값: " + opt.value);
-		console.log("선택된 옵션의 텍스트: " + selectedText);
-		
-		return false;
+// 		return false;
 	}
-
-
-	
 	
 </script>
 </html>
