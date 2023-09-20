@@ -27,6 +27,9 @@ public interface IUserDao {
 	//정보수정
 		public int updateUser(UserVo vo);
 		
+	//비밀번호초기화
+		public int updatePwd(Map<String, Object> map);
+		
 	//관리자 소셜조회
 		public List<SocialVo> selectSocial();
 		

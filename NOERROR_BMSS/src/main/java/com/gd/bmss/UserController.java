@@ -158,4 +158,12 @@ public class UserController {
 		log.info("@@@@@@@@@@@@@@@이메일 찾기 이동@@@@@@@@@@@@@@@");
 		return "findEmail";
 	}
+	/*
+	 * 비밀번호찾기/초기화
+	 */
+	@RequestMapping(value = "/findPassword.do")
+	public String findPassword() {
+		log.info("@@@@@@@@@@@@@@@비밀번호 찾기 이동@@@@@@@@@@@@@@@");
+		return "findPassword";
+	}
 }

@@ -18,4 +18,10 @@ public interface IUserService {
 	public int updateRetoken(SocialVo vo);
 	
 	public int emailCheck(String email);
+	
+	public String findEmail(Map<String, Object> map);
+	
+	public String findPassword(Map<String, Object> map);
+	
+	public int updatePwd(Map<String,Object> map);
 }
