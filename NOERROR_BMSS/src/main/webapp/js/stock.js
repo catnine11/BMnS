@@ -45,27 +45,25 @@ html+="		</tr>                                                                  
 		for (let obj of data)    {    
 			   
 html+="			<tr>                                                                                                ";
-html+="				<td><input type='checkbox' name='delChk'                                                        ";
-html+="					value='"+obj.book_code+"'></td>                                                             ";
+html+="				<td><input class='delChk' type='checkbox' name='delChk' value='"+obj.book_code+"'></td>                                                       ";
 html+="				<td class='stockNum'>"+obj.stock_number+"</td>                                                     ";
 html+="				<td>"+obj.status_title+"</td>                                                                      ";
-html+="				<td><select class='changeBookStatus' name='status_code'>                                        ";
-html+="						<option value='A' ("+obj.status_code+" === 'D') ? 'selected' : ''>일반</option>                 ";
-html+="						<option value='B' ("+obj.status_code+" === 'D') ? 'selected' : ''>재고</option>                 ";
-html+="						<option value='C' ("+obj.status_code+" === 'D') ? 'selected' : ''>분실</option>                 ";
-html+="						<option value='D' ("+obj.status_code+" === 'D') ? 'selected' : ''>예정</option>                 ";
-html+="				</select></td>                                                                 ";
-html+="				<td><select class='sellStatus' name='sellStatus'>                                               ";
-html+="						<option value='N' ("+obj.sell_status+" == 'N' ? 'selected' : '')>판매불가</option>           ";
-html+="						<option value='Y' ("+obj.sell_status+" 'Y' ? 'selected' : '')>판매가능</option>           ";
-html+="				</select></td>                                                                                  ";
-html+="				<td><input class='price' type='number' name='price'                                             ";
-html+="					value='"+obj.book_price+"'></td> "; 
+html+=`<td><select class='changeBookStatus' name='status_code'>                                        
+    <option value='A' ${obj.status_code == 'A' ? "selected" : ""}>일반</option>
+    <option value='B' ${obj.status_code == 'B' ? "selected" : ""}>재고</option>
+    <option value='C' ${obj.status_code == 'C' ? "selected" : ""}>분실</option>
+    <option value='D' ${obj.status_code =='D'? "selected": ""}>예정</option>
+</select></td>`;
+html+=`<td><select class='sellStatus' name='sellStatus'>                                              
+    <option value='N' ${obj.sell_status == 'N' ? 'selected' : ''}>판매불가</option>          
+    <option value='Y' ${obj.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>           
+</select></td>`;                                                                             
+html += `<td><input class='price' type='number' name='price' value='${obj.book_price}' ${obj.sell_status != 'Y' ? 'readonly' : ''}></td>`;
 html+="					<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>";                                                             
 html+="				<td><input class='chPrice' type='button' value='가격 변경'></td>                                ";
 html+="			</tr>                                                                                               ";
  }                                                                                         
-html+="	<tr>	<td><input type='submit' value='삭제' ></td></tr>                                                   ";
+html+="	<tr>	<td><input id='delButton' type='submit' value='삭제' ></td></tr>                                                   ";
 html+="		</table>                                                                                                ";
  	
  $("#stockDel").html(html);	
@@ -79,16 +77,6 @@ html+="		</table>                                                               
   })
 });
 
-
-
-
-
-
-
-
-//<td><input class='chPrice' type='button' value='가격 변경'></td>      
-
-	
 			
 			$("#stockDel").on("click", "input.chPrice", function() {
     var price= $(this).closest('tr').find('.price').val() // 값을 가져올 때 val() 대신 text() 사용
@@ -111,6 +99,7 @@ html+="		</table>                                                               
         dataType: 'json',
         success: function(data) {
             console.log(data);
+          
             alert("가격이 변경되었습니다.");
         },
         error: function() {
@@ -134,6 +123,13 @@ html+="		</table>                                                               
 				num :num
 			},
 			success : function(data) {
+				 console.log (data);
+				 console.log(data.status);
+				
+				 if(data.status!='Y'){
+					$('.price').prop('readonly',true);	
+				}
+				
 				alert("도서 판매여부가 변경되었습니다.");
 			},
 			error : function() {
@@ -177,7 +173,7 @@ html+="		</table>                                                               
 		})
 		
 		
-	
+
 	$(document).ready(function(){
 		$("input[name='allChk']").click(function(event){
 			
@@ -210,30 +206,72 @@ html+="		</table>                                                               
 		
 	})
 	
-	
-	
-function delStock(){
-	console.log("체크");
-	var frm = document.forms[0];
-	var delChk = document.getElementsByName("delChk");
-	console.log($("input:checkbox[name=delChk]:checked").length);
-	let jQueryCnt =$("input:checkbox[name=delChk]:checked").length;
-	let cnt =0;
-	console.log(delChk.length)
-	for(let i=0; i<delChk.length;i++){
-		console.log(delChk[i].checked)
-		if(delChk[i].checked){
-			cnt++;
+
+
+
+
+	$(document).on('click', 'input#delButton', function() {
+    var checkedNums = [];
+    $('input[name="delChk"]:checked').each(function() {
+        checkedNums.push($(this).closest('tr').find('.stockNum').text());//체크된 값을 
+
+   $.ajax({
+	type:"POST",
+	url:"./stocksDel.do",
+	data:{checkedNums:checkedNums},
+	success:function(data){
+		if(checkedNums.length==data.length){
+			
+		alert('삭제를 완료했습니다.');
+		
+		}else{
+			alert('삭제할 수 없는 항목이 있습니다.');
 		}
+			
+	
+	},
+	error:function(){
+		alert('삭제에 실패했습니다.');
 	}
 	
-	if(jQueryCnt>0){ // 한개도 체크가 안되었을때
-		frm.action="./stocksDel.do";
-		frm.method="post";
-		frm.submit();	
-	}else{
-		alert("체크항목은 필수 입니다");
-		return false;
-	}
-	
-}
+})
+    
+    });
+    console.log(checkedNums);
+    
+   
+   
+});
+
+//	html+="				<td><input type='checkbox' name='delChk'                                                      ";
+//	$(document).on('click','input#delButton',function(){
+//	console.log($(this).closest('tr').find('.delChk').val());
+//	var frm = document.forms[0];
+//	var delChk = document.getElementsByName("delChk");
+//	console.log($("input:checkbox[name=delChk]:checked").length);
+//	let jQueryCnt =$("input:checkbox[name=delChk]:checked").length;
+//	let cnt =0;
+//	console.log(delChk.length)
+//	for(let i=0; i<delChk.length;i++){
+//		console.log(delChk[i].checked)
+//		if(delChk[i].checked){
+//			return false;
+//			cnt++;
+//		}
+//	}
+//	
+//	if(jQueryCnt>0){ // 한개도 체크가 안되었을때
+//		frm.action="./stocksDel.do";
+//		frm.method="post";
+//		return false;
+//		frm.submit();	
+//	}else{
+//		alert("체크항목은 필수 입니다");
+//		return false;
+//	}
+//	
+//
+//
+//
+//		
+//	})

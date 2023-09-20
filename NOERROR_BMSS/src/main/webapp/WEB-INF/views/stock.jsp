@@ -77,40 +77,8 @@ table {
 
 
 			<div class="col-sm-6">
-				<form id="stockDel" action="/stocksDel.do" method="post">
-<!-- 					<table> -->
-<!-- 						<tr> -->
-<!-- 							<td><input type="checkbox" name="allChk"></td> -->
-<!-- 							<td>재고번호</td> -->
-<!-- 							<td>도서명</td> -->
-<!-- 							<td>도서상태</td> -->
-<!-- 							<td>판매가능 여부</td> -->
-<!-- 							<td>도서 가격</td> -->
-<!-- 						</tr> -->
-<%-- 						<c:forEach var="a" items="${list}"> --%>
-<!-- 							<tr> -->
-<!-- 								<td><input type="checkbox" name="delChk" -->
-<%-- 									value="${a.stock_number}"></td> --%>
-<%-- 								<td class="stockNum">${a.stock_number}</td> --%>
-<%-- 								<td>${a.status_title}</td> --%>
-<!-- 								<td><select class="changeBookStatus" name="status_code"> -->
-<%-- 										<option value="A" ${a.status_code=='A' ? 'selected' : ''}>일반</option> --%>
-<%-- 										<option value="B" ${a.status_code=='B' ? 'selected' : ''}>재고</option> --%>
-<%-- 										<option value="C" ${a.status_code=='C' ? 'selected' : ''}>분실</option> --%>
-<%-- 										<option value="D" ${a.status_code=='D' ? 'selected' : ''}>예정</option> --%>
-<!-- 								</select></td> -->
-<!-- 								<td><select class="sellStatus" name="sellStatus"> -->
-<%-- 										<option value="N" ${a.sell_status == 'N' ? 'selected' : ''}>판매불가</option> --%>
-<%-- 										<option value="Y" ${a.sell_status == 'Y' ? 'selected' : ''}>판매가능</option> --%>
-<!-- 								</select></td> -->
-<!-- 								<td><input class="price" type="number" name="price" -->
-<%-- 									value="${a.book_price}"></td> --%>
-<!-- 								<td><input class="chPrice" type="button" value="가격 변경"></td> -->
-<!-- 							</tr> -->
+				<form id="stockDel" action="./stocksDel.do" method="post">
 
-<%-- 						</c:forEach> --%>
-<!-- 					<tr>	<td><input type="submit" value="삭제" ></td></tr> -->
-<!-- 					</table> -->
 				</form>
 			</div>
 
