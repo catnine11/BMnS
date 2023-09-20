@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gd.bmss.vo.BookInfoVo;
+import com.gd.bmss.vo.Book_StatusVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +38,11 @@ public class BookManageDaoImpl implements IBookManageDao {
 	@Override
 	public BookInfoVo getOneBook(String book_code) {
 		return session.selectOne(NS+"getOneBook", book_code);
+	}
+	@Override
+//	public List<Book_StatusVo> getOneBookStatus(String book_code) {
+		public BookInfoVo getOneBookStatus(String book_code) {
+		return session.selectOne(NS+"getOneBookStatus", book_code);
 	}
 
 	@Override

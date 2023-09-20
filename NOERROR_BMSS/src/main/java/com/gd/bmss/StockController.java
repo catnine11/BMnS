@@ -2,6 +2,7 @@ package com.gd.bmss;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.mapper.IStockDao;
@@ -102,29 +104,13 @@ public class StockController {
 	
 	@PostMapping("/stocksDel.do")
 	@ResponseBody
-	public Map<String, String[]> stocksDel(String[] checkedNums,HttpServletResponse resp) throws IOException {
+	public Map<String, Integer> stocksDel( @RequestParam(value="checkedNums[]") List<String> checkedNums,HttpServletResponse resp){
 		System.out.println("stocksDel.do");
-		System.out.println(checkedNums);
-		
-			Map<String, String[]> map =new HashMap<String, String[]>();
-		map.put("nums", checkedNums);
-		
-//		if(delChk!=null && delChk.length()>1) {
-//			String [] nums =delChk.split(",");
-//			map.put("nums", nums);
-//			System.out.println(map);
-		dao.stocksDel(map);
-//		return "redirect:/stocklist.do";
-//		}else if(delChk.length()==0) {
-//			
-//			String [] nums = {delChk};
-//			map.put("nums", nums);
-//			dao.stocksDel(map);
-//			
-//			return "redirect:/stocklist.do";
-//		}
-//		return "redirect:/stocklist.do";
-//		}
+		System.out.println((checkedNums));
+		int n 	=dao.stocksDel(checkedNums);
+Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("result", n);
+	
 	return map ;
 	
 //			

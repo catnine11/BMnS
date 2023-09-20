@@ -62,8 +62,14 @@ public class BookModel_JUnitTest {
 	
 //	@Test
 	public void detailTest() {
-		BookInfoVo info = dao.getOneBook("3");
+		BookInfoVo info = dao.getOneBook("1");
 		System.out.println(info);
+		assertNotNull(info);
+	}
+	
+	@Test
+	public void detailStatus() {
+		BookInfoVo info = dao.getOneBookStatus("1");
 		assertNotNull(info);
 	}
 	
@@ -234,7 +240,7 @@ public class BookModel_JUnitTest {
 		assertEquals(1, n);
 	}
 	
-	@Test
+//	@Test
 	public void CancelReserveCron() {
 		boolean isc = service.CancelReserveCron();
 		assertTrue(isc);

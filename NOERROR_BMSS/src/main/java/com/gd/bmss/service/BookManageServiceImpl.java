@@ -42,6 +42,12 @@ public class BookManageServiceImpl implements IBookManageService {
 		log.info("@@@@@@@@@@@BookManageServiceImpl getOneBook 상세조회 {}", book_code);
 		return dao.getOneBook(book_code);
 	}
+	@Override
+//	public List<Book_StatusVo> getOneBookStatus(String book_code) {
+		public BookInfoVo getOneBookStatus(String book_code) {
+		log.info("@@@@@@@@@@@BookManageServiceImpl getOneBookStatus 상세조회 {}", book_code);
+		return dao.getOneBookStatus(book_code);
+	}
 
 	@Override
 	public int changeGenre(Map<String, Object> map) {

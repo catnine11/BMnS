@@ -57,7 +57,7 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 
 
 	@Override
-	public int stocksDel(Map<String, String[]> stock_number) {
+	public int stocksDel(List<String> stock_number) {
 	int n=	sql.delete(NS+"stocksDel",stock_number);
 		return n;
 	}

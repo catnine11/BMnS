@@ -20,9 +20,6 @@ body{
 <%-- ${sessionScope.info } --%>
 	<div style="background-color: #D9E5FF">
 		<div>
-			<a href="./myPage.do">마이페이지</a>
-		</div>
-		<div>
 			<a>아 귀찮다</a>
 		</div>
 		<div>

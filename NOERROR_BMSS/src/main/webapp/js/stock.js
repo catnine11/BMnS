@@ -44,7 +44,7 @@ html+="			<td>도서 가격</td>                                                
 html+="		</tr>                                                                                                   ";
 		for (let obj of data)    {    
 			   
-html+="			<tr>                                                                                                ";
+html+="			<tr class='delTr'>                                                                                                ";
 html+="				<td><input class='delChk' type='checkbox' name='delChk' value='"+obj.book_code+"'></td>                                                       ";
 html+="				<td class='stockNum'>"+obj.stock_number+"</td>                                                     ";
 html+="				<td>"+obj.status_title+"</td>                                                                      ";
@@ -58,12 +58,12 @@ html+=`<td><select class='sellStatus' name='sellStatus'>
     <option value='N' ${obj.sell_status == 'N' ? 'selected' : ''}>판매불가</option>          
     <option value='Y' ${obj.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>           
 </select></td>`;                                                                             
-html += `<td><input class='price' type='number' name='price' value='${obj.book_price}' ${obj.sell_status != 'Y' ? 'readonly' : ''}></td>`;
+html += `<td><input class='price' type='number' name='price' value='${obj.book_price}'}></td>`;
 html+="					<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>";                                                             
 html+="				<td><input class='chPrice' type='button' value='가격 변경'></td>                                ";
 html+="			</tr>                                                                                               ";
  }                                                                                         
-html+="	<tr>	<td><input id='delButton' type='submit' value='삭제' ></td></tr>                                                   ";
+html+="	<tr>	<td><input id='delButton' type='button' value='삭제' ></td></tr>                                                   ";
 html+="		</table>                                                                                                ";
  	
  $("#stockDel").html(html);	
@@ -211,33 +211,43 @@ html+="		</table>                                                               
 
 
 	$(document).on('click', 'input#delButton', function() {
-    var checkedNums = [];
+    var checkedNums = new Array();
     $('input[name="delChk"]:checked').each(function() {
         checkedNums.push($(this).closest('tr').find('.stockNum').text());//체크된 값을 
+ 		
 
-   $.ajax({
-	type:"POST",
+ 		
+ });
+  $.ajax({
+	type:"post",
 	url:"./stocksDel.do",
-	data:{checkedNums:checkedNums},
-	success:function(data){
-		if(checkedNums.length==data.length){
-			
-		alert('삭제를 완료했습니다.');
-		
-		}else{
-			alert('삭제할 수 없는 항목이 있습니다.');
-		}
-			
+	data:{"checkedNums":checkedNums},
 	
+	success:function(data){
+//		console.log(data.result);
+//		console.log(data);
+//		console.log(checkedNums.length);
+		if(data.result!=checkedNums.length){
+		alert("판매 가능 목록을 같이 선택 하셨습니다.");
+		}else{
+		 $('input[name="delChk"]:checked').each(function() {
+                // 가장 가까운 '.delTr' 클래스를 가진 tr 요소를 찾아서 제거합니다.
+                $(this).closest('.delTr').remove();
+			alert("삭제를 완료 했습니다.");
+            });
+            }
+		
+		
 	},
+	
 	error:function(){
-		alert('삭제에 실패했습니다.');
+		alert("주문에 추가 되었거나 가격을 확인하세요");
 	}
 	
 })
     
-    });
-    console.log(checkedNums);
+   
+
     
    
    

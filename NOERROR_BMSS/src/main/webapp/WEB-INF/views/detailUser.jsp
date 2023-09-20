@@ -14,6 +14,7 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
+
 	<div style="margin-left: 5%; margin-right: 5%;">
 	<h2>내 정보</h2>
 		<table class="table table-hover" style="margin-top: 5%; border-top: 2px solid #e1e1e1">
@@ -61,6 +62,8 @@
 			<a class="text-reset" href="/boardChat?requestedPage="></a>&nbsp;&nbsp;
 		</p>
 		
+    <a href="./myLibrary.do">내 서재</a>
+
 	</div>
 </body>
 <%@include file="footer.jsp"%>

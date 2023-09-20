@@ -8,21 +8,47 @@
 <selectKey keyProperty="order_price" order="BEFORE" resultType="java.lang.Integer" > 
 SELECT BOOK_PRICE AS ORDER_PRICE FROM BOOK_STOCK WHERE STOCK_NUMBER =#{stock_number}
 </selectKey>
-INSERT INTO NOER.BOOK_ORDER
-(STOCK_NUMBER, ORDER_NUMBER, ORDER_QUANTITY, ORDER_PRICE, ORDER_DATE, PAY_STATUS, USER_ID)
-VALUES(#{stock_number}, #{order_number}, 1, #{order_price}, (CURRENT_DATE), 1, #{user_id})
+INSERT INTO BOOK_ORDER
+(ORDER_SEQ, STOCK_NUMBER, ORDER_QUANTITY, ORDER_PRICE, ORDER_DATE, PAY_STATUS, USER_ID)
+VALUES(ORDER_SEQ.NEXTVAL, #{stock_number}, 1, #{order_price}, (CURRENT_DATE), (1),#{user_id})
 </insert>
 
 <select id="getAllOrder" resultType="OrderVo">
-SELECT A.STOCK_NUMBER, A.ORDER_NUMBER, A.ORDER_DATE, A.ORDER_QUANTITY, A.ORDER_PRICE,
+SELECT A.STOCK_NUMBER, A.ORDER_SEQ, A.ORDER_DATE, A.ORDER_QUANTITY, A.ORDER_PRICE,
 A.PAY_STATUS, A.USER_ID,USER_ADDRESS
 FROM BOOK_ORDER A
 JOIN BOOK_USERINFO B ON A.USER_ID = B.USER_ID
 </select>
 
+<resultMap type="OrderVo" id="OrderMap">
+<result property="order_seq" column="ORDER_SEQ"/>
+<result property="stock_number" column="STOCK_NUMBER"/>
+<result property="order_quantity" column="ORDER_QUANTITY"/>
+<result property="order_price" column="ORDER_PRICE"/>
+<result property="order_date" column="ORDER_DATE"/>
+<result property="pay_status" column="PAY_STATUS"/>
+<result property="user_id" column="USER_ID"/>
+<collection property="stockvo" resultMap="StockMap"></collection>
+</resultMap>
+
+<resultMap type="StockVo" id="StockMap">
+<result column="STOCK_NUMBER" property="stock_number"/>
+<result column="SELL_STATUS" property="sell_status"/>
+<result column="BOOK_SEQ" property="book_seq"/>
+<result column="BOOK_PRICE" property="book_price"/>
+</resultMap>
+
+
+
+
+
+
+
+
+
 
 <select id="getDetailOrder" resultType="OrderVo" >
-SELECT STOCK_NUMBER, ORDER_NUMBER, ORDER_QUANTITY , ORDER_PRICE,
+SELECT ORDER_SEQ,STOCK_NUMBER,  ORDER_QUANTITY , ORDER_PRICE,
   PAY_STATUS, USER_ID  FROM BOOK_ORDER WHERE USER_ID=#{user_id}
 </select>
 
