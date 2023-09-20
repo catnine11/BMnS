@@ -20,6 +20,12 @@ import com.gd.bmss.vo.BookInfoVo;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 도서관리 컨트롤러
+ * @author 남가람
+ *
+ */
+
 @Controller
 @Slf4j
 public class BookManageController {
@@ -78,7 +84,7 @@ public class BookManageController {
 	public String bookDetail(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
 		BookInfoVo detailList = service.getOneBook(book_code);
-		model.addAttribute("lists", detailList);
+		model.addAttribute("detail", detailList);
 		
 		return "bookDetail";
 	}

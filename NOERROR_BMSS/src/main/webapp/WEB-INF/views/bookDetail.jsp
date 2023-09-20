@@ -40,7 +40,7 @@
 				</div>
 				<div class="info">
 					<div class="title">
-						<h2>${lists.title}</h2>
+						<b>${lists.title}</b>
 					</div>
 					<hr>
 					<div class="info">
@@ -80,16 +80,34 @@
 								 ${lists.genre_name}
 							</li>
 						</ul>
-						<ul>
-							<li>
-								<strong></strong>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-							</li>
-							<li>
-								<strong></strong>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-							</li>
-						</ul>
+					</div>
+					<div class="seqByBookCode">
+						<table>
+							<tbody>
+								<tr>
+									<th class="adminOnly">관리번호</th>
+									<th>장   르</th>
+									<th>도서상태</th>
+									<th>대출상태</th>
+									<th>반납예정일</th>
+									<th>예약상태</th>
+								</tr>
+								<c:forEach var="d" items="${detail}" varStatus="vs">
+									<tr>
+										<td class="adminOnly">${d.book_seq}</td>
+										<td>${d.genre_name}</td>
+										<td>
+										<c:if test="">
+										${d.status_code}
+										</c:if>
+										</td>
+										<td>${d.borrow_status}</td>
+										<td>${d.return_date}</td>
+										<td>${d.reserve_status}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
