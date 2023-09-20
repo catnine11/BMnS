@@ -176,4 +176,14 @@ public class UserController {
 		log.info("@@@@@@@@@@@@@@@비밀번호 찾기 이동@@@@@@@@@@@@@@@");
 		return "findPassword";
 	}
+	
+	/*
+	 * 내정보
+	 */
+	@RequestMapping(value = "/detailUser.do")
+	public String detailUser() {
+		log.info("@@@@@@@@@@@@@@@내정보 이동@@@@@@@@@@@@@@@");
+		return "detailUser";
+	}
+	
 }
