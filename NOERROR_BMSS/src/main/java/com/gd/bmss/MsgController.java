@@ -101,7 +101,7 @@ public class MsgController {
 	@RequestMapping(value = "/phoneChkForm.do")
 	@ResponseBody
 	public String phoneChkFormm(@RequestParam(value ="phone",required=false) String phone ,HttpSession session) {
-		DefaultMessageService msgService = NurigoApp.INSTANCE.initialize("NCS52YUDRI4OLSDD", "RGVUWQOOA3HUXEID6NI5GOMXGLF5MQD5", "https://api.coolsms.co.kr");
+		DefaultMessageService msgService = NurigoApp.INSTANCE.initialize("NCSZADE5ZEC1DZR3", "RGVUWQOOA3HUXEID6NI5GOMXGLF5MQD5", "https://api.coolsms.co.kr");
 		Message message = new Message();
 		String randomCode = randomCode();
 		String msgText = "NOERROR 책check 인증번호는\t" + randomCode +"\t 입니다 \n\n 인증번호를 입력해 주세요";
