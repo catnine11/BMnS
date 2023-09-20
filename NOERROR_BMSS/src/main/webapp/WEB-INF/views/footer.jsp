@@ -5,20 +5,30 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
+html{
+	height: 100%;
+	width: 100%;
+	display: block;
+	min-height: 100%;
+	max-width: 100%;
+}
 	body{
 		margin: 0px;
 	}
 
 	footer{
 	background-color: #f6f6f6;
-	padding-top: 90px;
+	width: 100%;
+    bottom: 0;
+    left: 0;
+	height: 250px;
+/* 	position: absolute; */
 }
 #ft_last{
 	margin: 0px;
 	font-size: 20px; 
 	text-align: center;
-	padding-bottom: 10px;
-	margin-top: 50px;
+	margin-top: 200px;
 }
 #fmenu{
 	float:left;
@@ -26,8 +36,11 @@
 	color: black;
 	text-decoration: none;
 	font-size: 20px;
-	margin-bottom: 100px;
 	margin-left: 10px;
+	margin-top: 100px;
+}
+img{
+	margin: 0px;
 }
 </style>
 </head>
