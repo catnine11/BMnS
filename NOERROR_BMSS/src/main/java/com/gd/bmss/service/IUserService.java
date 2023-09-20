@@ -24,4 +24,6 @@ public interface IUserService {
 	public String findPassword(Map<String, Object> map);
 	
 	public int updatePwd(Map<String,Object> map);
+	
+	public int updateUser(UserVo vo);
 }

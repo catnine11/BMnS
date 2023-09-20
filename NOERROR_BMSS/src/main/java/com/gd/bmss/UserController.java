@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -114,9 +115,7 @@ public class UserController {
 	 * 로그인폼
 	 */
 	@PostMapping("/loginCheck.do")
-	public String login(HttpSession session, Model model, HttpServletRequest req) {
-//		String email = (String) model.getAttribute("user_email");
-//		String pwd = (String) model.getAttribute("user_password");
+	public String login(HttpSession session, Model model,HttpServletRequest req) {
 		String email = req.getParameter("user_email");
 		String pwd = req.getParameter("user_password");
 		log.info("@Controller LoginController login 요청받은 값 [{}] [{}]", email,pwd);
@@ -176,5 +175,41 @@ public class UserController {
 		log.info("@@@@@@@@@@@@@@@내정보 이동@@@@@@@@@@@@@@@");
 		return "detailUser";
 	}
-	
+	/*
+	 * 정보수정
+	 */
+	@RequestMapping(value = "/modifyUser.do")
+	public String modifyUser() {
+		log.info("@@@@@@@@@@@@@@@정보수정 이동@@@@@@@@@@@@@@@");
+		return "modifyUser";
+	}
+	@RequestMapping(value = "/pwdChk.do")
+	@ResponseBody
+	public String modifyInfo(HttpSession session, @RequestParam String password) {
+		log.info("@@@@@@@@@@@@@@@@전달받은 패스워드 : {}@@@@@@@@@@@@@@@@@@@@@@@",password);
+		UserVo a = (UserVo)session.getAttribute("loginVo");
+		
+		log.info(a.getUser_password());
+		if(password.equals(a.getUser_password())) {
+			return "good";
+		}else {
+			
+			return "bad";
+		}
+	}
+	@RequestMapping(value = "/modifyInfo.do")
+	public String modifyInfo(UserVo vo, HttpServletResponse response) throws IOException {
+		log.info("@@@@@@@@@@@@@@@@ 정보수정폼 modifyInfo 이동 @@@@@@@@@@@@@@@@@@@@@@@");
+		int n = service.updateUser(vo);
+		log.info("@@@@@@@@@@@@@@@@@@@@ updateUser 입력값 1or OTHER  : {}@@@@@@@@@@@@@@@@@@@@@@@@@", n);
+		if(n>0) {
+			response.setContentType("text/html; charset=utf-8;");
+	    	response.getWriter().println("<script>alert('회원정보가 수정되었습니다'); location.href='./detailUser.do';</script>");
+			return "redirect:/detailUser.do";
+		}else {
+			response.setContentType("text/html; charset=utf-8;");
+	    	response.getWriter().println("<script>alert('오류가 발생했습니다 다시 시도해 주세요'); location.href='./detailUser.do';</script>");
+			return null;
+		}
+	}
 }

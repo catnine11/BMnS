@@ -71,8 +71,14 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public String findPassword(Map<String, Object> map) {
-		log.info("@@@@@@@@@@@@@@ 비밀번호찾기 updatePwd@@@@@@@@@@@@@@@@");
+		log.info("@@@@@@@@@@@@@@ 비밀번호찾기 findPassword@@@@@@@@@@@@@@@@");
 		return dao.findPassword(map);
+	}
+
+	@Override
+	public int updateUser(UserVo vo) {
+		log.info("@@@@@@@@@@@@@@ 회원정보수정 updateUser@@@@@@@@@@@@@@@@");
+		return dao.updateUser(vo);
 	}
 	
 

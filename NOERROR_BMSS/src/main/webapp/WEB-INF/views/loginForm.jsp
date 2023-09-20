@@ -310,8 +310,8 @@ html,body {
   </div>
   </form>
   </div>
-</body>
 <%@include file="footer.jsp"%>
+</body>
 <script type="text/javascript">
 	function findEmail(){
 		var width = '450';
