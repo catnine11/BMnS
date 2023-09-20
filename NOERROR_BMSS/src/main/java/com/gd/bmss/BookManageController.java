@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.service.IBookManageService;
 import com.gd.bmss.vo.BookInfoVo;
+import com.gd.bmss.vo.Book_StatusVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -80,11 +81,25 @@ public class BookManageController {
 	/*
 	 * 상세조회
 	 */
-	@GetMapping(value = "/bookDetail.do")
+//	@GetMapping(value = "/bookDetail.do")
 	public String bookDetail(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
 		BookInfoVo detailList = service.getOneBook(book_code);
 		model.addAttribute("detail", detailList);
+		
+		return "bookDetail";
+	}
+	
+	/*
+	 * 상세조회-대출상태포함
+	 */
+	@GetMapping(value = "/bookDetail.do")
+	public String bookDetailStatus(Model model, String book_code) {
+		log.info("Welcome BookManageController 도서상세화면창 이동");
+		BookInfoVo detail= service.getOneBookStatus(book_code);
+//		List<Book_StatusVo> detailList = service.getOneBookStatus(book_code);
+		model.addAttribute("detail", detail);
+		System.out.println("\n\n" + detail);
 		
 		return "bookDetail";
 	}

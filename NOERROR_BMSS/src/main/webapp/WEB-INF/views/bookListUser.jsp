@@ -71,7 +71,7 @@
 				html+="		<p>"+book.publisher+"</p>";
 				html+="	</div>";
 				html+="	<a>";
-				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='location.href='./bookDetail.do?book_code="+book.book_code+">";
+				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='location.href=./bookDetail.do?book_code="+book.book_code+"'>";
 				html+="	</a>";
 				html+="</li>";
 				html+="</ul>";
