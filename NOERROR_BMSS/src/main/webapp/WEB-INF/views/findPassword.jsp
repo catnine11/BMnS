@@ -7,20 +7,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이메일찾기</title>
+<title>비밀번호찾기</title>
 <link rel="stylesheet" href="./css/popup.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<body>
 	 <div class="container" style="width: 350px;">
-      <form id="findEmail" action="./findEmailChk.do" method="post">
+      <form id="findPassword" action="./findPwdChk.do" method="post">
       <div class="group">   
-        <input id="name"  name="name" type="text"  required="required">
+        <input id="email"  name="email" type="text"  required="required">
         <span class="highlight"></span>
         <span class="bar"></span>
-        <label>이름</label>
+        <label>이메일</label>
       </div>
       <div class="group">      
         <input type="text"  id="ip2" name="confirmNum" required="required"> 
@@ -48,7 +49,7 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#findEmail").submit(function(event) {
+    $("#findPassword").submit(function(event) {
         event.preventDefault();
         var phone = $("#ip2").val();
         $.ajax({
@@ -74,25 +75,25 @@ $(document).ready(function() {
         event.preventDefault();
         var confirmNum = $("input[name='chkNum']").val();
         var phone = $("#ip2").val();
-        var name = $("#name").val()
+        var email = $("#email").val()
 
         $.ajax({
-            url: "./numChk.do",
+            url: "./numCheck.do",
             type: "POST",
             data: {
             	phone: phone,
-            	name:name,
+            	email:email,
                 confirmNum: confirmNum
             },
-            success: function(email) {
-                if (email === "") {
+            success: function(msg) {
+                if (msg === "") {
                     alert("인증번호가 일치하지 않습니다.");
                     console.log(confirmNum);
                 } else {
                 	console.log(confirmNum);
                     alert("인증이 완료되었습니다.");
                     localStorage.setItem('verified', 'true');
-                    alert("회원님의 이메일은 \t[" + email + "]\t입니다");
+                    alert("비밀번호가 초기화 되었습니다 \n 회원정보에 입력된 이메일로 비밀번호가 발송되었습니다.");
                     window.close();
                 }
             },
@@ -104,4 +105,5 @@ $(document).ready(function() {
     });
 });
 </script>
+</body>
 </html>

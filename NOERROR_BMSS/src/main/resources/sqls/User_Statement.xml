@@ -91,6 +91,12 @@ WHERE SOCIAL_EMAIL = #{social_email}
 		SET USER_PASSWORD=#{user_password}, USER_ADDRESS=#{user_address}
 	WHERE USER_ID=#{user_id} AND GUBUN = 'nomal'
 </update>
+<!-- 비밀번호 초기화 -->
+<update id="updatePwd">
+	UPDATE BOOK_USERINFO
+		SET USER_PASSWORD = #{user_password}
+	WHERE USER_EMAIL=#{user_email} AND GUBUN='nomal' AND USER_PHONE = #{user_phone}
+</update>
 
 <!-- 관리자가 소셜조회 -->
 <select id="selectSocial" resultType="SocialVo">

@@ -85,4 +85,9 @@ public class UserDaoImpl implements IUserDao {
 	public int updateRetoken(SocialVo vo) {
 		return sql.update("com.gd.bmss.mapper.UserDaoImpl.updateRetoken",vo);
 	}
+
+	@Override
+	public int updatePwd(Map<String, Object> map) {
+		return sql.update("com.gd.bmss.mapper.UserDaoImpl.updatePwd",map);
+	}
 }

@@ -1,6 +1,9 @@
 package com.gd.bmss;
 
+import java.security.Provider.Service;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.gd.bmss.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
@@ -34,6 +39,8 @@ public class MsgController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private IUserService service;
 	@GetMapping(value = "/emailChk.do")
 	public String mail() {
 		log.info("@@@@@@@@@@@@@@@MailController emailChk  화면 이동@@@@@@@@@@@@@@@@@");
@@ -130,6 +137,66 @@ public class MsgController {
 		    } else {
 		        return "Error";
 		    }
+	}
+	/*
+	 * 이메일찾기
+	 */
+	@PostMapping(value = "/numChk.do")
+	@ResponseBody
+	public String findEmail(@RequestParam String confirmNum, String name, String phone, HttpSession session) {
+		String storedCode = (String) session.getAttribute("randomCode");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_name", name);
+		map.put("user_phone", phone);
+		String email = service.findEmail(map);
+		if (storedCode != null && storedCode.equals(confirmNum)) {
+			session.removeAttribute("randomCode");
+			session.removeAttribute("phone");
+			
+			return (email == null)?"":email;
+		} else {
+			return "Error";
+		}
+	}
+	
+	/*
+	 * 비밀번호찾기/초기화
+	 */
+	@PostMapping(value = "/numCheck.do")
+	@ResponseBody
+	public String findPassword(@RequestParam String confirmNum, String email, String phone, HttpSession session) {
+		log.info("@@@@@@@@@@@@@@@@@@@ findPassword 비밀번호찾기 이동함@@@@@@@@@@@@@@@@");
+		String storedCode = (String) session.getAttribute("randomCode");
+		String randomPwd = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10);
+		 MimeMessage message = mailSender.createMimeMessage();
+		    
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_email", email);
+		map.put("user_phone", phone);
+		map.put("user_password", randomPwd);
+		String pwd = service.findPassword(map);
+		String n = service.updatePwd(map)+"";
+		if (storedCode != null && storedCode.equals(confirmNum)) {
+			session.removeAttribute("randomCode");
+			session.removeAttribute("phone");
+			try {
+		        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		        messageHelper.setFrom("rlaekgnssla20@naver.com");
+		        messageHelper.setTo(email);
+		        messageHelper.setSubject("Bmss 책check 회원님의 비밀번호가 변경되었습니다");
+
+		        String content = "회원님의 변경된 비밀번호\n\n\t\t\t\t\t\t"+randomPwd+"!\t\t입니다"+"\n\n변경된 비밀번호로 로그인 해주세요";
+		        log.info("@@@@@@@@@@@@@@@@@@randomPwd값 : {}@@@@@@@@@@@@@@@@@@@@@",randomPwd );
+		        messageHelper.setText(content, false);
+
+		        mailSender.send(message);
+		    } catch (MessagingException e) {
+		        e.printStackTrace();
+		    }
+			return (pwd == null)?"":n;
+		} else {
+			return "Error";
+		}
 	}
 	
 }

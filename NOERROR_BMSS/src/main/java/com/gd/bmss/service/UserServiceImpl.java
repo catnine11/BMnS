@@ -56,6 +56,24 @@ public class UserServiceImpl implements IUserService {
 		log.info("@@@@@@@@@@@@@@ 중복회원검사 emailCheck @@@@@@@@@@@@@@@@");
 		return dao.emailCheck(email);
 	}
+
+	@Override
+	public String findEmail(Map<String, Object> map) {
+		log.info("@@@@@@@@@@@@@@ 이메일찾기 findEmail@@@@@@@@@@@@@@@@");
+		return dao.findEmail(map);
+	}
+
+	@Override
+	public int updatePwd(Map<String, Object> map) {
+		log.info("@@@@@@@@@@@@@@ 비밀번호초기화 updatePwd@@@@@@@@@@@@@@@@");
+		return dao.updatePwd(map);
+	}
+
+	@Override
+	public String findPassword(Map<String, Object> map) {
+		log.info("@@@@@@@@@@@@@@ 비밀번호찾기 updatePwd@@@@@@@@@@@@@@@@");
+		return dao.findPassword(map);
+	}
 	
 
 }
