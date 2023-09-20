@@ -101,17 +101,19 @@ public class StockController {
 	
 	
 	@PostMapping("/stocksDel.do")
-	public String stocksDel(String[] delChk,HttpServletResponse resp) throws IOException {
+	@ResponseBody
+	public Map<String, String[]> stocksDel(String[] checkedNums,HttpServletResponse resp) throws IOException {
 		System.out.println("stocksDel.do");
-		System.out.println(delChk.length);
-			Map<String, String[]> map =new HashMap<String, String[]>();
+		System.out.println(checkedNums);
 		
+			Map<String, String[]> map =new HashMap<String, String[]>();
+		map.put("nums", checkedNums);
 		
 //		if(delChk!=null && delChk.length()>1) {
 //			String [] nums =delChk.split(",");
 //			map.put("nums", nums);
 //			System.out.println(map);
-//		dao.stocksDel(map);
+		dao.stocksDel(map);
 //		return "redirect:/stocklist.do";
 //		}else if(delChk.length()==0) {
 //			
@@ -123,7 +125,7 @@ public class StockController {
 //		}
 //		return "redirect:/stocklist.do";
 //		}
-	return "";
+	return map ;
 	
 //			
 	

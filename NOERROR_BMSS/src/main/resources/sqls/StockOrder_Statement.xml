@@ -48,7 +48,7 @@ WHERE X.BOOK_COUNT > 1 ]]>)
 
 <!-- 판매 불가->판매가능 상태 업데이트 -->
 <update id="sellAble">
-UPDATE BOOK_STOCK SET SELL_STATUS =#{status} WHERE STOCK_NUMBER =#{num}
+UPDATE BOOK_STOCK SET SELL_STATUS =#{status} WHERE BOOK_SEQ =#{num}
 </update>
 <!-- 판매 불가->판매가능 다중 상태 업데이트 -->
 <update id="sellAbleMany">
@@ -60,7 +60,7 @@ UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER IN
 <!-- 재고목록 다중 삭제 -->
 <delete id="stocksDel">
 DELETE FROM BOOK_STOCK
-WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
+WHERE SELL_STATUS ='N' AND STATUS_CODE='B' AND STOCK_NUMBER IN
 <foreach collection="nums" item="stock_number" open="(" separator="," close=")">
 #{stock_number}
 </foreach>
