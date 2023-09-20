@@ -14,7 +14,11 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
-	${loginVo }
+	${loginVo}
+	
+	<div>
+		<a href="./myLibrary.do">내 서재</a>
+	</div>
 </body>
 <%@include file="footer.jsp"%>
 </html>

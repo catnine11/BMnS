@@ -46,6 +46,7 @@
 	<collection property="resvVo" resultMap="reserveMap"/>
 </resultMap>
 
+
 <!-- 대출신청 -->
 <insert id="insertBorrow" parameterType="BorrowVo">
 INSERT INTO BOOK_BORROW

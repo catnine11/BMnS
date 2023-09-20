@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.gd.bmss.vo.BookInfoVo;
+import com.gd.bmss.vo.Book_StatusVo;
 
 public interface IBookManageService {
 
@@ -15,6 +16,9 @@ public interface IBookManageService {
 	public List<BookInfoVo> getAllBookAdmin();
 	//상세조회
 	public BookInfoVo getOneBook(String book_code);
+	//상세조회-상태
+//	public List<Book_StatusVo> getOneBookStatus(String book_code);
+	public BookInfoVo getOneBookStatus(String book_code);
 	//장르변경
 	public int changeGenre(Map<String, Object> map);
 	//상태변경

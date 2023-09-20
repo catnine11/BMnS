@@ -54,15 +54,6 @@ public class UserController {
 		return "adminPage";
 	}
 	
-	/*
-	 * 마이페이지 이동
-	 */
-	@GetMapping(value = "/myPage.do")
-	public String myPage() {
-		log.info("@@@@@@@@@@  마이페이지 이동");
-		return "myPage";
-	}
-	
 	
 	/*
 	 * 약관동의 이동
