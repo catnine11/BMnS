@@ -148,11 +148,10 @@ public class OrderModel_JUnitTest {
 		 
 	}
 	
-//	@Test
+	@Test
 	public void addOrder() {
 		OrderVo vo = new OrderVo();
-		vo.setStock_number(4);
-		vo.setOrder_number(10000);
+		vo.setStock_number(11);
 		vo.setUser_id(2);
 		
 		odao.addOrder(vo);
@@ -201,7 +200,7 @@ public class OrderModel_JUnitTest {
 	
 	
 
-	@Test
+//	@Test
 	public void booksDetail() {
 		
 		

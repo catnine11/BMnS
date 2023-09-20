@@ -19,7 +19,7 @@ import lombok.ToString;
 public class StockVo {
 
 	
-private int	stock_number  ;
+private int stock_number  ;
 private String sell_status   ;
 private int	book_seq      ;
 private int	book_price   ;

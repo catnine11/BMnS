@@ -60,8 +60,8 @@ UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER IN
 <!-- 재고목록 다중 삭제 -->
 <delete id="stocksDel">
 DELETE FROM BOOK_STOCK
-WHERE SELL_STATUS ='N' AND STATUS_CODE='B' AND STOCK_NUMBER IN
-<foreach collection="nums" item="stock_number" open="(" separator="," close=")">
+WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
+<foreach collection="list" item="stock_number" open="(" separator="," close=")">
 #{stock_number}
 </foreach>
 </delete>
@@ -93,6 +93,5 @@ LEFT JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ WHERE BOOK_CODE=#{book_cod
 <update id="priceChange">
 UPDATE BOOK_STOCK SET BOOK_PRICE=#{price} WHERE STOCK_NUMBER =#{number}
 </update>
-
 
 </mapper>
