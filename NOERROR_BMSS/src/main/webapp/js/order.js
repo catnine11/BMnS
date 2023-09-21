@@ -29,13 +29,41 @@ $(document).ready(function(){
 })
 
 
-$(document).ready(function(){
-	
-	 $("input[name='delCheck']").click(function(){
+$(document).on('click', 'input#delBtn', function(){
+    var checkedOrder = new Array();
+    $("input[name='delCheck']:checked").each(function(){
+//	console.log( $(this).closest('tr').find('.stNum').text());
+        checkedOrder.push($(this).closest('tr').find('.stNum').text());
+    });
+    
+    $.ajax({
+        type: 'post',
+        url: './delOrder.do',
+        data: {'checkedOrder': checkedOrder},
+        success: function(data){
+		console.log(data.oderdel);
+		$('input.delBox:checked').each(function(){
 		
-		 var checkedCheckboxes = $("input[name='delCheck']:checked")
-		 console.log(checkedCheckboxes);
-		
-		   });
+		$(this).closest('tr').remove();		
+			
 	
-	});
+		})		
+			alert("주문을 삭제 했습니다.");	
+        },
+        error: function(){
+            alert("최소 하나이상의 도서를  체크해 주세요");
+        }
+    });
+});
+
+function dtWindow(id){
+	window.open('./orderDetail.do?id='+id,'주문조회 상세창','width=800,height=600');
+	
+	
+}
+
+
+
+
+
+

@@ -218,6 +218,7 @@ html+="		</table>                                                               
 
  		
  });
+ console.log(checkedNums);
   $.ajax({
 	type:"post",
 	url:"./stocksDel.do",

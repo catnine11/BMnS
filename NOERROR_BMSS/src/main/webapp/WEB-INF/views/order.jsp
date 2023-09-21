@@ -22,13 +22,14 @@ text-align: center;
 </style>
 </head>
 <body>
+<a href="./getOrderUser.do?user=2">유저주문 조회</a>
 <form action="./delOrder.do" method="post">
 <div id="container">
 <table>
 <tr>
 <td><input type="checkbox" name="allCheck"></td>
-<td>아이디</td>
 <td>주문번호</td>
+<td>아이디</td>
 <td>재고번호</td>
 <td>수량</td>
 <td>가격</td>
@@ -38,18 +39,18 @@ text-align: center;
 </tr>
 <c:forEach var="o" items="${oderList}">
 <tr>
-<td><input type="checkbox" name="delCheck" value="${o.stock_number}"></td>
-<td>${o.user_id}</td>
-<td>${o.order_number}</td>
-<td>${o.stock_number}</td>
+<td><input class="delBox" type="checkbox" name="delCheck" value="${o.stock_number}"></td>
+<td>${o.order_seq}</td>
+<td><a class="detailWindow" href="#" onclick="dtWindow(${o.user_id});return false;" >${o.user_id}</a></td>
+<td class="stNum">${o.stock_number}</td>
 <td>${o.order_quantity}</td>
 <td>${o.order_price}</td>
-<td>${o.pay_status}</td>
+<td>주문완료</td>
 <td>${o.user_address}</td>
 <td>${o.order_date}</td>
 </tr>
 </c:forEach>
-<tr><td><input id="del" type="submit" value="삭제"></td></tr>
+<tr><td><input id="delBtn" type="button" value="삭제"></td></tr>
 </table>
 </div>
 </form>

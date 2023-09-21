@@ -47,6 +47,11 @@ public class OrderDaoImpl implements IOrderDao{
 		int n= sql.delete(NS+"delOrders",list) ;
 		return n;
 	}
+	@Override
+	public List<OrderVo> getOrderUser(String seq) {
+	List<OrderVo>	list	=sql.selectList(NS+"getOrderUser",seq);
+		return list;
+	}
 	
 
 
