@@ -59,16 +59,17 @@ public class UserModel_JUnitTest {
 //		map.put("user_email", "admin@naver.com");
 //		map.put("user_phone", "123-456-7890");
 //		String n = dao.findPassword(map);
-		sVo.setSocial_id(11);
-		sVo.setSocial_email("cobynine2@baby.com");
-		sVo.setSocial_token("cPtAoXBqxNjP6Z0o8KOwa-_PXhyxlUlRwR8V_tIKCj11nAAAAYqWpW1p");
-		sVo.setSocial_gubun("kakao");
-		int n = dao.updateRetoken(sVo);
+//		sVo.setSocial_id(11);
+//		sVo.setSocial_email("cobynine2@baby.com");
+//		sVo.setSocial_token("cPtAoXBqxNjP6Z0o8KOwa-_PXhyxlUlRwR8V_tIKCj11nAAAAYqWpW1p");
+//		sVo.setSocial_gubun("kakao");
+		 UserVo n =dao.getNotDelUser(162);
+//		 n = dao.updateRetoken(uVo);
 		
 		
 		
-		assertEquals(1, n);
-//		assertNotNull(n);
+//		assertEquals(1, n);
+		assertNotNull(n);
 	}
 	
 	

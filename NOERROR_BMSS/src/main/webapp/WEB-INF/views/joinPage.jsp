@@ -15,12 +15,9 @@
 <style>
         .a {
         border: 2px solid #D9E5FF;
-/*         width: 1000px; margin: 0 auto;   */
+        margin-top: 20px;
+        margin-bottom: 20px;
          } 
-
-
-
-
     </style>
 <%@include file="header.jsp"%>
 <body>
@@ -56,7 +53,7 @@
                     <form>
                         <h4>사이트 이용약관</h4>
                         <div>
-                            <textarea rows="10" class="form-control">
+                            <textarea style="background-color: white; resize: none;" rows="20" class="form-control" readonly="readonly">
 제 1 조 (목적)
 
  1. 본 약관은 TEAM NOERROR가 운영하는 온라인 도서관리판매 사이트 "http://localhost:8080"에서 제공하는 서비스
@@ -168,7 +165,7 @@
 	6. '회원'이 자신의 아이디(ID) 및 비밀번호를 도난당하거나 제3자가 사용하고 있음을 인지한 경우에는 바로 '회사'에 통보하고 안내에 따라야 합니다.
 	
 	
-	<b>부칙</b>
+	부칙
 	
 제 1 조 (시행일)
 	
@@ -186,7 +183,7 @@
                     <form>
                         <h4>개인정보 수집 및 이용에 대한 안내</h4>
                         <div>
-                            <textarea rows="10" class="form-control">
+                            <textarea style="background-color: white; resize: none;" rows="20" class="form-control" readonly="readonly">
 제1조 [개인정보의 처리 목적]
 
 	NOERROR 책check은 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 
@@ -281,18 +278,16 @@
 
             <div class="text-center m-3 ">
                 <button type="button" id="okagree" class="btn btn-success" onclick="chkBox()">
-                    <i class="bi bi-check"></i>모두 동의합니다</button>
+                    <i class="bi bi-check"></i>동의합니다</button>
                 <button type="button" id="noagree" class="btn btn-danger">
-                    <i class="bi bi-x"></i>모두 동의하지 않습니다</button>
+                    <i class="bi bi-x"></i>동의하지 않습니다</button>
             </div>  
 
         </div>   
 
 
-        <footer>
             <h6>Copylight &copy; Lorem Ipsum 2022.
                 All rights reserved.</h6>
-        </footer>
     </div>   
 
 

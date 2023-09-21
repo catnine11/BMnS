@@ -75,7 +75,7 @@ WHERE SOCIAL_EMAIL = #{social_email}
 <select id="login" resultType="UserVo">
 	SELECT USER_ID, USER_NAME ,USER_PASSWORD,RPAD('*', 4, '*') || SUBSTR(USER_EMAIL , 5) AS USER_EMAIL ,USER_AUTH ,USER_DELFLAG ,USER_ADDRESS,SUBSTR(USER_PHONE , 1, LENGTH(USER_PHONE)-6) || RPAD('*', 6, '*') AS USER_PHONE,USER_BIRTH,PENALTY_DATE,TO_CHAR(USER_JOINDATE , 'YYYY-MM-DD') AS USER_JOINDATE,GUBUN 
 		FROM BOOK_USERINFO u 
-	WHERE USER_EMAIL = #{user_email} AND USER_PASSWORD = #{user_password}
+	WHERE USER_EMAIL = #{user_email} AND USER_PASSWORD = #{user_password} AND USER_DELFLAG = 'N'
 </select>
 
 <!-- 중복회원 검사 -->
@@ -153,8 +153,28 @@ WHERE USER_EMAIL =#{user_email} AND USER_PHONE =#{user_phone}
 	WHERE USER_ID = #{user_id}
 </update>
 
-
-
+<!-- 탈퇴시 예약,대출,연체회원 조회 -->
+<resultMap type="BorrowVo" id="BorrowVoMap" >
+    <result property="user_id" column="USER_ID"/>
+    <result property="borrow_status" column="BORROW_STATUS"/>
+</resultMap>
+<resultMap type="ReserveVo" id="ReserveVoMap">
+	<result property="user_id" column="USER_ID"/>
+	<result property="reserve_status" column="RESERVE_STATUS"/>
+</resultMap>
+<resultMap type="UserVo" id="UserVoMap">
+	<collection property="borwVo" resultMap="BorrowVoMap"/>
+	<collection property="resvVo" resultMap="ReserveVoMap"/>
+</resultMap>
+<select id="getNotDelUser" resultMap="UserVoMap">
+	SELECT bu.*, bb.BORROW_STATUS ,br.RESERVE_STATUS 
+	FROM BOOK_USERINFO bu 
+	JOIN BOOK_RESERVE br 
+	ON bu.USER_ID =br.USER_ID 
+	JOIN BOOK_BORROW bb 
+	ON bu.USER_ID = bb.USER_ID 
+WHERE bu.USER_ID =#{user_id} AND bb.BORROW_STATUS = 'Y' AND br.RESERVE_STATUS = 'Y'
+</select>
 
 
 

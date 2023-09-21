@@ -80,6 +80,18 @@ public class UserServiceImpl implements IUserService {
 		log.info("@@@@@@@@@@@@@@ 회원정보수정 updateUser@@@@@@@@@@@@@@@@");
 		return dao.updateUser(vo);
 	}
+
+	@Override
+	public int deleteUser(int id) {
+		log.info("@@@@@@@@@@@@@@ 회원탈퇴 deleteUser@@@@@@@@@@@@@@@@");
+		return dao.deleteUser(id);
+	}
+
+	@Override
+	public UserVo getNotDelUser(int id) {
+		log.info("@@@@@@@@@@@@@@ 회원탈퇴 -> 연체,예약,패널티 회원조회 getNotDelUser @@@@@@@@@@@@@@@@");
+		return dao.getNotDelUser(id);
+	}
 	
 
 }

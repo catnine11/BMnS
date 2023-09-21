@@ -11,10 +11,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="./js/payment.js"></script>
 </head>
 <%@include file="header.jsp"%>
 <body>
-
+<button id="pay_btn" onclick="requestPay()">결제하기</button>
+<input type="hidden" id="loginVo" value="${loginVo}">
 	<div style="margin-left: 5%; margin-right: 5%;">
 	<h2>내 정보</h2>
 		<table class="table table-hover" style="margin-top: 5%; border-top: 2px solid #e1e1e1">
@@ -63,8 +66,71 @@
 		</p>
 		
     <a href="./myLibrary.do">내 서재</a>
+    
 
 	</div>
 </body>
 <%@include file="footer.jsp"%>
+<script type="text/javascript">
+var email = '${loginVo.user_email}';
+var name = '${loginVo.user_name}';
+var address = '${loginVo.user_address}';
+var phone = '${loginVo.user_phone}';
+var merchant_uid = merchant_uid + 1;
+var point = 100000; // 아직 구현 안해서 값을 못가져옴 임시지정 
+var IMP = window.IMP;
+IMP.init("imp46250334");
+console.log("유저정보",loginVo.value);
+
+function requestPay() {
+    IMP.request_pay(
+        {
+            pg: "kakaopay", 
+            pay_method: "card", 
+            merchant_uid: merchant_uid,
+            name: "결제테스트",
+            amount: point,
+            buyer_email: email,
+            buyer_name: name,
+            buyer_tel: phone,
+            buyer_addr: address,
+            buyer_postcode: '4868282',
+        },
+        function (rsp) {
+            console.log(rsp);
+			console.log(point);
+            if (rsp.success) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+                alert(msg);
+                var pay_method = rsp.pay_method;
+                $.ajax({
+                    type: "POST",
+                    url: "./payForm.do",
+                    data: JSON.stringify ({
+                    	point: point,
+                        pay_method:pay_method
+                    }),
+                    contentType: "application/json",
+                    success: function(data) {
+                        console.log('성공');
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('에러 :', status,error);
+                        console.log('에러 :', point,pay_method);
+                    }
+                });
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                console.log('결제실패');
+                alert(msg);
+            }
+        }
+    );
+}
+</script>
 </html>
