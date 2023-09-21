@@ -1,5 +1,6 @@
 package com.gd.bmss.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,32 @@ public class BookLendingServiceImpl implements IBookLendingService {
 	@Autowired
 	private IBookLendingDao dao;
 	
+//	@Override
+//	public boolean isPenaltyUserT(int user_id) {
+//		UserVo user = new UserVo();
+//		String penalty = user.getPenalty_date();
 
+//		LocalDateTime currentTime = LocalDateTime.now();
+//		LocalDateTime penalty = dao.isPenaltyUser(user_id);
+//
+//		dao.isPenaltyUser(user_id) 
+//		
+//		if( ) {
+//			return true;
+//		}
+//		return false;
+//	}
+	
+	//불가조건2>불가조건1>잔여권수판단>대출신청
+	@Override
+	@Transactional(readOnly = true)
+	public boolean requestBorrow(BorrowVo borrow) {
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출신청 트랜잭션 처리 requestBorrow {}", borrow);
+		int borrowResult = dao.insertBorrow(borrow);
+		
+		
+		return false;
+	}
 
 	@Override
 	public int insertBorrow(BorrowVo brw) {

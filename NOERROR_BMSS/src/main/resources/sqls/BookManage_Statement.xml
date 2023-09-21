@@ -28,6 +28,8 @@
 	<result column="BORROW_STATUS" property="borrow_status"/>
 	<result column="RESERVE_SEQ" property="reserve_seq"/>
 	<result column="RESERVE_STATUS" property="reserve_status"/>
+	<result column="RESERVE_USER_ID" property="user_id"/>
+	
 <!-- 	<collection property="borwVo" resultMap="borrowMap"/> -->
 <!-- 	<collection property="resvVo" resultMap="reserveMap"/> -->
 </resultMap>
@@ -86,19 +88,19 @@
 <!-- 상세조회-대출,예약상태 -->
 <select id="getOneBookStatus" resultMap="bInfoMap">
 	SELECT bi.BOOK_CODE, ISBN, TITLE, AUTHOR, GENRE_NAME, GENRE_CODE, PUBLISHER, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE, THUMBNAIL, 
-		CONTENT, INTRO, REVIEW, AUTHORINFO, 
-		STATUS_CODE, bs.BOOK_SEQ,
-		BORROW_SEQ 대출정보, RETURN_DATE , BORROW_STATUS,
-		RESERVE_SEQ 예약정보,  RESERVE_STATUS
-	FROM BOOKINFO bi JOIN BOOK_GENRE bg 
-					USING (GENRE_CODE) 
-	JOIN BOOK_STATUS bs
-		ON bi.BOOK_CODE = bs.BOOK_CODE 
-	LEFT JOIN  BOOK_BORROW bb
-		ON bs.BOOK_SEQ = bb.BOOK_SEQ 
-	LEFT JOIN  BOOK_RESERVE br
-		ON bs.BOOK_SEQ = br.BOOK_SEQ 
-	WHERE bi.BOOK_CODE =#{book_code}
+			CONTENT, INTRO, REVIEW, AUTHORINFO, 
+			STATUS_CODE, bs.BOOK_SEQ,
+			BORROW_SEQ 대출정보, RETURN_DATE , BORROW_STATUS,
+			RESERVE_SEQ 예약정보,  RESERVE_STATUS, br.USER_ID AS RESERVE_USER_ID
+		FROM BOOKINFO bi JOIN BOOK_GENRE bg 
+						USING (GENRE_CODE) 
+		JOIN BOOK_STATUS bs
+			ON bi.BOOK_CODE = bs.BOOK_CODE 
+		LEFT JOIN  BOOK_BORROW bb
+			ON bs.BOOK_SEQ = bb.BOOK_SEQ 
+		LEFT JOIN  BOOK_RESERVE br
+			ON bs.BOOK_SEQ = br.BOOK_SEQ 
+		WHERE bi.BOOK_CODE =#{book_code}
 </select>
 
 <!-- 다중 장르변경 -->

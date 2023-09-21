@@ -20,18 +20,30 @@ ${sessionScope.loginVo.user_id}
 		<h2>현황</h2>
 			<div>
 				<p><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
+				<div id="myBorrowNow">
+				
+				</div>
 			</div>
 			<div>
 				<p><a href="./myReserve.do">예약현황</a></p>
+				<div id="myReserve.do">
+				
+				</div>
 			</div>
 		</div>
 		<div>
 		<h2>내역</h2>
 			<div>
 				<p><a href="./myBorrowHistory.do">대출내역</a></p>
+				<div id="myBorrowHistory">
+				
+				</div>
 			</div>
 			<div>
 				<p><a href="">희망도서신청</a></p>
+				<div id="">
+				
+				</div>
 			</div>
 		</div>
 	</div>

@@ -49,25 +49,30 @@
 
 <!-- 대출신청 -->
 <insert id="insertBorrow" parameterType="BorrowVo">
-INSERT INTO BOOK_BORROW
-(BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ)
-VALUES(BORROW_SEQ.NEXTVAL, #{borrow_title}, #{start_date}, #{return_date} ,  'N' , 'Y' , #{user_id}, #{book_seq})
+	INSERT INTO BOOK_BORROW
+	(BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ)
+	VALUES
+	(BORROW_SEQ.NEXTVAL, #{borrow_title}, CURRENT_DATE, CURRENT_DATE+14 ,  'N' , 'Y' , #{user_id}, #{book_seq})
+<!-- INSERT INTO BOOK_BORROW -->
+<!-- (BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ) -->
+<!-- VALUES(BORROW_SEQ.NEXTVAL, #{borrow_title}, #{start_date}, #{return_date} ,  'N' , 'Y' , #{user_id}, #{book_seq}) -->
 </insert>
 
 <!-- 대출불가능한 경우 1.예약중이거나 대출중이거나 도서상태가 일반이 아님 -->
 <select id="borrowNotOk" resultMap="bStatusMap">
-SELECT BOOK_SEQ
-FROM BOOK_STATUS bs
-LEFT JOIN BOOK_BORROW bb USING(BOOK_SEQ)
-LEFT JOIN BOOK_RESERVE br USING(BOOK_SEQ)
-WHERE (bb.BORROW_STATUS ='Y'
-OR br.RESERVE_STATUS ='Y')
-OR bs.STATUS_CODE !='A'
+	SELECT BOOK_SEQ
+		FROM BOOK_STATUS bs
+		LEFT JOIN BOOK_BORROW bb USING(BOOK_SEQ)
+		LEFT JOIN BOOK_RESERVE br USING(BOOK_SEQ)
+		WHERE (bb.BORROW_STATUS ='Y'
+			OR br.RESERVE_STATUS ='Y')
+			OR bs.STATUS_CODE !='A'
 </select>
 
 <!-- 대출불가능한 경우 2. 연체회원인 경우 -->
 <select id="isPenaltyUser" resultMap="userMap">
-SELECT MAX(PENALTY_DATE) PENALTY_DATE, bu.USER_ID
+SELECT MAX(PENALTY_DATE) PENALTY_DATE
+<!-- , bu.USER_ID -->
 FROM BOOK_USERINFO bu
 	 JOIN BOOK_BORROW bb  ON bb.USER_ID = bu.USER_ID
 WHERE bu.USER_ID =#{user_id}
@@ -86,7 +91,23 @@ SELECT COUNT(*)
 
 <!-- 예약자의 대출신청 //트랜잭션//////물어볼것 -->
 <select id="borrowReserver" resultMap="bStatusMap">
-
+SELECT
+  T2.USER_ID,
+  T1.BOOK_SEQ 
+FROM
+  T2
+LEFT JOIN T1 ON T1.BOOK_CODE = T2.BOOK_CODE AND T2.RESERVE_RANK = T1.BORROW_RANK
+LEFT JOIN (SELECT BB.USER_ID, MAX(BU.PENALTY_DATE) PENALTY_DATE
+   FROM BOOK_BORROW bb 
+    LEFT JOIN BOOK_USERINFO bu ON bb.USER_ID = bu.USER_ID
+    GROUP BY bb.USER_ID
+) USER_P
+ON T2.USER_ID = USER_P.USER_ID 
+WHERE (PENALTY_DATE IS NULL OR SYSDATE > PENALTY_DATE)
+<!-- AND T2.USER_ID=#{user_id} -->
+AND T2.BOOK_CODE=#{book_code}
+ORDER BY
+  T2.USER_ID;
 </select>
 
 <!-- 트랜잭션/예약취소 -->

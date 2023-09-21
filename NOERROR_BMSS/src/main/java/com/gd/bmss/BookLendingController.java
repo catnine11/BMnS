@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.gd.bmss.mapper.IBookLendingDao;
 import com.gd.bmss.service.IBookLendingService;
 import com.gd.bmss.vo.BorrowVo;
 
@@ -24,6 +26,9 @@ public class BookLendingController {
 	
 	@Autowired
 	private IBookLendingService service;
+	
+	@Autowired
+	private IBookLendingDao dao;
 
 	
 	/*
@@ -114,11 +119,26 @@ public class BookLendingController {
 	 * 회원의 대출신청 insertBorrow
 	 * //연체회원여부 확인할것
 	 */
+//	@PostMapping(value = "/requestBorrow.do")
+	public String requestBorrow(String title, String user_id, String book_seq) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
+		
+		BorrowVo borrow = new BorrowVo();
+		borrow.setBorrow_title(title);
+		borrow.setUser_id(user_id);
+		borrow.setBook_seq(book_seq);
+		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
+		
+		int n = service.insertBorrow(borrow);
+		
+		return "bookDetail";
+	}
 	
 	
 	/*
 	 * 대출불가 조건(도서상태가 대출중, 예약중, 상태가 일반 아님) borrowNotOk
 	 */
+//	public String 
 	
 	
 	/*

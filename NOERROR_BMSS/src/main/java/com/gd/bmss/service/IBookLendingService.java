@@ -21,8 +21,16 @@ public interface IBookLendingService {
 		
 	//회원의 대출가능 잔여권수 판단(현재 대출권수)
 	public int countBorrow(int user_id);
+	
+//	public boolean isPenaltyUserT(int user_id);
+	
+	//대출신청(트랜잭션)
+	public boolean requestBorrow(BorrowVo borrow);
+		
+	
 		
 	//예약자의 대출신청(트랜잭션 걸 것)
+//	연체회원>예약자대출신청조건>대출가능잔여권수판단>대출신청>예약취소
 //	public boolean borrowForReserver(Map<String, Object> map);	
 	
 	//관리자의 전체회원 대출현황 조회
@@ -59,7 +67,7 @@ public interface IBookLendingService {
 	//회원의 예약취소
 	public int cancelMyReserve(Map<String, Object> map);
 		
-	//스케줄러 예약자동취소 및 삭제
+	//스케줄러 예약자동취소 및 삭제(트랜잭션)
 	public boolean CancelReserveCron();
 		
 	//관리자의 전체회원 예약현황조회

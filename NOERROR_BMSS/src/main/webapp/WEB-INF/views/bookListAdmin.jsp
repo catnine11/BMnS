@@ -55,7 +55,7 @@
 				html+="			<td>"+book.publisher+"</td> ";
 				html+="			<td>"+book.publish_date+"</td>";
 				html+="			<td>                         ";
-				html+="				<input type='button' value='도서 상세' onclick='return getDetail("+book.book_code+")'>";  
+				html+="				<input type='button' value='도서 상세' onclick='getDetail("+book.book_code+")'>";  
 				html+="			</td>                        ";
 				html+="		</tr>                            ";
 				}
@@ -131,7 +131,7 @@
 								<td>${book.publisher}</td>
 								<td>${book.publish_date}</td>
 								<td>
-									<input type="button" value="도서 상세" onclick="return getDetail(${book.book_code})">
+									<input type="button" value="도서 상세" onclick="getDetail(${book.book_code})">
 								</td>
 							</tr>
 						</c:forEach>

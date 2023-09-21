@@ -58,6 +58,7 @@ public class BookManageController {
 	@ResponseBody
 	public Map<String, Object> bookListGenre(Model model, @RequestParam String selectedGenre) {
 		log.info("Welcome BookManageController 도서전체조회창-장르별 조회");
+		log.info("Welcome BookManageController  선택된장르 {}", selectedGenre);
 		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -78,17 +79,6 @@ public class BookManageController {
 	}
 	
 	
-	/*
-	 * 상세조회
-	 */
-//	@GetMapping(value = "/bookDetail.do")
-	public String bookDetail(Model model, String book_code) {
-		log.info("Welcome BookManageController 도서상세화면창 이동");
-		BookInfoVo detailList = service.getOneBook(book_code);
-		model.addAttribute("detail", detailList);
-		
-		return "bookDetail";
-	}
 	
 	/*
 	 * 상세조회-대출상태포함
@@ -96,7 +86,7 @@ public class BookManageController {
 	@GetMapping(value = "/bookDetail.do")
 	public String bookDetailStatus(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
-		BookInfoVo detail= service.getOneBookStatus(book_code);
+		log.info("Welcome BookManageController 북코드 {}",book_code );		BookInfoVo detail= service.getOneBookStatus(book_code);
 //		List<Book_StatusVo> detailList = service.getOneBookStatus(book_code);
 		model.addAttribute("detail", detail);
 		System.out.println("\n\n" + detail);
@@ -133,7 +123,7 @@ public class BookManageController {
 	public String changeBStatus() {
 		log.info("Welcome BookManageController 도서상태변경 ");
 		
-		return "redirect:/bookListAdmin.do";
+		return "redirect:/bookDetail.do";
 	}
 	
 	
