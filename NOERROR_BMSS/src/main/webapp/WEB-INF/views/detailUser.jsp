@@ -16,8 +16,15 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
-<button id="pay_btn" onclick="requestPay()">결제하기</button>
 <input type="hidden" id="loginVo" value="${loginVo}">
+<c:choose>
+<c:when test="${loginVo eq null}">
+<button style="display: none;" id="pay_btn" onclick="requestPay()">결제하기</button>
+</c:when>
+<c:otherwise>
+<button id="pay_btn" onclick="requestPay()">결제하기</button>
+</c:otherwise>
+</c:choose>
 	<div style="margin-left: 5%; margin-right: 5%;">
 	<h2>내 정보</h2>
 		<table class="table table-hover" style="margin-top: 5%; border-top: 2px solid #e1e1e1">
@@ -77,10 +84,10 @@ var name = '${loginVo.user_name}';
 var address = '${loginVo.user_address}';
 var phone = '${loginVo.user_phone}';
 var merchant_uid = merchant_uid + 1;
-var point = 100000; // 아직 구현 안해서 값을 못가져옴 임시지정 
+var point = '100000'; // 아직 구현 안해서 값을 못가져옴 임시지정 
 var IMP = window.IMP;
 IMP.init("imp46250334");
-console.log("유저정보",loginVo.value);
+console.log("유저정보", loginVo.value);
 
 function requestPay() {
     IMP.request_pay(
@@ -98,7 +105,7 @@ function requestPay() {
         },
         function (rsp) {
             console.log(rsp);
-			console.log(point);
+            console.log(point);
             if (rsp.success) {
                 var msg = '결제가 완료되었습니다.';
                 msg += '고유ID : ' + rsp.imp_uid;
@@ -107,20 +114,21 @@ function requestPay() {
                 msg += '카드 승인번호 : ' + rsp.apply_num;
                 alert(msg);
                 var pay_method = rsp.pay_method;
+                var amount = rsp.paid_amount;
                 $.ajax({
                     type: "POST",
                     url: "./payForm.do",
-                    data: JSON.stringify ({
-                    	point: point,
-                        pay_method:pay_method
-                    }),
-                    contentType: "application/json",
+                    data: {
+                        amount: amount,
+                        pay_method: pay_method
+                    },
                     success: function(data) {
                         console.log('성공');
+                        location.href='http://localhost:8080/NOERROR_BMSS/'; // 결제정보조회페이지이동해야함 9/21
                     },
                     error: function(xhr, status, error) {
-                        console.log('에러 :', status,error);
-                        console.log('에러 :', point,pay_method);
+                        console.log('에러 :', status, error);
+                        console.log('에러 :', amount, pay_method);
                     }
                 });
             } else {
@@ -132,5 +140,6 @@ function requestPay() {
         }
     );
 }
+
 </script>
 </html>

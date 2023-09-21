@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,22 +29,25 @@ public class PayController {
     @Autowired
     private IPayService service;
 
-
-    @PostMapping("/payForm.do")
+    /*
+     * 결제정보입력 
+     */
+    @RequestMapping("/payForm.do")
     @ResponseBody
-    public String iamportPayment(String point,  String pay_method,HttpSession session) {
+    public String insertPayInfoTrans(@RequestParam("amount")String amount,  @RequestParam("pay_method")String pay_method,HttpSession session) {
+    	log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ insertPayInfoTrans 실행 @@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     	UserVo uVo = (UserVo) session.getAttribute("loginVo");
     	Map<String, Object> map = new HashMap<String, Object>();
-    	map.put("pay_money", Integer.parseInt(point)); //수정
+    	map.put("pay_money", Integer.parseInt(amount)); //수정
     	map.put("pay_method", pay_method);
     	
     	log.info("@@@@@@@@@@@@@@@@@@@@@@전달받은 값 : [{}],[{}]@@@@@@@@@@@@@@@@@@@@@", uVo,map); 
         int n = service.insertPayInfoTrans(map, uVo);
         log.info("@@@@@@@@@@@@@@@@@@@@@@서비스 결과값 : {}@@@@@@@@@@@@@@@@@@@@@", n); 
         if(n == 0) {
-        	return "mainPage";
+        	return "";
         }else {
-        	return "mainPage";
+        	return "";
         }
     }
 }
