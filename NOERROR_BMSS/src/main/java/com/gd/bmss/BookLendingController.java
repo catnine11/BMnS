@@ -1,6 +1,8 @@
 package com.gd.bmss;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,9 +56,15 @@ public class BookLendingController {
 	 */
 	@GetMapping(value = "/myBorrowNow.do")
 	public String myBorrowNow(Model model, int user_id) {
+//	public Map<String, Object> myBorrowNow(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출현황 조회");
+		
 		List<BorrowVo> borrowList =service.myBorrowNow(user_id);
 		model.addAttribute("lists", borrowList);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		
+//		return map;
 		return "myLibrary";
 	}
 	

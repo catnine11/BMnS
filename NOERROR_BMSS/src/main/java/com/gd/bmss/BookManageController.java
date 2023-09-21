@@ -102,8 +102,6 @@ public class BookManageController {
 		log.info("Welcome BookManageController 장르변경 ");
 		log.info("Welcome BookManageController 장르변경 parameter : {} {}", Arrays.toString(chkBook), selectedChangeGenre);
 		
-		
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("genre_code", selectedChangeGenre);
 		map.put("codes", chkBook);
@@ -120,10 +118,17 @@ public class BookManageController {
 	/*
 	 * 도서상태변경
 	 */
-	public String changeBStatus() {
+	@PostMapping(value = "/changeBStatus.do")
+	public Map<String, Object> changeBStatus(String status_code, String book_seq) {
 		log.info("Welcome BookManageController 도서상태변경 ");
 		
-		return "redirect:/bookDetail.do";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status_code", status_code);
+		map.put("book_seq", book_seq);
+		service.changeBStatus(map);
+		
+//		return "redirect:/bookDetail.do";
+		return map;
 	}
 	
 	

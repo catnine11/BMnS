@@ -40,15 +40,15 @@ public class BookLendingServiceImpl implements IBookLendingService {
 //	}
 	
 	//불가조건2>불가조건1>잔여권수판단>대출신청
-	@Override
-	@Transactional(readOnly = true)
-	public boolean requestBorrow(BorrowVo borrow) {
-		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출신청 트랜잭션 처리 requestBorrow {}", borrow);
-		int borrowResult = dao.insertBorrow(borrow);
-		
-		
-		return false;
-	}
+//	@Override
+//	@Transactional(readOnly = true)
+//	public boolean requestBorrow(BorrowVo borrow) {
+//		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출신청 트랜잭션 처리 requestBorrow {}", borrow);
+//		int borrowResult = dao.insertBorrow(borrow);
+//		
+//		
+//		return false;
+//	}
 
 	@Override
 	public int insertBorrow(BorrowVo brw) {

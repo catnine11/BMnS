@@ -24,7 +24,7 @@
         color: #ccc;
 	}
 	
-	table{
+	table, th, tr, td{
 		text-align: center;
 	}
 	
@@ -120,7 +120,7 @@ ${sessionScope.loginVo}
 				
 				<div class="seqByBookCode">
 				<table>
-					<tbody>
+					<tbody id="borrowStatus">
 						<tr>
 							<th class="adminOnly">관리번호</th>
 							<th>장르</th>
@@ -128,17 +128,27 @@ ${sessionScope.loginVo}
 							<th>대출상태</th>
 							<th>반납예정일</th>
 							<th>예약상태</th>
+							<th>도서상태변경</th>
 						</tr>
 						<c:forEach  var="d" items="${detail.bsVo}">
 							<c:choose>
 							<c:when test="${sessionScope.loginVo.user_auth=='A'}">
 								<tr>
-									<td class="adminOnly">${d.book_seq}</td>
+									<td class="adminOnly book_seq">${d.book_seq}</td>
 									<td>${detail.genre_name}</td>
-									<td>${d.status_code}</td>
+									<td class="adminOnly status_code">${d.status_code}</td>
 									<td>${d.borrow_status}</td>
 									<td>${d.return_date}</td>
 									<td>${d.reserve_status}</td>
+									<td>
+										<select class="changeBookStatus" name="status_code">                                        
+											<option value="A" ${d.status_code =="A"? "selected": ""}>일반</option>
+											<option value="B" ${d.status_code =="B"? "selected": ""}>재고</option>
+											<option value="C" ${d.status_code =="C"? "selected": ""}>분실</option>
+											<option value="D" ${d.status_code =="D"? "selected": ""}>파손</option>
+											<option value="E" ${d.status_code =="E"? "selected": ""}>예정</option>
+										</select>
+									</td>
 								</tr>
 							</c:when>
 							<c:otherwise>
@@ -146,7 +156,7 @@ ${sessionScope.loginVo}
 									<tr>
 										<td class="adminOnly">${d.book_seq}</td>
 										<td>${detail.genre_name}</td>
-										<td>${d.status_code}</td>
+										<td class="adminOnly">${d.status_code}</td>
 										<td>
 											<c:if test="${d.borrow_status == 'Y'}">
 												<p style="color: red;">대출중</p>
@@ -156,7 +166,6 @@ ${sessionScope.loginVo}
 												<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
 												<input type="hidden" name="reserve_user" class="reserve_user" value="${d.user_id}">
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
-<%-- 												<input type="button" value="대출신청" onclick="requestBorrow(${d.book_seq})"> --%>
 												<input type="button" class="requestBorrow" value="대출신청">
  											</c:if>
 										</td>
@@ -169,6 +178,7 @@ ${sessionScope.loginVo}
 												<button onclick="requestReserve(${d.book_seq})">예약신청</button>
 	 										</c:if>
 										</td>
+										<td class="adminOnly"></td>
 									</tr>
 								</c:if>					
 							</c:otherwise>
@@ -177,7 +187,13 @@ ${sessionScope.loginVo}
 					</tbody>
 				</table>
 				</div>
-					
+				<div id="modalReserver" class="modal">
+					<div class="modal-content">
+						<p>예약한 도서를 대출하시겠습니까?</p>
+						<button id="nextButton">Y</button>
+						<button>N</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

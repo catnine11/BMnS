@@ -5,8 +5,8 @@
 window.onload = function () {
 
 	var adminOnlyElements = document.getElementsByClassName("adminOnly");
-	var userAuth = "${sessionScope.loginVo.user_auth}";
-// 	console.log("userAuth: " + userAuth);
+	var userAuth = $("input.user_auth").val();
+		console.log("userAuth의 값 : ", userAuth);
 
 	if (userAuth != 'A') {
 		for (var i = 0; i < adminOnlyElements.length; i++) {
@@ -19,6 +19,35 @@ window.onload = function () {
 	}
 } 
  
+$(document).ready(function(){
+	$("#borrowStatus").on("change","select.changeBookStatus",function(){
+		
+		var status_code=$(this).closest("tr").find(".changeBookStatus").find("option:selected").val();
+		var book_seq=$(this).closest("tr").find(".book_seq").text();
+				
+			console.log("도서상태 : ", status_code);
+			console.log("도서seq: ",book_seq);
+			$.ajax({
+				method:"post",
+				url:"./chageBookStatus.do",
+				data:{book_seq:book_seq,status_code:status_code},
+				success:function(){
+					alert("도서상태 변경을 완료했습니다.");
+				},
+				error:function(){
+					alert("도서상태 변경에 실패했습니다.");
+				}
+			})
+	});
+});
+ 
+ 
+var modal = document.getElementsByClassName("modal");
+// 모달을 표시하는 함수
+function showModal() {
+	modal.style.display = "block";
+}
+
  
 $(document).ready(function(){
 		var userAuth = $("input.user_auth").val();
@@ -38,24 +67,52 @@ $(document).ready(function(){
 		console.log("예약유저:", reserve_user);
 		
 		if(userAuth=='U'){
+			if(reserve_user=user_id){
 
-			$.ajax({
-				url: "./requestBorrow.do",
-				type: "post",
-				data: {title : title,
-						user_id : user_id,
-						book_seq : book_seq
-				},
-				success: function(){
-					
-					
-					return false;
-				},
-				error: function(){
-					alert('대출신청에 실패했습니다.');
-				}
-			});
+				var nextButton = document.getElementById("nextButton");
+				// 버튼을 클릭할 때 실행되는 함수를 정의합니다.
+				nextButton.addEventListener("click", function () {
+					modal.style.display = "none";
+	
+					$.ajax({
+						url: "./borrowReserver.do",
+						type: "post",
+						data: {title : title,
+								user_id : user_id,
+								book_seq : book_seq
+						},
+						success: function(){
+							
+							
+							return false;
+						},
+						error: function(){
+							alert('대출신청에 실패했습니다.');
+						}
+					});
+				});
+				
+			}else{
+				alert('예약중인 도서는 예약자만 대출이 가능합니다.')
+				
+				$.ajax({
+					url: "./requestBorrow.do",
+					type: "post",
+					data: {title : title,
+							user_id : user_id,
+							book_seq : book_seq
+					},
+					success: function(){
+						
+						
+						return false;
+					},
+					error: function(){
+						alert('대출신청에 실패했습니다.');
+					}
+				});
 			
+			}
 			
 		}else{
 			alert('대출은 회원만 가능합니다. 로그인해주세요');

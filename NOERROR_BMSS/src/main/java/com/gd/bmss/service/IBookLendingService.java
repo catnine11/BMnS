@@ -25,7 +25,7 @@ public interface IBookLendingService {
 //	public boolean isPenaltyUserT(int user_id);
 	
 	//대출신청(트랜잭션)
-	public boolean requestBorrow(BorrowVo borrow);
+//	public boolean requestBorrow(BorrowVo borrow);
 		
 	
 		

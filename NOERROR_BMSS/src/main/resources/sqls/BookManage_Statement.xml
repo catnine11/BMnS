@@ -22,6 +22,7 @@
 	
 <resultMap type="com.gd.bmss.vo.Book_StatusVo" id="bStatusMap">
 	<result column="STATUS_CODE" property="status_code"/>
+	<result column="STATUS_TITLE" property="status_title"/>
 	<result column="BOOK_SEQ" property="book_seq"/>
 	<result column="BORROW_SEQ" property="borrow_seq"/>
 	<result column="RETURN_DATE" property="return_date"/>
@@ -113,14 +114,17 @@
 	</foreach>
 </update>
 
-<!-- 다중 상태변경 -->
+<!-- (다중) 상태변경 -->
 <update id="changeBStatus" parameterType="java.util.Map">
 	UPDATE BOOK_STATUS
 	SET STATUS_CODE=#{status_code}
-	WHERE BOOK_SEQ IN
-	<foreach collection="seqs" item="book_seq" open="(" separator="," close=")">
-		#{book_seq}
-	</foreach>
+	WHERE BOOK_SEQ = #{book_seq}
+<!-- 	UPDATE BOOK_STATUS -->
+<!-- 	SET STATUS_CODE=#{status_code} -->
+<!-- 	WHERE BOOK_SEQ IN -->
+<!-- 	<foreach collection="seqs" item="book_seq" open="(" separator="," close=")"> -->
+<!-- 		#{book_seq} -->
+<!-- 	</foreach> -->
 </update>
 
 <!-- 도서등록 -->
