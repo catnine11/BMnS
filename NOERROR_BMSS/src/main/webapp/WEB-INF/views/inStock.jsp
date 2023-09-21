@@ -14,6 +14,7 @@
 book_seq=56, book_price=0, 
 status_title=희망(리영희 산문선)(양장본 HardCover), 
 status_code=A, book_code=30 -->
+
 <table class="container">
 <tr>
 <td><input type='checkbox' name='allChk'></td> 
@@ -22,11 +23,11 @@ status_code=A, book_code=30 -->
 <td>도서가격</td>
 <td>도서명</td>
 <td>도서코드</td>
-
 </tr>
 <c:forEach var="g" items="${getInStock}">
 <tr>
-<td><input class='delChk' type='checkbox' name='delChk' value='g.book_code'></td>
+<td><input class="stockNum" type="hidden" value="${g.stock_number}">
+<td><input class='delChk' type='checkbox' name='delChk' value='${g.book_code}'></td>
 <td class="book_seq">${g.book_seq}</td>
 <td><select class='InStockStatus' name='status_code'>                                        
     <option value='A' ${g.status_code == 'A' ? "selected" : ""}>일반</option>

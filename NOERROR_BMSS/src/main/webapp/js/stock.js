@@ -126,9 +126,9 @@ html+="		</table>                                                               
 				 console.log (data);
 				 console.log(data.status);
 				
-				 if(data.status!='Y'){
-					$('.price').prop('readonly',true);	
-				}
+//				 if(data.status!='Y'){
+//					$('.price').prop('readonly',true);	
+//				}
 				
 				alert("도서 판매여부가 변경되었습니다.");
 			},
@@ -143,7 +143,7 @@ html+="		</table>                                                               
 
 
 //	<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>"; 
-//재고목록 삭제 
+//재고목록 변경
 		$("#stockDel").on("change","select.changeBookStatus",function(){
 			var status_code=$(this).closest('tr').find('.changeBookStatus').find("option:selected").val();
 			var book_seq=$(this).closest("tr").find(".book_seq").val();
@@ -214,8 +214,6 @@ html+="		</table>                                                               
     $('input[name="delChk"]:checked').each(function() {
         checkedNums.push($(this).closest('tr').find('.stockNum').text());//체크된 값을 
  		
-
- 		
  });
  console.log(checkedNums);
   $.ajax({
@@ -284,21 +282,77 @@ html+="		</table>                                                               
 //    });
 //});
 
+//재고대상 목록의  상태변경  
 $(document).ready(function(){
 	$('.InStockStatus').on('change',function(){
 		console.log($(this));
-		
+//		status_code ,book_seq
 		
 		$(this).closest('tr').find('.InStockStatus').val();
+	var status_code=	$(this).closest('tr').find('.InStockStatus').val();
+	var book_seq=$(this).closest('tr').find('.book_seq').text();
+	console.log($(this).closest('tr'));
+	var book_tr =$(this).closest('tr');
+//	return false;
+	$.ajax({
+		type:"post",
+		data:{'book_seq':book_seq ,'status_code':status_code},
+		url: "./chageBookStatus.do",
+		success:function(data){
+			console.log($(this));
+			if(data.status_code=='B'){
+			alert("도서가 재고목록에 등록 되었습니다.")
+			book_tr.remove();
+
+			}else if(data.status_code=='C'){
+				alert("도서가 분실 처리 되었습니다.")
+			book_tr.remove();
+	}else if(data.status_code=='D'){
+				alert('도서가 파손처리 되었습니다.');
+			book_tr.remove();	}
+			
+		},
 		
-		console.log($(this).closest('tr').find('.InStockStatus').val());
+		error:function(){
+			
+			
+		}
+		
+		
+	})
 	});
 	
 	
 	
 })
 
-
+$(document).ready(function(){
+	$('#inStockDel').click(function(){
+		var checkedNums=new Array();
+		$("input.delChk:checked").each(function(){
+//			console.log($(this).closest('tr').find('.book_seq').text());
+			checkedNums.push($(this).closest('tr').find('.stockNum').val());
+		var inStock_tr=$(this).closest('tr');	  
+		})
+		console.log(checkedNums);
+		$.ajax({
+		type:"post",
+		url:"./stocksDel.do",
+		data:{"checkedNums":checkedNums},
+		success:function(){
+			$('input.delChk:checked').each(function(){
+				$(this).closest('tr').remove();
+			})
+			alert('재고목록 대상에서 제외되었습니다');
+		}
+			
+		})
+		
+		
+	})
+	
+	
+})
 
 
 
