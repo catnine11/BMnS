@@ -146,7 +146,12 @@ WHERE USER_EMAIL =#{user_email} AND USER_PHONE =#{user_phone}
         SELECT SOCIAL_ID FROM BOOK_SOCIALINFO WHERE SOCIAL_EMAIL = #{social_email} AND SOCIAL_GUBUN = #{social_gubun}
     </select>
 
-
+<!-- 회원탈퇴 -->
+<update id="deleteUser">
+	UPDATE BOOK_USERINFO
+		SET USER_DELFLAG = 'Y'
+	WHERE USER_ID = #{user_id}
+</update>
 
 
 

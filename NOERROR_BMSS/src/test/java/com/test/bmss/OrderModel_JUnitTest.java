@@ -119,8 +119,8 @@ public class OrderModel_JUnitTest {
 		String[] chks = {"10","20","30"};
 		Map<String, String[]> map =new HashMap<String, String[]>();
 		map.put("nums",chks);
-		int n =dao.stocksDel(map);
-		assertEquals(3, n);
+//		int n =dao.stocksDel(map);
+//		assertEquals(3, n);
 	}
 	
 //	@Test

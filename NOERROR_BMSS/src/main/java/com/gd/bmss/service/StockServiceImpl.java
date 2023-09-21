@@ -79,7 +79,7 @@ public class StockServiceImpl implements IStockService {
 	@Override
 	public int stocksDel(Map<String, String[]> stock_number) {
 		log.info("재고 다중삭제 메소드 ");
-		return dao.stocksDel(stock_number);
+		return dao.stocksDel((List<String>) stock_number);
 	}
 
 	@Override

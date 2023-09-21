@@ -198,18 +198,42 @@ public class UserController {
 		}
 	}
 	@RequestMapping(value = "/modifyInfo.do")
-	public String modifyInfo(UserVo vo, HttpServletResponse response) throws IOException {
+	public String modifyInfo(String passwordD, HttpServletResponse response,String password, String address, String ModifyAddrD,HttpSession session) throws IOException {
 		log.info("@@@@@@@@@@@@@@@@ 정보수정폼 modifyInfo 이동 @@@@@@@@@@@@@@@@@@@@@@@");
-		int n = service.updateUser(vo);
+		UserVo loginVo = (UserVo) session.getAttribute("loginVo");
+		loginVo.setUser_password(password);
+		loginVo.setUser_address(address+"\t"+ModifyAddrD);
+		UserVo a = (UserVo) session.getAttribute("loginVo");
+		loginVo.setUser_id(a.getUser_id());
+		log.info("@@@@@@@@@@@@@@@@@@@@ Password 입력값  : {}@@@@@@@@@@@@@@@@@@@@@@@@@", loginVo.getUser_password());
+		if(loginVo.getUser_password() == "") {
+			loginVo.setUser_password(passwordD);
+			log.info("@@@@@@@@@@@@@@@@@@@@ Password 입력값  : {}@@@@@@@@@@@@@@@@@@@@@@@@@", loginVo.getUser_password());
+			int n = service.updateUser(loginVo);
 		log.info("@@@@@@@@@@@@@@@@@@@@ updateUser 입력값 1or OTHER  : {}@@@@@@@@@@@@@@@@@@@@@@@@@", n);
 		if(n>0) {
+			session.setAttribute("loginVo", loginVo);
 			response.setContentType("text/html; charset=utf-8;");
 	    	response.getWriter().println("<script>alert('회원정보가 수정되었습니다'); location.href='./detailUser.do';</script>");
-			return "redirect:/detailUser.do";
+			return null;
 		}else {
 			response.setContentType("text/html; charset=utf-8;");
 	    	response.getWriter().println("<script>alert('오류가 발생했습니다 다시 시도해 주세요'); location.href='./detailUser.do';</script>");
-			return null;
+	    	return null;
 		}
+	}else {
+		int n = service.updateUser(loginVo);
+		log.info("@@@@@@@@@@@@@@@@@@@@ updateUser 입력값 1or OTHER  : {}@@@@@@@@@@@@@@@@@@@@@@@@@", n);
+		if(n>0) {
+			session.setAttribute("loginVo", loginVo);
+			response.setContentType("text/html; charset=utf-8;");
+	    	response.getWriter().println("<script>alert('회원정보가 수정되었습니다'); location.href='./detailUser.do';</script>");
+			return null;
+		}else {
+			response.setContentType("text/html; charset=utf-8;");
+	    	response.getWriter().println("<script>alert('오류가 발생했습니다 다시 시도해 주세요'); location.href='./detailUser.do';</script>");
+	    	return null;
+		}
+	}
 	}
 }
