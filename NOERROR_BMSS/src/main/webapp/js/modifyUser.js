@@ -36,18 +36,19 @@ $("input[type='submit']").click(function(event){
 });
 function modiChk(){
 	var password = document.getElementById("modifyPwd").value;
-	var address = document.getElementById("modifyAddr").value;
-	var dAddress = document.getElementById("detailAddr").value;
 	var pwdChk = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
-if(password == ""){
-		alert("비밀번호을 작성해 주세요");
-		document.getElementById("modifyPwd").focus();
-		return false;
-	}
+//if(password == ""){
+//		alert("비밀번호을 작성해 주세요");
+//		document.getElementById("modifyPwd").focus();
+//		return false;
+//	}
+console.log(password);
+if(password !== ""){
 	if(!pwdChk.test(password)){
 		alert("패스워드는 8자리이상 16자리이하 영문,숫자,특수문자를 포함해야 합니다");
 		document.getElementById("modifyPwd").focus();
 		return false;
 	}
-	
+}
+	return true;
 }

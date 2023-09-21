@@ -30,12 +30,13 @@
 	<!---------------------------------------------------------------------------------------------------->
 	<form action="./modifyInfo.do" method="post">
 	<div id="nextBody" style="display: none;">
-		비밀번호 변경&nbsp;<input id="modifyPwd" type="password" placeholder="변경할 비밀번호">
+		비밀번호 변경&nbsp;<input id="modifyPwd" name="password" type="password" placeholder="변경할 비밀번호">
+									<input id="defaultPwd" name="passwordD" type="hidden" value="${loginVo.user_password }">
 		<br>
-		주소 &nbsp;<input size="50" id=modifyAddr type="text" value="${loginVo.user_address}" readonly="readonly" >
+		주소 &nbsp;<input size="50" id=modifyAddr name="address" type="text" value="${loginVo.user_address}" readonly="readonly" >
 		<br>
 		상세주소 &nbsp;<input type="text" id="detailAddr" name="ModifyAddrD" >
-	<br><input type="submit" id="modifyBtn" value="수정" onclick="modiChk()">
+	<br><button type="submit" id="modifyBtn" value="수정" onclick="return modiChk()">수정</button>
 	<input type="button" id="backBtn" value="취소" onclick="history.back(-1)">
 	</div>
 	</form>
