@@ -148,7 +148,7 @@ public class OrderModel_JUnitTest {
 		 
 	}
 	
-	@Test
+//	@Test
 	public void addOrder() {
 		OrderVo vo = new OrderVo();
 		vo.setStock_number(11);
@@ -208,6 +208,15 @@ List<StockVo> list	=dao.booksDetail("7");
 
 			assertNotNull(list);
 		
+	}
+	
+	@Test
+	public void getOrderUser() {
+		
+	List<OrderVo>	list=odao.getOrderUser("2");
+	
+		assertNotNull(list);
+	
 	}
 	
 

@@ -12,4 +12,5 @@ public interface IOrderDao {
 	 public int	updateAddr(Map<String, Object>map);
 	 public int delOrder(String number);
 	 public int delOrders(List<String>list);
+	 public List<OrderVo> getOrderUser(String seq);
 }
