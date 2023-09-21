@@ -92,6 +92,18 @@ List<StockVo> lists =	sql.selectList(NS+"booksDetail",seq);
 }
 
 
+@Override
+public int addStocks(List<String> list) {
+int n =	sql.insert(NS+"addStocks",list);
+	return n;
+}
+
+@Override
+	public List<StockVo> getInStock() {
+	List<StockVo> list =		sql.selectList(NS+"getInStock");
+	return list;
+	}
+
 //@Override
 //public List<StockVo> normalToStockst() {
 //		sql.update(NS+"normalToStocks")	;

@@ -32,6 +32,7 @@
 	<mapper resource="sqls/Board_Statement.xml"/>
 	<mapper resource="sqls/BookLending_Statement.xml"/>
 	<mapper resource="sqls/Order_Statement.xml"/>
+	<mapper resource="sqls/Search_Statement.xml"/>
 </mappers>
 
 </configuration>

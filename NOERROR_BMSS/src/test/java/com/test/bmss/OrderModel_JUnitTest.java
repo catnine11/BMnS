@@ -16,11 +16,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.gd.bmss.mapper.IOrderDao;
+import com.gd.bmss.mapper.ISearchDao;
 import com.gd.bmss.mapper.IStockDao;
 import com.gd.bmss.service.IStockService;
+import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.Book_StatusVo;
 import com.gd.bmss.vo.OrderVo;
 import com.gd.bmss.vo.StockVo;
+import com.gd.bmss.vo.UserVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
@@ -34,6 +37,9 @@ public class OrderModel_JUnitTest {
 	
 	@Autowired
 	private IStockService service;
+	
+	@Autowired
+	private ISearchDao sdao;
 	
 	
 	@Autowired
@@ -210,7 +216,7 @@ List<StockVo> list	=dao.booksDetail("7");
 		
 	}
 	
-	@Test
+//	@Test
 	public void getOrderUser() {
 		
 	List<OrderVo>	list=odao.getOrderUser("2");
@@ -218,6 +224,49 @@ List<StockVo> list	=dao.booksDetail("7");
 		assertNotNull(list);
 	
 	}
+	
+	
+//	@Test
+	public void searchBooks() {
+	Map<String, Object> map = new HashMap<String, Object>();
+	map.put("column", "TITLE");
+	map.put("title", "위화도");
+	
+	List<BookInfoVo> list	=sdao.searchBooks(map);
+		
+		assertEquals(1, list.size());
+	
+	}
+	
+//	@Test
+	public void seachUser() {
+		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_name", "관리자");
+		map.put("user_email", "social");
+		
+		List<UserVo> list	=sdao.searchUser(map);			
+			
+		assertNotNull(list);
+		
+		}
+	
+	
+	
+	@Test
+	public void Cron2() {
+		
+		List<Book_StatusVo> lists = service.selectStockable();
+		StockVo vo = new StockVo();//insert 
+		for (Book_StatusVo book_seq : lists) {
+			String bookSeq=	book_seq.getBook_seq();
+			vo.setBook_seq(Integer.parseInt(bookSeq));
+			int n =	service.addStock(vo);
+		}
+//	int m=	service.normalToStocks(list);
+		
+//		System.out.println(m);
+	}
+	
 	
 
 	

@@ -28,6 +28,20 @@
 <!-- servlet동작을 위한 트렌젝션매니저 -->
 <tx:annotation-driven transaction-manager="transactionManager"/>
 
+<!-- Schecduler 기능을 통해서 반복적인 잡으로 일정기간에 맞춰  자동 동작 -->
+<!-- <task:annotation-driven scheduler="scheduler"/> -->
+<!-- <task:scheduler id="scheduler" pool-size="10"/> -->
+<!-- 반복할 메소드가 있는 bean ref에 넣어 준다
+반복한 메소드의 이름을 작성한다
+반복 주기를 Cron 표현식으로 작성한다.
+https://www.freeformatter.com/cron-expression-generator-quartz.html
+ref 카멜방법?
+ -->
+<!--  <task:scheduled-tasks> -->
+<!--  <task:scheduled ref="stockServiceImpl" method="cron" cron="*/10 * * * * *"/> -->
+<!--  </task:scheduled-tasks> -->
+
+
 
 
 

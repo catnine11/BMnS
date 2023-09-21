@@ -45,6 +45,15 @@ WHERE X.BOOK_COUNT > 1 ]]>)
   VALUES(STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0)
 </insert>
 
+<!-- <insert id="addStocks"> -->
+<!--     INSERT ALL  -->
+<!--     <foreach collection="list" item="book_seq"> -->
+<!--         INTO BOOK_STOCK (STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)  -->
+<!--         VALUES (STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0) -->
+<!--     </foreach> -->
+<!--     SELECT * FROM dual -->
+<!-- </insert> -->
+
 
 <!-- 판매 불가->판매가능 상태 업데이트 -->
 <update id="sellAble">
@@ -82,6 +91,16 @@ SELECT  STOCK_NUMBER,STATUS_TITLE, SELL_STATUS, BT.BOOK_SEQ AS STBOOK_SEQ, STATU
 FROM BOOK_STOCK BT
 LEFT JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ
 WHERE STATUS_CODE = 'B'
+</select>
+
+
+
+
+<select id="getInStock" resultMap="StockMap">
+SELECT  STOCK_NUMBER,STATUS_TITLE, SELL_STATUS, BOOK_SEQ AS STBOOK_SEQ, STATUS_CODE, BOOK_CODE, BOOK_PRICE
+FROM BOOK_STOCK BT
+LEFT JOIN BOOK_STATUS USING(BOOK_SEQ)
+WHERE STATUS_CODE = 'A'
 </select>
 
 <select id="booksDetail" resultMap="StockMap">

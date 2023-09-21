@@ -9,10 +9,10 @@ import com.gd.bmss.vo.StockVo;
 public interface IStockDao {
 	
 	public List<Book_StatusVo>selectStockable();
-	public int normalToStocks();
 	public int addStock(StockVo book_seq);
-	
-	
+	public int addStocks(List<String> list);
+	public int normalToStocks();
+	public List<StockVo>getInStock();
 //	public List<StockVo> normalToStockst();
 //	public List<StockVo> addStock(StockVo book_seq);
 //	
@@ -26,5 +26,5 @@ public interface IStockDao {
 	public boolean normalToStock(Book_StatusVo vo);
 	
 	public List<StockVo> booksDetail(String seq);
-
+	
 }

@@ -143,7 +143,7 @@ html+="		</table>                                                               
 
 
 //	<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>"; 
-
+//재고목록 삭제 
 		$("#stockDel").on("change","select.changeBookStatus",function(){
 			var status_code=$(this).closest('tr').find('.changeBookStatus').find("option:selected").val();
 			var book_seq=$(this).closest("tr").find(".book_seq").val();
@@ -194,7 +194,6 @@ html+="		</table>                                                               
 				$("input[name='allChk']").prop("checked",ischeck);
 				
 			})
-			
 			
 				
 			})
@@ -254,6 +253,66 @@ html+="		</table>                                                               
    
 });
 
+
+//재고 대상목록 삭제 
+
+
+
+//$(document).ready(function(){
+//    $(".InStockStatus").on("change",  function(){
+//        console.log($(this));
+//        var status_code = $(this).closest('tr').find('.InStockStatus').find("option:selected").val();
+//        var book_seq = $(this).closest("tr").find(".book_seq").text(); // 수정: .val() -> .text()
+//        
+//        console.log("도서상태 : ", status_code);
+//        console.log("도서seq: ", book_seq);
+//        
+//        $.ajax({
+//            method: "post",
+//            url: "./chageBookStatus.do",
+//            data: {book_seq: book_seq, status_code: status_code},
+//            success:function(){
+//                alert("도서상태 변경을 완료했습니다.");
+//                if(status_code != "B"){
+//                    // 삭제 처리 등 추가 작업
+//                }
+//            },
+//            error:function(){
+//                alert("도서상태 변경에 실패했습니다.");
+//            }
+//        });
+//    });
+//});
+
+$(document).ready(function(){
+	$('.InStockStatus').on('change',function(){
+		console.log($(this));
+		
+		
+		$(this).closest('tr').find('.InStockStatus').val();
+		
+		console.log($(this).closest('tr').find('.InStockStatus').val());
+	});
+	
+	
+	
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
 //	html+="				<td><input type='checkbox' name='delChk'                                                      ";
 //	$(document).on('click','input#delButton',function(){
 //	console.log($(this).closest('tr').find('.delChk').val());
