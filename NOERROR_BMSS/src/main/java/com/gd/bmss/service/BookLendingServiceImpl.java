@@ -80,23 +80,23 @@ public class BookLendingServiceImpl implements IBookLendingService {
 
 	
 	@Override
-	public List<BorrowVo> getMyBorrowNow(int user_id) {
-		log.info("@@@@@@@@@@@@BookLendingServiceImpl 회원의 자신의 대출현황조회 getMyBorrowNow {}", user_id);
-		return dao.getMyBorrowNow(user_id);
+	public List<BorrowVo> myBorrowNow(int user_id) {
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 회원의 자신의 대출현황조회 myBorrowNow {}", user_id);
+		return dao.myBorrowNow(user_id);
 	}
 
 	
 	@Override
-	public List<BorrowVo> getAllBorrow(int user_id) {
-		log.info("@@@@@@@@@@@@BookLendingServiceImpl 관리자의 특정회원 대출내역 조회 getAllBorrow {}", user_id);
-		return dao.getAllBorrow(user_id);
+	public List<BorrowVo> getOneBorrowHistory(int user_id) {
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 관리자의 특정회원 대출내역 조회 getOneBorrowHistory {}", user_id);
+		return dao.getOneBorrowHistory(user_id);
 	}
 
 
 	@Override
-	public List<BorrowVo> getMyAllBorrow(int user_id) { 
-		log.info("@@@@@@@@@@@@BookLendingServiceImpl 회원의 자신의 대출내역 조회 getMyAllBorrow {}", user_id);
-		return dao.getMyAllBorrow(user_id);
+	public List<BorrowVo> myBorrowHistory(int user_id) { 
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 회원의 자신의 대출내역 조회 myBorrowHistory {}", user_id);
+		return dao.myBorrowHistory(user_id);
 	}
 
 
@@ -162,9 +162,9 @@ public class BookLendingServiceImpl implements IBookLendingService {
 
 
 	@Override
-	public List<ReserveVo> getOneReserveNow(int user_id) {
-		log.info("@@@@@@@@@@@@BookLendingServiceImpl 특정회원 예약현황 조회 getOneReserveNow {}", user_id);
-		return dao.getOneReserveNow(user_id);
+	public List<ReserveVo> myReserveNow(int user_id) {
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 특정회원 예약현황 조회 myReserveNow {}", user_id);
+		return dao.myReserveNow(user_id);
 	}
 
 

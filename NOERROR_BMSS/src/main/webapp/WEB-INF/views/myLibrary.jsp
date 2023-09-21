@@ -11,10 +11,31 @@
 </head>
 <%@include file="header.jsp" %>
 <body>
-
+${sessionScope.loginVo}
+<br>
+${sessionScope.loginVo.user_id}
+<div class="container">
 	<div>
+		<div>
+		<h2>현황</h2>
+			<div>
+				<p><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
+			</div>
+			<div>
+				<p><a href="./myReserve.do">예약현황</a></p>
+			</div>
+		</div>
+		<div>
+		<h2>내역</h2>
+			<div>
+				<p><a href="./myBorrowHistory.do">대출내역</a></p>
+			</div>
+			<div>
+				<p><a href="">희망도서신청</a></p>
+			</div>
+		</div>
 	</div>
-
+</div>
 </body>
 <%@include file="footer.jsp" %>
 </html>

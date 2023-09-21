@@ -71,7 +71,7 @@
 				html+="		<p>"+book.publisher+"</p>";
 				html+="	</div>";
 				html+="	<a>";
-				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='location.href=./bookDetail.do?book_code="+book.book_code+"'>";
+				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='return getDetail("+book.book_code+")'>";
 				html+="	</a>";
 				html+="</li>";
 				html+="</ul>";
@@ -83,6 +83,11 @@
 				alert("도서 목록을 불러오는 중 오류가 발생했습니다.");
 			}
 		});
+	}
+	
+	function getDetail(book_code){
+		var url = './bookDetail.do?book_code='+book_code;
+		window.location.href = url;
 	}
 	
 </script>
@@ -115,7 +120,7 @@
 					<p>${book.publisher}</p>
 				</div>
 				<a>
-					<img id="thumbnail" src="${book.thumbnail}" onclick="location.href='./bookDetail.do?book_code=${book.book_code}'">
+					<img id="thumbnail" src="${book.thumbnail}" onclick="return getDetail(${book.book_code})">
 				</a>
 			</li>
 		</c:forEach>

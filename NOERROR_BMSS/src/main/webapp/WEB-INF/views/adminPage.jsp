@@ -20,7 +20,8 @@
 <%@include file="header.jsp"%>
 <body>
 	<a href="./stocklist.do">재고목록</a>
-<a href="./orderlist.do">주문목록</a>
+	<a href="./orderlist.do">주문목록</a>
+	<a href="./borrowUserList.do">회원대출관리</a>
 	<div class="search" style="float: right; margin-right: 5%; margin-top: 5%; margin-bottom: 5px;">
       <input type="text" class="search__input" placeholder="검색">
       <div class="search__icon">

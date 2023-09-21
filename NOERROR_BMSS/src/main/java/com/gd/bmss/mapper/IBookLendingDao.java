@@ -29,7 +29,7 @@ public interface IBookLendingDao {
 	//예약자의 대출신청(트랜잭션 걸 것)
 //	public Book_StatusVo borrowReserver(Map<String, Object> map);
 	
-	//예약대출 후 예약취소(트랜잭션 것 것)
+	//예약대출 후 예약취소(트랜잭션 걸 것)
 	public int deleteReserveAfterBorrow(int book_seq);
 	
 	//관리자의 전체회원 대출현황 조회
@@ -39,13 +39,13 @@ public interface IBookLendingDao {
 	public List<BorrowVo> getOneBorrowNow(int user_id);
 	
 	//회원의 자신의 대출현황 조회
-	public List<BorrowVo> getMyBorrowNow(int user_id);
+	public List<BorrowVo> myBorrowNow(int user_id);
 	
 	//관리자의 특정회원 대출내역 조회
-	public List<BorrowVo> getAllBorrow(int user_id);
+	public List<BorrowVo> getOneBorrowHistory(int user_id);
 	
 	//회원의 자신의 대출내역 조회
-	public List<BorrowVo> getMyAllBorrow(int user_id);
+	public List<BorrowVo> myBorrowHistory(int user_id);
 	
 	//반납신청
 	public int returnBook(Map<String, Object> map);
@@ -76,7 +76,7 @@ public interface IBookLendingDao {
 	public List<ReserveVo> getAllReserveNow();
 	
 	//회원의 자신의 예약현황 조회
-	public List<ReserveVo> getOneReserveNow(int user_id);
+	public List<ReserveVo> myReserveNow(int user_id);
 	
 	//연체시 패널티기간 산정
 	public int calPenalty(UserVo userVo);

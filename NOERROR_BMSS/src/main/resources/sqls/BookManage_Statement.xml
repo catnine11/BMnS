@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gd.bmss.mapper.BookManageDaoImpl">
 
-
 <resultMap type="com.gd.bmss.vo.BookInfoVo" id="bInfoMap">
 	<result column="BOOK_CODE" property="book_code"/>
 	<result column="ISBN" property="isbn"/>
@@ -58,7 +57,7 @@
 </select>
 
 <select id="getAllBookUserGenre" resultMap="bInfoMap">
-	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE
+	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE
 	FROM (
 			SELECT GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, THUMBNAIL, BOOK_CODE
 			FROM BOOKINFO b JOIN BOOK_GENRE bg 
@@ -70,7 +69,7 @@
 
 <!-- 전체조회(장르별) /관리자 -->
 <select id="getAllBookAdmin" resultMap="bInfoMap">
-	SELECT BOOK_CODE, GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, THUMBNAIL
+	SELECT BOOK_CODE, GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE, THUMBNAIL
 	FROM BOOKINFO b JOIN BOOK_GENRE bg 
 	USING (GENRE_CODE)
 	ORDER BY BOOK_CODE, GENRE_CODE 
@@ -102,7 +101,7 @@
 	WHERE bi.BOOK_CODE =#{book_code}
 </select>
 
-<!-- 장르변경 -->
+<!-- 다중 장르변경 -->
 <update id="changeGenre" parameterType="java.util.Map">
 	UPDATE BOOKINFO
 	SET GENRE_CODE=#{genre_code}
@@ -112,7 +111,7 @@
 	</foreach>
 </update>
 
-<!-- 상태변경 -->
+<!-- 다중 상태변경 -->
 <update id="changeBStatus" parameterType="java.util.Map">
 	UPDATE BOOK_STATUS
 	SET STATUS_CODE=#{status_code}
@@ -123,6 +122,11 @@
 </update>
 
 <!-- 도서등록 -->
+<insert id="insertBookInfo">
+	INSERT INTO BOOK_STATUS
+	(BOOK_SEQ, STATUS_TITLE, STATUS_CODE, BOOK_CODE)
+	VALUES(BOOK_SEQ.NEXTVAL, #{status_title}, 'A' , #{book_code});
+</insert>
 
 
 <!-- 크롤링-도서등록 -->
@@ -132,5 +136,16 @@
 	WHERE BOOK_CODE=#{book_code}
 </update>
 
+<!-- 도서상태에 도서등록(도서상세 1개당 도서 여러권) -->
+<insert id="insertBook">
+
+</insert>
+
+<!-- 크롤링 후 도서상태 변경 -->
+<!-- <update id="updateStatus" parameterType=""> -->
+<!-- 	UPDATE BOOK_STATUS -->
+<!-- 	SET STATUS_CODE='A' -->
+<!-- 	WHERE BOOK_CODE=#{book_code} -->
+<!-- </update> -->
 
 </mapper>

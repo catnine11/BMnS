@@ -67,10 +67,11 @@ OR bs.STATUS_CODE !='A'
 
 <!-- 대출불가능한 경우 2. 연체회원인 경우 -->
 <select id="isPenaltyUser" resultMap="userMap">
-SELECT MAX(PENALTY_DATE) PENALTY_DATE
+SELECT MAX(PENALTY_DATE) PENALTY_DATE, bu.USER_ID
 FROM BOOK_USERINFO bu
 	 JOIN BOOK_BORROW bb  ON bb.USER_ID = bu.USER_ID
 WHERE bu.USER_ID =#{user_id}
+GROUP BY bu.USER_ID
 </select>
 
 <!-- 회원의 대출가능 잔여권수 판단 -->
@@ -118,7 +119,7 @@ ORDER BY BORROW_SEQ
 </select>
 
 <!-- 대출 조회 : 회원의 자신의 대출현황 조회 -->
-<select id="getMyBorrowNow" resultMap="borrowMap">
+<select id="myBorrowNow" resultMap="borrowMap">
 SELECT BORROW_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, START_DATE, RETURN_DATE, RENEW
 FROM BOOK_BORROW bb  
 JOIN BOOK_STATUS bs ON bb.BOOK_SEQ=bs.BOOK_SEQ  
@@ -133,7 +134,7 @@ ORDER BY BORROW_SEQ
 </select>
 
 <!-- 대출 조회 : 관리자의 특정회원대출내역 조회 -->
-<select id="getAllBorrow" resultMap="borrowMap">
+<select id="getOneBorrowHistory" resultMap="borrowMap">
 SELECT USER_ID, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS, BOOK_SEQ
 FROM BOOK_BORROW
 JOIN BOOK_USERINFO bu 
@@ -143,7 +144,7 @@ ORDER BY BORROW_SEQ
 </select>
 
 <!-- 대출 조회 : 회원의 자신의 대출내역 조회 -->
-<select id="getMyAllBorrow" resultMap="borrowMap">
+<select id="myBorrowHistory" resultMap="borrowMap">
 SELECT BORROW_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, START_DATE, RETURN_DATE, BORROW_STATUS 
 FROM BOOK_BORROW bb  
 JOIN BOOK_STATUS bs ON bb.BOOK_SEQ=bs.BOOK_SEQ  
@@ -258,7 +259,7 @@ ORDER BY USER_ID
 </select>
 
 <!-- 예약현황조회 : 회원의 자신의 현황 -->
-<select id="getOneReserveNow" resultMap="reserveMap">
+<select id="myReserveNow" resultMap="reserveMap">
 SELECT RESERVE_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, RESERVE_DATE
 FROM BOOK_RESERVE br 
 JOIN BOOK_STATUS bs ON br.BOOK_SEQ=bs.BOOK_SEQ  

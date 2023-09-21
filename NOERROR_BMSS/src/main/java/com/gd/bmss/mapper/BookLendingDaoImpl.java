@@ -62,18 +62,18 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 	}
 
 	@Override
-	public List<BorrowVo> getMyBorrowNow(int user_id) {
-		return session.selectList(NS+"getMyBorrowNow", user_id);
+	public List<BorrowVo> myBorrowNow(int user_id) {
+		return session.selectList(NS+"myBorrowNow", user_id);
 	}
 	
 	@Override
-	public List<BorrowVo> getAllBorrow(int user_id) {
-		return session.selectList(NS+"getAllBorrow", user_id);
+	public List<BorrowVo> getOneBorrowHistory(int user_id) {
+		return session.selectList(NS+"getOneBorrowHistory", user_id);
 	}
 
 	@Override
-	public List<BorrowVo> getMyAllBorrow(int user_id) {
-		return session.selectList(NS+"getMyAllBorrow", user_id);
+	public List<BorrowVo> myBorrowHistory(int user_id) {
+		return session.selectList(NS+"myBorrowHistory", user_id);
 	}
 
 	@Override
@@ -122,8 +122,8 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 	}
 
 	@Override
-	public List<ReserveVo> getOneReserveNow(int user_id) {
-		return session.selectList(NS+"getOneReserveNow", user_id);
+	public List<ReserveVo> myReserveNow(int user_id) {
+		return session.selectList(NS+"myReserveNow", user_id);
 	}
 
 	@Override

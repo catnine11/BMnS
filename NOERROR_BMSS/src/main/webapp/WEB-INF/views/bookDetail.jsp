@@ -29,7 +29,7 @@
 	}
 	
 </style>
-<!-- <script type="text/javascript" src="./js/detail.js"></script> -->
+<script type="text/javascript" src="./js/detail.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -50,7 +50,7 @@ window.onload = function () {
 		}
 	}
 }
-
+var loginVo = ${sessionScope.loginVo}
 </script>
 </head>
 <%@include file="header.jsp" %>
@@ -153,7 +153,7 @@ window.onload = function () {
 								<c:choose>
 								<c:when test="${sessionScope.loginVo.user_auth=='A'}">
 									<tr>
-											<td class="adminOnly">${d.book_seq}</td>
+										<td class="adminOnly">${d.book_seq}</td>
 										<td>${detail.genre_name}</td>
 										<td>${d.status_code}</td>
 										<td>${d.borrow_status}</td>
@@ -163,14 +163,44 @@ window.onload = function () {
 								</c:when>
 								<c:otherwise>
 									<c:if test="${d.status_code=='A'}">
-									<tr>
-										<td class="adminOnly">${d.book_seq}</td>
-										<td>${detail.genre_name}</td>
-										<td>${d.status_code}</td>
-										<td>${d.borrow_status}</td>
-										<td>${d.return_date}</td>
-										<td>${d.reserve_status}</td>
-									</tr>
+									<c:choose>
+									<c:when test="${sessionScope.loginVo.user_auth=='U'}">
+										<tr>
+											<td>${detail.genre_name}</td>
+											<td>${d.status_code}</td>
+											<c:if test="${d.borrow_status == 'N' || d.borrow_status == null}">
+												<td> ${d.borrow_status}
+													<button onclick="return requestBorrow(${d.book_seq})">대출신청</button>
+												</td>
+											</c:if>
+											<td>${d.return_date}</td>
+											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
+												<td>
+													${d.reserve_status}
+													<button onclick="return requestReservew(${d.book_seq})">예약신청</button>
+												</td>
+											</c:if>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td>${detail.genre_name}</td>
+											<td>${d.status_code}</td>
+											<c:if test="${d.borrow_status == 'N' || d.borrow_status == null}">
+												<td> ${d.borrow_status}
+													<button onclick="return requestBorrow(${d.book_seq})">대출신청</button>
+												</td>
+											</c:if>
+											<td>${d.return_date}</td>
+											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
+												<td>
+													${d.reserve_status}
+													<button onclick="return requestReservew(${d.book_seq})">예약신청</button>
+												</td>
+											</c:if>
+										</tr>
+									</c:otherwise>
+									</c:choose>
 									</c:if>
 								</c:otherwise>
 								</c:choose>

@@ -166,22 +166,22 @@ public class BookModel_JUnitTest {
 	}
 	
 //	@Test
-	public void getMyBorrowNow() {
+	public void myBorrowNow() {
 		int user_id = 3;
-		List<BorrowVo> vo = service.getMyBorrowNow(user_id);
+		List<BorrowVo> vo = service.myBorrowNow(user_id);
 		
 		assertNotNull(vo);
 	}
 	
 //	@Test
-	public void getAllBorrow() {
-		List<BorrowVo> lists = service.getAllBorrow(3);
+	public void getOneBorrowHistory() {
+		List<BorrowVo> lists = service.getOneBorrowHistory(3);
 		assertNotNull(lists);
 	}
 	
 //	@Test
-	public void getMyAllBorrow() {
-		List<BorrowVo> lists = service.getMyAllBorrow(3);
+	public void myBorrowHistory() {
+		List<BorrowVo> lists = service.myBorrowHistory(3);
 		assertNotNull(lists);
 	}
 	
@@ -253,8 +253,8 @@ public class BookModel_JUnitTest {
 	}
 	
 //	@Test
-	public void getOneReserveNow() {
-		List<ReserveVo> list = service.getOneReserveNow(4);
+	public void myReserveNow() {
+		List<ReserveVo> list = service.myReserveNow(4);
 		assertNotNull(list);
 	}
 	

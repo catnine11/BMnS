@@ -32,13 +32,13 @@ public interface IBookLendingService {
 	public List<BorrowVo> getOneBorrowNow(int user_id);
 		
 	//회원의 자신의 대출현황 조회
-	public List<BorrowVo> getMyBorrowNow(int user_id);
+	public List<BorrowVo> myBorrowNow(int user_id);
 		
 	//관리자의 특정회원 대출내역 조회
-	public List<BorrowVo> getAllBorrow(int user_id);
+	public List<BorrowVo> getOneBorrowHistory(int user_id);
 		
 	//회원의 자신의 대출내역 조회
-	public List<BorrowVo> getMyAllBorrow(int user_id);
+	public List<BorrowVo> myBorrowHistory(int user_id);
 		
 	//반납신청
 	public int returnBook(Map<String, Object> map);
@@ -66,7 +66,7 @@ public interface IBookLendingService {
 	public List<ReserveVo> getAllReserveNow();
 		
 	//회원의 자신의 예약현황 조회
-	public List<ReserveVo> getOneReserveNow(int user_id);
+	public List<ReserveVo>myReserveNow(int user_id);
 		
 	//연체시 패널티기간 산정
 	public int calPenalty(UserVo userVo);

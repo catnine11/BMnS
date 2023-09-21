@@ -7,11 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <title>NOERROR 책 목록-관리자</title>
+<style type="text/css">
+	table{
+		text-align: center;
+	}
+</style>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
 	function genreList(){
 		var selectedGenre = $("#genreSelect").val();
 		console.log(selectedGenre);
+		
+		if(selectedGenre =="전체"){
+			window.location.href="./bookListAdmin.do";
+		}
 		
 		$.ajax({
 			url: "./bookListGenre.do",
@@ -26,30 +35,44 @@
 				
 				$("#bookList").html("");
 				var html = "";
+				html+="<table> ";
+				html+="<tbody> ";
 				
 				for (var i = 0; i < data.selectGenre.length; i++) {
-				    var book = data.selectGenre[i];
+					var book = data.selectGenre[i];
 				
-				html+="<ul class='imgList'>";
-				html+="<li>";
-				html+="	<div class='over'>";
-				html+="		<strong>"+book.title+"</strong>";
-				html+="		<span>"+book.author+"</span>";
-				html+="		<p>"+book.publisher+"</p>";
-				html+="	</div>";
-				html+="	<a>";
-				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='location.href='./bookDetail.do?book_code="+book.book_code+">";
-				html+="	</a>";
-				html+="</li>";
-				html+="</ul>";
+				html+="		<tr>      ";
+				html+="			<td>  ";
+				html+="				<input type='checkbox' name='chkBook' value='"+book.book_code+"'>";
+				html+="			</td>  ";
+				html+="			<td>"+book.book_code+"</td>";
+				html+="			<td>   ";
+				html+="				<img src='"+book.thumbnail+"'>";
+				html+="			</td>  ";
+				html+="			<td>"+book.genre_name+"</td>";
+				html+="			<td>"+book.title+"</td>     ";
+				html+="			<td>"+book.author+"</td>    ";
+				html+="			<td>"+book.publisher+"</td> ";
+				html+="			<td>"+book.publish_date+"</td>";
+				html+="			<td>                         ";
+				html+="				<input type='button' value='도서 상세' onclick='return getDetail("+book.book_code+")'>";  
+				html+="			</td>                        ";
+				html+="		</tr>                            ";
 				}
 				$('#bookList').html(html);
+				html+="</tbody>                              ";
+				html+="</table>                             ";
 
 			},
 			error: function () {
 				alert("도서 목록을 불러오는 중 오류가 발생했습니다.");
 			}
 		});
+	}
+	
+	function getDetail(book_code){
+		var url = './bookDetail.do?book_code='+book_code;
+		window.location.href = url;
 	}
 	
 </script>
@@ -108,7 +131,7 @@
 								<td>${book.publisher}</td>
 								<td>${book.publish_date}</td>
 								<td>
-									<input type="button" value="도서 상세" onclick="location.href='./bookDetail.do?book_code=${book.book_code}'">
+									<input type="button" value="도서 상세" onclick="return getDetail(${book.book_code})">
 								</td>
 							</tr>
 						</c:forEach>
@@ -131,17 +154,17 @@
 		var opt = select.options[idx];
 		console.log("선택된 옵션값: " + opt.value);
 		console.log("선택된 옵션의 텍스트: " + opt.text);
-		if(opt.value == ""){
-			alert("전체로는 장르를 변경할 수 없습니다.");
-			return false;
-		}
+// 		if(opt.value == ""){
+// 			alert("전체로는 장르를 변경할 수 없습니다.");
+// 			return false;
+// 		}
 		
 		var chks = document.getElementsByName("chkBook");
 		var cnt = 0;
-		for(let c of chkBook){
+		for(let c of chks){
 			if(c.checked){
 				cnt++;
-				console.log("cnt");
+				console.log("cnt : "+cnt);
 			}
 		}
 		if(cnt ==0){
@@ -149,7 +172,6 @@
 			return false;
 		}
 		
-// 		return false;
 	}
 	
 </script>
