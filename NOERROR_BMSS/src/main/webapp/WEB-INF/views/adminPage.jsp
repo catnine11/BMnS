@@ -21,7 +21,10 @@
 <body>
 	<a href="./stocklist.do">재고목록</a>
 	<a href="./orderlist.do">주문목록</a>
+	<a href="./cronStockList.do">재고대기목록</a>
+
 	<a href="./bookListAdmin.do">도서관리</a>
+
 	<a href="./borrowUserList.do">회원대출관리</a>
 	<div class="search" style="float: right; margin-right: 5%; margin-top: 5%; margin-bottom: 5px;">
       <input type="text" class="search__input" placeholder="검색">

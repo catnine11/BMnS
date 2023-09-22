@@ -14,15 +14,13 @@
 <tr>
 <td></td>
 
-
 </tr>
 
 <c:forEach var="ul" items="${oderUser}">
 <tr>
 <td>${ul.status_title}</td>
-<td>${ul.thumbnail}</td>
 
-<td><img src="${ul.thumbnail}" alt="Thumbnail"></td>
+<td><img src="${ul.thumbnail}" alt="${ul.status_title}"></td>
 <td>${ul.author}</td>
 <td>${ul.user_address}</td>
 

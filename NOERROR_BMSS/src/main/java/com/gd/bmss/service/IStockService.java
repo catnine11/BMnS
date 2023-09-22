@@ -18,6 +18,8 @@ public interface IStockService {
 	public int addStock(StockVo seq);
 	public int normalToStocks();
 	
+	public int cron();
+	
 	/**
 	 *  cronStock selectStockable과 normalToStocks를 합친것 
 	 *  현재문제 업데이트보다 insert가 먼저 되야하는데 insert 도 selectStockable 이 필요함

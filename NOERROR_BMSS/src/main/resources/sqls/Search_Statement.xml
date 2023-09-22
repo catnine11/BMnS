@@ -1,9 +1,33 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
-<!-- <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > -->
-<!-- <mapper  namespace=""> -->
-<!-- <sql id="criteria"> -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper  namespace="com.gd.bmss.mapper.SearchDaoImpl">
+
+<select id="searchBooks" resultType="BInfoVo" >
+  SELECT BOOK_CODE,TITLE,AUTHOR,
+PUBLISHER,THUMBNAIL FROM BOOKINFO b
+  WHERE
+  <choose>
+    <when test="column == 'TITLE'">
+      b.TITLE LIKE '%' || #{title} || '%'
+    </when>
+    <when test="column == 'AUTHOR'">
+      b.AUTHOR LIKE '%' || #{author} || '%'
+    </when>
+        <when test="column == 'ISBN'">
+      b.ISBN LIKE '%' || #{isbn} || '%'
+    </when>
+    <otherwise>
+    </otherwise>
+  </choose>
+</select>
+<select id="searchUser"  resultType="UserVo">
+SELECT USER_ID,USER_NAME,USER_EMAIL,
+USER_PHONE,USER_ADDRESS,PENALTY_DATE
+USER_JOINDATE FROM BOOK_USERINFO
+WHERE USER_EMAIL LIKE UPPER('%' ||#{user_email}|| '%')
 
 
-<!-- </sql> -->
+</select>
 
-<!-- </mapper> -->
+
+</mapper>

@@ -22,7 +22,6 @@ public class StockServiceImpl implements IStockService {
 	/**
 	 * 재고목록의 조건을 만족하는 도서를 조회하는 메소드
 	 */
-	@Transactional
 	@Override
 	public List<Book_StatusVo> selectStockable() {
 		log.info("재고목록 조회 메소드 selectStockable");
@@ -32,7 +31,6 @@ public class StockServiceImpl implements IStockService {
 	/**
 	 * 일반 상태를 재고상태로 변경해주는  메소드
 	 */
-	@Transactional
 	@Override
 	public int normalToStocks() {
 		log.info("재고 조건을 만족하는 도서들의 일반 상태를 재고상태로 변경해주는  메소드 normalToStock");
@@ -42,7 +40,6 @@ public class StockServiceImpl implements IStockService {
 	/**
 	 * 재고목록 조건에 일치하는 도서를 재고목록에 추가해주는  메소드 
 	 */
-	@Transactional
 	@Override
 	public int addStock(StockVo seq) {
 		log.info(" 재고목록 조건에 일치하는 도서를 재고목록에 추가해주는  메소드 addStock");
@@ -92,6 +89,23 @@ public class StockServiceImpl implements IStockService {
 	public int priceChange(Map<String, String> map) {
 		log.info("도서 판매가격 변경 매소드 ");
 		return dao.priceChange(map);
+	}
+
+	@Override
+	public int cron() {
+		
+		List<Book_StatusVo> lists = dao.selectStockable();
+		StockVo vo = new StockVo();//insert
+		int cnt=0;
+		for (Book_StatusVo book_seq : lists) {
+			String bookSeq=	book_seq.getBook_seq();
+			vo.setBook_seq(Integer.parseInt(bookSeq));
+			dao.addStock(vo);
+			cnt++;
+		}
+		
+		
+		return cnt;
 	}
 
 

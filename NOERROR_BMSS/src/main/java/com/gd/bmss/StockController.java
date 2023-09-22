@@ -127,6 +127,16 @@ Map<String, Integer> map = new HashMap<String, Integer>();
 //		}
 
 	}
+	@RequestMapping(value="/cronStockList.do",method = RequestMethod.GET)
+	public String cronStockList(Model model) {
+		
+	List<StockVo>	list	=dao.getInStock();
+		
+		model.addAttribute("getInStock",list);
+		
+		return "inStock";
+		
+	}
 		
 	
 	}
