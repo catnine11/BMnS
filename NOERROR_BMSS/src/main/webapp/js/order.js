@@ -79,14 +79,19 @@ $(document).on('click', 'input#delUBtn', function(){
         data: {'checkedOrder': checkedOrder},
         success: function(data){
 		console.log(data.oderdel);
+		if(data.orderdel==0){
+			  alert("최소 하나이상의 도서를  체크해 주세요");
+			  return false;
+		}
 		$('input.delBox:checked').each(function(){
-//		$(this).closest('tr').remove();		
+//		console.log($(this).closest('tr').remove());
+		$(this).closest('tr').remove();		
 			
 		})		
 			alert("주문을 삭제 했습니다.");	
         },
         error: function(){
-            alert("최소 하나이상의 도서를  체크해 주세요");
+          
         }
     });
 });

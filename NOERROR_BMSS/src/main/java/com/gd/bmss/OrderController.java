@@ -48,10 +48,15 @@ public class OrderController {
 		 */
 		@PostMapping("/delOrder.do")
 		@ResponseBody
-		public Map<String, Integer> delOrder(@RequestParam(value = "checkedOrder[]") List<String> delCheck) {
+		public Map<String, Integer> delOrder(@RequestParam(value = "checkedOrder[]",required = false) List<String> delCheck) {
 			Map<String, Integer> map =new HashMap<String, Integer>();
 			System.out.println(delCheck);	
-			int n =		odao.delOrders(delCheck);
+			int n =0;
+			if(delCheck!=null) {
+				
+				n =		odao.delOrders(delCheck);
+			}
+			
 			
 			map.put("orderdel", n);
 			

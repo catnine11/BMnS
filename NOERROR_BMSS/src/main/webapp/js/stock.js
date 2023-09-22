@@ -332,18 +332,25 @@ $(document).ready(function(){
 		$("input.delChk:checked").each(function(){
 //			console.log($(this).closest('tr').find('.book_seq').text());
 			checkedNums.push($(this).closest('tr').find('.stockNum').val());
-		var inStock_tr=$(this).closest('tr');	  
 		})
 		console.log(checkedNums);
 		$.ajax({
 		type:"post",
 		url:"./stocksDel.do",
 		data:{"checkedNums":checkedNums},
-		success:function(){
-			$('input.delChk:checked').each(function(){
+		success:function(data){
+			console.log(data);
+			console.log(data.result);
+			if(data.result==0){
+				alert('도서를 선택해 주세요');
+				return false;
+			}
+				$('input.delChk:checked').each(function(){
 				$(this).closest('tr').remove();
 			})
-			alert('재고목록 대상에서 제외되었습니다');
+			alert('재고목록 대상에서 제외되었습니다');	
+			
+			
 		}
 			
 		})
