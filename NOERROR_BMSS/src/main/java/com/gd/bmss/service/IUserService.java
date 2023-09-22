@@ -26,4 +26,8 @@ public interface IUserService {
 	public int updatePwd(Map<String,Object> map);
 	
 	public int updateUser(UserVo vo);
+	
+	public int deleteUser(int id);
+	
+	public UserVo getNotDelUser(int id);
 }

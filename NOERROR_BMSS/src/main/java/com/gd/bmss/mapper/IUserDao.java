@@ -51,4 +51,10 @@ public interface IUserDao {
 	//소셜고유번호찾기
 		public int getSId(SocialVo vo);
 		
+	//회원탈퇴
+		public int deleteUser(int id);
+	
+	//탈퇴시 연체,예약,대출조회
+		public UserVo getNotDelUser(int id);
+		
 }

@@ -97,7 +97,7 @@ public class UserController {
 		        }
 		    }else {
 		    	response.setContentType("text/html; charset=utf-8;");
-		    	response.getWriter().println("<script>alert('이미 가입된 회원입니다\\n로그인 페이지로 이동합니다'); location.href='/NOERROR_BMSS/login.do';</script>");
+		    	response.getWriter().println("<script>alert('이미 가입된 회원입니다\\n로그인 페이지로 이동합니다'); location.href='./login.do';</script>");
 		    	return null;
 		    }
 	}
@@ -115,7 +115,7 @@ public class UserController {
 	 * 로그인폼
 	 */
 	@PostMapping("/loginCheck.do")
-	public String login(HttpSession session, Model model,HttpServletRequest req) {
+	public String login(HttpSession session, Model model,HttpServletRequest req,HttpServletResponse resp) throws IOException {
 		String email = req.getParameter("user_email");
 		String pwd = req.getParameter("user_password");
 		log.info("@Controller LoginController login 요청받은 값 [{}] [{}]", email,pwd);
@@ -124,7 +124,9 @@ public class UserController {
 		map.put("user_password", pwd);
 		UserVo loginVo = service.login(map);
 		if(loginVo == null) {
-			return "loginForm";
+			resp.setContentType("text/html; charset=utf-8;");
+	    	resp.getWriter().println("<script>alert('이메일 또는 비밀번호를 확인해 주세요.'); location.href='./login.do';</script>");
+			return null;
 		}else {
 			session.setAttribute("loginVo", loginVo);
 			model.addAttribute("loginVo",loginVo);
@@ -235,5 +237,46 @@ public class UserController {
 	    	return null;
 		}
 	}
+	}
+	
+	/*
+	 * 회원탈퇴
+	 */
+	@RequestMapping(value = "/deleteUser.do")
+	public String deleteUser(HttpServletResponse resp) throws IOException {
+		log.info("@@@@@@@@@@@@@@@회원탈퇴 이동@@@@@@@@@@@@@@@");
+		resp.setContentType("text/html; charset=utf-8;");
+    	resp.getWriter().println("<script>alert('회원탈퇴를 진행 하시겠습니까?'); location.href='./delUserForm.do';</script>");
+		return null;
+	}
+	@RequestMapping(value = "/delUserForm.do")
+	public String delUserForm() {
+		log.info("@@@@@@@@@@@@@@@회원탈퇴폼 이동@@@@@@@@@@@@@@@");
+		return "deleteUser";
+	}
+	@RequestMapping(value = "/deleteUserForm.do")
+	public String deleteUserForm(HttpSession session, HttpServletResponse resp) throws IOException {
+		log.info("@@@@@@@@@@@@@@@회원탈퇴폼 실행 @@@@@@@@@@@@@@@");
+		UserVo loginVo = (UserVo) session.getAttribute("loginVo");
+		int n = loginVo.getUser_id();
+		UserVo result = service.getNotDelUser(n);
+		log.info("@@@@@@@@@@@@@@@ result 값 : {}@@@@@@@@@@@@@@@",result);
+		if(result != null) {
+			int m = service.deleteUser(n);
+			if(m>0) {
+				session.removeAttribute("loginVo");
+				resp.setContentType("text/html; charset=utf-8;");
+				resp.getWriter().println("<script>alert('탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.'); location.href='http://localhost:8080/NOERROR_BMSS';</script>");
+				return null;
+			}else {
+				resp.setContentType("text/html; charset=utf-8;");
+		    	resp.getWriter().println("<script>alert('회원탈퇴중 오류가 발생했습니다'); location.href='./detailUser.do';</script>");
+				return null;
+			}
+		}else {
+			resp.setContentType("text/html; charset=utf-8;");
+	    	resp.getWriter().println("<script>alert('회원탈퇴중 오류가 발생했습니다'); location.href='./detailUser.do';</script>");
+			return null;
+		}
 	}
 }
