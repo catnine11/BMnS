@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NOERROR 책check 마이페이지</title>
+<title>NOERROR 책check 내 서재</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -22,8 +22,9 @@
 <body>
 ${sessionScope.loginVo}
 <br>
-${sessionScope.loginVo.user_id}
-<input type="hidden" name="${sessionScope.loginVo.user_id}">
+<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
+<input type="hidden" name="penalty_date" class="penalty_date" value="${sessionScope.loginVo.penalty_date}">
+
 <div class="container">
 	<div>
 		<div>
@@ -43,7 +44,6 @@ ${sessionScope.loginVo.user_id}
 								<th>반납(예정)일</th>
 								<th>연장</th>
 							</tr>
-<%-- 							${borrowNow} --%>
 							<c:forEach var="book" items="${borrowNow}">
 							<c:forEach var="b" items="${book.bsVo}">
 							<tr>
@@ -60,7 +60,7 @@ ${sessionScope.loginVo.user_id}
 										</c:when>
 										<c:otherwise>
 											<input type="hidden" class="book_seq" value="${b.book_seq}">
-											<input type="button" class="renew" value="연장하기">
+											<input type="button" class="renew" value="연장">
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
@@ -73,8 +73,40 @@ ${sessionScope.loginVo.user_id}
 			<div>
 				<h3>예약현황</h3>
 				<p><a href="./myReserve.do?user_id=${sessionScope.loginVo.user_id}">예약현황</a></p>
-				<div id="myReserve.do">
-				
+				<div id="myReserve">
+<%-- 				${reserveList} --%>
+					<table>
+						<tbody>
+							<tr>
+								<th>제목</th>
+								<th>저자</th>
+								<th>출판사</th>
+								<th>장르</th>
+								<th>예약일</th>
+								<th>반납예정일</th>
+								<th>예약취소</th>
+							</tr>
+							<c:forEach var="book" items="${reserveList}">
+							<c:forEach var="r" items="${book.bsVo}">
+							<tr>
+								<td>${r.reserve_title}</td>
+								<td>${book.author}</td>
+								<td>${book.publisher}</td>
+								<td>${book.genre_name}</td>
+								<td>${r.reserve_date}</td>
+								<td>${r.return_date}</td>
+								<td>
+									<c:if test="${r.reserve_status=='Y'}">
+										<input type="hidden" name="book_seq" class="book_seq" value="${r.book_seq}">
+										<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
+										<input type="button" class="cancelReserve" value="예약취소">
+									</c:if>
+								</td>
+							</tr>
+							</c:forEach>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.gd.bmss.mapper.IBookLendingDao;
 import com.gd.bmss.service.IBookLendingService;
 import com.gd.bmss.vo.BorrowVo;
+import com.gd.bmss.vo.ReserveVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,9 +90,11 @@ public class BookLendingController {
 	@GetMapping(value = "/borrowAllUserNow.do")
 	public String BorrowAllUserNow(Model model) {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 전체회원 대출현황 조회");
-		service.getAllBorrowNow();
 		
-		return "myLibrary";
+		List<BorrowVo> borrowList = service.getAllBorrowNow();
+		model.addAttribute("borrowNow", borrowList);
+		
+		return "borrowUserList";
 	}
 	
 	/*
@@ -100,9 +103,11 @@ public class BookLendingController {
 	@GetMapping(value = "/borrowOneUserNow.do")
 	public String BorrowOneUserNow(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 특정회원 대출현황 조회");
-		service.getOneBorrowNow(user_id);
 		
-		return "myLibrary";
+		List<BorrowVo> borrowList = service.getOneBorrowNow(user_id);
+		model.addAttribute("borrowOneNow", borrowList);
+		
+		return "borrowUserList";
 	}
 	
 	/*
@@ -113,7 +118,7 @@ public class BookLendingController {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 특정회원 대출내역 조회");
 		service.getOneBorrowHistory(user_id);
 		
-		return "myLibrary";
+		return "borrowUserList";
 	}
 	
 	/*
@@ -193,6 +198,17 @@ public class BookLendingController {
 	/*
 	 * 회원의 예약현황조회 myReserveNow
 	 */
+	@GetMapping(value = "/myReserve.do")
+	public String myReserveNow(Model model, int user_id) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 예약현황 조회");
+
+		List<ReserveVo> reserveList =service.myReserveNow(user_id);
+		model.addAttribute("reserveList", reserveList);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_id", user_id);
+		
+		return "myLibrary";
+	}
 	
 	
 	/*
@@ -214,6 +230,23 @@ public class BookLendingController {
 	/*
 	 * 회원의 예약취소 cancelMyReserve
 	 */
+	@PostMapping(value = "/cancelMyReserve.do")
+	public String cancelMyReserve(int book_seq, int user_id) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 예약취소");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("book_seq", book_seq);
+		map.put("user_id", user_id);
+		
+		int n = service.cancelMyReserve(map);
+		if(n>0) {
+			
+			return "myLibrary";
+		}else {
+			return null;
+		}
+		
+	}
 	
 	
 	/*
