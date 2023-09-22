@@ -28,7 +28,7 @@ public class PayServiceImpl implements IPayService {
 		log.info("@@@@@@@@@@@@@인서트 성공?{}@@@@@@@@@@@@@@",n);
 		int m = dao.payStatusChange(id);
 		log.info("@@@@@@@@@@@@@업데이트 성공?{}@@@@@@@@@@@@@@",m);
-		return (n>0 || m>0)?1:0;
+		return (n>0 || m>0)?dao.getPay():0;
 	}
 
 	@Override
@@ -41,6 +41,23 @@ public class PayServiceImpl implements IPayService {
 	public List<UserVo> selectStatusNum2(int seq) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 관리자->회원결제대기상태 조회 selectStatusNum2 @@@@@@@@@@@@@@@@@@@");
 		return dao.selectStatusNum2(seq);
+	}
+	
+	@Override
+	public PayVo selectPayInfo(int seq) {
+		log.info("@@@@@@@@@@@@@@@@@@@ 현재결제내역조회 selectPayInfo @@@@@@@@@@@@@@@@@@@");
+		return dao.selectPayInfo(seq);
+	}
+
+	@Override
+	public int getPay() {
+		return dao.getPay();
+	}
+	
+	@Override
+	public List<UserVo> getAllPay(int id) {
+		log.info("@@@@@@@@@@@@@@@@@@@ 결제내역리스트조회 getAllPay @@@@@@@@@@@@@@@@@@@");
+		return dao.getAllPay(id);
 	}
 
 }

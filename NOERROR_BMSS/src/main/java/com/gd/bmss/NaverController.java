@@ -80,11 +80,11 @@ public class NaverController {
 		    		 sVo.setSocial_phone(phone);
 		    		 sVo.setSocial_token(refreshToken);
 		    		 sVo.setSocial_gubun(gubun);
-		    		 int id = dao.getSId(sVo);
 		    		 int n = dao.checkEmail(sVo);
 		    		 if(n!=0) {
 //		    			 dao.updateRetoken(sVo);
 		    			 UserVo loginVo = new UserVo();
+		    			 int id = dao.getSId(sVo);
 		    			 loginVo = dao.detailUser(id);
 		    			 log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 		    			 session.setAttribute("loginVo", loginVo);
@@ -92,6 +92,7 @@ public class NaverController {
 		    			 return "redirect:/";
 		    		 }else {
 		    			dao.joinSocial(sVo);
+		    			int id = dao.getSId(sVo);
 		    			UserVo loginVo = dao.detailUser(id);
 		    			log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 		    			session.setAttribute("info", sVo);

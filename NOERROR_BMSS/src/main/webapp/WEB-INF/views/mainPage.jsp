@@ -14,6 +14,7 @@ body{
 </head>
 <%@include file="header.jsp" %>
 <body>
+<a id="payInfo2"></a>
 	<h2><a href="./adminPage.do">관리자페이지</a></h2>
 <%-- ${sessionScope.loginVo} --%>
 <!-- <hr> -->
@@ -94,4 +95,7 @@ body{
 	
 </body>
 <%@include file="footer.jsp" %>
+<script type="text/javascript">
+console.log(localStorage.getItem('payInfo'));
+</script>
 </html>

@@ -36,5 +36,7 @@ public class UserVo {
 	
 	private List<BorrowVo> borwVo;
 	private List<ReserveVo> resvVo; 
+	private List<OrderVo> orderVo;
+	private List<PayVo> payVo;
 	
 }

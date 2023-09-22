@@ -41,7 +41,100 @@ SELECT bu.USER_ID ,bu.USER_NAME ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.
 		JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
 	WHERE bp.PAY_STATUS =#{pay_status}
 </select>
+<!-- 현재결제내역조회 -->
+<!-- <resultMap type="BorrowVo" id="BorrowVoMap" > -->
+<!--     <result property="user_id" column="USER_ID"/> -->
+<!--     <result property="borrow_status" column="BORROW_STATUS"/> -->
+<!-- </resultMap> -->
+<!-- <resultMap type="ReserveVo" id="ReserveVoMap"> -->
+<!-- 	<result property="user_id" column="USER_ID"/> -->
+<!-- 	<result property="reserve_status" column="RESERVE_STATUS"/> -->
+<!-- </resultMap> -->
+<!-- <resultMap type="PayVo" id="PayVoMap"> -->
+<!-- 	<result property="pay_seq" column="PAY_SEQ"/> -->
+<!-- 	<result property="pay_money" column="PAY_MONEY"/> -->
+<!-- 	<result property="pay_time" column="PAY_TIME"/> -->
+<!-- 	<result property="pay_method" column="PAY_METHOD"/> -->
+<!-- 	<result property="pay_status" column="PAY_STATUS"/> -->
+<!-- </resultMap> -->
+<!-- <resultMap type="UserVo" id="UserVoMap"> -->
+<!-- 	<result property="user_id" column="USER_ID"/> -->
+<!-- 	<result property="user_name" column="USER_NAME"/> -->
+<!-- 	<result property="user_email" column="USER_EMAIL"/> -->
+<!-- 	<result property="user_phone" column="USER_PHONE"/> -->
+<!-- 	<result property="gubun" column="GUBUN"/> -->
+<!-- 	<collection property="borwVo" resultMap="BorrowVoMap"/> -->
+<!-- 	<collection property="resvVo" resultMap="ReserveVoMap"/> -->
+<!-- 	<collection property="payVo" resultMap="PayVoMap"/> -->
+<!-- </resultMap> -->
+<select id="selectPayInfo" resultType="PayVo">
+	SELECT PAY_SEQ,PAY_MONEY,PAY_METHOD,PAY_STATUS,PAY_TIME 
+FROM BOOK_PAY
+WHERE PAY_SEQ=#{pay_seq}
+</select>
+
+<select id="getPay" resultType="java.lang.Integer">
+	SELECT MAX(PAY_SEQ)
+		FROM BOOK_PAY
+</select>
 
 
+
+<resultMap type="BorrowVo" id="BorrowVoMap" >
+    <result property="user_id" column="USER_ID"/>
+    <result property="borrow_status" column="BORROW_STATUS"/>
+</resultMap>
+<resultMap type="ReserveVo" id="ReserveVoMap">
+	<result property="user_id" column="USER_ID"/>
+	<result property="reserve_status" column="RESERVE_STATUS"/>
+</resultMap>
+<resultMap type="PayVo" id="PayVoMap">
+	<result property="pay_seq" column="PAY_SEQ"/>
+	<result property="pay_money" column="PAY_MONEY"/>
+	<result property="pay_time" column="PAY_TIME"/>
+	<result property="pay_method" column="PAY_METHOD"/>
+	<result property="pay_status" column="PAY_STATUS"/>
+</resultMap>
+<resultMap type="OrderVo" id="OrderVoMap">
+	<result property="order_seq" column="ORDER_SEQ"/>
+	<result property="stock_number" column="STOCK_NUMBER"/>
+	<result property="order_quantity" column="ORDER_QUANTITY"/>
+	<result property="order_price" column="ORDER_PRICE"/>
+	<result property="order_date" column="ORDER_DATE"/>
+	<result property="pay_status" column="PAY_STATUS"/>
+	<result property="user_id" column="USER_ID"/>
+	<result property="user_address" column="USER_ADDRESS"/>
+	<result property="status_title" column="STATUS_TITLE"/>
+	<result property="thumbnail" column="THUMBNAIL"/>
+	<result property="genre_code" column="GENRE_CODE"/>
+	<result property="author" column="AUTHOR"/>
+	<collection property="payVo" resultMap="PayVoMap"/>
+</resultMap>
+<resultMap type="PayStatusVo" id="PayStatusVoMap">
+	<result property="pay_status" column="PAY_STATUS"/>
+	<result property="pay_title" column="PAY_TITLE"/>
+</resultMap>
+<resultMap type="UserVo" id="UserVoMap">
+	<result property="user_id" column="USER_ID"/>
+	<result property="user_name" column="USER_NAME"/>
+	<result property="user_email" column="USER_EMAIL"/>
+	<result property="user_phone" column="USER_PHONE"/>
+	<result property="gubun" column="GUBUN"/>
+	<collection property="borwVo" resultMap="BorrowVoMap"/>
+	<collection property="resvVo" resultMap="ReserveVoMap"/>
+	<collection property="payVo" resultMap="PayVoMap"/>
+	<collection property="orderVo" resultMap="OrderVoMap"/>
+</resultMap>
+<select id="getAllPay" resultMap="UserVoMap">
+	SELECT bu.*,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.* 
+FROM BOOK_USERINFO bu 
+	JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
+	JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
+	JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
+	JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
+	JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
+	JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
+WHERE bu.USER_ID  =#{user_id}	
+</select>
 
 </mapper>

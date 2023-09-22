@@ -14,4 +14,10 @@ public interface IPayService {
 	
 	public List<UserVo> selectStatusNum2(int seq);
 	
+	public PayVo selectPayInfo(int seq);
+	
+	public int getPay();
+	
+	public List<UserVo> getAllPay(int id);
+	
 }
