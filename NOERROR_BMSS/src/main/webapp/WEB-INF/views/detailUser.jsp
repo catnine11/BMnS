@@ -58,10 +58,12 @@
 						<td style="width: 10%; color: red;" class="text-center">${loginVo.penalty_date}</td>
 						</c:otherwise>
 						</c:choose>
-						<td style="width: 3%" class="text-center"><input
-							type="button" value="대출정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> <input
-							type="button" value="예약정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> <input
-							type="button" value="결제정보" onclick="location.href='#'"></td>
+						<td style="width: 3%" class="text-center">
+
+						<input type="button" value="대출정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
+            <input type="button" value="예약정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
+            <input type="button" value="결제정보" onclick="location.href='#'"></td>
+
 					</tr>
 			</tbody>
 		</table>
@@ -93,7 +95,7 @@ function requestPay() {
     IMP.request_pay(
         {
             pg: "kakaopay", 
-            pay_method: "card", 
+            pay_method: "kakaopay", 
             merchant_uid: merchant_uid,
             name: "결제테스트",
             amount: point,
@@ -123,8 +125,9 @@ function requestPay() {
                         pay_method: pay_method
                     },
                     success: function(data) {
-                        console.log('성공');
-                        location.href='http://localhost:8080/NOERROR_BMSS/'; // 결제정보조회페이지이동해야함 9/21
+                        console.log('성공',data);
+                        localStorage.setItem('payInfo',data);
+                        location.href='./payInfo.do'; 
                     },
                     error: function(xhr, status, error) {
                         console.log('에러 :', status, error);

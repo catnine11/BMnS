@@ -98,10 +98,10 @@ public class KakaoController {
 			    		 sVo.setSocial_phone("NO PHONE");
 			    		 sVo.setSocial_gubun(gubun);
 			    		 int n = dao.checkEmail(sVo);
-			    		 int id = dao.getSId(sVo);
 			    		 if(n!=0) {
 //			    			 dao.updateRetoken(dao.detailSocial(id));
 			    			 UserVo loginVo = new UserVo();
+			    			 int id = dao.getSId(sVo);
 			    			 loginVo = dao.detailUser(id);
 			    			 log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 			    			 session.setAttribute("loginVo", loginVo);
@@ -109,6 +109,7 @@ public class KakaoController {
 			    			 return "redirect:/";
 			    		 }else {
 			    			 dao.joinSocial(sVo);
+			    			 int id = dao.getSId(sVo);
 			    			 UserVo loginVo = dao.detailUser(id);
 			    			 log.info("!@#!@#!@#!@#!@#!@#loginVo == [{}]!@#!@#!@#!@#!@#!@#",loginVo);
 			    			session.setAttribute("info", sVo);

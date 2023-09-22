@@ -16,4 +16,10 @@ public interface IPayDao {
 	public int okPayStatusChange(String id);
 	//관리자 결제대기상태 조회
 	public List<UserVo> selectStatusNum2(int seq);
+	//현재결제내역조회
+	public PayVo selectPayInfo(int seq);
+	//PayVo의 max(seq)조회
+	public int getPay();
+	//결제내역조회리스트
+	public List<UserVo> getAllPay(int id);
 }

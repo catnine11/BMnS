@@ -15,12 +15,13 @@ body {
 </head>
 <%@include file="header.jsp"%>
 <body>
-	<h2>
-		<a href="./adminPage.do">관리자페이지</a>
-	</h2>
-	<%-- ${sessionScope.loginVo} --%>
-	<!-- <hr> -->
-	<%-- ${sessionScope.info } --%>
+
+<a id="payInfo2"></a>
+	<h2><a href="./adminPage.do">관리자페이지</a></h2>
+<%-- ${sessionScope.loginVo} --%>
+<!-- <hr> -->
+<%-- ${sessionScope.info } --%>
+
 	<div style="background-color: #D9E5FF">
 		<div>
 			<a>아 귀찮다</a>
@@ -104,5 +105,10 @@ body {
 	<script type="text/javascript" src="./js/search.js"></script>
 
 </body>
-<%@include file="footer.jsp"%>
+
+<%@include file="footer.jsp" %>
+<script type="text/javascript">
+console.log(localStorage.getItem('payInfo'));
+</script>
+
 </html>
