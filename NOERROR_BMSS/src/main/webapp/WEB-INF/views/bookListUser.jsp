@@ -71,7 +71,7 @@
 				html+="		<p>"+book.publisher+"</p>";
 				html+="	</div>";
 				html+="	<a>";
-				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='return getDetail("+book.book_code+")'>";
+				html+="		<img id='thumbnail' src='"+book.thumbnail+"' onclick='getDetail("+book.book_code+")'>";
 				html+="	</a>";
 				html+="</li>";
 				html+="</ul>";
@@ -86,8 +86,8 @@
 	}
 	
 	function getDetail(book_code){
-		var url = './bookDetail.do?book_code='+book_code;
-		window.location.href = url;
+	
+		location.href ='./bookDetail.do?book_code='+book_code;
 	}
 	
 </script>
@@ -120,7 +120,7 @@
 					<p>${book.publisher}</p>
 				</div>
 				<a>
-					<img id="thumbnail" src="${book.thumbnail}" onclick="return getDetail(${book.book_code})">
+					<img id="thumbnail" src="${book.thumbnail}" onclick="getDetail('${book.book_code}')">
 				</a>
 			</li>
 		</c:forEach>

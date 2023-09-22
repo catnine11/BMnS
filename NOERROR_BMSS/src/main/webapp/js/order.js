@@ -1,3 +1,4 @@
+//전체 체크박스 함수
 $(document).ready(function(){
 	$("input[name='allCheck']").click(function(){
 		
@@ -28,14 +29,17 @@ $(document).ready(function(){
 	
 })
 
+//관리자 주문내역을 삭제 하는 함수;
 
 $(document).on('click', 'input#delBtn', function(){
     var checkedOrder = new Array();
     $("input[name='delCheck']:checked").each(function(){
 //	console.log( $(this).closest('tr').find('.stNum').text());
+	console.log($(this));
         checkedOrder.push($(this).closest('tr').find('.stNum').text());
+    console.log(checkedOrder);
     });
-    
+    console.log(checkedOrder);
     $.ajax({
         type: 'post',
         url: './delOrder.do',
@@ -55,6 +59,50 @@ $(document).on('click', 'input#delBtn', function(){
         }
     });
 });
+
+
+
+
+//유저가 주문내역을 삭제 하는 함수;
+$(document).on('click', 'input#delUBtn', function(){
+    var checkedOrder = new Array();
+    $("input[name='delCheck']:checked").each(function(){
+//	console.log( $(this).closest('tr').find('.stNum').text());
+	console.log($(this));
+        checkedOrder.push($(this).closest('tr').find('.delBox').val());
+    });
+    console.log(checkedOrder);
+//    return false;
+    $.ajax({
+        type: 'post',
+        url: './delOrder.do',
+        data: {'checkedOrder': checkedOrder},
+        success: function(data){
+		console.log(data.oderdel);
+		$('input.delBox:checked').each(function(){
+//		$(this).closest('tr').remove();		
+			
+		})		
+			alert("주문을 삭제 했습니다.");	
+        },
+        error: function(){
+            alert("최소 하나이상의 도서를  체크해 주세요");
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function dtWindow(id){
 	window.open('./orderDetail.do?id='+id,'주문조회 상세창','width=800,height=600');

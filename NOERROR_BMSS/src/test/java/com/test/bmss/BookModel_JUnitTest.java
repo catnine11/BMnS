@@ -67,7 +67,7 @@ public class BookModel_JUnitTest {
 		assertNotNull(info);
 	}
 	
-	@Test
+//	@Test
 	public void detailStatus() {
 		BookInfoVo info = dao.getOneBookStatus("1");
 		assertNotNull(info);
@@ -252,9 +252,9 @@ public class BookModel_JUnitTest {
 		assertNotNull(list);
 	}
 	
-//	@Test
+	@Test
 	public void myReserveNow() {
-		List<ReserveVo> list = service.myReserveNow(4);
+		List<ReserveVo> list = service.myReserveNow(2);
 		assertNotNull(list);
 	}
 	

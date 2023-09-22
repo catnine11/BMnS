@@ -15,6 +15,10 @@
 		margin-top: 20px;
 	}
 	
+	li{
+		list-style: none;
+	}
+	
 	.info> ul> li{
 		display: inline;
 	}
@@ -24,65 +28,45 @@
         color: #ccc;
 	}
 	
-	table{
+	table, th, tr, td{
 		text-align: center;
 	}
 	
 </style>
-<script type="text/javascript" src="./js/detail.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/detail.js"></script>
 <script type="text/javascript">
-window.onload = function () {
+// var loginVo = ${sessionScope.loginVo}
+// window.onload = function () {
 
-	var adminOnlyElements = document.getElementsByClassName("adminOnly");
-	var userAuth = "${sessionScope.loginVo.user_auth}";
-	console.log("userAuth: " + userAuth);
+// 	var adminOnlyElements = document.getElementsByClassName("adminOnly");
+// 	var userAuth = "${sessionScope.loginVo.user_auth}";
+// // 	console.log("userAuth: " + userAuth);
 
-	if (userAuth != 'A') {
-		for (var i = 0; i < adminOnlyElements.length; i++) {
-			adminOnlyElements[i].style.display = "none";
-		}
-	}else{
-		for (var i = 0; i < adminOnlyElements.length; i++) {
-			adminOnlyElements[i].style.display = "";
-		}
-	}
-}
-var loginVo = ${sessionScope.loginVo}
+// 	if (userAuth != 'A') {
+// 		for (var i = 0; i < adminOnlyElements.length; i++) {
+// 			adminOnlyElements[i].style.display = "none";
+// 		}
+// 	}else{
+// 		for (var i = 0; i < adminOnlyElements.length; i++) {
+// 			adminOnlyElements[i].style.display = "";
+// 		}
+// 	}
+// }
+
 </script>
 </head>
 <%@include file="header.jsp" %>
 <body>
-<%-- ${sessionScope.loginVo.user_auth} --%>
-<!-- <div> -->
-<!-- 	<fieldset> -->
-<%-- 		<div>${detail}</div> --%>
-<!-- 		<hr> -->
-<!-- 		<div> -->
-<!-- 				<h3>사진</h3> -->
-<%-- 				thumbnail : ${detail.thumbnail} --%>
-<!-- 			<hr> -->
-<!-- 				<h3>책상세</h3> -->
-<%-- 				isbn= : ${detail.isbn} --%>
-<%-- 				title= : ${detail.title} --%>
-<%-- 				author= : :${detail.author}  --%>
-<%-- 				genre_code= :${detail.genre_code}  --%>
-<%-- 				publisher=:${detail.publisher}  --%>
-<%-- 				publish_date =: :${detail.publish_date} --%>
-<!-- 			<hr> -->
-<!-- 				<h3>대출예약</h3> -->
-<%-- 				<c:forEach var="vo" items="${detail.bsVo}"> --%>
-<!-- 					<p> -->
-<%-- 						status_code=:${vo.status_code}  --%>
-<%-- 						return_date=:${vo.return_date}   --%>
-<%-- 						borrow_status=:${vo.borrow_status}  --%>
-<!-- 					</p> -->
-<%-- 				</c:forEach> --%>
-<!-- 		</div> -->
-<!-- 	</fieldset> -->
-<!-- </div> -->
+<%-- ${detail} --%>
+${sessionScope.loginVo}
+<input type="hidden" name="loginVo" value="${sessionScope.loginVo}">
+<input type="hidden" name="user_auth" class="user_auth" value="${sessionScope.loginVo.user_auth}">
+<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
+<input type="hidden" name="penalty_date" class="penalty_date" value="${sessionScope.loginVo.penalty_date}">
+
 <div class="container">
 	<div class="title">
 		<h2>상세정보</h2>
@@ -94,6 +78,9 @@ var loginVo = ${sessionScope.loginVo}
 					<img id="thumbnail" src="${detail.thumbnail}" alt="${detail.title}">
 				</div>
 				<div class="binfo">
+					<div class="adminOnly">
+						<input type="button" name="" value="도서정보수정" class="">
+					</div>
 					<div class="title">
 						<b>${detail.title}</b>
 					</div>
@@ -135,84 +122,169 @@ var loginVo = ${sessionScope.loginVo}
 								 ${detail.genre_name}
 							</li>
 						</ul>
+						<div>
+						<ul>
+							<li>
+								<strong>추가정보</strong>
+							</li>
+							<c:choose>
+							<c:when test="${empty detail.content || empty detail.intro || empty detail.review || empty detail.authorinfo}">
+								<li>등록된 정보가 없습니다.</li>
+							</c:when>
+ 							<c:otherwise>
+								<li>${detail.content}</li>
+								<li>${detail.intro}</li>
+								<li>${detail.review}</li>
+								<li>${detail.authorinfo}</li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+						</div>
 					</div>
 				</div>
 				
 				<div class="seqByBookCode">
-					<table>
-						<tbody>
-							<tr>
-								<th class="adminOnly">관리번호</th>
-								<th>장르</th>
-								<th>도서상태</th>
-								<th>대출상태</th>
-								<th>반납예정일</th>
-								<th>예약상태</th>
-							</tr>
-							<c:forEach  var="d" items="${detail.bsVo}">
-								<c:choose>
-								<c:when test="${sessionScope.loginVo.user_auth=='A'}">
+				<table>
+					<tbody id="borrowStatus">
+						<tr>
+							<th class="adminOnly">관리번호</th>
+							<th>장르</th>
+							<th class="adminOnly">도서상태</th>
+							<th>대출상태</th>
+							<th>반납예정일</th>
+							<th>예약상태</th>
+							<th class="adminOnly">도서상태변경</th>
+						</tr>
+						<c:forEach  var="d" items="${detail.bsVo}">
+							<c:choose>
+							<c:when test="${sessionScope.loginVo.user_auth=='A'}">
+								<tr>
+									<td class="adminOnly book_seq">${d.book_seq}</td>
+									<td>${detail.genre_name}</td>
+									<td class="adminOnly status_code">${d.status_code}</td>
+									<td>${d.borrow_status}</td>
+									<td>${d.return_date}</td>
+									<td>${d.reserve_status}</td>
+									<td class="adminOnly">
+										<select class="changeBookStatus" name="status_code">                                        
+											<option value="A" ${d.status_code =="A"? "selected": ""}>일반</option>
+											<option value="B" ${d.status_code =="B"? "selected": ""}>재고</option>
+											<option value="C" ${d.status_code =="C"? "selected": ""}>분실</option>
+											<option value="D" ${d.status_code =="D"? "selected": ""}>파손</option>
+											<option value="E" ${d.status_code =="E"? "selected": ""}>예정</option>
+										</select>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${d.status_code=='A'}">
 									<tr>
 										<td class="adminOnly">${d.book_seq}</td>
 										<td>${detail.genre_name}</td>
-										<td>${d.status_code}</td>
-										<td>${d.borrow_status}</td>
+										<td class="adminOnly">${d.status_code}</td>
+										<td>
+											<c:if test="${d.borrow_status == 'Y'}">
+												<p style="color: red;">대출중</p>
+ 											</c:if>
+											<c:if test="${d.borrow_status == 'N' || d.borrow_status == null}">
+												<input type="hidden" name="borrow_title" class="borrow_title" value="${detail.title}">
+												<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
+												<input type="hidden" name="reserve_user" class="reserve_user" value="${d.user_id}">
+												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
+												<input type="button" class="requestBorrow" value="대출신청">
+ 											</c:if>
+										</td>
 										<td>${d.return_date}</td>
-										<td>${d.reserve_status}</td>
+										<td>
+											<c:if test="${d.reserve_status == 'Y'}">
+												<p style="color: red;">예약중</p>
+	 										</c:if>
+											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
+												<button onclick="requestReserve(${d.book_seq})">예약신청</button>
+	 										</c:if>
+										</td>
+										<td class="adminOnly"></td>
 									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:if test="${d.status_code=='A'}">
-									<c:choose>
-									<c:when test="${sessionScope.loginVo.user_auth=='U'}">
-										<tr>
-											<td>${detail.genre_name}</td>
-											<td>${d.status_code}</td>
-											<c:if test="${d.borrow_status == 'N' || d.borrow_status == null}">
-												<td> ${d.borrow_status}
-													<button onclick="return requestBorrow(${d.book_seq})">대출신청</button>
-												</td>
-											</c:if>
-											<td>${d.return_date}</td>
-											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
-												<td>
-													${d.reserve_status}
-													<button onclick="return requestReservew(${d.book_seq})">예약신청</button>
-												</td>
-											</c:if>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<tr>
-											<td>${detail.genre_name}</td>
-											<td>${d.status_code}</td>
-											<c:if test="${d.borrow_status == 'N' || d.borrow_status == null}">
-												<td> ${d.borrow_status}
-													<button onclick="return requestBorrow(${d.book_seq})">대출신청</button>
-												</td>
-											</c:if>
-											<td>${d.return_date}</td>
-											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
-												<td>
-													${d.reserve_status}
-													<button onclick="return requestReservew(${d.book_seq})">예약신청</button>
-												</td>
-											</c:if>
-										</tr>
-									</c:otherwise>
-									</c:choose>
-									</c:if>
-								</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</tbody>
-					</table>
+								</c:if>					
+							</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</tbody>
+				</table>
 				</div>
-					
+				<div id="modalReserver" class="modal">
+					<div class="modal-content">
+						<p>예약한 도서를 대출하시겠습니까?</p>
+						<button id="nextButton">Y</button>
+						<button>N</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+
+// 	$("input.requestBorrow").on("click", function(){
+// 		var book_seq = $(this).closest("tr").find(".book_seq").val();
+// 		console.log(book_seq);
+		
+// 		var userAuth = $("input.user_auth").val();
+// 		console.log("userAuth의 값 : ", userAuth);
+		
+// 	});
+
+// 	function requestBorrow(book_seq){
+		
+// 		var book_seq = $(this).val();
+// 		console.log('선택한 책의 book_seq 값:', book_seq);
+		
+// 		if(userAuth=='U'){
+// 			console.log('회원의 대출신청');
+// 			var title = "${detail.title}";
+// 			var user_id = "${sessionScope.loginVo.user_id}";
+// // 			var book_seq = ;
+// 			console.log(title, user_id, book_seq)
+
+// 			$.ajax({
+// 				url: "./requestBorrow.do",
+// 				type: "post",
+// 				data: {title : title,
+// 						user_id : user_id,
+// 						book_seq : book_seq
+// 				},
+// 				success: function(){
+// 					console.log(data);
+// 					return false;
+// 				},
+// 				error: function(){
+// 					alert('대출신청에 실패했습니다.');
+// 				}
+// 			});
+			
+			
+// 		}else{
+// 			alert('대출은 회원만 가능합니다. 로그인해주세요');
+// 			location.href="./login.do";
+// 		}
+// 	}
+	
+	function requestReserve(book_seq){
+		var userAuth = '${sessionScope.loginVo.user_auth}';
+		console.log("userAuth");
+		
+		if(userAuth=='U'){
+			console.log('회원의 예약신청');
+			
+			
+		}else{
+			alert('예약은 회원만 가능합니다. 로그인해주세요');
+			location.href="./login.do";
+		}
+	}
+	
+	
+</script>
 </body>
 <%@include file="footer.jsp" %>
 </html>

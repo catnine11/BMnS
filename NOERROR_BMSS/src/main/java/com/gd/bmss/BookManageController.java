@@ -58,6 +58,7 @@ public class BookManageController {
 	@ResponseBody
 	public Map<String, Object> bookListGenre(Model model, @RequestParam String selectedGenre) {
 		log.info("Welcome BookManageController 도서전체조회창-장르별 조회");
+		log.info("Welcome BookManageController  선택된장르 {}", selectedGenre);
 		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -78,17 +79,6 @@ public class BookManageController {
 	}
 	
 	
-	/*
-	 * 상세조회
-	 */
-//	@GetMapping(value = "/bookDetail.do")
-	public String bookDetail(Model model, String book_code) {
-		log.info("Welcome BookManageController 도서상세화면창 이동");
-		BookInfoVo detailList = service.getOneBook(book_code);
-		model.addAttribute("detail", detailList);
-		
-		return "bookDetail";
-	}
 	
 	/*
 	 * 상세조회-대출상태포함
@@ -96,7 +86,7 @@ public class BookManageController {
 	@GetMapping(value = "/bookDetail.do")
 	public String bookDetailStatus(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
-		BookInfoVo detail= service.getOneBookStatus(book_code);
+		log.info("Welcome BookManageController 북코드 {}",book_code );		BookInfoVo detail= service.getOneBookStatus(book_code);
 //		List<Book_StatusVo> detailList = service.getOneBookStatus(book_code);
 		model.addAttribute("detail", detail);
 		System.out.println("\n\n" + detail);
@@ -111,8 +101,6 @@ public class BookManageController {
 	public String changeGenre(Model model, String[] chkBook, String selectedChangeGenre) {
 		log.info("Welcome BookManageController 장르변경 ");
 		log.info("Welcome BookManageController 장르변경 parameter : {} {}", Arrays.toString(chkBook), selectedChangeGenre);
-		
-		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("genre_code", selectedChangeGenre);
@@ -130,10 +118,17 @@ public class BookManageController {
 	/*
 	 * 도서상태변경
 	 */
-	public String changeBStatus() {
+	@PostMapping(value = "/changeBStatus.do")
+	public Map<String, Object> changeBStatus(String status_code, String book_seq) {
 		log.info("Welcome BookManageController 도서상태변경 ");
 		
-		return "redirect:/bookListAdmin.do";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status_code", status_code);
+		map.put("book_seq", book_seq);
+		service.changeBStatus(map);
+		
+//		return "redirect:/bookDetail.do";
+		return map;
 	}
 	
 	
