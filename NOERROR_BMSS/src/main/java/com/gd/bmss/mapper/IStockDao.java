@@ -16,6 +16,7 @@ public interface IStockDao {
 //	public List<StockVo> normalToStockst();
 //	public List<StockVo> addStock(StockVo book_seq);
 //	
+	public List<StockVo>getSellableStock();
 	
 	public int sellAble(Map<String, Object> map);
 	public int sellAbleMany(List<Integer>stock_number );

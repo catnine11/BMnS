@@ -104,6 +104,15 @@ int n =	sql.insert(NS+"addStocks",list);
 	return list;
 	}
 
+/*
+ * 유저가 판매 목록을 조회
+ */
+@Override
+public List<StockVo> getSellableStock() {
+		List<StockVo>	list	=sql.selectList(NS+"getSellableStock");
+	return list;
+}
+
 //@Override
 //public List<StockVo> normalToStockst() {
 //		sql.update(NS+"normalToStocks")	;

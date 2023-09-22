@@ -104,13 +104,17 @@ public class StockController {
 	
 	@PostMapping("/stocksDel.do")
 	@ResponseBody
-	public Map<String, Integer> stocksDel( @RequestParam(value="checkedNums[]") List<String> checkedNums,HttpServletResponse resp){
+	public Map<String, Integer> stocksDel( @RequestParam(value="checkedNums[]",required = false) List<String> checkedNums,HttpServletResponse resp){
 		System.out.println("stocksDel.do");
 		System.out.println((checkedNums));
-		int n 	=dao.stocksDel(checkedNums);
-Map<String, Integer> map = new HashMap<String, Integer>();
+		int n =0;
+		if (checkedNums != null ) {
+			n 	=dao.stocksDel(checkedNums);
+		}
+		
+		System.out.println(n);
+		Map<String, Integer> map = new HashMap<String, Integer>();
 			map.put("result", n);
-	
 	return map ;
 	
 //			

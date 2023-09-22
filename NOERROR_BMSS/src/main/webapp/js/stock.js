@@ -79,8 +79,8 @@ html+="		</table>                                                               
 
 			
 			$("#stockDel").on("click", "input.chPrice", function() {
-    var price= $(this).closest('tr').find('.price').val() // 값을 가져올 때 val() 대신 text() 사용
-	var stockNum=$(this).closest('tr').find('.stockNum').text();
+    	var price= $(this).closest('tr').find('.price').val() 
+		var stockNum=$(this).closest('tr').find('.stockNum').text();
 //    	console.log()
 
 //    var stockNum = $(this).closest("tr").find(".stockNum").text(); // 주석 해제
@@ -332,18 +332,25 @@ $(document).ready(function(){
 		$("input.delChk:checked").each(function(){
 //			console.log($(this).closest('tr').find('.book_seq').text());
 			checkedNums.push($(this).closest('tr').find('.stockNum').val());
-		var inStock_tr=$(this).closest('tr');	  
 		})
 		console.log(checkedNums);
 		$.ajax({
 		type:"post",
 		url:"./stocksDel.do",
 		data:{"checkedNums":checkedNums},
-		success:function(){
-			$('input.delChk:checked').each(function(){
+		success:function(data){
+			console.log(data);
+			console.log(data.result);
+			if(data.result==0){
+				alert('도서를 선택해 주세요');
+				return;
+			}
+				$('input.delChk:checked').each(function(){
 				$(this).closest('tr').remove();
 			})
-			alert('재고목록 대상에서 제외되었습니다');
+			alert('재고목록 대상에서 제외되었습니다');	
+			
+			
 		}
 			
 		})
