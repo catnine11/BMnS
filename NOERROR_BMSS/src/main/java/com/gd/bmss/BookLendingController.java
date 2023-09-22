@@ -60,7 +60,7 @@ public class BookLendingController {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출현황 조회");
 		
 		List<BorrowVo> borrowList =service.myBorrowNow(user_id);
-		model.addAttribute("lists", borrowList);
+		model.addAttribute("borrowNow", borrowList);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", user_id);
 		
@@ -74,9 +74,12 @@ public class BookLendingController {
 	@GetMapping(value = "/myBorrowHistory.do")
 	public String myBorrowHistory(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출내역 조회");
-		service.myBorrowHistory(user_id);
+
 		List<BorrowVo> borrowList =service.myBorrowHistory(user_id);
-		model.addAttribute("lists", borrowList);
+		model.addAttribute("borrowHistory", borrowList);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_id", user_id);
+		
 		return "myLibrary";
 	}
 	
@@ -167,6 +170,19 @@ public class BookLendingController {
 	/*
 	 * 연장신청 renewBook
 	 */
+	@PostMapping(value = "/renew.do")
+	public String renew(int book_seq) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 연장신청");
+		
+		int n = service.renewBook(book_seq);
+		if(n>0) {
+			
+			return "myLibrary";
+		}else {
+			return null;
+		}
+		
+	}
 	
 	
 	/*
