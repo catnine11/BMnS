@@ -90,4 +90,14 @@ public class UserDaoImpl implements IUserDao {
 	public int updatePwd(Map<String, Object> map) {
 		return sql.update("com.gd.bmss.mapper.UserDaoImpl.updatePwd",map);
 	}
+
+	@Override
+	public int deleteUser(int id) {
+		return sql.update("com.gd.bmss.mapper.UserDaoImpl.deleteUser",id);
+	}
+
+	@Override
+	public UserVo getNotDelUser(int id) {
+		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.getNotDelUser",id);
+	}
 }

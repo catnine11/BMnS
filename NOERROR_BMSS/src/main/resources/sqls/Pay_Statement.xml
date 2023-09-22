@@ -2,6 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper  namespace="com.gd.bmss.mapper.PayDaoImpl">
 
+<!-- 결제정보 입력 -->
+<insert id="insertPayInfo">
+<selectKey keyProperty="pay_seq" resultType="java.lang.Integer" order="BEFORE">
+		SELECT PAY_SEQ_SEQUENCE.NEXTVAL AS PAY_SEQ FROM DUAL
+</selectKey>
+	INSERT INTO BOOK_PAY
+		(PAY_SEQ,
+		 PAY_MONEY, 
+		 PAY_TIME, 
+		 PAY_METHOD, 
+		 PAY_STATUS)
+	VALUES(#{pay_seq}, #{pay_money}, SYSDATE, #{pay_method}, '2')
+</insert>
+
+<!-- 결제시상태변경 -->
+<update id="payStatusChange">
+	UPDATE BOOK_ORDER  
+	SET PAY_STATUS = '2'
+	WHERE USER_ID =#{user_id}
+</update>
+
+<!-- 관리자승인시 결제상태변경 -->
+<update id="okPayStatusChange">
+	UPDATE BOOK_ORDER 
+	SET PAY_STATUS ='3'
+	WHERE USER_ID =#{user_id}
+</update>
+<!-- 관리자 회원의 결제대기 확인 -->
+<select id="selectStatusNum2" resultType="UserVo">
+SELECT bu.USER_ID ,bu.USER_NAME ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.* 
+	FROM BOOK_USERINFO bu 
+		JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
+		JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
+		JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
+		JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
+		JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
+		JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
+	WHERE bp.PAY_STATUS =#{pay_status}
+</select>
+
 
 
 </mapper>

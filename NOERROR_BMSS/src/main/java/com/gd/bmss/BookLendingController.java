@@ -1,12 +1,16 @@
 package com.gd.bmss;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.gd.bmss.mapper.IBookLendingDao;
 import com.gd.bmss.service.IBookLendingService;
 import com.gd.bmss.vo.BorrowVo;
 
@@ -24,6 +28,9 @@ public class BookLendingController {
 	
 	@Autowired
 	private IBookLendingService service;
+	
+	@Autowired
+	private IBookLendingDao dao;
 
 	
 	/*
@@ -49,9 +56,15 @@ public class BookLendingController {
 	 */
 	@GetMapping(value = "/myBorrowNow.do")
 	public String myBorrowNow(Model model, int user_id) {
+//	public Map<String, Object> myBorrowNow(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출현황 조회");
+		
 		List<BorrowVo> borrowList =service.myBorrowNow(user_id);
-		model.addAttribute("lists", borrowList);
+		model.addAttribute("borrowNow", borrowList);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		
+//		return map;
 		return "myLibrary";
 	}
 	
@@ -61,9 +74,12 @@ public class BookLendingController {
 	@GetMapping(value = "/myBorrowHistory.do")
 	public String myBorrowHistory(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출내역 조회");
-		service.myBorrowHistory(user_id);
+
 		List<BorrowVo> borrowList =service.myBorrowHistory(user_id);
-		model.addAttribute("lists", borrowList);
+		model.addAttribute("borrowHistory", borrowList);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_id", user_id);
+		
 		return "myLibrary";
 	}
 	
@@ -114,11 +130,26 @@ public class BookLendingController {
 	 * 회원의 대출신청 insertBorrow
 	 * //연체회원여부 확인할것
 	 */
+//	@PostMapping(value = "/requestBorrow.do")
+	public String requestBorrow(String title, String user_id, String book_seq) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
+		
+		BorrowVo borrow = new BorrowVo();
+		borrow.setBorrow_title(title);
+		borrow.setUser_id(user_id);
+		borrow.setBook_seq(book_seq);
+		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
+		
+		int n = service.insertBorrow(borrow);
+		
+		return "bookDetail";
+	}
 	
 	
 	/*
 	 * 대출불가 조건(도서상태가 대출중, 예약중, 상태가 일반 아님) borrowNotOk
 	 */
+//	public String 
 	
 	
 	/*
@@ -139,6 +170,19 @@ public class BookLendingController {
 	/*
 	 * 연장신청 renewBook
 	 */
+	@PostMapping(value = "/renew.do")
+	public String renew(int book_seq) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 연장신청");
+		
+		int n = service.renewBook(book_seq);
+		if(n>0) {
+			
+			return "myLibrary";
+		}else {
+			return null;
+		}
+		
+	}
 	
 	
 	/*

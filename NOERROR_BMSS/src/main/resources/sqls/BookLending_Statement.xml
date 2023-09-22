@@ -2,17 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper  namespace="com.gd.bmss.mapper.BookLendingDaoImpl">
 
-<resultMap type="com.gd.bmss.vo.Book_StatusVo" id="bStatusMap">
-	<result column="STATUS" property="status"/>
-	<result column="STATUS_CODE" property="status_code"/>
-	<result column="BOOK_SEQ" property="book_seq"/>
-	<result column="STATUS_TITLE" property="status_title"/>
+<resultMap type="com.gd.bmss.vo.BookInfoVo" id="bInfoMap">
 	<result column="BOOK_CODE" property="book_code"/>
+	<result column="ISBN" property="isbn"/>
+	<result column="TITLE" property="title"/>
+	<result column="AUTHOR" property="author"/>
+	<result column="GENRE_CODE" property="genre_code"/>
+	<result column="GENRE_NAME" property="genre_name"/>
+	<result column="PUBLISHER" property="publisher"/>
+	<result column="PUBLISH_DATE" property="publish_date"/>
+	<result column="THUMBNAIL" property="thumbnail"/>
+	<result column="CONTENT" property="content"/>
+	<result column="INTRO" property="intro"/>
+	<result column="REVIEW" property="review"/>
+	<result column="AUTHORINFO" property="authorinfo"/>
 	
-	<collection property="borwVo" resultMap="borrowMap"/>
-	<collection property="resvVo" resultMap="reserveMap"/>
+	<collection property="bsVo" resultMap="bStatusMap"/>
 </resultMap>
 
+<resultMap type="com.gd.bmss.vo.Book_StatusVo" id="bStatusMap">
+	<result column="STATUS_CODE" property="status_code"/>
+	<result column="BOOK_SEQ" property="book_seq"/>
+
+	<result column="BORROW_SEQ" property="borrow_seq"/>
+	<result column="BORROW_TITLE" property="borrow_title"/>
+	<result column="START_DATE" property="start_date"/>
+	<result column="RETURN_DATE" property="return_date"/>
+	<result column="RENEW" property="renew"/>
+	<result column="BORROW_STATUS" property="borrow_status"/>
+	
+	<result column="RESERVE_SEQ" property="reserve_seq"/>
+	<result column="RESERVE_TITLE" property="reserve_title"/>
+	<result column="RESERVE_DATE" property="reserve_date"/>
+	<result column="RESERVE_STATUS" property="reserve_status"/>
+
+	<result column="USER_ID" property="user_id"/>
+	
+<!-- 	<collection property="borwVo" resultMap="borrowMap"/> -->
+<!-- 	<collection property="resvVo" resultMap="reserveMap"/> -->
+</resultMap>
 
 <resultMap type="com.gd.bmss.vo.BorrowVo" id="borrowMap">
 	<result column="BORROW_SEQ" property="borrow_seq"/>
@@ -49,25 +77,30 @@
 
 <!-- 대출신청 -->
 <insert id="insertBorrow" parameterType="BorrowVo">
-INSERT INTO BOOK_BORROW
-(BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ)
-VALUES(BORROW_SEQ.NEXTVAL, #{borrow_title}, #{start_date}, #{return_date} ,  'N' , 'Y' , #{user_id}, #{book_seq})
+	INSERT INTO BOOK_BORROW
+	(BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ)
+	VALUES
+	(BORROW_SEQ.NEXTVAL, #{borrow_title}, CURRENT_DATE, CURRENT_DATE+14 ,  'N' , 'Y' , #{user_id}, #{book_seq})
+<!-- INSERT INTO BOOK_BORROW -->
+<!-- (BORROW_SEQ, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , USER_ID, BOOK_SEQ) -->
+<!-- VALUES(BORROW_SEQ.NEXTVAL, #{borrow_title}, #{start_date}, #{return_date} ,  'N' , 'Y' , #{user_id}, #{book_seq}) -->
 </insert>
 
 <!-- 대출불가능한 경우 1.예약중이거나 대출중이거나 도서상태가 일반이 아님 -->
 <select id="borrowNotOk" resultMap="bStatusMap">
-SELECT BOOK_SEQ
-FROM BOOK_STATUS bs
-LEFT JOIN BOOK_BORROW bb USING(BOOK_SEQ)
-LEFT JOIN BOOK_RESERVE br USING(BOOK_SEQ)
-WHERE (bb.BORROW_STATUS ='Y'
-OR br.RESERVE_STATUS ='Y')
-OR bs.STATUS_CODE !='A'
+	SELECT BOOK_SEQ
+		FROM BOOK_STATUS bs
+		LEFT JOIN BOOK_BORROW bb USING(BOOK_SEQ)
+		LEFT JOIN BOOK_RESERVE br USING(BOOK_SEQ)
+		WHERE (bb.BORROW_STATUS ='Y'
+			OR br.RESERVE_STATUS ='Y')
+			OR bs.STATUS_CODE !='A'
 </select>
 
 <!-- 대출불가능한 경우 2. 연체회원인 경우 -->
 <select id="isPenaltyUser" resultMap="userMap">
-SELECT MAX(PENALTY_DATE) PENALTY_DATE, bu.USER_ID
+SELECT MAX(PENALTY_DATE) PENALTY_DATE
+<!-- , bu.USER_ID -->
 FROM BOOK_USERINFO bu
 	 JOIN BOOK_BORROW bb  ON bb.USER_ID = bu.USER_ID
 WHERE bu.USER_ID =#{user_id}
@@ -86,7 +119,23 @@ SELECT COUNT(*)
 
 <!-- 예약자의 대출신청 //트랜잭션//////물어볼것 -->
 <select id="borrowReserver" resultMap="bStatusMap">
-
+SELECT
+  T2.USER_ID,
+  T1.BOOK_SEQ 
+FROM
+  T2
+LEFT JOIN T1 ON T1.BOOK_CODE = T2.BOOK_CODE AND T2.RESERVE_RANK = T1.BORROW_RANK
+LEFT JOIN (SELECT BB.USER_ID, MAX(BU.PENALTY_DATE) PENALTY_DATE
+   FROM BOOK_BORROW bb 
+    LEFT JOIN BOOK_USERINFO bu ON bb.USER_ID = bu.USER_ID
+    GROUP BY bb.USER_ID
+) USER_P
+ON T2.USER_ID = USER_P.USER_ID 
+WHERE (PENALTY_DATE IS NULL OR SYSDATE > PENALTY_DATE)
+<!-- AND T2.USER_ID=#{user_id} -->
+AND T2.BOOK_CODE=#{book_code}
+ORDER BY
+  T2.USER_ID;
 </select>
 
 <!-- 트랜잭션/예약취소 -->
@@ -97,7 +146,8 @@ WHERE BOOK_SEQ=#{book_seq}
 
 <!-- 대출 조회 : 관리자의 전체회원 대출현황 조회 -->
 <select id="getAllBorrowNow" resultMap="borrowMap">
-SELECT USER_ID ,BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , BOOK_SEQ
+SELECT USER_ID ,BORROW_TITLE, TO_CHAR(START_DATE,'YYYY-MM-DD') AS START_DATE,
+		TO_CHAR(RETURN_DATE,'YYYY-MM-DD') AS RETURN_DATE, RENEW, BORROW_STATUS , BOOK_SEQ
 	FROM BOOK_BORROW
 	JOIN BOOK_USERINFO bu 
 	USING(USER_ID)
@@ -108,52 +158,56 @@ SELECT USER_ID ,BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS , BO
 
 <!-- 대출 조회 : 관리자의 특정회원 대출현황 -->
 <select id="getOneBorrowNow" resultMap="borrowMap">
-SELECT BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS, USER_ID, BOOK_SEQ
-FROM BOOK_BORROW
-JOIN BOOK_USERINFO bu 
-USING(USER_ID)
-WHERE RETURN_DATE >SYSDATE 
-AND BORROW_STATUS ='Y'
-AND USER_ID =#{user_id}
-ORDER BY BORROW_SEQ
+SELECT BORROW_TITLE, TO_CHAR(START_DATE,'YYYY-MM-DD') AS START_DATE,TO_CHAR(RETURN_DATE,'YYYY-MM-DD') AS RETURN_DATE,
+		 RENEW, BORROW_STATUS, USER_ID, BOOK_SEQ
+	FROM BOOK_BORROW
+	JOIN BOOK_USERINFO bu 
+	USING(USER_ID)
+	WHERE RETURN_DATE >SYSDATE 
+	AND BORROW_STATUS ='Y'
+	AND USER_ID =#{user_id}
+	ORDER BY BORROW_SEQ
 </select>
 
 <!-- 대출 조회 : 회원의 자신의 대출현황 조회 -->
-<select id="myBorrowNow" resultMap="borrowMap">
-SELECT BORROW_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, START_DATE, RETURN_DATE, RENEW
-FROM BOOK_BORROW bb  
-JOIN BOOK_STATUS bs ON bb.BOOK_SEQ=bs.BOOK_SEQ  
-JOIN BOOKINFO b ON b.BOOK_CODE =bs.BOOK_CODE 
-JOIN BOOK_GENRE bg ON b.GENRE_CODE =bg.GENRE_CODE 
-JOIN BOOK_USERINFO bu 
-USING(USER_ID)
-WHERE RETURN_DATE >SYSDATE 
-AND BORROW_STATUS ='Y'
-AND USER_ID =#{user_id}
-ORDER BY BORROW_SEQ
+<select id="myBorrowNow" resultMap="bInfoMap">
+SELECT BORROW_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, bs.BOOK_SEQ,
+		TO_CHAR(START_DATE,'YYYY-MM-DD') AS START_DATE,TO_CHAR(RETURN_DATE,'YYYY-MM-DD') AS RETURN_DATE, RENEW
+	FROM BOOK_BORROW bb  
+	JOIN BOOK_STATUS bs ON bb.BOOK_SEQ=bs.BOOK_SEQ  
+	JOIN BOOKINFO b ON b.BOOK_CODE =bs.BOOK_CODE 
+	JOIN BOOK_GENRE bg ON b.GENRE_CODE =bg.GENRE_CODE 
+	JOIN BOOK_USERINFO bu 
+	USING(USER_ID)
+	WHERE RETURN_DATE >SYSDATE 
+	AND BORROW_STATUS ='Y'
+	AND USER_ID =#{user_id}
+	ORDER BY BORROW_SEQ
 </select>
 
 <!-- 대출 조회 : 관리자의 특정회원대출내역 조회 -->
 <select id="getOneBorrowHistory" resultMap="borrowMap">
-SELECT USER_ID, BORROW_TITLE, START_DATE, RETURN_DATE, RENEW, BORROW_STATUS, BOOK_SEQ
-FROM BOOK_BORROW
-JOIN BOOK_USERINFO bu 
-USING(USER_ID)
-WHERE USER_ID =#{user_id}
-ORDER BY BORROW_SEQ
+SELECT USER_ID, BORROW_TITLE, TO_CHAR(START_DATE,'YYYY-MM-DD') AS START_DATE,
+		TO_CHAR(RETURN_DATE,'YYYY-MM-DD') AS RETURN_DATE, RENEW, BORROW_STATUS, BOOK_SEQ
+	FROM BOOK_BORROW
+	JOIN BOOK_USERINFO bu 
+	USING(USER_ID)
+	WHERE USER_ID =#{user_id}
+	ORDER BY BORROW_SEQ
 </select>
 
 <!-- 대출 조회 : 회원의 자신의 대출내역 조회 -->
-<select id="myBorrowHistory" resultMap="borrowMap">
-SELECT BORROW_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, START_DATE, RETURN_DATE, BORROW_STATUS 
-FROM BOOK_BORROW bb  
-JOIN BOOK_STATUS bs ON bb.BOOK_SEQ=bs.BOOK_SEQ  
-JOIN BOOKINFO b ON b.BOOK_CODE =bs.BOOK_CODE 
-JOIN BOOK_GENRE bg ON b.GENRE_CODE =bg.GENRE_CODE
-JOIN BOOK_USERINFO bu 
-USING(USER_ID)
-WHERE USER_ID =#{user_id}
-ORDER BY BORROW_SEQ
+<select id="myBorrowHistory" resultMap="bInfoMap">
+SELECT BORROW_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, 
+		TO_CHAR(START_DATE,'YYYY-MM-DD') AS START_DATE,TO_CHAR(RETURN_DATE,'YYYY-MM-DD') AS RETURN_DATE, BORROW_STATUS 
+	FROM BOOK_BORROW bb  
+	JOIN BOOK_STATUS bs ON bb.BOOK_SEQ=bs.BOOK_SEQ  
+	JOIN BOOKINFO b ON b.BOOK_CODE =bs.BOOK_CODE 
+	JOIN BOOK_GENRE bg ON b.GENRE_CODE =bg.GENRE_CODE
+	JOIN BOOK_USERINFO bu 
+	USING(USER_ID)
+	WHERE USER_ID =#{user_id}
+	ORDER BY BORROW_SEQ
 </select>
 
 <!-- 반납 신청 -->
