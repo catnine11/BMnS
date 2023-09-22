@@ -24,7 +24,7 @@ body{
 		</div>
 		<div>
 			<a href="./bookListUser.do">신착도서 안내</a>
-			<a href="./bookListAdmin.do">관리자의 도서관리</a>
+			
 		</div>
 		<div>
 			<a>아 귀찮다</a>

@@ -49,7 +49,7 @@
 						</c:otherwise>
 						</c:choose>
 						<td style="width: 3%" class="text-center"><input
-							type="button" value="대출정보" onclick="location.href='./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}'"> <input
+							type="button" value="대출정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> <input
 							type="button" value="예약정보" onclick="location.href='#'"> <input
 							type="button" value="결제정보" onclick="location.href='#'"></td>
 					</tr>
