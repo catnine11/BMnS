@@ -15,6 +15,10 @@
 		margin-top: 20px;
 	}
 	
+	li{
+		list-style: none;
+	}
+	
 	.info> ul> li{
 		display: inline;
 	}
@@ -74,6 +78,9 @@ ${sessionScope.loginVo}
 					<img id="thumbnail" src="${detail.thumbnail}" alt="${detail.title}">
 				</div>
 				<div class="binfo">
+					<div class="adminOnly">
+						<input type="button" name="" value="도서정보수정" class="">
+					</div>
 					<div class="title">
 						<b>${detail.title}</b>
 					</div>
@@ -115,6 +122,24 @@ ${sessionScope.loginVo}
 								 ${detail.genre_name}
 							</li>
 						</ul>
+						<div>
+						<ul>
+							<li>
+								<strong>추가정보</strong>
+							</li>
+							<c:choose>
+							<c:when test="${empty detail.content || empty detail.intro || empty detail.review || empty detail.authorinfo}">
+								<li>등록된 정보가 없습니다.</li>
+							</c:when>
+ 							<c:otherwise>
+								<li>${detail.content}</li>
+								<li>${detail.intro}</li>
+								<li>${detail.review}</li>
+								<li>${detail.authorinfo}</li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+						</div>
 					</div>
 				</div>
 				
@@ -124,11 +149,11 @@ ${sessionScope.loginVo}
 						<tr>
 							<th class="adminOnly">관리번호</th>
 							<th>장르</th>
-							<th>도서상태</th>
+							<th class="adminOnly">도서상태</th>
 							<th>대출상태</th>
 							<th>반납예정일</th>
 							<th>예약상태</th>
-							<th>도서상태변경</th>
+							<th class="adminOnly">도서상태변경</th>
 						</tr>
 						<c:forEach  var="d" items="${detail.bsVo}">
 							<c:choose>
@@ -140,7 +165,7 @@ ${sessionScope.loginVo}
 									<td>${d.borrow_status}</td>
 									<td>${d.return_date}</td>
 									<td>${d.reserve_status}</td>
-									<td>
+									<td class="adminOnly">
 										<select class="changeBookStatus" name="status_code">                                        
 											<option value="A" ${d.status_code =="A"? "selected": ""}>일반</option>
 											<option value="B" ${d.status_code =="B"? "selected": ""}>재고</option>
