@@ -66,6 +66,16 @@ UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER IN
 #{stock_number}
 </foreach>
 </update>
+<!-- 판매불가 상태 업데이트 다중  -->
+<update id="notSellMany">
+UPDATE BOOK_STOCK SET SELL_STATUS ='N' WHERE STOCK_NUMBER IN
+<foreach collection="list" item="stock_number" open="(" separator="," close=")" >
+#{stock_number}
+</foreach>
+</update>
+
+
+
 <!-- 재고목록 다중 삭제 -->
 <delete id="stocksDel">
 DELETE FROM BOOK_STOCK
@@ -92,8 +102,13 @@ FROM BOOK_STOCK BT
 LEFT JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ
 WHERE STATUS_CODE = 'B'
 </select>
-
-
+<!-- 유저가 판매중인 도서 조회 -->
+<select id="getSellableStock" resultMap="StockMap">
+SELECT  STOCK_NUMBER,STATUS_TITLE, SELL_STATUS, BT.BOOK_SEQ AS STBOOK_SEQ, STATUS_CODE, BOOK_CODE, BOOK_PRICE
+FROM BOOK_STOCK BT
+LEFT JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ
+WHERE STATUS_CODE = 'B'  AND SELL_STATUS='Y'
+</select>
 
 
 <select id="getInStock" resultMap="StockMap">

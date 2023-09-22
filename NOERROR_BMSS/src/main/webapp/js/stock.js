@@ -79,8 +79,8 @@ html+="		</table>                                                               
 
 			
 			$("#stockDel").on("click", "input.chPrice", function() {
-    var price= $(this).closest('tr').find('.price').val() // 값을 가져올 때 val() 대신 text() 사용
-	var stockNum=$(this).closest('tr').find('.stockNum').text();
+    	var price= $(this).closest('tr').find('.price').val() 
+		var stockNum=$(this).closest('tr').find('.stockNum').text();
 //    	console.log()
 
 //    var stockNum = $(this).closest("tr").find(".stockNum").text(); // 주석 해제
@@ -343,7 +343,7 @@ $(document).ready(function(){
 			console.log(data.result);
 			if(data.result==0){
 				alert('도서를 선택해 주세요');
-				return false;
+				return;
 			}
 				$('input.delChk:checked').each(function(){
 				$(this).closest('tr').remove();

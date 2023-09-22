@@ -252,7 +252,7 @@ List<StockVo> list	=dao.booksDetail("7");
 	
 	
 	
-	@Test
+//	@Test
 	public void Cron2() {
 		
 		List<Book_StatusVo> lists = service.selectStockable();
@@ -267,6 +267,11 @@ List<StockVo> list	=dao.booksDetail("7");
 //		System.out.println(m);
 	}
 	
+	@Test 
+	public void getSellableStock() {
+	List<StockVo>	list=	dao.getSellableStock();
+		assertNotNull(list);
+	}
 	
 
 	

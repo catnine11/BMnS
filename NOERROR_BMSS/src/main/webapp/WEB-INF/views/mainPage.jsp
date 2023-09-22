@@ -56,7 +56,7 @@ body {
 					<option class="searchOption" value="TITLE">제목</option>
 					<option class="searchOption" value="AUTHOR">저자</option>
 					<option class="searchOption" value="ISBN">ISBN</option>
-				</select> <input type="text" name="inputVal">
+				</select> <input  name="inputVal" type="text" name="inputVal">
 				<button type="button">검색</button>
 			</form>
 		</div>

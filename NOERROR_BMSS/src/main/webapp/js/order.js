@@ -81,12 +81,11 @@ $(document).on('click', 'input#delUBtn', function(){
 		console.log(data.oderdel);
 		if(data.orderdel==0){
 			  alert("최소 하나이상의 도서를  체크해 주세요");
-			  return false;
+			  return;
 		}
 		$('input.delBox:checked').each(function(){
 //		console.log($(this).closest('tr').remove());
 		$(this).closest('tr').remove();		
-			
 		})		
 			alert("주문을 삭제 했습니다.");	
         },
