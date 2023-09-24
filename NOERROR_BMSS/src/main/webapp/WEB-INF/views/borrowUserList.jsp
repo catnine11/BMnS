@@ -65,7 +65,7 @@ ${sessionScope.loginVo}
 							<c:forEach var="borrow" items="${borrowNow}">
 								<tr>
 									<td>
-									<input type="checkbox">
+										<input type="checkbox" name="chkBook" value="${borrow.book_seq}">
 									</td>
 									<td>${borrow.book_seq}</td>
 									<td>${borrow.user_id}</td>

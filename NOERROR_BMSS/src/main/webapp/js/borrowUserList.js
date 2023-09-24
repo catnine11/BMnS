@@ -1,6 +1,29 @@
 /**
  * 
  */
+function chkBook() {
+		var chks = document.getElementsByName("chkBook");
+		var cnt = 0;
+		for(let c of chks){
+			if(c.checked){
+				cnt++;
+			}
+		}
+		
+		if(cnt ==0){
+			alert("한 개 이상의 글을 반드시 선택하세요");
+			return false;
+		}
+	}
+	
+	function allValue(bool){
+		var chks = document.getElementsByName("chkVal");
+		for(let c of chks){
+			c.checked = bool;
+		}
+	}
+
+
 
 $(document).ready(function(){
 	
