@@ -1,8 +1,13 @@
+<%@page import="java.util.List"%>
+<%@page import="com.gd.bmss.vo.OrderVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +23,7 @@
 <title>주문내역</title>
 </head>
 <body>
+${orderListUser}
 <form action="./delOrder.do" method="post">
 <div id="container">
 <table>
@@ -68,9 +74,14 @@
 </table>
 </div>
 </form>
-<!-- 판매도서 -->
-<a href="./getSellableStock.do">판매도서목록</a>
 
+<%for(int i=0; i<odu.size();i++) {
+		int price=	odu.get(i).getOrder_price();
+		int quantity=	odu.get(i).getOrder_quantity();
+		int totalCount=	price*quantity;
+%>
+
+<% }%>
 
 <script type="text/javascript" src="./js/order.js"></script>
 

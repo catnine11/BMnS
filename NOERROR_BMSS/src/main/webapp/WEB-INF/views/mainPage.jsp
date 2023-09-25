@@ -63,7 +63,6 @@ body {
 			</form>
 		</div>
 		<div>
-			<a href="./oderListUser.do?user=${loginVo.user_id}">유저주문 조회</a>
 		</div>
 		<div>
 			<a>아 귀찮다</a>

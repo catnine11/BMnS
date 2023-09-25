@@ -32,8 +32,9 @@ public class OrderVo {
 	private String genre_code    ;
 	private String author        ;
 
+		
 	private List<PayVo> payVo;
-
+	private int book_code; 
 
 
 	//	    private List<StockVo> stockvo;

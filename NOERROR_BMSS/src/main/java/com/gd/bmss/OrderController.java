@@ -103,7 +103,7 @@ public class OrderController {
 //			odao.getOrderUser(getOrderUser());
 //			return "orderUser";
 //		}
-		
+		//판매 가능한 도서를 유저가 조회하는 메소드
 		@RequestMapping(value="/getSellableStock.do")
 		public String getSellableStock(Model model) {
 			
@@ -113,6 +113,9 @@ public class OrderController {
 			
 		}
 		
+		
+		
+		//판매 가능한 도서의 상세를 유저가 조회하는기능
 		@RequestMapping(value="/salesDetail.do",method = RequestMethod.GET)
 		public String salesDetail(Model model,String book_code) {
 			List<BookInfoVo>	list=	sdao.getSalesDetail(book_code);
