@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +23,8 @@
 <table>
 <tr>
 <td><input type="checkbox" name="allCheck"></td>
-<td>도서명</td>
 <td>썸네일</td>
+<td>도서명</td>
 <td>저자</td>
 <!-- <td>주소</td> -->
 <td>수량</td>
@@ -32,31 +34,31 @@
 <c:forEach var="ordU" items="${orderListUser}">
 <tr>
 <td><input class="delBox" type="checkbox" name="delCheck" value="${ordU.stock_number}"></td>
-<td>${ordU.status_title}</td>
 <td class="background-cover" style="background-image: url('${ordU.thumbnail}');" data-alt="${ordU.status_title}"></td>
+<td>${ordU.status_title}</td>
 <td>${ordU.author}</td>
 <td>${ordU.order_quantity}</td>
 <td>${ordU.order_price}</td>	
-<%-- <c:choose> --%>
-<%-- <c:when test="${ordU.pay_status==1}"> --%>
-<!-- <td>주문 대기목록</td> -->
-<%-- </c:when> --%>
+<c:choose>
+<c:when test="${ordU.pay_status==1}">
+<td>주문 대기</td>
+</c:when>
 
-<%-- <c:when test="${ordU.pay_status==2}"> --%>
-<!-- <td>결제대기</td> -->
-<%-- </c:when> --%>
-<%-- <c:when test="${ordU.pay_status==3}"> --%>
-<!-- <td>결제완료</td> -->
-<%-- </c:when> --%>
+<c:when test="${ordU.pay_status==2}">
+<td>결제대기</td>
+</c:when>
+<c:when test="${ordU.pay_status==3}">
+<td>결제완료</td>
+</c:when>
 
-<%-- <c:when test="${ordU.pay_status==4}"> --%>
-<!-- <td>결제취소대기</td> -->
-<%-- </c:when> --%>
-<%-- <c:when test="${ordU.pay_status==5}"> --%>
-<!-- <td>결제취소</td> -->
-<%-- </c:when> --%>
+<c:when test="${ordU.pay_status==4}">
+<td>결제취소대기</td>
+</c:when>
+<c:when test="${ordU.pay_status==5}">
+<td>결제취소</td>
+</c:when>
 
-<%-- </c:choose> --%>
+</c:choose>
 </tr>
 </c:forEach>
 <tr>
@@ -66,8 +68,8 @@
 </table>
 </div>
 </form>
-
-
+<!-- 판매도서 -->
+<a href="./getSellableStock.do">판매도서목록</a>
 
 
 <script type="text/javascript" src="./js/order.js"></script>

@@ -110,8 +110,6 @@ $(document).on('click', 'input#delUBtn', function(){
 
 function dtWindow(id){
 	window.open('./orderDetail.do?id='+id,'주문조회 상세창','width=800,height=600');
-	
-	
 }
 
 

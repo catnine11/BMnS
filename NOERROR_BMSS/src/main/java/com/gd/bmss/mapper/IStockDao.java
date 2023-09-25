@@ -3,6 +3,7 @@ package com.gd.bmss.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.Book_StatusVo;
 import com.gd.bmss.vo.StockVo;
 
@@ -16,7 +17,7 @@ public interface IStockDao {
 //	public List<StockVo> normalToStockst();
 //	public List<StockVo> addStock(StockVo book_seq);
 //	
-	public List<StockVo>getSellableStock();
+	public List<BookInfoVo>getSellableStock();
 	
 	public int sellAble(Map<String, Object> map);
 	public int sellAbleMany(List<Integer>stock_number );
@@ -27,5 +28,7 @@ public interface IStockDao {
 	public boolean normalToStock(Book_StatusVo vo);
 	
 	public List<StockVo> booksDetail(String seq);
+	public List<BookInfoVo> getSalesDetail(String seq);
+	
 	
 }

@@ -52,18 +52,18 @@ body {
 			<a>아 귀찮다</a>
 		</div>
 		<div>
-			<form>
+			<form id="search">
 				<select name="selectOpt">
 					<option class="searchOption" value="TITLE">제목</option>
 					<option class="searchOption" value="AUTHOR">저자</option>
 					<option class="searchOption" value="ISBN">ISBN</option>
-				</select> <input  name="inputVal" type="text" name="inputVal">
+				</select> 
+				<input  name="inputVal" type="text" name="inputVal">
 				<button type="button">검색</button>
 			</form>
 		</div>
 		<div>
-		<!-- 여기 user2 부분을로그인 했을때 로 바꿔줘야함  -->
-			<a href="./oderListUser.do?user=2">유저주문 조회</a>
+			<a href="./oderListUser.do?user=${loginVo.user_id}">유저주문 조회</a>
 		</div>
 		<div>
 			<a>아 귀찮다</a>

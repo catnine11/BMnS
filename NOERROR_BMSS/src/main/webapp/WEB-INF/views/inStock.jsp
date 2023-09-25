@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +34,6 @@ status_code=A, book_code=30 -->
 <td><select class='InStockStatus' name='status_code'>                                        
     <option value='A' ${g.status_code == 'A' ? "selected" : ""}>일반</option>
     <option value='B' ${g.status_code == 'B' ? "selected" : ""}>재고</option>
-    <option value='C' ${g.status_code == 'C' ? "selected" : ""}>분실</option>
-    <option value='D' ${g.status_code =='D'? "selected": ""}>예정</option>
 </select></td>
 <td>${g.book_price}</td>
 <td>${g.status_title}</td>

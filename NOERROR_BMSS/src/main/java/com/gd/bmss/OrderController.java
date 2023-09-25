@@ -1,7 +1,5 @@
 package com.gd.bmss;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.mapper.IOrderDao;
+import com.gd.bmss.mapper.IStockDao;
+import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.OrderVo;
+import com.gd.bmss.vo.StockVo;
 
-import retrofit2.http.GET;
 
 @Controller
 public class OrderController {
 	@Autowired
 	private IOrderDao odao;
+	
+	@Autowired
+	private IStockDao sdao;
 	
 	/**
 	 * 관리자가 볼 수 있는 모든 유저들의 주문목록
@@ -84,7 +87,7 @@ public class OrderController {
 		 * @return
 		 */
 		
-		//현재 user의 값을 2로 고정 해 놓았슴 그래서 값을 ${}로바꿔줘야하암 main에서 
+		//유저 자신의 주문리스트가 있는 페이지로 이동
 		@RequestMapping(value="/oderListUser.do",method = RequestMethod.GET)
 		public String getOrderUser(String user,Model model) {
 			System.out.println(user+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -100,4 +103,22 @@ public class OrderController {
 //			odao.getOrderUser(getOrderUser());
 //			return "orderUser";
 //		}
+		
+		@RequestMapping(value="/getSellableStock.do")
+		public String getSellableStock(Model model) {
+			
+	List<BookInfoVo>	list=	sdao.getSellableStock();
+			model.addAttribute("saleList",list);
+			return"saleList";
+			
+		}
+		
+		@RequestMapping(value="/salesDetail.do",method = RequestMethod.GET)
+		public String salesDetail(Model model,String book_code) {
+			List<BookInfoVo>	list=	sdao.getSalesDetail(book_code);
+						model.addAttribute("salesDetail",list);
+			
+				return "salesDetail";
+		}
+		
 }

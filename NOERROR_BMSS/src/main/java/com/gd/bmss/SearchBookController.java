@@ -25,29 +25,28 @@ public class SearchBookController {
 	public String  searchBooks(String selectOpt,String inputVal, Model model) {
 		System.out.println(selectOpt+"@@@@@@@@@@@@");
 		System.out.println(inputVal +"@@@@@@@@@@@@");
-		if(selectOpt=="TITLE") {
-			Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(selectOpt.equals("TITLE")) {
 			map.put("column",selectOpt);
 			map.put("title", inputVal);
 		List<BookInfoVo> bookList=sdao.searchBooks(map);
 		model.addAttribute("bookList",bookList);
 		return"searchBooks";
-		}else if(selectOpt=="AUTHOR") {
-			Map<String, Object> map = new HashMap<String, Object>();
+		}else if(selectOpt.equals("AUTHOR")) {
 			map.put("column",selectOpt);
 			map.put("author", inputVal);
 			List<BookInfoVo> bookList=sdao.searchBooks(map);
 			model.addAttribute("bookList",bookList);
 			return"searchBooks";
-		}else if(selectOpt=="ISBN") {
-			Map<String, Object> map = new HashMap<String, Object>();
+		}else if(selectOpt.equals("ISBN")) {
 			map.put("column",selectOpt);
 			map.put("isbn", inputVal);
 			List<BookInfoVo> bookList=	sdao.searchBooks(map);
 			model.addAttribute("bookList",bookList);
 			return"searchBooks";
 		}
-
+	    List<BookInfoVo> bookList = sdao.searchBooks(map);
+	    model.addAttribute("bookList", bookList);
 		return"searchBooks";
 		
 	}

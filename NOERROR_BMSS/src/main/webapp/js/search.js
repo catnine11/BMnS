@@ -5,7 +5,7 @@ $(document).ready(function(){
 //		var searchOption= $(this).closest("div").find('option:selected').val()
 		var inputVal=$(this).closest("div").find("input[name=input]").val();
 //		
-//		console.log(inputVal);
+		console.log(inputVal);
 //		console.log(searchOption);
 		
 		if(inputVal==''){

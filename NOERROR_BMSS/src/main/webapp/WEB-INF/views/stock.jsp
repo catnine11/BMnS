@@ -44,25 +44,15 @@ table {
 						<table id="container">
 							<tr id="stocklist">
 
-								<td>재고목록</td>
 								<td>도서명</td>
 								<td>도서상태</td>
 							</tr>
 							<c:forEach var="a" items="${list}">
 								<tr>
-									<td><input class="number" type="hidden" name=num
-										value="${a.stock_number}"></td>
-													<td ><input type="hidden" name="booksDetail" value="${a.book_code}"></td>
-									<td class="stockNum">${a.stock_number}</td>
-									<td class="detailTD"><input type="hidden"
-										class="booksDetail" name="booksDetail" value="${a.book_code}">
+									<td class="detailTD"><input type="hidden"class="booksDetail" name="booksDetail" value="${a.book_code}">
 										${a.status_title}</td>
-									<td>${a.status_code=='B'?"재고":""}</td>
-
-
 									<td>
-									<td><input class="book_seq" type="hidden"
-										value="${a.book_seq}"></td>
+									<td><input type="hidden" class="statCode" value="${status_code}"></td>
 								</tr>
 							</c:forEach>
 							<tr>
