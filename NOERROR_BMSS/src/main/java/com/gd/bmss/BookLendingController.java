@@ -1,9 +1,13 @@
 package com.gd.bmss;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -136,26 +140,72 @@ public class BookLendingController {
 	 * 연체회원 패널티 산정 calPenalty
 	 */
 	
+	/*
+	 * 대출조건
+	 */
+//	@RequestMapping(value = "/bookDetail.do")
+//	public String condition(Model model, String user_id) {
+//		Map<String, Object> map =service.borrowCondition(user_id);
+//		map.put("user_id", user_id);
+//		System.out.println("@@@@@@@@@@@@@@@@@@@"+map);
+//		model.addAttribute("overdue", map.get("overdue"));
+//		model.addAttribute("cnt", map.get("cnt"));
+//		model.addAttribute("cond", map);
+//		
+//		
+//		return "bookDetail";
+//	}
 	
 	/*
 	 * 회원의 대출신청 insertBorrow
 	 * //연체회원여부 확인할것
 	 */
 	@PostMapping(value = "/requestBorrow.do")
-	public String requestBorrow(String title, String user_id, String book_seq) {
+	@ResponseBody
+	public String requestBorrow(Model model, String title, String user_id, String book_seq, HttpServletResponse resp) throws IOException {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
 		
-		BorrowVo borrow = new BorrowVo();
-		borrow.setBorrow_title(title);
-		borrow.setUser_id(user_id);
-		borrow.setBook_seq(book_seq);
-		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
 		
-		int n = service.insertBorrow(borrow);
-		
+		Map<String, Object> map =service.borrowCondition(user_id);
+		System.out.println(map);
+//		String overdue = (String) map.get("OVERDUE");
+		String overdue = (String) map.get("overdue");
+		System.out.println(overdue);
 		
 		
-		return "bookDetail";
+		
+//		BorrowVo borrow = new BorrowVo();
+//		borrow.setBorrow_title(title);
+//		borrow.setUser_id(user_id);
+//		borrow.setBook_seq(book_seq);
+//		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
+		
+		
+		
+//		return "bookDetail";
+		
+		
+//		resp.setContentType("text/html; charset=UTF-8;");
+		
+//		int m = service.countBorrow(user_id);
+//		if(m==4) {
+//			log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
+//			PrintWriter out = resp.getWriter();
+//			out.println("<script>alert('회원당 4권까지만 대출이 가능합니다. 도서를 반납 후 이용해주세요');</script>");
+//			out.flush();
+//		}else if(m<4 && m>=0) {
+//			int n = service.insertBorrow(borrow);
+//			if(n>0) {
+//				PrintWriter out = resp.getWriter();
+//				out.println("<script>alert('대출이 완료되었습니다. 현재 대여한 도서는 m권, 앞으로 "+(4-m)+"권 더 대출 가능합니다');location.href='./bookDetail.do';</script>");
+//				out.flush();
+//			}
+//			
+//		}else {
+//			return null;
+//		}
+		return book_seq;
+		
 	}
 	
 	
@@ -240,6 +290,15 @@ public class BookLendingController {
 	 * 회원의 예약신청 insertReserve
 	 * 	//연체회원여부 확인할것
 	 */
+	@PostMapping(value = "/requestReserve.do")
+	public String requestReserve(Model model, String title, String user_id, String book_seq){
+		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
+		
+		
+		
+		return "bookDetail";
+	}
+	
 	
 	
 	/*

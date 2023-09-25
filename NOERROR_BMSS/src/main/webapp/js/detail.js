@@ -56,6 +56,9 @@ $(document).ready(function(){
 		console.log("user_id의 값 : ", user_id);
 		var penalty_date = $("input.penalty_date").val();
 		console.log("penalty_date의 값 : ", penalty_date);
+		var currentDate = $("input.nowDate").val();
+		console.log(currentDate);
+		
 		
 	$("input.requestBorrow").on("click", function(){
 		console.log('회원의 대출신청');
@@ -70,7 +73,6 @@ $(document).ready(function(){
 
 			if(reserve_user==user_id){
 				var nextButton = document.getElementById("nextButton");
-				// 버튼을 클릭할 때 실행되는 함수를 정의합니다.
 				nextButton.addEventListener("click", function () {
 					modal.style.display = "none";
 	
@@ -94,22 +96,28 @@ $(document).ready(function(){
 				
 			}else if(!reserve_user || reserve_user.trim() === ""){
 				
-				$.ajax({
-					url: "./requestBorrow.do",
-					type: "post",
-					data: {title : title,
-							user_id : user_id,
-							book_seq : book_seq
-					},
-					success: function(){
-						
-						
-						return false;
-					},
-					error: function(){
-						alert('대출신청에 실패했습니다.');
-					}
-				});
+				if(penalty_date>currentDate){
+					alert('연체회원입니다. '+penalty_date+'일까지 도서를 대출할 수 없습니다');
+					return false;
+				}else{
+					
+					$.ajax({
+						url: "./requestBorrow.do",
+						type: "post",
+						data: {title : title,
+								user_id : user_id,
+								book_seq : book_seq
+						},
+						success: function(){
+							alert('도서를 2주 뒤까지 반납해주세요.')
+							
+						},
+						error: function(){
+							alert('대출신청에 실패했습니다.');
+						}
+					});
+					
+				}
 			}else{
 				alert('예약중인 도서는 예약자만 대출이 가능합니다.')
 			}
@@ -119,8 +127,9 @@ $(document).ready(function(){
 			location.href="./login.do";
 		}
 		
-		
 	});
+	
+	
 	
 	
 	

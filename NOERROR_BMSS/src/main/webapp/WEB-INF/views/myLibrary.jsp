@@ -33,8 +33,9 @@ ${sessionScope.loginVo}
 		<h2>현황</h2>
 			<div>
 				<h3>대출현황</h3>
-				<p><a href="./myBorrowNow.doS?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
+				<p><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
 				<div id="myBorrowNow">
+				${borrowNow}
 					<table>
 						<tbody>
 							<tr>
