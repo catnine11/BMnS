@@ -41,6 +41,9 @@ public class BookInfoVo {
 	private String genre_name;
 
 	private List<Book_StatusVo> bsVo;
+	
+	private int book_price;
+	private int stock_number;
 
 	
 }

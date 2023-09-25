@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.Book_StatusVo;
 import com.gd.bmss.vo.StockVo;
 
@@ -108,9 +109,16 @@ int n =	sql.insert(NS+"addStocks",list);
  * 유저가 판매 목록을 조회
  */
 @Override
-public List<StockVo> getSellableStock() {
-		List<StockVo>	list	=sql.selectList(NS+"getSellableStock");
+public List<BookInfoVo> getSellableStock() {
+		List<BookInfoVo>	list	=sql.selectList(NS+"getSellableStock");
 	return list;
+}
+
+
+@Override
+public List<BookInfoVo> getSalesDetail(String seq) {
+	
+	return sql.selectList(NS+"getSalesDetail",seq);
 }
 
 //@Override
