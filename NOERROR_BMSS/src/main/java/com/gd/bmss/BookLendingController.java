@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.mapper.IBookLendingDao;
 import com.gd.bmss.service.IBookLendingService;
@@ -178,8 +179,9 @@ public class BookLendingController {
 	 * 반납신청 returnBook
 	 */
 	@RequestMapping(value = "/returnBook.do", method = {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
 //	public String returnBook(String[] chkBooks) {
-	public Map<String, Object> returnBook(String[] chkBooks) {
+	public Map<String, Object> returnBook(@RequestParam("chkBooks[]") String[] chkBooks) {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 반납처리");
 		log.info("@@@@@@@@@@ BookLendingController 반납 parameter : {}", Arrays.toString(chkBooks));
 //		log.info("@@@@@@@@@@ BookLendingController 반납 parameter : {}", chkBooks);

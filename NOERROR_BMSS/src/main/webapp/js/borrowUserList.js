@@ -45,6 +45,7 @@ $(document).ready(function(){
 			return false;
 		}
 		
+		
 		var chkBooks = new Array();
 		$("input.chkBooks:checked").each(function(){
 		var book_seq = $(this).closest("tr").find(".book_seq").val();
@@ -57,7 +58,7 @@ $(document).ready(function(){
 			url: "./returnBook.do",
 			type: "post",
 //			data: {"chkBooks":chkBooks},
-			data: {"chkBooks":chkBooks},
+			data: {"chkBooks":chkBooks },
 			success: function(data){
 				console.log(data);
 				alert("책이 반납처리되었습니다.");
