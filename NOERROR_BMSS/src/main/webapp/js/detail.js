@@ -67,8 +67,8 @@ $(document).ready(function(){
 		console.log("예약유저:", reserve_user);
 		
 		if(userAuth=='U'){
-			if(reserve_user=user_id){
 
+			if(reserve_user==user_id){
 				var nextButton = document.getElementById("nextButton");
 				// 버튼을 클릭할 때 실행되는 함수를 정의합니다.
 				nextButton.addEventListener("click", function () {
@@ -92,8 +92,7 @@ $(document).ready(function(){
 					});
 				});
 				
-			}else{
-				alert('예약중인 도서는 예약자만 대출이 가능합니다.')
+			}else if(!reserve_user || reserve_user.trim() === ""){
 				
 				$.ajax({
 					url: "./requestBorrow.do",
@@ -111,7 +110,8 @@ $(document).ready(function(){
 						alert('대출신청에 실패했습니다.');
 					}
 				});
-			
+			}else{
+				alert('예약중인 도서는 예약자만 대출이 가능합니다.')
 			}
 			
 		}else{
