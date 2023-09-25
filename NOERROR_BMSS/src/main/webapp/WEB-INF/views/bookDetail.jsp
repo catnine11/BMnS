@@ -183,18 +183,27 @@ ${sessionScope.loginVo}
 										<td>${detail.genre_name}</td>
 										<td class="adminOnly">${d.status_code}</td>
 										<td>
-											<c:if test="${d.borrow_status == 'Y'}">
+											<c:choose>
+											<c:when test="${d.borrow_status == 'Y'}">
 												<p style="color: red;">대출중</p>
- 											</c:if>
-											<c:if test="${d.borrow_status == 'N' || d.borrow_status == null}">
+ 											</c:when>
+ 											</c:choose>
+ 											<c:choose>
+											<c:when test="${d.borrow_status == 'N' || d.borrow_status == null}">
 												<input type="hidden" name="borrow_title" class="borrow_title" value="${detail.title}">
 												<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
 												<input type="hidden" name="reserve_user" class="reserve_user" value="${d.user_id}">
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
 												<input type="button" class="requestBorrow" value="대출신청">
- 											</c:if>
+ 											</c:when>
+ 											</c:choose>
 										</td>
-										<td>${d.return_date}</td>
+										<td>
+											<c:if test="${d.borrow_status == 'Y'}">
+<!-- 												<p style="color: red;">대출중</p> -->
+												${d.return_date}
+ 											</c:if>				
+										</td>
 										<td>
 											<c:if test="${d.reserve_status == 'Y'}">
 												<p style="color: red;">예약중</p>

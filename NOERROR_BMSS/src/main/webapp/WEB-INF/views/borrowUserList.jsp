@@ -1,3 +1,7 @@
+<%@page import="java.time.temporal.ChronoUnit"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -47,12 +51,12 @@ ${sessionScope.loginVo}
 				<h3>대출현황</h3>
 				<p><a href="./borrowAllUserNow.do">전체회원</a></p>
 				<div id="borrowAllUserNow">
-					<input type="button" class="returnBook" value="반납">
+					<input type="button" id="returnBook" value="반납">
 					<table>
 						<tbody>
 							<tr>
 								<th>
-									<input type="checkbox">
+									<input type="checkbox" name="allChk" id="allChk">
 								</th>
 								<th>관리번호</th>
 								<th>회원아이디</th>
@@ -65,13 +69,33 @@ ${sessionScope.loginVo}
 							<c:forEach var="borrow" items="${borrowNow}">
 								<tr>
 									<td>
-										<input type="checkbox" name="chkBook" value="${borrow.book_seq}">
+										<input type="checkbox" class="chkBooks" name="chkBooks" value="${borrow.book_seq}">
+										<input type="hidden" class="book_seq" value="${borrow.book_seq}">
 									</td>
 									<td>${borrow.book_seq}</td>
 									<td>${borrow.user_id}</td>
 									<td>${borrow.borrow_title}</td>
 									<td>${borrow.start_date}</td>
-									<td>${borrow.return_date}</td>
+									<td>
+									<%
+									    // 현재 날짜를 가져옵니다.
+									    Date currentDate = new Date();
+									    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+									    String formattedCurrentDate = sdf.format(currentDate);
+									    pageContext.setAttribute("currentDate", formattedCurrentDate);
+									    System.out.println("현재시간"+currentDate);
+									    
+									%>
+									<c:choose>
+										<c:when test="${borrow.return_date < currentDate}">
+<%-- 											<p style="color: red;">(${borrow.return_date-currentDate}일 연체중)</p> --%>
+											<p>${borrow.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
+										</c:when>
+										<c:otherwise>
+											<p style="color: black;">${borrow.return_date}</p>
+										</c:otherwise>
+										</c:choose>
+									</td>
 									<td>
 										<c:choose>
 										<c:when test="${borrow.renew=='Y'}">
@@ -84,7 +108,8 @@ ${sessionScope.loginVo}
 									</td>
 									<td>
 										<input type="hidden" name="user_id" class="user_id" value="${borrow.user_id}">
-										<input type="button" class="detailUserBorrow" value="회원상세" onclick="location.href='./borrowOneUserNow.do'">
+										<input type="button" class="detailUserBorrow" value="회원대출상세">
+<!-- 										<input type="button" class="detailUserBorrow" value="회원대출상세" onclick="location.href='./borrowOneUserNow.do'"> -->
 <%-- 										<input type="button" class="detailUserBorrow" value="회원상세" onclick="oneUserborrowNow(${borrow.user_id})"> --%>
 									</td>
 								</tr>
@@ -92,8 +117,8 @@ ${sessionScope.loginVo}
 						</tbody>
 					</table>
 				</div>
+<!-- 				<p><a href="./borrowOneUserNow.do">특정회원</a></p> -->
 				<div id="borrowOneUserNow" >
-				<p><a href="./borrowOneUserNow.do">특정회원</a></p>
 					<table>
 						<tbody>
 							<tr>
@@ -112,7 +137,26 @@ ${sessionScope.loginVo}
 									<td>${borrow.borrow_seq}</td>
 									<td>${borrow.borrow_title}</td>
 									<td>${borrow.start_date}</td>
-									<td>${borrow.return_date}</td>
+									<td>
+									<%
+									    // 현재 날짜를 가져옵니다.
+									    Date currentDate = new Date();
+									    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+									    String formattedCurrentDate = sdf.format(currentDate);
+									    pageContext.setAttribute("currentDate", formattedCurrentDate);
+									    System.out.println("현재시간"+currentDate);
+									    
+									%>
+									<c:choose>
+										<c:when test="${borrow.return_date < currentDate}">
+<%-- 											<p style="color: red;">(${borrow.return_date-currentDate}일 연체중)</p> --%>
+											<p>${borrow.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
+										</c:when>
+										<c:otherwise>
+											<p style="color: black;">${borrow.return_date}</p>
+										</c:otherwise>
+										</c:choose>
+									</td>
 									<td>
 										<c:choose>
 										<c:when test="${borrow.renew=='Y'}">
@@ -124,12 +168,8 @@ ${sessionScope.loginVo}
 										</c:choose>
 									</td>
 									<td>
-<%-- 										<input type="hidden" name="user_id" class="user_id" value="${borrow.user_id}"> --%>
-<!-- 										<input type="button" class="detailUserBorrow" value="회원상세"> -->
-									</td>
-									<td>
-<%-- 										<input type="hidden" name="user_id" class="user_id" value="${borrow.user_id}"> --%>
-<!-- 										<input type="button" class="detailUserBorrow" value="회원상세"> -->
+										${borrow.penalty_date}
+										<input type="hidden" class="user_id" name="user_id" value="${b.user_id}">
 									</td>
 								</tr>
 							</c:forEach>
@@ -222,13 +262,9 @@ ${sessionScope.loginVo}
 		</div>
 	</div>
 </div>
-<!-- <script type="text/javascript"> -->
-// 	function oneUserborrowNow(user_id){
-// 		var user_id =  $(this).closest("tr").find(".user_id").val();
-// 		console.log(user_id)
-		
-// 	}
-<!-- </script> -->
+<script type="text/javascript">
+
+ </script> 
 </body>
 <%@include file="footer.jsp" %>
 </html>

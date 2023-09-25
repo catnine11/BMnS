@@ -1,5 +1,6 @@
 package com.gd.bmss;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.bmss.mapper.IBookLendingDao;
 import com.gd.bmss.service.IBookLendingService;
@@ -116,7 +120,8 @@ public class BookLendingController {
 	@GetMapping(value = "/borrowOneUserHistory.do")
 	public String BorrowOneUserHistory(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 특정회원 대출내역 조회");
-		service.getOneBorrowHistory(user_id);
+		List<BorrowVo> borrowList = service.getOneBorrowHistory(user_id);
+		model.addAttribute("borrowOneAll", borrowList);
 		
 		return "borrowUserList";
 	}
@@ -135,7 +140,7 @@ public class BookLendingController {
 	 * 회원의 대출신청 insertBorrow
 	 * //연체회원여부 확인할것
 	 */
-//	@PostMapping(value = "/requestBorrow.do")
+	@PostMapping(value = "/requestBorrow.do")
 	public String requestBorrow(String title, String user_id, String book_seq) {
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
 		
@@ -146,6 +151,8 @@ public class BookLendingController {
 		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
 		
 		int n = service.insertBorrow(borrow);
+		
+		
 		
 		return "bookDetail";
 	}
@@ -170,7 +177,23 @@ public class BookLendingController {
 	/*
 	 * 반납신청 returnBook
 	 */
-	
+	@RequestMapping(value = "/returnBook.do", method = {RequestMethod.POST, RequestMethod.GET})
+//	public String returnBook(String[] chkBooks) {
+	public Map<String, Object> returnBook(String[] chkBooks) {
+		log.info("@@@@@@@@@@ BookLendingController 관리자의 반납처리");
+		log.info("@@@@@@@@@@ BookLendingController 반납 parameter : {}", Arrays.toString(chkBooks));
+//		log.info("@@@@@@@@@@ BookLendingController 반납 parameter : {}", chkBooks);
+
+//		int n = service.returnBook(chkBooks);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("chkBooks", chkBooks);
+		service.returnBook(map);
+		
+		
+		return map;
+//		return "borrowUserList";
+	}
 	
 	/*
 	 * 연장신청 renewBook
