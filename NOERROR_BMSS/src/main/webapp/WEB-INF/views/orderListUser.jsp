@@ -40,8 +40,8 @@ ${orderListUser}
 <c:forEach var="ordU" items="${orderListUser}">
 <tr>
 <td><input class="delBox" type="checkbox" name="delCheck" value="${ordU.stock_number}"></td>
-<td class="background-cover" style="background-image: url('${ordU.thumbnail}');" data-alt="${ordU.status_title}"></td>
-<td>${ordU.status_title}</td>
+<td class="background-cover" style="background-image: url('${ordU.thumbnail}');" data-alt="${ordU.thumbnail}"></td>
+<td class="tit">${ordU.status_title}</td>
 <td>${ordU.author}</td>
 <td>${ordU.order_quantity}</td>
 <td>${ordU.order_price}</td>	
@@ -75,15 +75,70 @@ ${orderListUser}
 </div>
 </form>
 
-<%for(int i=0; i<odu.size();i++) {
+
+<%		int totalPrice=0;
+		int totalCount=0;
+for(int i=0; i<odu.size();i++) {
 		int price=	odu.get(i).getOrder_price();
 		int quantity=	odu.get(i).getOrder_quantity();
-		int totalCount=	price*quantity;
+		int bookPrice=	price*quantity;
+		
+		totalPrice += bookPrice; 
+		totalCount+=quantity;
+		
 %>
-
 <% }%>
 
-<script type="text/javascript" src="./js/order.js"></script>
+<script type="text/javascript" src="./js/order.js">
+</script>
+<script type="text/javascript">
+
+var totalPrice=<%=totalPrice%>
+var totalCount=<%=totalCount%>
+
+
+$(document).ready(function(){
+
+$("#payBtn").click(function(){
+	console.log(totalPrice);
+	console.log(totalCount);
+	var thumbNail=new Array();
+	var stock_num=new Array();
+	var title=new Array();
+
+	$(".delBox:checked").each(function(){
+var	thumb=	$(this).closest('tr').find('.background-cover').attr('data-alt');
+var stNum=	$(this).val();
+var tit = $(this).closest('tr').find('.tit').text();		
+ 	
+	thumbNail.push(thumb);
+	stock_num.push(stNum);
+	title.push(tit);
+		
+	})
+	console.log(thumbNail)
+	console.log(stock_num)
+	console.log(title)
+	
+	
+	$.ajax({
+	type:"post",
+	url:"x.do",
+	data:"",
+	success:function(){
+	},
+	error:function(){
+		
+		
+	}
+
+	
+	})
+})
+
+
+})
+</script>
 
 
 </body>
