@@ -23,7 +23,9 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <title>주문내역</title>
 </head>
-<%@include file="./header.jsp" %>
+
+<%@include file="header.jsp"%>
+
 <body>
 ${orderListUser}
 <form action="./delOrder.do" method="post">
@@ -193,4 +195,5 @@ IMP.init("imp46250334");
 
 </script>
 </body>
+<%@include file="footer.jsp" %>
 </html>
