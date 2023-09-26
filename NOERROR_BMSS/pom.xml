@@ -262,7 +262,12 @@
          <version>1.16.1</version>
        </dependency>
 
-	
+	<!-- ckeditor -->
+	<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-text</artifactId>
+    <version>1.10.0</version>
+</dependency>
 
 	</dependencies>
 

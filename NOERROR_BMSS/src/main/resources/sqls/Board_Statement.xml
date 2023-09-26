@@ -2,7 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gd.bmss.mapper.BoardDaoImpl">
 
+<!-- 게시글작성 -->
+<insert id="insertAskBoard">
+<selectKey keyProperty="ask_seq" resultType="java.lang.Integer" order="BEFORE">
+		SELECT ASK_SEQ.NEXTVAL AS ASK_SEQ FROM DUAL
+</selectKey>
+	INSERT INTO ASK_BOARD
+		(ASK_SEQ, ASK_TITLE, ASK_CONTENTS, ASK_REGDATE, USER_ID, DELFLAG,USER_NAME)
+	VALUES(#{ask_seq}, #{ask_title}, #{ask_contents}, SYSDATE , #{user_id}, 'N' ,(SELECT USER_NAME FROM BOOK_USERINFO bu WHERE bu.USER_ID=#{user_name}))
+</insert>
 
+<!-- seq맥스값조회 -->
+<select id="getSeq" resultType="java.lang.Integer">
+	SELECT MAX(ASK_SEQ) FROM ASK_BOARD
+</select>
 
+<!-- 상세보기게시판 -->
+<select id="detailAskBoard" resultType="AskBoardVo">
+	SELECT ASK_SEQ ,ASK_TITLE ,ASK_CONTENTS, ASK_REGDATE ,DELFLAG ,USER_ID ,USER_NAME 
+		FROM ASK_BOARD  
+	WHERE ASK_SEQ =#{ask_seq}
+</select>
 
+<!-- 문의게시판 수정 -->
+<update id="updateAskBoard">
+			UPDATE ASK_BOARD 
+			SET ASK_TITLE = #{ask_title} , ASK_CONTENTS=#{ask_contents}
+			WHERE ASK_SEQ = #{ask_seq}
+	</update>
 </mapper>

@@ -20,8 +20,10 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
 </style>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <title>주문내역</title>
 </head>
+<%@include file="./header.jsp" %>
 <body>
 ${orderListUser}
 <form action="./delOrder.do" method="post">
@@ -41,7 +43,7 @@ ${orderListUser}
 <tr>
 <td><input class="delBox" type="checkbox" name="delCheck" value="${ordU.stock_number}"></td>
 <td class="background-cover" style="background-image: url('${ordU.thumbnail}');" data-alt="${ordU.thumbnail}"></td>
-<td class="tit">${ordU.status_title}</td>
+<td id="bookName" class="tit">${ordU.status_title}</td>
 <td>${ordU.author}</td>
 <td>${ordU.order_quantity}</td>
 <td>${ordU.order_price}</td>	
@@ -69,12 +71,12 @@ ${orderListUser}
 </c:forEach>
 <tr>
 <td><input id="delUBtn" type="button" value="삭제"></td>
-<td><input type="button" id="payBtn" value="결제하기"></td>
 </tr>
 </table>
 </div>
 </form>
-
+<button id="payBtn" onclick="requestPay()">결제하기</button>
+<%@include file="./footer.jsp" %>
 
 <%		int totalPrice=0;
 		int totalCount=0;
@@ -115,31 +117,80 @@ var tit = $(this).closest('tr').find('.tit').text();
 	stock_num.push(stNum);
 	title.push(tit);
 		
-	})
+	
 	console.log(thumbNail)
 	console.log(stock_num)
 	console.log(title)
 	
 	
-	$.ajax({
-	type:"post",
-	url:"x.do",
-	data:"",
-	success:function(){
-	},
-	error:function(){
-		
-		
-	}
-
-	
+var email = '${loginVo.user_email}';
+var name = '${loginVo.user_name}';
+var address = '${loginVo.user_address}';
+var phone = '${loginVo.user_phone}';
+var merchant_uid = merchant_uid + 1;
+var point = <%=totalPrice%>
+var IMP = window.IMP;
+IMP.init("imp46250334");
+// function requestPay() {
+    IMP.request_pay(
+        {
+            pg: "kakaopay", 
+            pay_method: "kakaopay", 
+            merchant_uid: merchant_uid,
+            name: tit,
+            amount: point,
+            buyer_email: email,
+            buyer_name: name,
+            buyer_tel: phone,
+            buyer_addr: address,
+            buyer_postcode: '4868282',
+        },
+        function (rsp) {
+            console.log(rsp);
+            console.log(point);
+            if (rsp.success) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid+"\n";
+                msg += '거래ID : ' + rsp.merchant_uid+"\n";
+                msg += '결제 금액 : ' + rsp.paid_amount+"\n";
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+                alert(msg);
+                var pay_method = rsp.pay_method;
+                var amount = rsp.paid_amount;
+                var imp_uid = rsp.imp_uid;
+                $.ajax({
+                    type: "POST",
+                    url: "./payForm.do",
+                    data: {
+                        amount: amount,
+                        pay_method: pay_method,
+                        imp_uid:imp_uid
+                    },
+                    success: function(data) {
+                        console.log('성공',data);
+                        localStorage.setItem('payInfo',data);
+                        location.href='./payInfo.do'; 
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('에러 :', status, error);
+                    }
+                });
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                console.log('결제실패');
+                alert(msg);
+            }
+        }
+    );
 	})
+// }
+})
 })
 
 
-})
+
+
 </script>
-
-
 </body>
 </html>

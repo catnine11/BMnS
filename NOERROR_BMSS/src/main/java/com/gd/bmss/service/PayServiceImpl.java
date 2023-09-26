@@ -68,4 +68,10 @@ public class PayServiceImpl implements IPayService {
 		log.info("@@@@@@@@@@@@@@@@@@@ 결제상세조회 detailPay @@@@@@@@@@@@@@@@@@@");
 		return dao.detailPay(map);
 	}
+	
+	@Override
+	public String findImpUID(int seq) {
+		log.info("@@@@@@@@@@@@@@@@@@@ 아임포트고유아이디조회 findImpUID @@@@@@@@@@@@@@@@@@@");
+		return dao.findImpUID(seq);
+	}
 }
