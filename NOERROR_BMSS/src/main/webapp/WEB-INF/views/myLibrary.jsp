@@ -33,8 +33,9 @@ ${sessionScope.loginVo}
 		<h2>현황</h2>
 			<div>
 				<h3>대출현황</h3>
-				<p><a href="./myBorrowNow.doS?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
+				<p><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
 				<div id="myBorrowNow">
+				${borrowNow}
 					<table>
 						<tbody>
 							<tr>
@@ -65,7 +66,7 @@ ${sessionScope.loginVo}
 									    
 									%>
 									<c:choose>
-										<c:when test="${b.return_date < currentDate}">
+										<c:when test="${b.return_date > currentDate}">
 <%-- 											<p style="color: red;">(${b.return_date-currentDate}일 연체중)</p> --%>
 											<p>${b.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
 										</c:when>
@@ -129,6 +130,11 @@ ${sessionScope.loginVo}
 										<c:when test="${r.return_date < currentDate}">
 <%-- 											<p style="color: red;">(${r.return_date-currentDate}일 연체중)</p> --%>
 											<p>${r.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
+										</c:when>
+										<c:when test="${r.return_date <= currentDate && r.borrow_status=='N'}">
+											<p><span style="color: blue;">대출가능
+												<button onclick="location.href='./bookDetail.do?book_code='${r.book_seq}"></button>
+											</span></p>
 										</c:when>
 										<c:otherwise>
 											<p style="color: black;">${r.return_date}</p>

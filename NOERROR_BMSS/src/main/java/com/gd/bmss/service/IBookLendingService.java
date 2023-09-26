@@ -17,12 +17,14 @@ public interface IBookLendingService {
 	public List<Book_StatusVo> borrowNotOk();
 	
 	//대출 불가 조건 2. 연체회원인 경우
-	public UserVo isPenaltyUser(int user_id);
+	public UserVo isPenaltyUser(String user_id);
 		
 	//회원의 대출가능 잔여권수 판단(현재 대출권수)
-	public int countBorrow(int user_id);
+	public int countBorrow(String user_id);
 	
-//	public boolean isPenaltyUserT(int user_id);
+	//대출 조건
+	public Map<String, Object> borrowCondition(String user_id);
+	
 	
 	//대출신청(트랜잭션)
 //	public boolean requestBorrow(BorrowVo borrow);

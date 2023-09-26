@@ -136,17 +136,17 @@ public class BookModel_JUnitTest {
 	}	
 	
 //	@Test
-	public void isPenaltyUser() {
-		UserVo vo = service.isPenaltyUser(15);
-		assertNotNull(vo);
-	}
+//	public void isPenaltyUser() {
+//		UserVo vo = service.isPenaltyUser(15);
+//		assertNotNull(vo);
+//	}
 	
 //	@Test
-	public void countBorrow() {
-//		List<BorrowVo> lists = service.countBorrow(3);
-		int n = service.countBorrow(7);
-		assertEquals(2, n);
-	}
+//	public void countBorrow() {
+////		List<BorrowVo> lists = service.countBorrow(3);
+//		int n = service.countBorrow(7);
+//		assertEquals(2, n);
+//	}
 	
 //	@Test
 	public void borrowForReserver() {
@@ -252,7 +252,7 @@ public class BookModel_JUnitTest {
 		assertNotNull(list);
 	}
 	
-	@Test
+//	@Test
 	public void myReserveNow() {
 		List<ReserveVo> list = service.myReserveNow(2);
 		assertNotNull(list);
@@ -266,7 +266,14 @@ public class BookModel_JUnitTest {
 		assertEquals(1, n);
 	}
 	
-	
+	@Test
+	public void borrowcondition() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", "2");
+		map = service.borrowCondition("2");
+		assertNotNull(map);
+		System.out.println(map);
+	}
 	
 	
 

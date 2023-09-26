@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -142,8 +144,19 @@ ${sessionScope.loginVo}
 						</div>
 					</div>
 				</div>
-				
 				<div class="seqByBookCode">
+				${overdue}
+				${cnt}
+				${cond}
+			<%
+				// 현재 날짜를 가져옵니다.
+				Date currentDate = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String formattedCurrentDate = sdf.format(currentDate);
+				pageContext.setAttribute("currentDate", formattedCurrentDate);
+				System.out.println("현재시간"+currentDate);
+			%>
+			<input type="hidden" class="nowDate" value="${currentDate}">
 				<table>
 					<tbody id="borrowStatus">
 						<tr>
@@ -209,7 +222,8 @@ ${sessionScope.loginVo}
 												<p style="color: red;">예약중</p>
 	 										</c:if>
 											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
-												<button onclick="requestReserve(${d.book_seq})">예약신청</button>
+												<input type="button" class="requestReserve" value=예약신청>
+<%-- 												<button onclick="requestReserve(${d.book_seq})">예약신청</button> --%>
 	 										</c:if>
 										</td>
 										<td class="adminOnly"></td>
@@ -225,7 +239,7 @@ ${sessionScope.loginVo}
 					<div class="modal-content">
 						<p>예약한 도서를 대출하시겠습니까?</p>
 						<button id="nextButton">Y</button>
-						<button>N</button>
+						<button onclick="closeModal()">N</button>
 					</div>
 				</div>
 			</div>
@@ -278,20 +292,23 @@ ${sessionScope.loginVo}
 // 		}
 // 	}
 	
-	function requestReserve(book_seq){
-		var userAuth = '${sessionScope.loginVo.user_auth}';
-		console.log("userAuth");
+// 	function requestReserve(book_seq){
+// 		var userAuth = '${sessionScope.loginVo.user_auth}';
+// 		console.log("userAuth");
 		
-		if(userAuth=='U'){
-			console.log('회원의 예약신청');
+// 		if(userAuth=='U'){
+// 			console.log('회원의 예약신청');
 			
 			
-		}else{
-			alert('예약은 회원만 가능합니다. 로그인해주세요');
-			location.href="./login.do";
-		}
-	}
+// 		}else{
+// 			alert('예약은 회원만 가능합니다. 로그인해주세요');
+// 			location.href="./login.do";
+// 		}
+// 	}
 	
+	function closeModal(){
+		modal.style.display = "none";
+	}
 	
 </script>
 </body>
