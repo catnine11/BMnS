@@ -22,6 +22,7 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <title>주문내역</title>
 </head>
+<%@include file="header.jsp"%>
 <body>
 ${orderListUser}
 <form action="./delOrder.do" method="post">
@@ -142,4 +143,5 @@ var tit = $(this).closest('tr').find('.tit').text();
 
 
 </body>
+<%@include file="footer.jsp" %>
 </html>

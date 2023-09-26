@@ -47,8 +47,7 @@ public class SearchBookController {
 			model.addAttribute("bookList",bookList);
 			return"searchBooks";
 		}
-	    List<BookInfoVo> bookList = sdao.searchBooks(map);
-	    model.addAttribute("bookList", bookList);
+		
 		return"searchBooks";
 		
 	}

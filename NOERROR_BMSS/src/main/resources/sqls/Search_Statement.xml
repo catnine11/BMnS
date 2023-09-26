@@ -3,7 +3,7 @@
 <mapper  namespace="com.gd.bmss.mapper.SearchDaoImpl">
 
 <select id="searchBooks" resultType="BInfoVo" >
-  SELECT BOOK_CODE,TITLE,AUTHOR,
+  SELECT BOOK_CODE,TITLE,AUTHOR,BOOK_CODE,
 PUBLISHER,THUMBNAIL,ISBN FROM BOOKINFO b
   WHERE
   <choose>

@@ -1,8 +1,11 @@
+<%@page import="com.gd.bmss.vo.BookInfoVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%  List<BookInfoVo> list =(List<BookInfoVo>)request.getAttribute("salesDetail");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,11 +52,16 @@ top:400px;
 <!-- 저자 출판사 출판연돈 isbn  -->
 		<c:set var="sd" value="${salesDetail}"></c:set>
 	<div id="container">
+<%-- 	<%for (i=0; i<list.size(); i++){%> --%>
 		<div><strong class="tit" style="font-size:26px">${sd[0].title}</strong></div>
 		<div>
 					 <div class="background-cover" style="background-image: url('${sd[0].thumbnail}');" data-alt="${sd[0].title}"></div>	
 				
-				<div><input name="order" id="addOrder" type="button" value="주문목록에 담기" > <input name="pay" id="purchase" type="button" value="바로구매" ></div> 
+				<div><input name="order" id="addOrder" type="button" value="주문목록에 담기" > </div> 
+				<div><input name="pay" id="purchase" type="button" value="바로구매" ></div>
+						
+						
+						<input id="stNum" type="text" value="${sd[0].stock_number }">
 		<ul>
 		<li class="auth">저자:${sd[0].author}</li>
  <li class="publ">출판사:${sd[0].publisher}</li>
@@ -65,6 +73,7 @@ top:400px;
 <li class="isbn">ISBN:${sd[0].isbn}</li>	
 		</ul>
 		</div>
+		
 <!-- 		<div><input type="button" value="주문목록에 담기"></div> -->
 	</div>
 	

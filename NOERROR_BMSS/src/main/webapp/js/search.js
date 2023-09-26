@@ -1,13 +1,12 @@
-
+//검색 버튼 터치를 통한 도서검색
 $(document).ready(function(){
 	
 	$("button").on("click",function(){
 //		var searchOption= $(this).closest("div").find('option:selected').val()
-		var inputVal=$(this).closest("div").find("input[name=input]").val();
+		var inputVal=$(this).closest("div").find("#booksearch").val();
 //		
 		console.log(inputVal);
 //		console.log(searchOption);
-		
 		if(inputVal==''){
 			alert('검색어를 입력 하세요 ');
 		}else{
@@ -21,20 +20,45 @@ $(document).ready(function(){
 	
 })
 
+//엔터 버튼 터리를 통한 도서검색 
 
-///관리자가 유저를 검색하는 기능
+$(document).ready(function () {
+  const inputVal = $("#booksearch");
 
-document.addEventListener("DOMContentLoaded", function () {
-  const inputVal = document.getElementById("search_input");
-
-  inputVal.addEventListener("keydown", function (event) {
+  inputVal.on("keydown", function (event) {
     if (event.keyCode === 13) {
       if (inputVal.value === '') {
         alert('검색어를 입력하세요');
       } else {
         var frm = document.forms[0];
-        frm.action = "./searchUsers.do";
+        frm.action = "./searchBooks.do";
         frm.method = "post";
+        frm.submit();
+      }
+    }
+  });
+});
+
+
+
+
+
+
+
+
+///관리자가 유저를 검색하는 기능
+
+$(document).ready(function () {
+  const inputVal = $("#search_input");
+
+  inputVal.on("keydown", function (event) {
+    if (event.keyCode === 13) {
+      if (inputVal.val() === '') {
+        alert('검색어를 입력하세요');
+      } else {
+        var frm = $("form:first");
+        frm.attr("action", "./searchUsers.do");
+        frm.attr("method", "post");
         frm.submit();
       }
     }
