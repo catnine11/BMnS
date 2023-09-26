@@ -26,6 +26,7 @@
 		<table class="table table-hover" style="margin-top: 5%; border-top: 2px solid #e1e1e1">
 			<thead>
 				<tr>
+					<th scope="col" class="text-center">결제번호</th>
 					<th scope="col" class="text-center">이름</th>
 					<th scope="col" class="text-center">이메일</th>
 					<th scope="col" class="text-center">전화번호</th>
@@ -39,13 +40,14 @@
 
 				<c:forEach var="lists" items="${lists}"  varStatus="vs">
 					<tr>
-						<td style="width: 10%" class="text-center">${lists.user_name}</td>
-						<td style="width: 20%" class="text-center">${lists.user_email}</td>
-						<td style="width: 10%" class="text-center">${lists.user_phone}</td>
-						<td style="width: 7%" class="text-center">${lists.pay_money}</td>
+						<td style="width: 10%" class="text-center">${lists.pay_seq}</td>
+						<td style="width: 10%" class="text-center">${loginVo.user_name}</td>
+						<td style="width: 20%" class="text-center">${loginVo.user_email}</td>
+						<td style="width: 10%" class="text-center">${loginVo.user_phone}</td>
+						<td style="width: 10%" class="text-center">${lists.pay_money}</td>
 						<td style="width: 20%" class="text-center">${lists.pay_time}</td>
-						<td style="width: 10%" class="text-center">${lists.pay_status}</td>
-						<td style="width: 3%" class="text-center">
+						<td style="width: 10%" class="text-center">${psVo}</td>
+						<td style="width: 10%" class="text-center"><input type="button" value="결제상세" onclick="location.href='detailPay.do?pay_seq=${lists.pay_seq}'"></td>
 					</tr>
 				</c:forEach>
 

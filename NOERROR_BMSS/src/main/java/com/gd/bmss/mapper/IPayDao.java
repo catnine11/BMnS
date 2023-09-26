@@ -21,5 +21,9 @@ public interface IPayDao {
 	//PayVo의 max(seq)조회
 	public int getPay();
 	//결제내역조회리스트
-	public List<UserVo> getAllPay(int id);
+	public List<PayVo> getAllPay(int id);
+	//결제상태조회
+	public String getPayStatus(int sts);
+	//결제상세조회
+	public UserVo detailPay(Map<String, Object> map);
 }

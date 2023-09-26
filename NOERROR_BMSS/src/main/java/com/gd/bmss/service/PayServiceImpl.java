@@ -46,18 +46,26 @@ public class PayServiceImpl implements IPayService {
 	@Override
 	public PayVo selectPayInfo(int seq) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 현재결제내역조회 selectPayInfo @@@@@@@@@@@@@@@@@@@");
-		return dao.selectPayInfo(seq);
+		int n = dao.getPay();
+		return dao.selectPayInfo(n);
 	}
 
-	@Override
-	public int getPay() {
-		return dao.getPay();
-	}
 	
 	@Override
-	public List<UserVo> getAllPay(int id) {
+	public List<PayVo> getAllPay(int id) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 결제내역리스트조회 getAllPay @@@@@@@@@@@@@@@@@@@");
 		return dao.getAllPay(id);
 	}
 
+	@Override
+	public String getPayStatus(int sts) {
+		log.info("@@@@@@@@@@@@@@@@@@@ 결제상태조회 getPayStatus @@@@@@@@@@@@@@@@@@@");
+		return dao.getPayStatus(sts);
+	}
+	
+	@Override
+	public UserVo detailPay(Map<String, Object> map) {
+		log.info("@@@@@@@@@@@@@@@@@@@ 결제상세조회 detailPay @@@@@@@@@@@@@@@@@@@");
+		return dao.detailPay(map);
+	}
 }

@@ -1,5 +1,7 @@
 package com.gd.bmss.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -17,5 +19,6 @@ public class PayStatusVo {
 
 	private int pay_status;	
 	private String pay_title;
-	
+	private List<OrderVo> orderVo;
+	private List<PayVo> payVo;
 }
