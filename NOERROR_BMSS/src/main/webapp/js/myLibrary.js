@@ -4,7 +4,8 @@
  
 $(document).ready(function(){
 	
-	var user_id = $(this).closest("tr").find(".user_id").val();
+	var user_id = $("input.user_id").val();
+//	var user_id = $(this).closest("tr").find(".user_id").val();
 	console.log("user_id의 값 : ", user_id);
 	
 	$("input.renew").on("click", function(){
@@ -21,6 +22,7 @@ $(document).ready(function(){
 					},
 				success: function(){
 					alert('대출기간이 7일 연장되었습니다.');
+					location.reload();
 				},
 				error: function(){
 					alert('연장은 대출이 7일 미만으로 남았을때, 예약회원이 없는 경우만 가능합니다.');
@@ -45,6 +47,7 @@ $(document).ready(function(){
 					},
 				success: function(){
 					alert('예약취소 완료');
+					location.reload();
 				},
 				error: function(){
 					alert('예약취소를 다시 진행해주세요');

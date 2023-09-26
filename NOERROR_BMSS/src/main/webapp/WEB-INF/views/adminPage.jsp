@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -24,8 +26,8 @@
 	<a href="./cronStockList.do">재고대기목록</a>
 
 	<a href="./bookListAdmin.do">도서관리</a>
-
 	<a href="./borrowUserList.do">회원대출관리</a>
+	
 	<form>
     <div class="search" style="float: right; margin-right: 5%; margin-top: 5%; margin-bottom: 5px;">
         <input type="text" name="inputVal" id="search_input" placeholder="검색">
@@ -50,7 +52,15 @@
 				</tr>
 			</thead>
 			<tbody>
-
+				<%
+					// 현재 날짜를 가져옵니다.
+					Date currentDate = new Date();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String formattedCurrentDate = sdf.format(currentDate);
+					pageContext.setAttribute("currentDate", formattedCurrentDate);
+					System.out.println("현재시간"+currentDate);
+				%>
+				
 				<c:forEach var="lists" items="${lists}"  varStatus="vs">
 					<tr>
 						<!-- 				<td style="width: 5%"><a class="text-reset">asdasd</a></td> -->
@@ -60,12 +70,16 @@
 						<td style="width: 10%" class="text-center">${lists.user_phone}</td>
 						<td style="width: 20%" class="text-center">${lists.user_address}</td>
 						<td style="width: 10%" class="text-center">${lists.user_joindate}</td>
-						<td style="width: 10%" class="text-center">${lists.penalty_date}</td>
+						<td style="width: 10%" class="text-center">
+							<c:if test="${lists.penalty_date>currentDate}">
+								${lists.penalty_date}
+							</c:if>
+						</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
-						<td style="width: 3%" class="text-center"><input
-							type="button" value="대출정보" onclick="location.href='#'"> <input
-							type="button" value="예약정보" onclick="location.href='#'"> <input
-							type="button" value="결제정보" onclick="location.href='#'"></td>
+						<td style="width: 3%" class="text-center">
+						<input	type="button" value="대출정보" onclick="location.href='#'"> 
+						<input	type="button" value="예약정보" onclick="location.href='#'"> 
+						<input	type="button" value="결제정보" onclick="location.href='#'"></td>
 					</tr>
 				</c:forEach>
 

@@ -1,6 +1,5 @@
 package com.gd.bmss.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -23,32 +22,20 @@ public class BookLendingServiceImpl implements IBookLendingService {
 	@Autowired
 	private IBookLendingDao dao;
 	
-//	@Override
-//	public boolean isPenaltyUserT(int user_id) {
-//		UserVo user = new UserVo();
-//		String penalty = user.getPenalty_date();
-
-//		LocalDateTime currentTime = LocalDateTime.now();
-//		LocalDateTime penalty = dao.isPenaltyUser(user_id);
-//
-//		dao.isPenaltyUser(user_id) 
-//		
-//		if( ) {
-//			return true;
-//		}
-//		return false;
-//	}
 	
 	//불가조건2>불가조건1>잔여권수판단>대출신청
-//	@Override
 //	@Transactional(readOnly = true)
+	@Override
 //	public boolean requestBorrow(BorrowVo borrow) {
+	public Book_StatusVo borrowReserver(Map<String, Object> map) {
 //		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출신청 트랜잭션 처리 requestBorrow {}", borrow);
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출신청 트랜잭션 처리 requestBorrow {}", map);
 //		int borrowResult = dao.insertBorrow(borrow);
-//		
-//		
+		
 //		return false;
-//	}
+		return dao.borrowReserver(map);
+		
+	}
 
 	@Override
 	public int insertBorrow(BorrowVo brw) {
@@ -155,7 +142,7 @@ public class BookLendingServiceImpl implements IBookLendingService {
 
 
 	@Override
-	public int countReserve(int user_id) {
+	public int countReserve(String user_id) {
 		log.info("@@@@@@@@@@@@BookLendingServiceImpl 예약권수 countReserve {}", user_id);
 		return dao.countReserve(user_id);
 	}

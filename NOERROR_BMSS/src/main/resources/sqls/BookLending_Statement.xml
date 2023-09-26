@@ -51,6 +51,8 @@
 	<result column="BORROW_STATUS" property="borrow_status"/>
 	<result column="USER_ID" property="user_id"/>
 	<result column="BOOK_SEQ" property="book_seq"/>
+	
+	<result column="PENALTY_DATE" property="penalty_date"/>
 </resultMap>
 
 <resultMap type="com.gd.bmss.vo.ReserveVo" id="reserveMap">
@@ -339,7 +341,7 @@ ORDER BY USER_ID
 
 <!-- 예약현황조회 : 회원의 자신의 현황 -->
 <select id="myReserveNow" resultMap="bInfoMap">
-SELECT bs.BOOK_SEQ ,RESERVE_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, RESERVE_STATUS, BORROW_STATUS,
+SELECT bs.BOOK_SEQ ,RESERVE_TITLE, AUTHOR, PUBLISHER, GENRE_NAME, RESERVE_STATUS, BORROW_STATUS, br.USER_ID
 	,TO_CHAR(RESERVE_DATE,'YYYY-MM-DD') AS RESERVE_DATE
 	,TO_CHAR(RETURN_DATE,'YYYY-MM-DD') AS RETURN_DATE
 FROM BOOK_RESERVE br 

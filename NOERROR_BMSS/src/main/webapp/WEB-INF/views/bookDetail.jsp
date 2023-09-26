@@ -10,35 +10,36 @@
 <meta charset="UTF-8">
 <title>NOERROR 책 상세페이지</title>
 <style type="text/css">
-	#thumbnail{
-		height: 250px;
-		width: 200px;
-		padding: 10px;
-		margin-top: 20px;
-	}
+/* 	#thumbnail{ */
+/* 		height: 250px; */
+/* 		width: 200px; */
+/* 		padding: 10px; */
+/* 		margin-top: 20px; */
+/* 	} */
 	
-	li{
-		list-style: none;
-	}
+/* 	li{ */
+/* 		list-style: none; */
+/* 	} */
 	
-	.info> ul> li{
-		display: inline;
-	}
+/* 	.info> ul> li{ */
+/* 		display: inline; */
+/* 	} */
 	
-	.info> ul> li:not(:last-child)::after {
-        content: " | ";
-        color: #ccc;
-	}
+/* 	.info> ul> li:not(:last-child)::after { */
+/*         content: " | "; */
+/*         color: #ccc; */
+/* 	} */
 	
-	table, th, tr, td{
-		text-align: center;
-	}
+/* 	table, th, tr, td{ */
+/* 		text-align: center; */
+/* 	} */
 	
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/bookDetail.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/detail.js"></script>
+<script type="text/javascript" src="./js/bookDetail.js"></script>
 <script type="text/javascript">
 // var loginVo = ${sessionScope.loginVo}
 // window.onload = function () {
@@ -63,7 +64,7 @@
 <%@include file="header.jsp" %>
 <body>
 <%-- ${detail} --%>
-${sessionScope.loginVo}
+<%-- ${sessionScope.loginVo} --%>
 <input type="hidden" name="loginVo" value="${sessionScope.loginVo}">
 <input type="hidden" name="user_auth" class="user_auth" value="${sessionScope.loginVo.user_auth}">
 <input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
@@ -145,18 +146,20 @@ ${sessionScope.loginVo}
 					</div>
 				</div>
 				<div class="seqByBookCode">
-				${overdue}
 				${cnt}
-				${cond}
-			<%
-				// 현재 날짜를 가져옵니다.
-				Date currentDate = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String formattedCurrentDate = sdf.format(currentDate);
-				pageContext.setAttribute("currentDate", formattedCurrentDate);
-				System.out.println("현재시간"+currentDate);
-			%>
+<%-- 				${detail}<br> --%>
+<%-- 				${detail.bsVo}<br> --%>
+
+<%-- 			<% --%>
+<!-- 				// 현재 날짜를 가져옵니다. -->
+<!-- 				Date currentDate = new Date(); -->
+<!-- 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); -->
+<!-- 				String formattedCurrentDate = sdf.format(currentDate); -->
+<!-- 				pageContext.setAttribute("currentDate", formattedCurrentDate); -->
+<!-- 				System.out.println("현재시간"+currentDate); -->
+<!-- 			%> -->
 			<input type="hidden" class="nowDate" value="${currentDate}">
+				
 				<table>
 					<tbody id="borrowStatus">
 						<tr>
@@ -222,9 +225,11 @@ ${sessionScope.loginVo}
 												<p style="color: red;">예약중</p>
 	 										</c:if>
 											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
-												<input type="button" class="requestReserve" value=예약신청>
-<%-- 												<button onclick="requestReserve(${d.book_seq})">예약신청</button> --%>
-	 										</c:if>
+												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
+												<input type="hidden" name="borrow_status" class="borrow_status" value="${d.borrow_status}">
+												<input type="hidden" name="reserve_title" class="reserve_title" value="${detail.title}">
+												<input type="button" class="requestReserve" value="예약신청">
+		 									</c:if>
 										</td>
 										<td class="adminOnly"></td>
 									</tr>
@@ -247,68 +252,23 @@ ${sessionScope.loginVo}
 	</div>
 </div>
 <script type="text/javascript">
-
-// 	$("input.requestBorrow").on("click", function(){
-// 		var book_seq = $(this).closest("tr").find(".book_seq").val();
-// 		console.log(book_seq);
-		
-// 		var userAuth = $("input.user_auth").val();
-// 		console.log("userAuth의 값 : ", userAuth);
-		
-// 	});
-
-// 	function requestBorrow(book_seq){
-		
-// 		var book_seq = $(this).val();
-// 		console.log('선택한 책의 book_seq 값:', book_seq);
-		
-// 		if(userAuth=='U'){
-// 			console.log('회원의 대출신청');
-// 			var title = "${detail.title}";
-// 			var user_id = "${sessionScope.loginVo.user_id}";
-// // 			var book_seq = ;
-// 			console.log(title, user_id, book_seq)
-
-// 			$.ajax({
-// 				url: "./requestBorrow.do",
-// 				type: "post",
-// 				data: {title : title,
-// 						user_id : user_id,
-// 						book_seq : book_seq
-// 				},
-// 				success: function(){
-// 					console.log(data);
-// 					return false;
-// 				},
-// 				error: function(){
-// 					alert('대출신청에 실패했습니다.');
-// 				}
-// 			});
-			
-			
-// 		}else{
-// 			alert('대출은 회원만 가능합니다. 로그인해주세요');
-// 			location.href="./login.do";
-// 		}
-// 	}
 	
-// 	function requestReserve(book_seq){
-// 		var userAuth = '${sessionScope.loginVo.user_auth}';
-// 		console.log("userAuth");
-		
-// 		if(userAuth=='U'){
-// 			console.log('회원의 예약신청');
-			
-			
-// 		}else{
-// 			alert('예약은 회원만 가능합니다. 로그인해주세요');
-// 			location.href="./login.do";
-// 		}
-// 	}
+	function openModal() {
+	  var modal = document.getElementById("modalReserver");
+	  modal.style.display = "block";
+	}
 	
 	function closeModal(){
+		var modal = document.getElementById("modalReserver");
 		modal.style.display = "none";
 	}
+	
+	window.onclick = function (event) {
+		  var modal = document.getElementById("modalReserver");
+		  if (event.target == modal) {
+		    modal.style.display = "none";
+		  }
+	};
 	
 </script>
 </body>

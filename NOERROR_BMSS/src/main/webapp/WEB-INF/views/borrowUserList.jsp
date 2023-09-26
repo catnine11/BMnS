@@ -22,13 +22,10 @@
 	table, tr, th, td{
 		text-align: center;
 	}
-	#borrowOneUserNow {
-    display: none; 
-	}
+/* 	#borrowOneUserNow { */
+/*     display: none;  */
+/* 	} */
 	
-	#borrowOneUserNow.show {
-	    display: block;
-	}
 	
 </style>
 </head>
@@ -49,8 +46,8 @@ ${sessionScope.loginVo}
 		<h2>현황</h2>
 			<div>
 				<h3>대출현황</h3>
-				<p><a href="./borrowAllUserNow.do">전체회원</a></p>
 				<div id="borrowAllUserNow">
+				<p><a href="./borrowAllUserNow.do">전체회원</a></p>
 					<input type="button" id="returnBook" value="반납">
 					<table>
 						<tbody>
@@ -117,8 +114,13 @@ ${sessionScope.loginVo}
 						</tbody>
 					</table>
 				</div>
-<!-- 				<p><a href="./borrowOneUserNow.do">특정회원</a></p> -->
 				<div id="borrowOneUserNow" >
+<%-- 				<p><a href="./borrowOneUserNow.do?user_id=${borrow.user_id}">특정회원</a></p> --%>
+<%-- 					${borrowOneNow} --%>
+					<p>
+						<b>${borrowOneNow[0].user_id} 회원의 패널티 여부 :</b>
+						
+					</p>
 					<table>
 						<tbody>
 							<tr>
@@ -134,7 +136,7 @@ ${sessionScope.loginVo}
 							<c:forEach var="borrow" items="${borrowOneNow}">
 								<tr>
 									<td>${borrow.user_id}</td>
-									<td>${borrow.borrow_seq}</td>
+									<td>${borrow.book_seq}</td>
 									<td>${borrow.borrow_title}</td>
 									<td>${borrow.start_date}</td>
 									<td>

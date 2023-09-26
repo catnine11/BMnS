@@ -61,8 +61,7 @@
 						</c:choose>
 						<td style="width: 3%" class="text-center">
 
-						<input type="button" value="대출정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
-            <input type="button" value="예약정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
+						<input type="button" value="내 서재" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
             <input type="button" value="결제정보" onclick="location.href='./payInfo.do'"></td>
 
 					</tr>
@@ -75,7 +74,7 @@
 			<a class="text-reset" href="/boardChat?requestedPage="></a>&nbsp;&nbsp;
 		</p>
 		
-    <a href="./myLibrary.do">내 서재</a>
+<!--     <a href="./myLibrary.do">내 서재</a> -->
     
 
 	</div>

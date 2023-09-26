@@ -110,13 +110,18 @@ public class BookLendingController {
 	 * 관리자의 특정회원 대출현황조회 getOneBorrowNow
 	 */
 	@GetMapping(value = "/borrowOneUserNow.do")
-	public String BorrowOneUserNow(Model model, int user_id) {
+//	public String BorrowOneUserNow(Model model, int user_id) {
+	public Map<String, Object> BorrowOneUserNow(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 특정회원 대출현황 조회");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		
 		List<BorrowVo> borrowList = service.getOneBorrowNow(user_id);
 		model.addAttribute("borrowOneNow", borrowList);
 		
-		return "borrowUserList";
+		return map;
+//		return "borrowUserList";
 	}
 	
 	/*
@@ -140,6 +145,7 @@ public class BookLendingController {
 	 * 연체회원 패널티 산정 calPenalty
 	 */
 	
+	
 	/*
 	 * 대출조건
 	 */
@@ -162,17 +168,16 @@ public class BookLendingController {
 	 */
 	@PostMapping(value = "/requestBorrow.do")
 	@ResponseBody
-	public String requestBorrow(Model model, String title, String user_id, String book_seq, HttpServletResponse resp) throws IOException {
+	public Map<String, Object> requestBorrow(Model model, String title, String user_id, String book_seq, HttpServletResponse resp){
 		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
 		
+//		Map<String, Object> map =service.borrowCondition(user_id);
+//		System.out.println(map);
+////		String overdue = (String) map.get("OVERDUE");
+//		String overdue = (String) map.get("overdue");
+//		System.out.println(overdue);
 		
-		Map<String, Object> map =service.borrowCondition(user_id);
-		System.out.println(map);
-//		String overdue = (String) map.get("OVERDUE");
-		String overdue = (String) map.get("overdue");
-		System.out.println(overdue);
-		
-		
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		BorrowVo borrow = new BorrowVo();
 		borrow.setBorrow_title(title);
@@ -180,48 +185,23 @@ public class BookLendingController {
 		borrow.setBook_seq(book_seq);
 		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
 		
-//		return "bookDetail";
-		
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		int m = service.countBorrow(user_id);
+		log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
 		model.addAttribute("cnt", m);
+		map.put("cnt", m);
 		
-		try {
-			if(m==4) {
-				log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
-				PrintWriter out = resp.getWriter();
-				out.println("<script>alert('4권까지만 대출이 가능합니다. 도서반납 후 이용해주세요')</script>");
-				out.flush();
-				return "myLibrary";
-			}else if(m<4 && m>=0) {
+			if(m>=4) {
+				map.put("msg","1");
+			}else{
 				int n = service.insertBorrow(borrow);
-				if(n>0) {
-					PrintWriter out = resp.getWriter();
-					out.println("<script>alert('대출이 완료되었습니다. 현재 대여한 도서는 m권, 앞으로 "+(4-m)+"권 더 대출 가능합니다');location.href='./bookDetail.do';</script>");
-					out.flush();
-				}
-				
-			}else {
-				return null;
+				map.put("msg","2");
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "bookDetail";
+		return map;
 		
 	}
 	
-	
-	/*
-	 * 대출불가 조건(도서상태가 대출중, 예약중, 상태가 일반 아님) borrowNotOk
-	 */
-//	public String 
-	
-	
-	/*
-	 * 회원의 대출가능 잔여권수 판단 countBorrow
-	 */
 	
 	
 	/*
@@ -229,17 +209,16 @@ public class BookLendingController {
 	 */
 	@PostMapping(value = "/borrowReserver.do")
 	@ResponseBody
-	public String borrowReserver(Model model, String title, String user_id, String book_seq,  HttpServletResponse resp) throws IOException {
+	public Map<String, Object> borrowReserver(Model model, String title, String user_id, String book_seq, HttpServletResponse resp){
 		log.info("@@@@@@@@@@ BookLendingController 예약회원의 대출신청");
 		
+//		Map<String, Object> map =service.borrowCondition(user_id);
+//		System.out.println(map);
+////		String overdue = (String) map.get("OVERDUE");
+//		String overdue = (String) map.get("overdue");
+//		System.out.println(overdue);
 		
-		Map<String, Object> map =service.borrowCondition(user_id);
-		System.out.println(map);
-//		String overdue = (String) map.get("OVERDUE");
-		String overdue = (String) map.get("overdue");
-		System.out.println(overdue);
-		
-		
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		BorrowVo borrow = new BorrowVo();
 		borrow.setBorrow_title(title);
@@ -247,35 +226,21 @@ public class BookLendingController {
 		borrow.setBook_seq(book_seq);
 		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
 		
-//		return "bookDetail";
-		
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		int m = service.countBorrow(user_id);
+		log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
 		model.addAttribute("cnt", m);
+		map.put("cnt", m);
 		
-//		try {
-			if(m==4) {
-				log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
-				PrintWriter out = resp.getWriter();
-				out.println("<script>alert('4권까지만 대출이 가능합니다. 도서반납 후 이용해주세요')</script>");
-				out.flush();
-				return "myLibrary";
-			}else if(m<4 && m>=0) {
+			if(m>=4) {
+				map.put("msg","1");
+			}else{
 				int n = service.insertBorrow(borrow);
-				if(n>0) {
-					PrintWriter out = resp.getWriter();
-					out.println("<script>alert('대출이 완료되었습니다. 현재 대여한 도서는 m권, 앞으로 "+(4-m)+"권 더 대출 가능합니다');location.href='./bookDetail.do';</script>");
-					out.flush();
-				}
-				
-			}else {
-				return null;
+				map.put("msg","2");
 			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		return "bookDetail";
+		
+		return map;
 		
 	}
 	
@@ -291,7 +256,6 @@ public class BookLendingController {
 		log.info("@@@@@@@@@@ BookLendingController 반납 parameter : {}", Arrays.toString(chkBooks));
 //		log.info("@@@@@@@@@@ BookLendingController 반납 parameter : {}", chkBooks);
 
-//		int n = service.returnBook(chkBooks);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("chkBooks", chkBooks);
@@ -346,24 +310,32 @@ public class BookLendingController {
 	 * 	//연체회원여부 확인할것
 	 */
 	@PostMapping(value = "/requestReserve.do")
-	public String requestReserve(Model model, String title, String user_id, String book_seq){
-		log.info("@@@@@@@@@@ BookLendingController 회원의 대출신청");
+	@ResponseBody
+	public Map<String, Object> requestReserve(Model model, String title, String user_id, String book_seq){
+		log.info("@@@@@@@@@@ BookLendingController 회원의 예약신청");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		ReserveVo reserve = new ReserveVo();
+		reserve.setReserve_title(title);
+		reserve.setUser_id(user_id);
+		reserve.setBook_seq(book_seq);
+		System.out.println("예약 title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
+
+		int m = service.countReserve(user_id);
+		log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
+		map.put("cnt", m);
+		
+		if(m>=2) {
+//			map.put("msg","1");
+		}else{
+			service.insertReserve(reserve);
+		}
 		
 		
+		return map;
 		
-		return "bookDetail";
 	}
-	
-	
-	
-	/*
-	 * 예약가능 조건(예약, 대출확인 여부) reserveOk
-	 */
-	
-	
-	/*
-	 * 회원의 잔여예약 권수 countReserve
-	 */
 	
 	
 	/*

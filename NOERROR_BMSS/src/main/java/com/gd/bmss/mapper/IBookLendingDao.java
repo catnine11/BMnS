@@ -31,7 +31,7 @@ public interface IBookLendingDao {
 		
 	
 	//예약자의 대출신청(트랜잭션 걸 것)
-//	public Book_StatusVo borrowReserver(Map<String, Object> map);
+	public Book_StatusVo borrowReserver(Map<String, Object> map);
 	
 	//예약대출 후 예약취소(트랜잭션 걸 것)
 	public int deleteReserveAfterBorrow(int book_seq);
@@ -65,7 +65,7 @@ public interface IBookLendingDao {
 	public List<Book_StatusVo> reserveOk();
 	
 	//회원의 예약가능 잔여권수 판단(현재 예약권수)
-	public int countReserve(int user_id);
+	public int countReserve(String user_id);
 	
 	//회원의 예약취소
 	public int cancelMyReserve(Map<String, Object> map);
