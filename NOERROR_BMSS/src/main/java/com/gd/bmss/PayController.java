@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.service.IPayService;
+import com.gd.bmss.vo.PayStatusVo;
 import com.gd.bmss.vo.PayVo;
 import com.gd.bmss.vo.UserVo;
 import com.siot.IamportRestClient.IamportClient;
@@ -72,7 +73,7 @@ public class PayController {
 		if (n == 0) {
 			return "";
 		} else {
-			return infoVo.toString();
+			return infoVo+"";
 		}
 	}
 	
@@ -83,9 +84,35 @@ public class PayController {
 	public String payInfo(HttpSession session, Model model) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제정보(리스트)조회 이동 payInfo @@@@@@@@@@@@@@@@@@@@@@");
 		UserVo loginVo = (UserVo) session.getAttribute("loginVo");
-		List<UserVo> payVo = (List<UserVo>)service.getAllPay(loginVo.getUser_id());
+		List<PayVo> payVo = (List<PayVo>)service.getAllPay(loginVo.getUser_id());
 		System.out.println(payVo);
 		model.addAttribute("lists",payVo);
+		model.addAttribute("psVo",service.getPayStatus(2));
 		return "payInfo";
+	}
+	
+	/*
+	 * 결제상세조회
+	 */
+	@RequestMapping(value = "/detailPay.do")
+	public String detailPay(Model model, @RequestParam("pay_seq")String pay_seq,HttpSession session) {
+		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제정보상세조회 이동 detailPay @@@@@@@@@@@@@@@@@@@@@@");
+		String seq = pay_seq;
+		UserVo id = (UserVo)session.getAttribute("loginVo");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pay_seq", seq);
+		map.put("user_id", id.getUser_id());
+		service.detailPay(map);
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@상세조회값 : {} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",service.detailPay(map));
+		model.addAttribute("detailPay",service.detailPay(map));
+		return "detailPay";
+	}
+	/*
+	 * 결제취소
+	 */
+	@RequestMapping(value = "/canclePay.do")
+	public String canclePay() {
+		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제취소문의 이동 canclePay @@@@@@@@@@@@@@@@@@@@@@");
+		return null;
 	}
 }

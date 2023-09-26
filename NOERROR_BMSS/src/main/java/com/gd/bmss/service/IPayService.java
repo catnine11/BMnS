@@ -16,8 +16,10 @@ public interface IPayService {
 	
 	public PayVo selectPayInfo(int seq);
 	
-	public int getPay();
+	public List<PayVo> getAllPay(int id);
 	
-	public List<UserVo> getAllPay(int id);
+	public String getPayStatus(int sts);
+	
+	public UserVo detailPay(Map<String, Object>map);
 	
 }

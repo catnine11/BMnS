@@ -32,7 +32,6 @@ public class OrderVo {
 	private String genre_code    ;
 	private String author        ;
 
-	private List<PayVo> payVo;
 
 
 

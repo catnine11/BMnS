@@ -48,5 +48,6 @@ public class Book_StatusVo {
 //	private Date reserve_date  ;
 	private String reserve_date;
 	private String reserve_status;
+	private List<BorrowVo> brwVo;
 	
 }
