@@ -21,6 +21,44 @@ $(document).ready(function(){
 	
 })
 
+
+///관리자가 유저를 검색하는 기능
+
+document.addEventListener("DOMContentLoaded", function () {
+  const inputVal = document.getElementById("search_input");
+
+  inputVal.addEventListener("keydown", function (event) {
+    if (event.keyCode === 13) {
+      if (inputVal.value === '') {
+        alert('검색어를 입력하세요');
+      } else {
+        var frm = document.forms[0];
+        frm.action = "./searchUsers.do";
+        frm.method = "post";
+        frm.submit();
+      }
+    }
+  });
+});
+// $(document).ready(function(){
+//        $(".search_input").keypress(function(event){
+//                var inputVal = $(this).val();
+// 	console.log(inputVal);
+//            if(event.keyCode === 13){
+//               if(inputVal==''){
+//					alert('검색어를 입력하세요');	
+//                console.log(inputVal);
+//}
+//            }else{
+//			var frm = document.forms[0];
+//			frm.action="./searchUsers.do";
+//			frm.method="post";
+//			frm.submit();
+//}
+//        });
+//    });
+
+
 //	html+="				<td><input type='checkbox' name='delChk'                                                      ";
 //	$(document).on('click','input#delButton',function(){
 //	console.log($(this).closest('tr').find('.delChk').val());

@@ -1,8 +1,13 @@
+<%@page import="java.util.List"%>
+<%@page import="com.gd.bmss.vo.OrderVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +23,7 @@
 <title>주문내역</title>
 </head>
 <body>
+${orderListUser}
 <form action="./delOrder.do" method="post">
 <div id="container">
 <table>
@@ -34,8 +40,8 @@
 <c:forEach var="ordU" items="${orderListUser}">
 <tr>
 <td><input class="delBox" type="checkbox" name="delCheck" value="${ordU.stock_number}"></td>
-<td class="background-cover" style="background-image: url('${ordU.thumbnail}');" data-alt="${ordU.status_title}"></td>
-<td>${ordU.status_title}</td>
+<td class="background-cover" style="background-image: url('${ordU.thumbnail}');" data-alt="${ordU.thumbnail}"></td>
+<td class="tit">${ordU.status_title}</td>
 <td>${ordU.author}</td>
 <td>${ordU.order_quantity}</td>
 <td>${ordU.order_price}</td>	
@@ -68,11 +74,71 @@
 </table>
 </div>
 </form>
-<!-- 판매도서 -->
-<a href="./getSellableStock.do">판매도서목록</a>
 
 
-<script type="text/javascript" src="./js/order.js"></script>
+<%		int totalPrice=0;
+		int totalCount=0;
+for(int i=0; i<odu.size();i++) {
+		int price=	odu.get(i).getOrder_price();
+		int quantity=	odu.get(i).getOrder_quantity();
+		int bookPrice=	price*quantity;
+		
+		totalPrice += bookPrice; 
+		totalCount+=quantity;
+		
+%>
+<% }%>
+
+<script type="text/javascript" src="./js/order.js">
+</script>
+<script type="text/javascript">
+
+var totalPrice=<%=totalPrice%>
+var totalCount=<%=totalCount%>
+
+
+$(document).ready(function(){
+
+$("#payBtn").click(function(){
+	console.log(totalPrice);
+	console.log(totalCount);
+	var thumbNail=new Array();
+	var stock_num=new Array();
+	var title=new Array();
+
+	$(".delBox:checked").each(function(){
+var	thumb=	$(this).closest('tr').find('.background-cover').attr('data-alt');
+var stNum=	$(this).val();
+var tit = $(this).closest('tr').find('.tit').text();		
+ 	
+	thumbNail.push(thumb);
+	stock_num.push(stNum);
+	title.push(tit);
+		
+	})
+	console.log(thumbNail)
+	console.log(stock_num)
+	console.log(title)
+	
+	
+	$.ajax({
+	type:"post",
+	url:"x.do",
+	data:"",
+	success:function(){
+	},
+	error:function(){
+		
+		
+	}
+
+	
+	})
+})
+
+
+})
+</script>
 
 
 </body>

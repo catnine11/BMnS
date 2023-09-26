@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.bmss.mapper.ISearchDao;
 import com.gd.bmss.vo.BookInfoVo;
+import com.gd.bmss.vo.UserVo;
 
 import oracle.jdbc.proxy.annotation.Post;
 
@@ -50,6 +52,21 @@ public class SearchBookController {
 		return"searchBooks";
 		
 	}
+	
+	
+	@PostMapping("/searchUsers.do")
+	public String searchUsers(  String inputVal, Model model) {
+		Map<String, Object> map =new HashMap<String, Object>();
+		map.put("user_email", inputVal);
+		
+	List<UserVo>	list=sdao.searchUser(map);
+	model.addAttribute("searchUsers",list);
+	return "searchUsers";
+	}
+	
+	
+	
+	
 	
 	
 }

@@ -26,12 +26,14 @@
 	<a href="./bookListAdmin.do">도서관리</a>
 
 	<a href="./borrowUserList.do">회원대출관리</a>
-	<div class="search" style="float: right; margin-right: 5%; margin-top: 5%; margin-bottom: 5px;">
-      <input type="text" class="search__input" placeholder="검색">
-      <div class="search__icon">
-        <ion-icon name="search"></ion-icon>
-      </div>
+	<form>
+    <div class="search" style="float: right; margin-right: 5%; margin-top: 5%; margin-bottom: 5px;">
+        <input type="text" name="inputVal" id="search_input" placeholder="검색">
+        <div class="search__icon">
+            <ion-icon name="search"></ion-icon>
+        </div>
     </div>
+</form>
 	<div style="margin-left: 5%; margin-right: 5%;">
 		<table class="table table-hover" style="margin-top: 5%; border-top: 2px solid #e1e1e1">
 			<thead>
@@ -72,7 +74,7 @@
 
 		<p class="text-center">
 
-
+<script type="text/javascript" src="./js/search.js"></script>
 			<a class="text-reset" href="/boardChat?requestedPage="></a>&nbsp;&nbsp;
 
 		</p>
