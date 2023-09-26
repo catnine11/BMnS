@@ -174,37 +174,41 @@ public class BookLendingController {
 		
 		
 		
-//		BorrowVo borrow = new BorrowVo();
-//		borrow.setBorrow_title(title);
-//		borrow.setUser_id(user_id);
-//		borrow.setBook_seq(book_seq);
-//		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
-		
-		
+		BorrowVo borrow = new BorrowVo();
+		borrow.setBorrow_title(title);
+		borrow.setUser_id(user_id);
+		borrow.setBook_seq(book_seq);
+		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
 		
 //		return "bookDetail";
 		
+		resp.setContentType("text/html; charset=UTF-8");
 		
-//		resp.setContentType("text/html; charset=UTF-8;");
+		int m = service.countBorrow(user_id);
+		model.addAttribute("cnt", m);
 		
-//		int m = service.countBorrow(user_id);
-//		if(m==4) {
-//			log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
-//			PrintWriter out = resp.getWriter();
-//			out.println("<script>alert('회원당 4권까지만 대출이 가능합니다. 도서를 반납 후 이용해주세요');</script>");
-//			out.flush();
-//		}else if(m<4 && m>=0) {
-//			int n = service.insertBorrow(borrow);
-//			if(n>0) {
-//				PrintWriter out = resp.getWriter();
-//				out.println("<script>alert('대출이 완료되었습니다. 현재 대여한 도서는 m권, 앞으로 "+(4-m)+"권 더 대출 가능합니다');location.href='./bookDetail.do';</script>");
-//				out.flush();
-//			}
-//			
-//		}else {
-//			return null;
-//		}
-		return book_seq;
+		try {
+			if(m==4) {
+				log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('4권까지만 대출이 가능합니다. 도서반납 후 이용해주세요')</script>");
+				out.flush();
+				return "myLibrary";
+			}else if(m<4 && m>=0) {
+				int n = service.insertBorrow(borrow);
+				if(n>0) {
+					PrintWriter out = resp.getWriter();
+					out.println("<script>alert('대출이 완료되었습니다. 현재 대여한 도서는 m권, 앞으로 "+(4-m)+"권 더 대출 가능합니다');location.href='./bookDetail.do';</script>");
+					out.flush();
+				}
+				
+			}else {
+				return null;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "bookDetail";
 		
 	}
 	
@@ -223,6 +227,57 @@ public class BookLendingController {
 	/*
 	 * 예약자의 대출신청 및 예약취소 borrowForReserver
 	 */
+	@PostMapping(value = "/borrowReserver.do")
+	@ResponseBody
+	public String borrowReserver(Model model, String title, String user_id, String book_seq,  HttpServletResponse resp) throws IOException {
+		log.info("@@@@@@@@@@ BookLendingController 예약회원의 대출신청");
+		
+		
+		Map<String, Object> map =service.borrowCondition(user_id);
+		System.out.println(map);
+//		String overdue = (String) map.get("OVERDUE");
+		String overdue = (String) map.get("overdue");
+		System.out.println(overdue);
+		
+		
+		
+		BorrowVo borrow = new BorrowVo();
+		borrow.setBorrow_title(title);
+		borrow.setUser_id(user_id);
+		borrow.setBook_seq(book_seq);
+		System.out.println("title:"+title+", user_id:"+user_id+", book_seq:"+book_seq);
+		
+//		return "bookDetail";
+		
+		resp.setContentType("text/html; charset=UTF-8");
+		
+		int m = service.countBorrow(user_id);
+		model.addAttribute("cnt", m);
+		
+//		try {
+			if(m==4) {
+				log.info("@@@@@@@@@@ {} 회원의 대출권수 {}", user_id, m);
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('4권까지만 대출이 가능합니다. 도서반납 후 이용해주세요')</script>");
+				out.flush();
+				return "myLibrary";
+			}else if(m<4 && m>=0) {
+				int n = service.insertBorrow(borrow);
+				if(n>0) {
+					PrintWriter out = resp.getWriter();
+					out.println("<script>alert('대출이 완료되었습니다. 현재 대여한 도서는 m권, 앞으로 "+(4-m)+"권 더 대출 가능합니다');location.href='./bookDetail.do';</script>");
+					out.flush();
+				}
+				
+			}else {
+				return null;
+			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		return "bookDetail";
+		
+	}
 	
 	
 	/*

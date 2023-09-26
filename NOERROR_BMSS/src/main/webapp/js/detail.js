@@ -75,23 +75,29 @@ $(document).ready(function(){
 				var nextButton = document.getElementById("nextButton");
 				nextButton.addEventListener("click", function () {
 					modal.style.display = "none";
+					
+					if(penalty_date>currentDate){
+						alert('연체회원입니다. '+penalty_date+'일까지 도서를 대출할 수 없습니다');
+						return false;
+					}else{
 	
-					$.ajax({
-						url: "./borrowReserver.do",
-						type: "post",
-						data: {title : title,
-								user_id : user_id,
-								book_seq : book_seq
-						},
-						success: function(){
-							
-							
-							return false;
-						},
-						error: function(){
-							alert('대출신청에 실패했습니다.');
-						}
-					});
+						$.ajax({
+							url: "./borrowReserver.do",
+							type: "post",
+							data: {title : title,
+									user_id : user_id,
+									book_seq : book_seq
+							},
+							success: function(){
+								alert('도서를 2주 뒤까지 반납해주세요.')
+								
+							},
+							error: function(){
+								alert('대출신청에 실패했습니다. 대출권수를 확인해주세요.');
+							}
+						});
+					}
+					
 				});
 				
 			}else if(!reserve_user || reserve_user.trim() === ""){
@@ -113,8 +119,9 @@ $(document).ready(function(){
 							
 						},
 						error: function(){
-							alert('대출신청에 실패했습니다.');
+							alert('대출신청에 실패했습니다. 대출권수를 확인해주세요.');
 						}
+			
 					});
 					
 				}

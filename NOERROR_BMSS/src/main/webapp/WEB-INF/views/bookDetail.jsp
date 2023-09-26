@@ -239,7 +239,7 @@ ${sessionScope.loginVo}
 					<div class="modal-content">
 						<p>예약한 도서를 대출하시겠습니까?</p>
 						<button id="nextButton">Y</button>
-						<button>N</button>
+						<button onclick="closeModal()">N</button>
 					</div>
 				</div>
 			</div>
@@ -306,6 +306,9 @@ ${sessionScope.loginVo}
 // 		}
 // 	}
 	
+	function closeModal(){
+		modal.style.display = "none";
+	}
 	
 </script>
 </body>
