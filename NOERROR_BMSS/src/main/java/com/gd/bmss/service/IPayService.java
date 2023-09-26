@@ -22,4 +22,6 @@ public interface IPayService {
 	
 	public UserVo detailPay(Map<String, Object>map);
 	
+	public String findImpUID(int seq);
+	
 }

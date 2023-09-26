@@ -26,4 +26,6 @@ public interface IPayDao {
 	public String getPayStatus(int sts);
 	//결제상세조회
 	public UserVo detailPay(Map<String, Object> map);
+	//아임포트고유번호찾기
+	public String findImpUID(int seq);
 }

@@ -60,4 +60,9 @@ public class PayDaoImpl implements IPayDao {
 	public UserVo detailPay(Map<String, Object> map) {
 		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.detailPay",map);
 	}
+	
+	@Override
+	public String findImpUID(int seq) {
+		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.findImpUID",seq);
+	}
 }

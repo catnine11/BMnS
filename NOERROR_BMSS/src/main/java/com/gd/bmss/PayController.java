@@ -26,6 +26,8 @@ import com.gd.bmss.vo.PayVo;
 import com.gd.bmss.vo.UserVo;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
@@ -53,18 +55,21 @@ public class PayController {
 		
 			return api.paymentByImpUid(imp_uid);
 	}
+	
+
 
 	/*
 	 * 결제정보입력
 	 */
 	@RequestMapping("/payForm.do")
 	@ResponseBody
-	public String insertPayInfoTrans(@RequestParam("amount") String amount,@RequestParam("pay_method") String pay_method, HttpSession session, Model model) {
+	public String insertPayInfoTrans(@RequestParam("amount") String amount,@RequestParam("pay_method") String pay_method,@RequestParam("imp_uid") String imp_uid, HttpSession session, Model model) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@ insertPayInfoTrans 실행 @@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		UserVo uVo = (UserVo) session.getAttribute("loginVo");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pay_money", Integer.parseInt(amount));
 		map.put("pay_method", pay_method);
+		map.put("imp_uid", imp_uid);
 		log.info("@@@@@@@@@@@@@@@@@@@@@@전달받은 값 : [{}],[{}]@@@@@@@@@@@@@@@@@@@@@", uVo, map);
 		int n = service.insertPayInfoTrans(map, uVo);
 		log.info("@@@@@@@@@@@@@@@@@@@@@@서비스 결과값 : {}@@@@@@@@@@@@@@@@@@@@@", n);
@@ -115,4 +120,36 @@ public class PayController {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제취소문의 이동 canclePay @@@@@@@@@@@@@@@@@@@@@@");
 		return null;
 	}
+	
+	@RequestMapping(value = "/canclePayInfo.do", method = RequestMethod.POST)
+	public String testCancelPaymentAlreadyCancelledImpUid() {
+		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제환불기능 testCancelPaymentAlreadyCancelledImpUid @@@@@@@@@@@@@@@@@@@@@@");
+		String seq = "78";
+		String imp_uid = service.findImpUID(Integer.parseInt(seq));
+        String test_already_cancelled_imp_uid = imp_uid;
+        CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소
+        log.info("@@@@@@@@@@@@@환불완료.@@@@@@@@@@@@@@@ {}", cancel_data);
+        service.okPayStatusChange(seq);
+        try {
+            IamportResponse<Payment> payment_response = api.cancelPaymentByImpUid(cancel_data);
+           
+            if(payment_response.getResponse() == null) {
+            	log.info("@@@@@@@@@@@@@이미 처리된 환불.@@@@@@@@@@@@@@@");
+            }
+//            assertNull(payment_response.getResponse()); // 이미 취소된 거래는 response가 null이다
+        } catch (IamportResponseException e) {
+            System.out.println(e.getMessage());
+
+            switch (e.getHttpStatusCode()) {
+                case 401:
+                    break;
+                case 500:
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "payInfo";
+    }
+
 }

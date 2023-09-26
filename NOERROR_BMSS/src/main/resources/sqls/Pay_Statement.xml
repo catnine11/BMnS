@@ -1,59 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper  namespace="com.gd.bmss.mapper.PayDaoImpl">
-
-<!-- 결제정보 입력 -->
-<insert id="insertPayInfo">
-<selectKey keyProperty="pay_seq" resultType="java.lang.Integer" order="BEFORE">
-		SELECT PAY_SEQ_SEQUENCE.NEXTVAL AS PAY_SEQ FROM DUAL
-</selectKey>
-	INSERT INTO BOOK_PAY
-		(PAY_SEQ,
-		 PAY_MONEY, 
-		 PAY_TIME, 
-		 PAY_METHOD, 
-		 PAY_STATUS)
-	VALUES(#{pay_seq}, #{pay_money}, SYSDATE, #{pay_method}, '2')
-</insert>
-
-<!-- 결제시상태변경 -->
-<update id="payStatusChange">
-	UPDATE BOOK_ORDER  
-	SET PAY_STATUS = '2'
-	WHERE USER_ID =#{user_id}
-</update>
-
-<!-- 관리자승인시 결제상태변경 -->
-<update id="okPayStatusChange">
-	UPDATE BOOK_ORDER 
-	SET PAY_STATUS ='3'
-	WHERE USER_ID =#{user_id}
-</update>
-<!-- 관리자 회원의 결제대기 확인 -->
-<select id="selectStatusNum2" resultType="UserVo">
-SELECT bu.USER_ID ,bu.USER_NAME ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.* 
-	FROM BOOK_USERINFO bu 
-		JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
-		JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
-		JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
-		JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
-		JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
-		JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
-	WHERE bp.PAY_STATUS =#{pay_status}
-</select>
-<!-- 현재결제내역조회 -->
-<select id="selectPayInfo" resultType="PayVo">
-	SELECT PAY_SEQ,PAY_MONEY,PAY_METHOD,PAY_STATUS,PAY_TIME 
-FROM BOOK_PAY
-WHERE PAY_SEQ=#{pay_seq}
-</select>
-
-<select id="getPay" resultType="java.lang.Integer">
-	SELECT MAX(PAY_SEQ)
-		FROM BOOK_PAY
-</select>
-
-
 <resultMap type="BInfoVo" id="bInfoMap">
 	<result column="BOOK_CODE" property="book_code"/>
 	<result column="ISBN" property="isbn"/>
@@ -148,6 +95,73 @@ WHERE PAY_SEQ=#{pay_seq}
 	<collection property="orderVo" resultMap="OrderVoMap"/>
 	<collection property="payVo" resultMap="PayVoMap"></collection>
 </resultMap>
+
+<!-- 결제정보 입력 -->
+<insert id="insertPayInfo">
+<selectKey keyProperty="pay_seq" resultType="java.lang.Integer" order="BEFORE">
+		SELECT PAY_SEQ_SEQUENCE.NEXTVAL AS PAY_SEQ FROM DUAL
+</selectKey>
+	INSERT INTO BOOK_PAY
+		(PAY_SEQ,
+		 PAY_MONEY, 
+		 PAY_TIME, 
+		 PAY_METHOD, 
+		 PAY_STATUS,
+		 IMP_UID)
+	VALUES(#{pay_seq}, #{pay_money}, SYSDATE, #{pay_method}, '2',#{imp_uid})
+</insert>
+
+<!-- 결제시상태변경 -->
+<update id="payStatusChange">
+	UPDATE BOOK_ORDER  
+	SET PAY_STATUS = '2'
+	WHERE USER_ID =#{user_id}
+</update>
+
+<!-- 결제상태변경 -->
+<update id="okPayStatusChange">
+	UPDATE BOOK_PAY
+	 <set>
+        <if test="pay_status == 1">
+            PAY_STATUS = 2,
+        </if>
+        <if test="pay_status == 2">
+            PAY_STATUS = 3,
+        </if>
+        <if test="pay_status == 3">
+            PAY_STATUS =4,
+        </if>
+        <if test="pay_status == 4">
+            PAY_STATUS = 5
+        </if>
+      </set>
+	WHERE PAY_SEQ =#{pay_seq}
+</update>
+<!-- 관리자 회원의 결제대기 확인 -->
+<select id="selectStatusNum2" resultType="UserVo">
+SELECT bu.USER_ID ,bu.USER_NAME ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.* 
+	FROM BOOK_USERINFO bu 
+		JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
+		JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
+		JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
+		JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
+		JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
+		JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
+	WHERE bp.PAY_STATUS =#{pay_status}
+</select>
+<!-- 현재결제내역조회 -->
+<select id="selectPayInfo" resultType="PayVo">
+	SELECT PAY_SEQ,PAY_MONEY,PAY_METHOD,PAY_STATUS,PAY_TIME 
+FROM BOOK_PAY
+WHERE PAY_SEQ=#{pay_seq}
+</select>
+
+<select id="getPay" resultType="java.lang.Integer">
+	SELECT MAX(PAY_SEQ)
+		FROM BOOK_PAY
+</select>
+
+
 <select id="getAllPay" resultMap="PayVoMap">
 	SELECT bu.*,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.PAY_SEQ,bp2.PAY_MONEY,bp2.PAY_TIME,bp2.PAY_METHOD,bp2.PAY_STATUS
 FROM BOOK_USERINFO bu 
@@ -179,6 +193,13 @@ FROM BOOK_USERINFO bu
 	JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
 	JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
 WHERE bu.USER_ID =#{user_id} AND PAY_SEQ = #{pay_seq}
+</select>
+
+<!-- iamport 고유번호 찾기 -->
+<select id="findImpUID" resultType="java.lang.String">
+	SELECT IMP_UID 
+		FROM BOOK_PAY bp
+	WHERE PAY_SEQ =#{pay_seq}
 </select>
 
 </mapper>
