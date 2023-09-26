@@ -14,7 +14,36 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
-	결제취소문의 페이지
+	<input type="button" onclick="location.href='./writeAsk.do'" value="글쓰기">
+	<input type="button" value="결제취소승인" onclick="cancle()">
+
 </body>
 <%@include file="footer.jsp"%>
+<script type="text/javascript">
+function cancle(){
+	 $.ajax({
+		 type:"post",
+		 url:"./canclePayInfo.do",
+		 success:function(result){
+			console.log(result);
+			alert("환불되었습니다");
+			location.href="./payInfo.do";
+			 
+		 }
+	 })
+}
+
+//결제정보 확인
+function doCheck(){
+	 $.ajax({
+		 type:"post",
+		 url:"./payment/payInfo",
+		 success:function(result){
+			 console.log(result);
+			 location.href="./payment/moveNext";
+		 }
+	 })
+}
+
+</script>
 </html>

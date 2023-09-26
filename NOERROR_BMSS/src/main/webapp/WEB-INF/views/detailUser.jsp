@@ -118,12 +118,14 @@ function requestPay() {
                 alert(msg);
                 var pay_method = rsp.pay_method;
                 var amount = rsp.paid_amount;
+                var imp_uid = rsp.imp_uid;
                 $.ajax({
                     type: "POST",
                     url: "./payForm.do",
                     data: {
                         amount: amount,
-                        pay_method: pay_method
+                        pay_method: pay_method,
+                        imp_uid:imp_uid
                     },
                     success: function(data) {
                         console.log('성공',data);
