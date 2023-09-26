@@ -30,12 +30,13 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 	}
 
 	@Override
-	public UserVo isPenaltyUser(int user_id) {
+	public UserVo isPenaltyUser(String user_id) {
 		return session.selectOne(NS+"isPenaltyUser", user_id);
 	}
+	
 
 	@Override
-	public int countBorrow(int user_id) {
+	public int countBorrow(String user_id) {
 		return session.selectOne(NS+"countBorrow", user_id);
 	}
 
@@ -129,6 +130,11 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 	@Override
 	public int calPenalty(UserVo userVo) {
 		return session.update(NS+"calPenalty", userVo);
+	}
+
+	@Override
+	public Map<String, Object> borrowCondition(String user_id) {
+		return session.selectOne(NS+"borrowCondition", user_id);
 	}
 
 }

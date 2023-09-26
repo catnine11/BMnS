@@ -38,5 +38,4 @@ public class UserVo {
 	private List<ReserveVo> resvVo; 
 	private List<OrderVo> orderVo;
 	private List<PayVo> payVo;
-	
 }

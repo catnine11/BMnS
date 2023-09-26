@@ -63,7 +63,7 @@
 
 						<input type="button" value="대출정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
             <input type="button" value="예약정보" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
-            <input type="button" value="결제정보" onclick="location.href='#'"></td>
+            <input type="button" value="결제정보" onclick="location.href='./payInfo.do'"></td>
 
 					</tr>
 			</tbody>

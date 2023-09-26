@@ -47,8 +47,17 @@ public class PayDaoImpl implements IPayDao {
 	}
 	
 	@Override
-	public List<UserVo> getAllPay(int id) {
+	public List<PayVo> getAllPay(int id) {
 		return sql.selectList("com.gd.bmss.mapper.PayDaoImpl.getAllPay",id);
 	}
 
+	@Override
+	public String getPayStatus(int sts) {
+		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.getPayStatus",sts);
+	}
+	
+	@Override
+	public UserVo detailPay(Map<String, Object> map) {
+		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.detailPay",map);
+	}
 }

@@ -65,14 +65,14 @@ public class BookLendingServiceImpl implements IBookLendingService {
 
 
 	@Override
-	public UserVo isPenaltyUser(int user_id) {
+	public UserVo isPenaltyUser(String user_id) {
 		log.info("@@@@@@@@@@@@BookLendingServiceImpl 연체회원여부 isPenaltyUser {}", user_id);
 		return dao.isPenaltyUser(user_id);
 	}
 
 
 	@Override
-	public int countBorrow(int user_id) {
+	public int countBorrow(String user_id) {
 		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출권수 countBorrow {}", user_id);
 		return dao.countBorrow(user_id);
 	}
@@ -198,6 +198,13 @@ public class BookLendingServiceImpl implements IBookLendingService {
 	public int calPenalty(UserVo userVo) {
 		log.info("@@@@@@@@@@@@BookLendingServiceImpl 패널티기간 산정 calPenalty {}", userVo);
 		return dao.calPenalty(userVo);
+	}
+
+
+	@Override
+	public Map<String, Object> borrowCondition(String user_id) {
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 대출조건 {}", user_id);
+		return dao.borrowCondition(user_id);
 	}
 
 }
