@@ -34,5 +34,7 @@ public class BorrowVo {
 	private String borrow_status;
 	private String user_id;
 	private String book_seq;
+	
+	private String penalty_date;
 
 }

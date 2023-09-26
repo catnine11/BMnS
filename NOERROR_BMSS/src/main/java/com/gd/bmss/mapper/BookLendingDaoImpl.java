@@ -42,10 +42,10 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 
 
 	///////////////////////////////////
-//	@Override
-//	public Book_StatusVo borrowReserver(Map<String, Object> map) {
-//		return session.selectOne(NS+"borrowForReserver", user_id);
-//	}
+	@Override
+	public Book_StatusVo borrowReserver(Map<String, Object> map) {
+		return session.selectOne(NS+"borrowForReserver", map);
+	}
 	
 	@Override
 	public int deleteReserveAfterBorrow(int book_seq) {
@@ -98,7 +98,7 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 	}
 
 	@Override
-	public int countReserve(int user_id) {
+	public int countReserve(String user_id) {
 		return session.selectOne(NS+"countReserve", user_id);
 	}
 

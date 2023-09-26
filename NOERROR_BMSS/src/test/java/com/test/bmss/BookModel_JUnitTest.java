@@ -227,7 +227,7 @@ public class BookModel_JUnitTest {
 	
 //	@Test
 	public void countReserve() {
-		int n = service.countReserve(7);
+		int n = service.countReserve("7");
 		assertEquals(2, n);
 	}
 	

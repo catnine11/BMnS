@@ -35,7 +35,7 @@ ${sessionScope.loginVo}
 				<h3>대출현황</h3>
 				<p><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}">대출현황</a></p>
 				<div id="myBorrowNow">
-				${borrowNow}
+<%-- 				${borrowNow} --%>
 					<table>
 						<tbody>
 							<tr>
@@ -66,14 +66,14 @@ ${sessionScope.loginVo}
 									    
 									%>
 									<c:choose>
-										<c:when test="${b.return_date > currentDate}">
-<%-- 											<p style="color: red;">(${b.return_date-currentDate}일 연체중)</p> --%>
+										<c:when test="${b.return_date < currentDate}">
+<%-- 											<p style="color: red;">(${currentDate-b.return_date}일 연체중)</p> --%>
 											<p>${b.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
 										</c:when>
 										<c:otherwise>
 											<p style="color: black;">${b.return_date}</p>
 										</c:otherwise>
-										</c:choose>
+									</c:choose>
 								</td>
 								<td><c:choose>
 	<%-- 								<td>${b.renew}</td> --%>
@@ -127,17 +127,19 @@ ${sessionScope.loginVo}
 									    
 									%>
 									<c:choose>
-										<c:when test="${r.return_date < currentDate}">
-<%-- 											<p style="color: red;">(${r.return_date-currentDate}일 연체중)</p> --%>
+										<c:when test="${r.return_date < currentDate && r.borrow_status=='Y'}">
+<%-- 											<p style="color: red;">(${currentDate-r.return_date}일 연체중)</p> --%>
 											<p>${r.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
 										</c:when>
 										<c:when test="${r.return_date <= currentDate && r.borrow_status=='N'}">
-											<p><span style="color: blue;">대출가능
-												<button onclick="location.href='./bookDetail.do?book_code='${r.book_seq}"></button>
-											</span></p>
+											<input type="hidden" name="reserve_title" class="reserve_title" value="${r.reserve_title}">
+											<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
+											<input type="hidden" name="reserve_user" class="reserve_user" value="${r.user_id}">
+											<input type="hidden" name="book_seq" class="book_seq" value="${r.book_seq}">
+											<input type="button" class="requestBorrow" value="대출신청">
 										</c:when>
 										<c:otherwise>
-											<p style="color: black;">${r.return_date}</p>
+											<p style="color: black;">${r.return_date}예정</p>
 										</c:otherwise>
 										</c:choose>
 								</td>
@@ -192,14 +194,14 @@ ${sessionScope.loginVo}
 									    
 									%>
 									<c:choose>
-										<c:when test="${b.return_date < currentDate}">
-<%-- 											<p style="color: red;">(${b.return_date-currentDate}일 연체중)</p> --%>
+										<c:when test="${b.return_date < currentDate && b.borrow_status=='Y'}">
+<%-- 											<p style="color: red;">(${currentDate-b.return_date}일 연체중)</p> --%>
 											<p>${b.return_date}예정,<br><span style="color: red;"> 연체중</span></p>
 										</c:when>
 										<c:otherwise>
 											<p style="color: black;">${b.return_date}</p>
 										</c:otherwise>
-										</c:choose>
+									</c:choose>
 								</td>
 								<td><c:choose>
 <%-- 								<td>${b.borrow_status}</td> --%>

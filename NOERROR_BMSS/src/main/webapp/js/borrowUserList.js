@@ -62,7 +62,7 @@ $(document).ready(function(){
 			success: function(data){
 				console.log(data);
 				alert("책이 반납처리되었습니다.");
-				
+				location.reload();
 			},
 			error: function(){
 				alert('반납처리에 실패했습니다.');
@@ -80,41 +80,17 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 	
-//	var user_id = $(this).closest("tr").find(".user_id").val();
-//	console.log("user_id의 값 : ", user_id);
-//	
-//	$("input.renew").on("click", function(){
-//		console.log('회원의 연장신청');
-//		
-//		var book_seq = $(this).closest("tr").find(".book_seq").val();
-//		console.log("book_seq:", book_seq);
-//		
-//		$.ajax({
-//				url: "./renew.do",
-//				type: "post",
-//				data: {
-//						book_seq : book_seq
-//					},
-//				success: function(){
-//					alert('대출기간이 7일 연장되었습니다.');
-//				},
-//				error: function(){
-//					alert('연장신청에 실패했습니다. 연장은 대출이 7일 미만으로 남았을때, 예약회원이 없는 경우만 가능합니다.');
-//				}
-//		});
-//	});
 	
-	
+//		$("#borrowOneUserNow").hide();
 	
 	$(".detailUserBorrow").click(function(event){
 		
-//		$("#borrowOneUserNow").hide();
+//		$("#borrowOneUserNow").show();
 		
 		var userId = $(this).closest("td").find(".user_id").val();
     	console.log(userId);
     	
-	    var url = "./borrowOneUserNow.do?user_id=" + userId;
-	    window.location.href = url;
+	    location.href ="./borrowOneUserNow.do?user_id=" + userId;
 		
 	});
 	
