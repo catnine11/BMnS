@@ -57,21 +57,6 @@ public class StockServiceImpl implements IStockService {
 	
 	
 	
-	
-	/**
-	 * 재고 목록중 판매가능 여부를 판매 가능으로 변경
-	 */
-	@Override
-	public int sellAble(Map<String, Object> map) {
-		log.info("판매여부 변경 메소드 N->Y");
-		return dao.sellAble(map);
-	}
-
-	@Override
-	public int sellAbleMany(List<Integer> stock_number) {
-
-		return dao.sellAbleMany(stock_number);
-	}
 
 	@Override
 	public int stocksDel(List<String>  stock_number) {

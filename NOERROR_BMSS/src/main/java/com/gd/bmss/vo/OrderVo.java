@@ -34,10 +34,18 @@ public class OrderVo {
 
 		
 	private List<PayVo> payVo;
-	private int book_code; 
+	private int book_code;
+	public OrderVo(int stock_number, int user_id) {
+		super();
+		this.stock_number = stock_number;
+		this.user_id = user_id;
+	}
+	
 
 
 	//	    private List<StockVo> stockvo;
+	
+	
 
 
 }

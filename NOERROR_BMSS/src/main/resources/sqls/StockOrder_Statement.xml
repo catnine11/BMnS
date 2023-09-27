@@ -41,45 +41,17 @@ WHERE X.BOOK_COUNT > 1 ]]>)
 <!-- 재고 추가  -->
 <insert id="addStock" parameterType="StockVo">
   INSERT INTO BOOK_STOCK
-  (STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)
-  VALUES(STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0)
+  (STOCK_NUMBER, BOOK_SEQ,BOOK_PRICE)
+  VALUES(STOCK_NUMBER.NEXTVAL,#{book_seq}, 0)
 </insert>
 
-<!-- <insert id="addStocks"> -->
-<!--     INSERT ALL  -->
-<!--     <foreach collection="list" item="book_seq"> -->
-<!--         INTO BOOK_STOCK (STOCK_NUMBER, SELL_STATUS, BOOK_SEQ, BOOK_PRICE)  -->
-<!--         VALUES (STOCK_NUMBER.NEXTVAL, 'N', #{book_seq}, 0) -->
-<!--     </foreach> -->
-<!--     SELECT * FROM dual -->
-<!-- </insert> -->
-
-
-<!-- 판매 불가->판매가능 상태 업데이트 -->
-<update id="sellAble">
-UPDATE BOOK_STOCK SET SELL_STATUS =#{status} WHERE BOOK_SEQ =#{num}
-</update>
-<!-- 판매 불가->판매가능 다중 상태 업데이트 -->
-<update id="sellAbleMany">
-UPDATE BOOK_STOCK SET SELL_STATUS ='Y' WHERE STOCK_NUMBER IN
-<foreach collection="list" item="stock_number" open="(" separator="," close=")" >
-#{stock_number}
-</foreach>
-</update>
-<!-- 판매불가 상태 업데이트 다중  -->
-<update id="notSellMany">
-UPDATE BOOK_STOCK SET SELL_STATUS ='N' WHERE STOCK_NUMBER IN
-<foreach collection="list" item="stock_number" open="(" separator="," close=")" >
-#{stock_number}
-</foreach>
-</update>
 
 
 
 <!-- 재고목록 다중 삭제 -->
 <delete id="stocksDel">
 DELETE FROM BOOK_STOCK
-WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
+WHERE STOCK_NUMBER IN
 <foreach collection="list" item="stock_number" open="(" separator="," close=")">
 #{stock_number}
 </foreach>
@@ -87,7 +59,6 @@ WHERE SELL_STATUS ='N' AND STOCK_NUMBER IN
 	
 	<resultMap type="StockVo" id="StockMap">
     <result column="STOCK_NUMBER" property="stock_number"/>
-    <result column="SELL_STATUS" property="sell_status"/>
     <result column="STBOOK_SEQ" property="book_seq"/>    
     <result column="BOOK_PRICE" property="book_price"/>
     <result column="STATUS_TITLE" property="status_title"/>
@@ -133,32 +104,30 @@ WHERE STATUS_CODE = 'B'
 
 <!-- 유저가 판매중인 도서 조회 -->
 <select id="getSellableStock" resultMap="InfoMap">
-SELECT THUMBNAIL, BOOK_PRICE,AUTHOR, PUBLISHER,PUBLISH_DATE, STATUS_CODE,TITLE,b.BOOK_CODE,STOCK_NUMBER
-FROM BOOK_STOCK BT
- JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ
- JOIN BOOKINFO b ON B.BOOK_CODE =BS.BOOK_CODE 
-WHERE STATUS_CODE = 'B'  AND SELL_STATUS='Y' AND BOOK_PRICE!=0 ORDER BY TITLE
+SELECT DISTINCT ISBN,TITLE,A.BOOK_CODE,
+AUTHOR,GENRE_CODE,PUBLISHER,PRICE,PUBLISH_DATE,THUMBNAIL FROM BOOKINFO A JOIN BOOK_STATUS C ON A.BOOK_CODE=C.BOOK_CODE 
+WHERE STATUS_CODE='B'
 </select>
 
 
 <select id="getSalesDetail" resultType="BInfoVo">
-SELECT THUMBNAIL, BOOK_PRICE,AUTHOR, PUBLISHER,PUBLISH_DATE, STATUS_CODE,TITLE,b.BOOK_CODE,ISBN,GENRE_CODE
-FROM BOOK_STOCK BT
-LEFT JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ
-LEFT JOIN BOOKINFO b ON B.BOOK_CODE =BS.BOOK_CODE 
-WHERE  b.BOOK_CODE=#{book_code} ORDER BY TITLE
+SELECT B.BOOK_CODE,ISBN,TITLE,STOCK_NUMBER,B.BOOK_SEQ,BOOK_PRICE,
+AUTHOR,GENRE_CODE,PUBLISHER,PUBLISH_DATE,THUMBNAIL FROM BOOKINFO  A
+JOIN BOOK_STATUS B ON A.BOOK_CODE=B.BOOK_CODE
+ JOIN BOOK_STOCK C ON B.BOOK_SEQ=C.BOOK_SEQ 
+ WHERE STATUS_CODE='B'AND A.BOOK_CODE =#{book_code}
 </select>
 
 
 <select id="getInStock" resultMap="StockMap">
-SELECT  STOCK_NUMBER,STATUS_TITLE, SELL_STATUS, BOOK_SEQ AS STBOOK_SEQ, STATUS_CODE, BOOK_CODE, BOOK_PRICE
+SELECT  STOCK_NUMBER,STATUS_TITLE, BOOK_SEQ AS STBOOK_SEQ, STATUS_CODE, BOOK_CODE, BOOK_PRICE
 FROM BOOK_STOCK BT
 LEFT JOIN BOOK_STATUS USING(BOOK_SEQ)
 WHERE STATUS_CODE = 'A'
 </select>
 
 <select id="booksDetail" resultMap="StockMap">
-SELECT  STOCK_NUMBER,STATUS_TITLE, SELL_STATUS, BT.BOOK_SEQ AS STBOOK_SEQ, STATUS_CODE, BOOK_CODE, BOOK_PRICE
+SELECT  STOCK_NUMBER,STATUS_TITLE, BT.BOOK_SEQ AS STBOOK_SEQ, STATUS_CODE, BOOK_CODE, BOOK_PRICE
 FROM BOOK_STOCK BT
 LEFT JOIN BOOK_STATUS BS ON BT.BOOK_SEQ = BS.BOOK_SEQ WHERE BOOK_CODE=#{book_code} AND STATUS_CODE='B'
 </select>

@@ -37,7 +37,7 @@ h4{
          <fmt:formatDate value="${pDate}" pattern="yyyy-MM-dd" />
        </c:set>
        ${s.publisher}|${formattedDate}<br>
-        가격:${s.book_price}원
+<%--         가격:${s.book_price}원 --%>
       </td>
     </tr>
   </table>

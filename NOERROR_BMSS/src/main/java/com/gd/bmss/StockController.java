@@ -1,6 +1,7 @@
 package com.gd.bmss;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -56,18 +57,18 @@ public class StockController {
 		return map;
 	}
 	
-	@PostMapping(value="/changeStatus.do")
-	@ResponseBody
-	public Map<String, Object> sellAble(String status ,int num) {
-		System.out.println(status);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("num",num);
-		map.put("status", status);
-		service.sellAble(map);
-		
-		return map;
-		
-	}
+//	@PostMapping(value="/changeStatus.do")
+//	@ResponseBody
+//	public Map<String, Object> sellAble(String status ,int num) {
+//		System.out.println(status);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("num",num);
+//		map.put("status", status);
+//		service.sellAble(map);
+//		
+//		return map;
+//		
+//	}
 	
 	
 	@PostMapping(value="/chageBookStatus.do")
@@ -96,7 +97,6 @@ public class StockController {
 		model.addAttribute("detailList",list);
 		return list;
 	}
-	
 
 		
 	

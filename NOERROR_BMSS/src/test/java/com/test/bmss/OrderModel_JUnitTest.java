@@ -102,23 +102,7 @@ public class OrderModel_JUnitTest {
 		
 //		System.out.println(m);
 	}
-//	@Test
-	public void sellAble() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("status","N");
-		map.put("num","1");
-		dao.sellAble(map);
-		
-	}
-//	@Test
-	public void sellAbleMany() {
-		List<Integer> stock_number = new ArrayList<Integer>();
-		
-		stock_number.add(7);
-		stock_number.add(8);
-		stock_number.add(9);
-		dao.sellAbleMany(stock_number);
-	}
+
 	
 //	@Test
 	public void stocksDel() {
@@ -267,14 +251,55 @@ List<StockVo> list	=dao.booksDetail("7");
 //		System.out.println(m);
 	}
 	
-	@Test 
+//	@Test 
 	public void getSellableStock() {
 	List<BookInfoVo>	list=	dao.getSellableStock();
 		assertNotNull(list);
 		
 	}
+	@Test
+public void getSalesDetail() {
+	List<BookInfoVo>list	=dao.getSalesDetail("7");
+
+	assertEquals(3, list.size());
+	
+}
 	
 
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 컬럼 변경후 필요없는 메소드들 
+//@Test
+//public void sellAble() {
+//	Map<String, Object> map = new HashMap<String, Object>();
+//	map.put("status","N");
+//	map.put("num","1");
+//	dao.sellAble(map);
+//	
+//}
+//@Test
+//public void sellAbleMany() {
+//	List<Integer> stock_number = new ArrayList<Integer>();
+//	
+//	stock_number.add(7);
+//	stock_number.add(8);
+//	stock_number.add(9);
+//	dao.sellAbleMany(stock_number);
+//}

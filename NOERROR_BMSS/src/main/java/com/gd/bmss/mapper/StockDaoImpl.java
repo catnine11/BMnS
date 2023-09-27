@@ -44,20 +44,6 @@ private final String NS="com.gd.bmss.mapper.StockDaoImpl.";
 
 
 	@Override
-	public int sellAble(Map<String, Object>map) {
-	int n =	sql.update(NS+"sellAble",map);
-		return n;
-	}
-
-
-	@Override
-	public int sellAbleMany(List<Integer> stock_number) {
-	int n =		sql.update(NS+"sellAbleMany",stock_number);
-		return n ;
-	}
-
-
-	@Override
 	public int stocksDel(List<String> stock_number) {
 	int n=	sql.delete(NS+"stocksDel",stock_number);
 		return n;
