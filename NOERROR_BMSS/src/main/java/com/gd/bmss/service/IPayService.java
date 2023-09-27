@@ -3,6 +3,7 @@ package com.gd.bmss.service;
 import java.util.List;
 import java.util.Map;
 
+import com.gd.bmss.vo.PayStatusVo;
 import com.gd.bmss.vo.PayVo;
 import com.gd.bmss.vo.UserVo;
 
@@ -18,10 +19,10 @@ public interface IPayService {
 	
 	public List<PayVo> getAllPay(int id);
 	
-	public String getPayStatus(int sts);
+	public String getPayStatus(int seq);
 	
 	public UserVo detailPay(Map<String, Object>map);
 	
-	public String findImpUID(int seq);
+	public String findImpUID(String seq);
 	
 }
