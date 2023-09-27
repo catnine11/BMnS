@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.mapper.IUserDao;
+import com.gd.bmss.service.IBookLendingService;
 import com.gd.bmss.service.IUserService;
 import com.gd.bmss.vo.UserVo;
 
@@ -40,7 +41,7 @@ public class UserController {
 	
 	@Autowired
 	private IUserService service;
-	
+
 	@Autowired
 	private IUserDao dao;
 	
@@ -49,7 +50,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/adminPage.do")
 	public String adminPage(Model model) {
-		log.info("@@@@@@@@@@@@@@@관리자화면 이동@@@@@@@@@@@@@@@");
+		log.info("@@@@@@@@@@@@@@@관리자화면 이동@@@@@@@@@@@@@@@@");
 		List<UserVo> lists = dao.selectUser();
 		model.addAttribute("lists",lists);
 		return "adminPage";

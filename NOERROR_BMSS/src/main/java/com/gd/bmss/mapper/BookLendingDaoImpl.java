@@ -44,7 +44,7 @@ public class BookLendingDaoImpl implements IBookLendingDao {
 	///////////////////////////////////
 	@Override
 	public Book_StatusVo borrowReserver(Map<String, Object> map) {
-		return session.selectOne(NS+"borrowForReserver", map);
+		return session.selectOne(NS+"borrowReserver", map);
 	}
 	
 	@Override
