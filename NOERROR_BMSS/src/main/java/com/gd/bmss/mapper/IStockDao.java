@@ -19,8 +19,6 @@ public interface IStockDao {
 //	
 	public List<BookInfoVo>getSellableStock();
 	
-	public int sellAble(Map<String, Object> map);
-	public int sellAbleMany(List<Integer>stock_number );
 	public int  stocksDel(List<String> stock_number);
 	public List<StockVo>getStocks();
 	public int priceChange(Map<String, String> map);

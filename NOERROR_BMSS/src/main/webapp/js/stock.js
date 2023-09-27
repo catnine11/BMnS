@@ -39,7 +39,7 @@ html+="			<td><input type='checkbox' name='allChk'></td>                        
 html+="			<td>재고번호</td>                                                                                   ";
 html+="			<td>도서명</td>                                                                                     ";
 html+="			<td>도서상태</td>                                                                                   ";
-html+="			<td>판매가능 여부</td>                                                                              ";
+//html+="			<td>판매가능 여부</td>                                                                              ";
 html+="			<td>도서 가격</td>                                                                                  ";
 html+="		</tr>                                                                                                   ";
 		for (let obj of data)    {   
@@ -54,10 +54,10 @@ html+=`<td><select class='changeBookStatus' name='status_code'>
     <option value='A' ${obj.status_code == 'A' ? "selected" : ""}>일반</option>
     <option value='B' ${obj.status_code == 'B' ? "selected" : ""}>재고</option>
 </select></td>`;
-html+=`<td><select class='sellStatus' name='sellStatus'>                                              
-    <option value='N' ${obj.sell_status == 'N' ? 'selected' : ''}>판매불가</option>          
-    <option value='Y' ${obj.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>           
-</select></td>`;                                                                             
+//html+=`<td><select class='sellStatus' name='sellStatus'>                                              
+//    <option value='N' ${obj.sell_status == 'N' ? 'selected' : ''}>판매불가</option>          
+//    <option value='Y' ${obj.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>           
+//</select></td>`;                                                                             
 html += `<td><input class='price' type='number' name='price' value='${obj.book_price}'}></td>`;
 html+="					<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>";                                                             
 html+="				<td><input class='chPrice' type='button' value='가격 변경'></td>                                ";
@@ -69,7 +69,7 @@ html+="		</table>                                                               
  	
  $("#stockDel").html(html);	
  	
-       stockLogic(html);
+//       stockLogic(html);
       },
       error: function(){
       }
@@ -82,7 +82,7 @@ function stockLogic(){
 	
 	   	$(".changeBookStatus, .sellStatus, .price").each(function(){
 		var status=	$(this).closest("tr").find('.changeBookStatus');
-		var sellStatus =	$(this).closest("tr").find('.sellStatus');
+//		var sellStatus =	$(this).closest("tr").find('.sellStatus');
 		var price=$(this).closest("tr").find('.price')
 		var btn=$(this).closest("tr").find(".chPirce");
 //		console.log("책상태",status);
@@ -144,30 +144,30 @@ function stockLogic(){
 			
 			
 	//도서 판매 여부 변경 메소드 N->Y Y->N
-		$("#stockDel").on("change","select.sellStatus",function(){
-			var status=$(this).closest("tr").find(".sellStatus").find("option:selected").val();
-			var num =$(this).closest("tr").find(".book_seq").val();
-			console.log(status)
-			console.log(num);
-			$.ajax({
-			method : "post",
-			url : "./changeStatus.do",
-			data : {
-				status :status,
-				num :num
-			},
-			success : function(data) {
-				 console.log (data);
-				 console.log(data.status);
-				alert("도서 판매여부가 변경되었습니다.");
-			},
-			error : function() {
-				alert("판매여부 변경실패 ");
-			}
-
-		})
-			
-		})
+//		$("#stockDel").on("change","select.sellStatus",function(){
+//			var status=$(this).closest("tr").find(".sellStatus").find("option:selected").val();
+//			var num =$(this).closest("tr").find(".book_seq").val();
+//			console.log(status)
+//			console.log(num);
+//			$.ajax({
+//			method : "post",
+//			url : "./changeStatus.do",
+//			data : {
+//				status :status,
+//				num :num
+//			},
+//			success : function(data) {
+//				 console.log (data);
+//				 console.log(data.status);
+//				alert("도서 판매여부가 변경되었습니다.");
+//			},
+//			error : function() {
+//				alert("판매여부 변경실패 ");
+//			}
+//
+//		})
+//			
+//		})
 		
 
 

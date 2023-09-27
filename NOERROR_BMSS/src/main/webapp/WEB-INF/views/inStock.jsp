@@ -12,10 +12,6 @@
 <title>재고대상목록</title>
 </head>
 <body>
-<!-- stock_number=6, sell_status=N, 
-book_seq=56, book_price=0, 
-status_title=희망(리영희 산문선)(양장본 HardCover), 
-status_code=A, book_code=30 -->
 
 <table class="container">
 <tr>

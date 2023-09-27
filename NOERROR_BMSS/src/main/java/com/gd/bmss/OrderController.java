@@ -1,8 +1,11 @@
 package com.gd.bmss;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import com.gd.bmss.mapper.IStockDao;
 import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.OrderVo;
 import com.gd.bmss.vo.StockVo;
+import com.gd.bmss.vo.UserVo;
 
 
 @Controller
@@ -123,5 +127,29 @@ public class OrderController {
 			
 				return "salesDetail";
 		}
+		
+		@PostMapping("/addOrder.do")
+		@ResponseBody
+		public int addOrder(@RequestParam ("chkArray[]")List<String> chkArray ,HttpSession session) {
+			System.out.println(chkArray);
+			
+			OrderVo vo = new OrderVo();	
+			int n=0;
+			UserVo  id	=	(UserVo)session.getAttribute("loginVo");
+				
+			System.out.println(id);
+				vo.setUser_id(id.getUser_id());
+//			
+			for (String string : chkArray) {
+				vo.setStock_number(Integer.parseInt(string));
+				 n =	odao.addOrder(vo);
+				 n++;
+			}
+				System.out.println(n);
+			
+			return n;
+			
+		}
+		
 		
 }

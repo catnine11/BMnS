@@ -27,7 +27,6 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
 <%@include file="header.jsp"%>
 
 <body>
-${orderListUser}
 <form action="./delOrder.do" method="post">
 <div id="container">
 <table>
@@ -78,7 +77,6 @@ ${orderListUser}
 </div>
 </form>
 <button id="payBtn" onclick="requestPay()">결제하기</button>
-<%@include file="./footer.jsp" %>
 
 <%		int totalPrice=0;
 		int totalCount=0;

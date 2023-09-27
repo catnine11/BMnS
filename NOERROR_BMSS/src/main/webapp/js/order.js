@@ -99,18 +99,35 @@ $(document).on('click', 'input#delUBtn', function(){
 
 
 
-
-
-
-
-
-
-
-
-
 function dtWindow(id){
 	window.open('./orderDetail.do?id='+id,'주문조회 상세창','width=800,height=600');
 }
+
+
+
+//유저가 주문하기
+	
+$(document).ready(function(){
+    $("#addOrder").click(function(){
+		var chkArray=new Array;
+       $(".bookChk:checked").each(function(){
+		chkArray.push($(this).val());
+})
+ $.ajax({
+	type:"post",
+	url:"./addOrder.do",
+	data:{"chkArray":chkArray},
+	success:function(){
+		
+	},
+	error:function(){
+	}
+	
+})
+    });
+});
+
+
 
 
 

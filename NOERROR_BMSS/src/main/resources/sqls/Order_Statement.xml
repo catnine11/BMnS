@@ -10,7 +10,14 @@ SELECT BOOK_PRICE AS ORDER_PRICE FROM BOOK_STOCK WHERE STOCK_NUMBER =#{stock_num
 </selectKey>
 INSERT INTO BOOK_ORDER
 (ORDER_SEQ, STOCK_NUMBER, ORDER_QUANTITY, ORDER_PRICE, ORDER_DATE, PAY_STATUS, USER_ID)
-VALUES(ORDER_SEQ.NEXTVAL, #{stock_number}, 1, #{order_price}, (CURRENT_DATE), (1),#{user_id})
+VALUES(ORDER_SEQ.NEXTVAL, #{stock_number}, 1, #{order_price}, (CURRENT_DATE), 
+<choose>
+<when test="pay_status!=null">
+#{pay_status}
+</when>
+<otherwise>'1'</otherwise>
+</choose>,
+#{user_id})
 </insert>
 
 <select id="getAllOrder" resultType="OrderVo">
@@ -33,7 +40,6 @@ JOIN BOOK_USERINFO B ON A.USER_ID = B.USER_ID WHERE PAY_STATUS=1
 
 <resultMap type="StockVo" id="StockMap">
 <result column="STOCK_NUMBER" property="stock_number"/>
-<result column="SELL_STATUS" property="sell_status"/>
 <result column="BOOK_SEQ" property="book_seq"/>
 <result column="BOOK_PRICE" property="book_price"/>
 </resultMap>
@@ -60,21 +66,20 @@ DELETE FROM BOOK_ORDER bo WHERE PAY_STATUS=1 AND STOCK_NUMBER IN
 </delete>
 
 <select id="getOrderUser" resultType="OrderVo">
-  SELECT A.ORDER_SEQ,A.STOCK_NUMBER, ORDER_QUANTITY,
+ SELECT A.ORDER_SEQ,A.STOCK_NUMBER, ORDER_QUANTITY,
        ORDER_PRICE,PAY_STATUS,
        STATUS_TITLE,
        THUMBNAIL,A.USER_ID,
        GENRE_CODE,AUTHOR,
        UI.USER_ADDRESS ,
-       A.SELL_STATUS,B.BOOK_CODE
+      B.BOOK_CODE
 FROM (
     SELECT X.STOCK_NUMBER,
            ORDER_QUANTITY,
            ORDER_PRICE,X.ORDER_SEQ,
            PAY_STATUS,
            STATUS_TITLE,
-           BOOK_CODE,X.USER_ID ,
-           X.SELL_STATUS  
+           BOOK_CODE,X.USER_ID
     FROM (
         SELECT BS.STOCK_NUMBER ,
                ORDER_QUANTITY ,
@@ -82,8 +87,7 @@ FROM (
                bo.ORDER_SEQ ,
                PAY_STATUS ,
                BOOK_SEQ ,
-               bo.USER_ID ,
-               SELL_STATUS 
+               bo.USER_ID
         FROM BOOK_STOCK bs 
         RIGHT JOIN BOOK_ORDER bo ON BS.STOCK_NUMBER = BO.STOCK_NUMBER
     ) X 
@@ -91,9 +95,8 @@ FROM (
 ) A 
 JOIN BOOKINFO b ON A.BOOK_CODE = B.BOOK_CODE
 JOIN BOOK_USERINFO UI ON A.USER_ID = UI.USER_ID
-WHERE A.USER_ID=#{user_id} AND A.SELL_STATUS='Y'
+WHERE A.USER_ID=#{user_id}
 ORDER BY A.STOCK_NUMBER
-
 </select>
 
 
