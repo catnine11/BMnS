@@ -1,5 +1,6 @@
 package com.gd.bmss.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gd.bmss.mapper.IBoardDao;
 import com.gd.bmss.vo.AskBoardVo;
+import com.gd.bmss.vo.UserVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,5 +38,16 @@ public class BoardServiceImpl implements IBoardService {
 		log.info("@@@@@@@@@@@@@@@ 문의게시판수정 updateAskBoard @@@@@@@@@@@@@@@");
 		return dao.updateAskBoard(vo);
 	}
-
+	
+	@Override
+	public int updatePayStatus(String seq) {
+		log.info("@@@@@@@@@@@@@@@ 문의게시판입력시 상태변경 updatePayStatus @@@@@@@@@@@@@@@");
+		return dao.updatePayStatus(seq);
+	}
+	
+	@Override
+	public List<AskBoardVo> askBoardList() {
+		log.info("@@@@@@@@@@@@@@@ 문의게시판리스트보기 askBoardList @@@@@@@@@@@@@@@");
+		return dao.askBoardList();
+	}
 }

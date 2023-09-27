@@ -91,8 +91,11 @@ public class PayController {
 		UserVo loginVo = (UserVo) session.getAttribute("loginVo");
 		List<PayVo> payVo = (List<PayVo>)service.getAllPay(loginVo.getUser_id());
 		System.out.println(payVo);
+		for(int i= 0; i<payVo.size(); i++) {
+			int a = payVo.get(i).getPay_seq();
+			model.addAttribute("psVo",service.getPayStatus(a));
+		}
 		model.addAttribute("lists",payVo);
-		model.addAttribute("psVo",service.getPayStatus(2));
 		return "payInfo";
 	}
 	
@@ -110,6 +113,7 @@ public class PayController {
 		service.detailPay(map);
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@상세조회값 : {} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",service.detailPay(map));
 		model.addAttribute("detailPay",service.detailPay(map));
+		session.setAttribute("pSeq", pay_seq);
 		return "detailPay";
 	}
 	/*
@@ -118,14 +122,14 @@ public class PayController {
 	@RequestMapping(value = "/canclePay.do")
 	public String canclePay() {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제취소문의 이동 canclePay @@@@@@@@@@@@@@@@@@@@@@");
-		return null;
+		return "writeAskBoard";
 	}
 	
 	@RequestMapping(value = "/canclePayInfo.do", method = RequestMethod.POST)
-	public String testCancelPaymentAlreadyCancelledImpUid() {
+	public String testCancelPaymentAlreadyCancelledImpUid(HttpSession session, String pay_seq) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제환불기능 testCancelPaymentAlreadyCancelledImpUid @@@@@@@@@@@@@@@@@@@@@@");
-		String seq = "78";
-		String imp_uid = service.findImpUID(Integer.parseInt(seq));
+		String seq = pay_seq;
+		String imp_uid = service.findImpUID(seq);
         String test_already_cancelled_imp_uid = imp_uid;
         CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소
         log.info("@@@@@@@@@@@@@환불완료.@@@@@@@@@@@@@@@ {}", cancel_data);

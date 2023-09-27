@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.bmss.mapper.IPayDao;
+import com.gd.bmss.vo.PayStatusVo;
 import com.gd.bmss.vo.PayVo;
 import com.gd.bmss.vo.UserVo;
 
@@ -58,9 +59,9 @@ public class PayServiceImpl implements IPayService {
 	}
 
 	@Override
-	public String getPayStatus(int sts) {
+	public String getPayStatus(int seq) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 결제상태조회 getPayStatus @@@@@@@@@@@@@@@@@@@");
-		return dao.getPayStatus(sts);
+		return dao.getPayStatus(seq);
 	}
 	
 	@Override
@@ -70,7 +71,7 @@ public class PayServiceImpl implements IPayService {
 	}
 	
 	@Override
-	public String findImpUID(int seq) {
+	public String findImpUID(String seq) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 아임포트고유아이디조회 findImpUID @@@@@@@@@@@@@@@@@@@");
 		return dao.findImpUID(seq);
 	}

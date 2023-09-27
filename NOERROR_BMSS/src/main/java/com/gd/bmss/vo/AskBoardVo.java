@@ -22,4 +22,7 @@ public class AskBoardVo {
 	private int user_id;
 	private String delflag;
 	
+	
+	private String user_name;
+	
 }
