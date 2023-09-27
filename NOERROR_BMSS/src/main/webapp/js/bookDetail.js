@@ -79,7 +79,7 @@ $(document).ready(function(){
 					}else{
 	
 						$.ajax({
-							url: "./borrowReserver.do",
+							url: "./borrowForReserver.do",
 							type: "post",
 							data: {title : title,
 									user_id : user_id,

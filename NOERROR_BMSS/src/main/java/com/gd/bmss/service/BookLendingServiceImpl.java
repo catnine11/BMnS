@@ -34,7 +34,6 @@ public class BookLendingServiceImpl implements IBookLendingService {
 		
 //		return false;
 		return dao.borrowReserver(map);
-		
 	}
 
 	@Override
@@ -65,16 +64,16 @@ public class BookLendingServiceImpl implements IBookLendingService {
 	}
 
 
-//	@Transactional(readOnly = true)
-//	@Override
-//	public boolean borrowForReserver(Map<String, Object> map) {
-//		log.info("")
-//	
-//	int n = dao.borrowReserver();
-//	int m = dao.deleteReserveAfterBorrow();
-//		
-//		return null;
-//	}
+	@Transactional(readOnly = true)
+	@Override
+	public int borrowForReserver(BorrowVo brw, int book_seq) {
+		log.info("@@@@@@@@@@@@BookLendingServiceImpl 예약자의 대출신청 및 예약취소 {} {}", brw, book_seq);
+	
+	int n = dao.insertBorrow(brw);
+	int m = dao.deleteReserveAfterBorrow(book_seq);
+		
+		return (m>0||n>0)?1:0;
+	}
 
 
 

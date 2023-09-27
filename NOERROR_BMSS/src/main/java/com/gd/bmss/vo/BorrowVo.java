@@ -36,5 +36,6 @@ public class BorrowVo {
 	private String book_seq;
 	
 	private String penalty_date;
+	private int over_return;
 
 }
