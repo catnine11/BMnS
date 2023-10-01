@@ -21,25 +21,27 @@ text-align: center;
 
 
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-<form action="./delOrder.do" method="post">
 <div id="container">
-<table>
+<table class="table table-sm">
+<thead>
 <tr>
-<td><input type="checkbox" name="allCheck"></td>
-<td>주문번호</td>
-<td>아이디</td>
-<td>재고번호</td>
-<td>수량</td>
-<td>가격</td>
-<td>결제상태</td>
-<td>주소</td>
-<td>주문날짜</td>
+<th scope="col">주문번호</th>
+<th scope="col">아이디</th>
+<th scope="col">재고번호</th>
+<th scope="col">수량</th>
+<th scope="col">가격</th>
+<th scope="col">결제상태</th>
+<th scope="col">주소</th>
+<th scope="col">주문날짜</th>
 </tr>
+</thead>
+<tbody>
 <c:forEach var="o" items="${oderList}">
 <tr>
-<td><input class="delBox" type="checkbox" name="delCheck" value="${o.stock_number}"></td>
 <td>${o.order_seq}</td>
 <td><a class="detailWindow" href="#" onclick="dtWindow(${o.user_id});return false;" >${o.user_id}</a></td>
 <td class="stNum">${o.stock_number}</td>
@@ -50,11 +52,11 @@ text-align: center;
 <td>${o.order_date}</td>
 </tr>
 </c:forEach>
-<tr><td><input id="delBtn" type="button" value="삭제"></td></tr>
+</tbody>
 </table>
 </div>
-</form>
 <script type="text/javascript" src="./js/order.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <%@include file="footer.jsp"%>
 </html>

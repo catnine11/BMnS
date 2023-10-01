@@ -1,7 +1,7 @@
 //검색 버튼 터치를 통한 도서검색
 $(document).ready(function(){
 	
-	$("button").on("click",function(){
+	$("#srcBtn").on("click",function(){
 //		var searchOption= $(this).closest("div").find('option:selected').val()
 		var inputVal=$(this).closest("div").find("#booksearch").val();
 //		
@@ -64,6 +64,78 @@ $(document).ready(function () {
     }
   });
 });
+
+
+
+
+
+
+
+//도서 등록 
+$(document).ready(function(){
+    $("#enrollBtn").on("click",function(){
+        $.ajax({
+            method: "GET",
+            url: "https://dapi.kakao.com/v3/search/book",
+            data: { query: $("#enroll").val() },
+            headers: { "Authorization": "KakaoAK deebb5b9fe3604c7cbb30baeb31b856e" },
+            success: function(res) {
+               fn_aa(res);
+            }
+        });
+    });
+});
+function fn_aa(res){
+	for(let i=0; i<res.documents.length; i++){
+		
+	var isbn =res.documents[i].isbn;
+	var title = res.documents[i].title;
+	var author = res.documents[i].authors
+	var price=res.documents[i].price
+	var	publisher=res.documents[i].publisher
+	var thumbnail=res.documents[i].thumbnail
+	var	publish_date=res.documents[i].datetime.substring(0,10)
+	
+	console.log(publish_date);
+	
+	$.ajax({
+    	   method: "post",
+           url: "./save.do",
+           data: {isbn:isbn,title:title ,author:author,price:price,publisher:publisher,thumbnail:thumbnail,publish_date:publish_date},
+    	success:function(rep){
+    		console.log(rep);
+    	}
+    	
+    })
+	}
+
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // $(document).ready(function(){
 //        $(".search_input").keypress(function(event){
 //                var inputVal = $(this).val();

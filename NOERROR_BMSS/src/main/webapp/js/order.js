@@ -1,9 +1,10 @@
 //전체 체크박스 함수
 $(document).ready(function(){
 	$("input[name='allCheck']").click(function(){
-		
+		//is:checked는 체크가 된것이아닌 체크 된것을 확인하는것 
 		var ischecked=$(this).is(":checked");
 		console.log(ischecked);
+		//'delCheck'인 모든 체크박스의 상태를 클릭된 체크박스의 상태로 설정합니다.
 			$("input[name='delCheck']").prop("checked",ischecked);
 	
 		})
@@ -117,10 +118,29 @@ $(document).ready(function(){
 	type:"post",
 	url:"./addOrder.do",
 	data:{"chkArray":chkArray},
-	success:function(){
+	success:function(result){
+		console.log(chkArray.length);
+		console.log(result);
+		if(result==chkArray.length){
+		alert("주문대기 목록에 등록되었습니다.")	
+			
+		}else if(result!=chkArray.length && result!=0 && result!=-2) {
+			
+		alert("중복된 주문을 제외하고 등록되었습니다.")	
+			
+		}else if(result==0){
+			
+			alert("모든 상품이 이미 주문목록에 존재합니다.")	
+		}else if(result==-2){
+		alert('최소 하나의 도서를 선택해 주세요');	
+			
+		}
+		
 		
 	},
 	error:function(){
+		alert("로그인을 진행해 주세요");
+		window.location.href='./login.do';
 	}
 	
 })

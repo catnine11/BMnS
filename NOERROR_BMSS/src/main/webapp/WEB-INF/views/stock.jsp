@@ -31,22 +31,21 @@ table {
 
 
 
-	<div class="container text-center">
-		<h3>What We Do</h3>
-		<br>
+	<div class="container text-center" class="table table-bordered">
 		<div class="row">
 			<div class="col-sm-6">
 
-				<div>목록</div>
+				<h1>재고</h1>
 
 				<div>
 					<form>
-						<table id="container">
+						<table id="container" class="table table-bordered">
+						<thead>
 							<tr id="stocklist">
-
-								<td>도서명</td>
-								<td>도서상태</td>
+								<th>도서명</th>
 							</tr>
+							</thead>
+							<tbody>
 							<c:forEach var="a" items="${list}">
 								<tr>
 									<td class="detailTD"><input type="hidden"class="booksDetail" name="booksDetail" value="${a.book_code}">
@@ -55,13 +54,13 @@ table {
 									<td><input type="hidden" class="statCode" value="${status_code}"></td>
 								</tr>
 							</c:forEach>
-							<tr>
-							</tr>
+							</tbody>
 						</table>
 					</form>
 				</div>
-
 			</div>
+
+
 
 
 
