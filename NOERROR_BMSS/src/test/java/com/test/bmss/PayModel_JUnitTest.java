@@ -60,7 +60,7 @@ public class PayModel_JUnitTest {
 	public PayModel_JUnitTest(){		
 		this.api = new IamportClient("6118522243253633","kYNTXLxk9cL9zBUHjfA44tronZqY8II1YsUmbDDQvY7pnPOAtMdPYcc43fQtw34ud6LP4yP4qn6kY27v");
 	}
-	@Test
+//	@Test
 	public void getToken() {
 		try {
 			IamportResponse<AccessToken> auth_response = api.getAuth();

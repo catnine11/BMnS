@@ -63,7 +63,7 @@
 </head>
 <%@include file="header.jsp" %>
 <body>
-<%-- ${detail} --%>
+${detail}
 <%-- ${sessionScope.loginVo} --%>
 <input type="hidden" name="loginVo" value="${sessionScope.loginVo}">
 <input type="hidden" name="user_auth" class="user_auth" value="${sessionScope.loginVo.user_auth}">
