@@ -94,7 +94,7 @@ public class BookModel_JUnitTest {
 		assertEquals(2, n);
 	}
 	
-//	@Test
+	@Test
 	public void updateBookTest() {
 		BookInfoVo info = new BookInfoVo();
 		info.setContent("목차");
@@ -148,10 +148,6 @@ public class BookModel_JUnitTest {
 //		assertEquals(2, n);
 //	}
 	
-//	@Test
-	public void borrowForReserver() {
-		
-	}
 	
 //	@Test
 	public void getAllBorrowNow() {
@@ -266,7 +262,7 @@ public class BookModel_JUnitTest {
 		assertEquals(1, n);
 	}
 	
-	@Test
+//	@Test
 	public void borrowcondition() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", "2");
@@ -275,6 +271,31 @@ public class BookModel_JUnitTest {
 		System.out.println(map);
 	}
 	
+//	@Test
+	public void borrowForReserver() {
+		BorrowVo vo = new BorrowVo();
+		String start_date = "2023-09-26";
+		String return_date = "2023-10-10";
+		
+//		String start_date = "2023-09-13";
+//		String return_date = "2023-09-15";
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		Date start =  sdf.parse(start_date);
+//		Date returnD =  sdf.parse(return_date);
+		
+		vo.setBorrow_title("구멍");
+		vo.setStart_date(start_date);
+		vo.setReturn_date(return_date);
+		vo.setUser_id("4");
+		vo.setBook_seq("26");
+		
+		int seq = 26;
+		
+		int n = service.borrowForReserver(vo, seq);
+		assertEquals(1, n);
+		
+		
+	}
 	
 
 }

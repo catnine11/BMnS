@@ -131,14 +131,22 @@
 								<strong>추가정보</strong>
 							</li>
 							<c:choose>
-							<c:when test="${empty detail.content || empty detail.intro || empty detail.review || empty detail.authorinfo}">
+							<c:when test="${empty detail.content && empty detail.intro && empty detail.review && empty detail.authorinfo}">
 								<li>등록된 정보가 없습니다.</li>
 							</c:when>
  							<c:otherwise>
-								<li>${detail.content}</li>
-								<li>${detail.intro}</li>
-								<li>${detail.review}</li>
-								<li>${detail.authorinfo}</li>
+								<li><div>
+									<strong>목차</strong>
+								&nbsp;&nbsp; ${detail.content}</div></li>
+								<li><div>
+									<strong>책 소개</strong>
+								&nbsp;&nbsp; ${detail.intro}</div></li>
+								<li><div>
+									<strong>서평</strong>
+								&nbsp;&nbsp; ${detail.review}</div></li>
+								<li><div>
+									<strong>저자소개</strong>
+								&nbsp;&nbsp; ${detail.authorinfo}</div></li>
 								</c:otherwise>
 							</c:choose>
 						</ul>

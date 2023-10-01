@@ -59,7 +59,8 @@
 					String formattedCurrentDate = sdf.format(currentDate);
 					pageContext.setAttribute("currentDate", formattedCurrentDate);
 					System.out.println("현재시간"+currentDate);
-				%>
+					System.out.println("현재날짜"+formattedCurrentDate);
+ 				%> 
 				
 				<c:forEach var="lists" items="${lists}"  varStatus="vs">
 					<tr>
@@ -72,7 +73,7 @@
 						<td style="width: 10%" class="text-center">${lists.user_joindate}</td>
 						<td style="width: 10%" class="text-center">
 							<c:if test="${lists.penalty_date>currentDate}">
-								${lists.penalty_date}
+								<span style="color: red;">${lists.penalty_date}</span> 
 							</c:if>
 						</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
@@ -89,6 +90,8 @@
 		<p class="text-center">
 
 <script type="text/javascript" src="./js/search.js"></script>
+
+
 			<a class="text-reset" href="/boardChat?requestedPage="></a>&nbsp;&nbsp;
 
 		</p>

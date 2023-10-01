@@ -1,5 +1,6 @@
 package com.gd.bmss.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gd.bmss.vo.AskBoardVo;
+import com.gd.bmss.vo.UserVo;
 
 @Repository
 public class BoardDaoImpl implements IBoardDao {
@@ -33,5 +35,14 @@ public class BoardDaoImpl implements IBoardDao {
 	public int updateAskBoard(AskBoardVo vo) {
 		return sql.update("com.gd.bmss.mapper.BoardDaoImpl.updateAskBoard",vo);
 	}
+	
+	@Override
+	public int updatePayStatus(String seq) {
+		return sql.update("com.gd.bmss.mapper.BoardDaoImpl.updatePayStatus",seq);
+	}
 
+	@Override
+	public List<AskBoardVo> askBoardList() {
+		return sql.selectList("com.gd.bmss.mapper.BoardDaoImpl.askBoardList");
+	}
 }

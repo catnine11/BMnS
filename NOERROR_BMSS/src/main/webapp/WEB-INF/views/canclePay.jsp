@@ -14,8 +14,7 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
-	<input type="button" onclick="location.href='./writeAsk.do'" value="글쓰기">
-	<input type="button" value="결제취소승인" onclick="cancle()">
+	
 
 </body>
 <%@include file="footer.jsp"%>

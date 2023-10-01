@@ -1,7 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gd.bmss.mapper.BoardDaoImpl">
+<resultMap type="BInfoVo" id="bInfoMap">
+	<result column="BOOK_CODE" property="book_code"/>
+	<result column="ISBN" property="isbn"/>
+	<result column="TITLE" property="title"/>
+	<result column="AUTHOR" property="author"/>
+	<result column="GENRE_CODE" property="genre_code"/>
+	<result column="GENRE_NAME" property="genre_name"/>
+	<result column="PUBLISHER" property="publisher"/>
+	<result column="PUBLISH_DATE" property="publish_date"/>
+	<result column="THUMBNAIL" property="thumbnail"/>
+	<result column="CONTENT" property="content"/>
+	<result column="INTRO" property="intro"/>
+	<result column="REVIEW" property="review"/>
+	<result column="AUTHORINFO" property="authorinfo"/>
+	<collection property="bsVo" resultMap="bStatusMap"/>
+</resultMap>
 
+<resultMap type="BStatusVo" id="bStatusMap">
+	<result column="STATUS_CODE" property="status_code"/>
+	<result column="BOOK_SEQ" property="book_seq"/>
+	<result column="BORROW_SEQ" property="borrow_seq"/>
+	<result column="BORROW_TITLE" property="borrow_title"/>
+	<result column="START_DATE" property="start_date"/>
+	<result column="RETURN_DATE" property="return_date"/>
+	<result column="RENEW" property="renew"/>
+	<result column="BORROW_STATUS" property="borrow_status"/>
+	<result column="RESERVE_SEQ" property="reserve_seq"/>
+	<result column="RESERVE_TITLE" property="reserve_title"/>
+	<result column="RESERVE_DATE" property="reserve_date"/>
+	<result column="RESERVE_STATUS" property="reserve_status"/>
+	<result column="USER_ID" property="user_id"/>
+</resultMap>
+
+<resultMap type="BorrowVo" id="borrowMap">
+	<result column="BORROW_SEQ" property="borrow_seq"/>
+	<result column="BORROW_TITLE" property="borrow_title"/>
+	<result column="START_DATE" property="start_date"/>
+	<result column="RETURN_DATE" property="return_date"/>
+	<result column="RENEW" property="renew"/>
+	<result column="BORROW_STATUS" property="borrow_status"/>
+	<result column="USER_ID" property="user_id"/>
+	<result column="BOOK_SEQ" property="book_seq"/>
+</resultMap>
+
+<resultMap type="ReserveVo" id="reserveMap">
+	<result column="RESERVE_SEQ" property="reserve_seq"/>
+	<result column="RESERVE_TITLE" property="reserve_title"/>
+	<result column="RESERVE_DATE" property="reserve_date"/>
+	<result column="RESERVE_STATUS" property="reserve_status"/>
+	<result column="USER_ID" property="user_id"/>
+	<result column="BOOK_SEQ" property="book_seq"/>
+</resultMap>
+
+<resultMap type="PayVo" id="PayVoMap">
+	<result property="pay_seq" column="PAY_SEQ"/>
+	<result property="pay_money" column="PAY_MONEY"/>
+	<result property="pay_time" column="PAY_TIME"/>
+	<result property="pay_method" column="PAY_METHOD"/>
+	<result property="pay_status" column="PAY_STATUS"/>
+</resultMap>
+
+<resultMap type="OrderVo" id="OrderVoMap">
+	<result property="order_seq" column="ORDER_SEQ"/>
+	<result property="stock_number" column="STOCK_NUMBER"/>
+	<result property="order_quantity" column="ORDER_QUANTITY"/>
+	<result property="order_price" column="ORDER_PRICE"/>
+	<result property="order_date" column="ORDER_DATE"/>
+	<result property="pay_status" column="PAY_STATUS"/>
+	<result property="user_id" column="USER_ID"/>
+	<result property="user_address" column="USER_ADDRESS"/>
+	<result property="status_title" column="STATUS_TITLE"/>
+	<result property="thumbnail" column="THUMBNAIL"/>
+	<result property="genre_code" column="GENRE_CODE"/>
+	<result property="author" column="AUTHOR"/>
+</resultMap>
+
+<resultMap type="PayStatusVo" id="PayStatusVoMap">
+	<result property="pay_status" column="PAY_STATUS"/>
+	<result property="pay_title" column="PAY_TITLE"/>
+	<collection property="payVo" resultMap="PayVoMap"/>
+	<collection property="orderVo" resultMap="OrderVoMap"/>
+</resultMap>
+
+<resultMap type="UserVo" id="UserVoMap">
+	<result property="user_id" column="USER_ID"/>
+	<result property="user_name" column="USER_NAME"/>
+	<result property="user_email" column="USER_EMAIL"/>
+	<result property="user_phone" column="USER_PHONE"/>
+	<result property="gubun" column="GUBUN"/>
+	<collection property="borwVo" resultMap="borrowMap"/>
+	<collection property="resvVo" resultMap="reserveMap"/>
+	<collection property="orderVo" resultMap="OrderVoMap"/>
+	<collection property="payVo" resultMap="PayVoMap"></collection>
+</resultMap>
 <!-- 게시글작성 -->
 <insert id="insertAskBoard">
 <selectKey keyProperty="ask_seq" resultType="java.lang.Integer" order="BEFORE">
@@ -11,6 +104,13 @@
 		(ASK_SEQ, ASK_TITLE, ASK_CONTENTS, ASK_REGDATE, USER_ID, DELFLAG,USER_NAME)
 	VALUES(#{ask_seq}, #{ask_title}, #{ask_contents}, SYSDATE , #{user_id}, 'N' ,(SELECT USER_NAME FROM BOOK_USERINFO bu WHERE bu.USER_ID=#{user_name}))
 </insert>
+
+<!-- 작성완료시 결제상태변경 -->
+<update id="updatePayStatus">
+	UPDATE BOOK_PAY
+	SET PAY_STATUS = 4
+	WHERE PAY_SEQ = #{pay_seq}
+</update>
 
 <!-- seq맥스값조회 -->
 <select id="getSeq" resultType="java.lang.Integer">
@@ -30,4 +130,22 @@
 			SET ASK_TITLE = #{ask_title} , ASK_CONTENTS=#{ask_contents}
 			WHERE ASK_SEQ = #{ask_seq}
 	</update>
+	
+	<!-- 문의게시판리스트 -->
+	<select id="askBoardList" resultType="AskBoardVo">
+	SELECT ab.ASK_SEQ ,ab.ASK_TITLE ,ab.ASK_CONTENTS, ab.ASK_REGDATE ,ab.DELFLAG ,ab.USER_ID ,ab.USER_NAME,bu.USER_ID,bu.USER_NAME,bu.USER_email 
+		FROM ASK_BOARD ab
+		JOIN BOOK_USERINFO bu
+		ON ab.USER_ID = bu.USER_ID  
+	WHERE ab.DELFLAG = 'N'
+	</select>
+
+	<!-- 내가 쓴 문의게시판리스트 -->
+	<select id="myAskBoardList" resultType="AskBoardVo">
+	SELECT ab.ASK_SEQ ,ab.ASK_TITLE ,ab.ASK_CONTENTS, ab.ASK_REGDATE ,ab.DELFLAG ,ab.USER_ID ,ab.USER_NAME,bu.USER_ID,bu.USER_NAME,bu.USER_email 
+		FROM ASK_BOARD ab
+		JOIN BOOK_USERINFO bu
+		ON ab.USER_ID = bu.USER_ID  
+	WHERE bu.USER_ID = #{user_id} AND ab.DELFLAG = 'N'
+	</select>
 </mapper>

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.gd.bmss.vo.PayStatusVo;
 import com.gd.bmss.vo.PayVo;
 import com.gd.bmss.vo.UserVo;
 
@@ -52,8 +53,8 @@ public class PayDaoImpl implements IPayDao {
 	}
 
 	@Override
-	public String getPayStatus(int sts) {
-		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.getPayStatus",sts);
+	public String getPayStatus(int seq) {
+		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.getPayStatus",seq);
 	}
 	
 	@Override
@@ -62,7 +63,7 @@ public class PayDaoImpl implements IPayDao {
 	}
 	
 	@Override
-	public String findImpUID(int seq) {
+	public String findImpUID(String seq) {
 		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.findImpUID",seq);
 	}
 }

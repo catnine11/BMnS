@@ -123,16 +123,16 @@
 	UPDATE BOOK_PAY
 	 <set>
         <if test="pay_status == 1">
-            PAY_STATUS = 2,
+          SET  PAY_STATUS = 2,
         </if>
         <if test="pay_status == 2">
-            PAY_STATUS = 3,
+          SET  PAY_STATUS = 3,
         </if>
         <if test="pay_status == 3">
-            PAY_STATUS =4,
+          SET  PAY_STATUS =4,
         </if>
         <if test="pay_status == 4">
-            PAY_STATUS = 5
+           SET PAY_STATUS = 5
         </if>
       </set>
 	WHERE PAY_SEQ =#{pay_seq}
@@ -177,9 +177,10 @@ ORDER BY PAY_SEQ DESC
 
 <!-- 결제상태 조회 -->
 <select id="getPayStatus" resultType="java.lang.String">
-	SELECT PAY_TITLE
-		FROM BOOK_PAYSTATUS
-	WHERE PAY_STATUS = #{pay_status}
+	SELECT bp.PAY_TITLE
+	FROM BOOK_PAYSTATUS bp 
+	JOIN BOOK_PAY bp2 ON bp.PAY_STATUS = bp2.PAY_STATUS 
+	WHERE bp2.PAY_SEQ = #{pay_seq}
 </select>
 
 <!-- 결제상세조회 -->

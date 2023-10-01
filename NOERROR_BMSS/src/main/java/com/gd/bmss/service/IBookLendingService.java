@@ -32,8 +32,9 @@ public interface IBookLendingService {
 	
 		
 	//예약자의 대출신청(트랜잭션 걸 것)
-//	연체회원>예약자대출신청조건>대출가능잔여권수판단>대출신청>예약취소
-//	public boolean borrowForReserver(Map<String, Object> map);
+	public int borrowForReserver(BorrowVo brw, int book_seq);
+
+	//	연체회원>예약자대출신청조건>대출가능잔여권수판단>대출신청>예약취소
 	public Book_StatusVo borrowReserver(Map<String, Object> map);
 	
 	//관리자의 전체회원 대출현황 조회

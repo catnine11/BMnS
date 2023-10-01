@@ -21,4 +21,6 @@ public class PayVo {
 	private int pay_status;
 	private String pay_time;
 	
+	private String pay_title;
+	
 }

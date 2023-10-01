@@ -31,7 +31,7 @@ body {
 			<a href="./bookListUser.do">신착도서 안내</a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a href="./askBoardList.do">문의게시판</a>
 		</div>
 		<div>
 			<a>아 귀찮다</a>

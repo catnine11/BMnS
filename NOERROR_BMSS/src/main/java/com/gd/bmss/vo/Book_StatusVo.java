@@ -30,8 +30,8 @@ public class Book_StatusVo {
 	private String status_title;
 	private String book_code;
 
-//	private BorrowVo borwVo;
-//	private ReserveVo resvVo;
+	private BorrowVo borwVo;
+	private ReserveVo resvVo;
 
 	private String borrow_seq;
 	private String borrow_title;
@@ -48,6 +48,6 @@ public class Book_StatusVo {
 //	private Date reserve_date  ;
 	private String reserve_date;
 	private String reserve_status;
-	private List<BorrowVo> brwVo;
+	private String reserve_user_id;
 	
 }

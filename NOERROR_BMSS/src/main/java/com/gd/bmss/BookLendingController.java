@@ -110,18 +110,19 @@ public class BookLendingController {
 	 * 관리자의 특정회원 대출현황조회 getOneBorrowNow
 	 */
 	@GetMapping(value = "/borrowOneUserNow.do")
-//	public String BorrowOneUserNow(Model model, int user_id) {
-	public Map<String, Object> BorrowOneUserNow(Model model, int user_id) {
+	public String BorrowOneUserNow(Model model, int user_id) {
+//	public Map<String, Object> BorrowOneUserNow(Model model, int user_id) {
 		log.info("@@@@@@@@@@ BookLendingController 관리자의 특정회원 대출현황 조회");
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
+		String userId = Integer.toString(user_id);
+		Map<String, Object> condition = service.borrowCondition(userId);
+		model.addAttribute("condition", condition);
 		
 		List<BorrowVo> borrowList = service.getOneBorrowNow(user_id);
 		model.addAttribute("borrowOneNow", borrowList);
 		
-		return map;
-//		return "borrowUserList";
+//		return map;
+		return "borrowUserList";
 	}
 	
 	/*
@@ -207,18 +208,14 @@ public class BookLendingController {
 	/*
 	 * 예약자의 대출신청 및 예약취소 borrowForReserver
 	 */
-	@PostMapping(value = "/borrowReserver.do")
+	@PostMapping(value = "/borrowForReserver.do")
 	@ResponseBody
-	public Map<String, Object> borrowReserver(Model model, String title, String user_id, String book_seq, HttpServletResponse resp){
+	public Map<String, Object> borrowForReserver(Model model, String title, String user_id, String book_seq, HttpServletResponse resp){
 		log.info("@@@@@@@@@@ BookLendingController 예약회원의 대출신청");
-		
-//		Map<String, Object> map =service.borrowCondition(user_id);
-//		System.out.println(map);
-////		String overdue = (String) map.get("OVERDUE");
-//		String overdue = (String) map.get("overdue");
-//		System.out.println(overdue);
+		log.info("@@@@@@@@@@ 예약회원의 대출신청 parameter user_id{} book_seq{}",user_id, book_seq);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		int seq = Integer.parseInt(book_seq);
 		
 		BorrowVo borrow = new BorrowVo();
 		borrow.setBorrow_title(title);
@@ -236,7 +233,7 @@ public class BookLendingController {
 			if(m>=4) {
 				map.put("msg","1");
 			}else{
-				int n = service.insertBorrow(borrow);
+				int n = service.borrowForReserver(borrow, seq);
 				map.put("msg","2");
 			}
 		
@@ -287,7 +284,15 @@ public class BookLendingController {
 	/*
 	 * 관리자의 전체회원 예약현황조회 getAllReserveNow
 	 */
-	
+	@GetMapping(value = "/getAllReserveNow.do")
+	public String getAllReserveNow(Model model) {
+		log.info("@@@@@@@@@@ BookLendingController 회원의 예약현황 조회");
+
+		List<ReserveVo> reserveList =service.getAllReserveNow();
+		model.addAttribute("reserveList", reserveList);
+		
+		return "borrowUserList";
+	}
 	
 	/*
 	 * 회원의 예약현황조회 myReserveNow
