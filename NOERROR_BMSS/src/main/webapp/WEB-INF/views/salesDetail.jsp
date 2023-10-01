@@ -35,10 +35,10 @@ margin-bottom: 20px;
 
 }
 
-#addOrder,#purchase{
-position: relative; 
-top:400px;
-}
+#addOrder,#purchase{ 
+ position: relative;  
+ top:350px; 
+ } 
 
 .stNum{
 position:relative;
@@ -48,11 +48,17 @@ height:20px;
 }
 
 </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>판매 상세</title>
 </head>
 <%@include file="header.jsp"%>
+
 <body>
-${salesDetail}
+
+
+
+
+<a href="javascript:history.back(-1);">뒤로가기</a>
 <!-- 저자 출판사 출판연돈 isbn  -->
 		<c:set var="sd" value="${salesDetail}"></c:set>
 	<div id="container">
@@ -61,9 +67,10 @@ ${salesDetail}
 		<div>
 					 <div class="background-cover" style="background-image: url('${sd[0].thumbnail}');" data-alt="${sd[0].title}"></div>	
 				
-				<div><input name="order" id="addOrder" type="button" value="주문목록에 담기" > </div> 
-				<div><input name="pay" id="purchase" type="button" value="바로구매" ></div>
-						
+	<div class="d-flex">
+    <input name="order" class="btn btn-primary" id="addOrder" type="button" value="주문목록에 담기">
+    <input name="pay" class="btn btn-success" id="purchase" type="button" value="바로구매">
+	</div>
 						
 		<ul>
 		<li class="auth">저자:${sd[0].author}</li>
@@ -115,7 +122,7 @@ $(document).ready(function(){
 		var price = new Array();//선택된 가격
 		
 		$(".bookChk:checked").each(function(){
-			purchaseChk.push($(this));
+			purchaseChk.push($(this).val());
 		})
 	
 		$(".price").each(function(){
@@ -128,9 +135,8 @@ $(document).ready(function(){
 // 				var array_element = array[i];
 				
 // 			}
-			console.log(purchaseChk.length);
-		
-		
+// 			console.log(purchaseChk.length);
+			console.log(purchaseChk);
 		
 // 	console.log(purchaseChk);
 	})
@@ -238,16 +244,10 @@ IMP.init("imp46250334");
 })
 })
 
-
-
-
 </script>
 
 
-
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <%@include file="footer.jsp"%>
 </html>

@@ -28,5 +28,14 @@ FROM BOOK_USERINFO
 WHERE LOWER(USER_EMAIL) LIKE '%' || #{user_email} || '%' 
 </select>
 
+<insert id="saveBook" parameterType="com.gd.bmss.vo.BookDto">
+INSERT INTO BOOKINFO
+(BOOK_CODE, ISBN,TITLE,
+AUTHOR,GENRE_CODE,PUBLISHER,
+PRICE,PUBLISH_DATE,THUMBNAIL)
+VALUES(BOOK_CODE.NEXTVAL, #{isbn}, #{title}
+,#{author},400,#{publisher},
+#{price},#{publish_date},#{thumbnail})
+</insert>
 
 </mapper>

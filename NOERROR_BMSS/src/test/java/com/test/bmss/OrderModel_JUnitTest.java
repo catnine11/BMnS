@@ -265,7 +265,13 @@ public void getSalesDetail() {
 	
 }
 	
+	@Test
+public void bookSave() {
+		
+	List<BookInfoVo>list	=sdao.saveBook();
 
+	
+}
 	
 	
 }
