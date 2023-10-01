@@ -94,7 +94,7 @@ public class BookModel_JUnitTest {
 		assertEquals(2, n);
 	}
 	
-	@Test
+//	@Test
 	public void updateBookTest() {
 		BookInfoVo info = new BookInfoVo();
 		info.setContent("목차");

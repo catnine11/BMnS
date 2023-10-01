@@ -36,7 +36,7 @@
 특정회원 대출내역조회 /borrowOneUserHistory.do
 전체회원 예약현황조회 /reserveAllUser.do
  -->
-${sessionScope.loginVo}
+<%-- ${sessionScope.loginVo} --%>
 <br>
 <%-- <input type="hidden" name="penalty_date" class="penalty_date" value="${sessionScope.loginVo.penalty_date}"> --%>
 

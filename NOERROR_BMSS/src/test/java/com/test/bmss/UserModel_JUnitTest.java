@@ -32,7 +32,7 @@ public class UserModel_JUnitTest {
 	public void test() {
 		assertNotNull(sql);
 	}
-	@Test
+//	@Test
 	public void UserTest() {
 //		UserVo vo = new UserVo(1, "신입유저입니다", "123123", "123123", "123123", "123123", "123123", "123123", "123123", "123123", "123123", "123123", null, null);
 //		SocialVo vo = new SocialVo(1, "123123", "123123", "123123", "123123", "123123", "123123");

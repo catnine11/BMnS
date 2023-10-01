@@ -132,7 +132,7 @@ margin-bottom: 20px;
 					<li class="nav-menu"><a id="imgMenu" class="menu" href="/NOERROR_BMSS" ><img class="logo" src="./img/BMSS아이콘.png"></a><a id="imenu" class="menu" href="/NOERROR_BMSS" >NOERROR 책check</a></li>
 
 					<li><a class="navtab" id="navdrop" href="#">자료검색</a></li>
-					<li><a class="navtab" id="navdrop" href="#">이용안내</a></li>
+					<li><a class="navtab" id="navdrop" href="./bookListUser.do">신착도서</a></li>
 					<li><a class="navtab" id="navdrop" href="./getSellableStock.do">판매도서목록</a></li>
 					<li><a class="navtab" id="navdrop" href="#">도서관소개</a></li>
 					<li></li>

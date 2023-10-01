@@ -78,8 +78,8 @@
 						</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
 						<td style="width: 3%" class="text-center">
-						<input	type="button" value="대출정보" onclick="location.href='#'"> 
-						<input	type="button" value="예약정보" onclick="location.href='#'"> 
+						<input	type="button" value="대출정보" onclick="location.href='./borrowOneUserNow.do?user_id=${lists.user_id}'"> 
+						<input	type="button" value="예약정보" onclick="location.href='./getAllReserveNow.do'"> 
 						<input	type="button" value="결제정보" onclick="location.href='#'"></td>
 					</tr>
 				</c:forEach>
