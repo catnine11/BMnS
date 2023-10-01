@@ -257,7 +257,7 @@ List<StockVo> list	=dao.booksDetail("7");
 		assertNotNull(list);
 		
 	}
-	@Test
+//	@Test
 public void getSalesDetail() {
 	List<BookInfoVo>list	=dao.getSalesDetail("7");
 
@@ -265,7 +265,13 @@ public void getSalesDetail() {
 	
 }
 	
+	@Test
+public void bookSave() {
+		
+	List<BookInfoVo>list	=sdao.saveBook();
 
+	
+}
 	
 	
 }

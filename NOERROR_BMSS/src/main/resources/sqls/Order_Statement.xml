@@ -10,14 +10,7 @@ SELECT BOOK_PRICE AS ORDER_PRICE FROM BOOK_STOCK WHERE STOCK_NUMBER =#{stock_num
 </selectKey>
 INSERT INTO BOOK_ORDER
 (ORDER_SEQ, STOCK_NUMBER, ORDER_QUANTITY, ORDER_PRICE, ORDER_DATE, PAY_STATUS, USER_ID)
-VALUES(ORDER_SEQ.NEXTVAL, #{stock_number}, 1, #{order_price}, (CURRENT_DATE), 
-<choose>
-<when test="pay_status!=null">
-#{pay_status}
-</when>
-<otherwise>'1'</otherwise>
-</choose>,
-#{user_id})
+VALUES(ORDER_SEQ.NEXTVAL, #{stock_number}, 1, #{order_price}, (CURRENT_DATE),1, #{user_id})
 </insert>
 
 <select id="getAllOrder" resultType="OrderVo">

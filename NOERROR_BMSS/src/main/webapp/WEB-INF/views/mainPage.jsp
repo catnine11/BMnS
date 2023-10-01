@@ -59,7 +59,7 @@ body {
 					<option class="searchOption" value="ISBN">ISBN</option>
 				</select> 
 				<input id="booksearch"   type="text" name="inputVal">
-				<button type="button">검색</button>
+				<button id="srcBtn" type="button">검색</button>
 			</form>
 		</div>
 		<div>
@@ -100,9 +100,10 @@ body {
 			<li>고민중</li>
 		</ul>
 	</div>
-
+	<input id="enroll" type="text">
+	<input id="enrollBtn" type="button" value="책등록" >
 	<script type="text/javascript" src="./js/search.js"></script>
-
+	
 </body>
 
 <%@include file="footer.jsp" %>

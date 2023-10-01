@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.gd.bmss.vo.BookDto;
 import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.UserVo;
 
@@ -26,5 +27,13 @@ public class SearchDaoImpl implements ISearchDao {
 			List<UserVo> list=	sql.selectList(NS+"searchUser",map);
 		return list;
 	}
+	@Override
+	public boolean saveBook(BookDto dto) {
+	int n=	sql.insert(NS+"saveBook",dto);
+		
+		
+		return n>0?true:false;
+	}
+	
 
 }

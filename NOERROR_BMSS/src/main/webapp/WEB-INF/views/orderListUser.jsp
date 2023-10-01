@@ -17,29 +17,42 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
     width: 100px; /* 원하는 너비 조절 */
     height: 100px; /* 원하는 높이 조절 */
 }
+
+.d-flex{
+margin:20px auto;
+justify-content: center;
+gap:50px;
+}
 </style>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
 <title>주문내역</title>
 </head>
 
 <%@include file="header.jsp"%>
 
 <body>
-<form action="./delOrder.do" method="post">
+
+
+
 <div id="container">
-<table>
-<tr>
-<td><input type="checkbox" name="allCheck"></td>
-<td>썸네일</td>
-<td>도서명</td>
-<td>저자</td>
-<!-- <td>주소</td> -->
-<td>수량</td>
-<td>가격</td>
-<td>결제상태<td>
-</tr>
+<table class="table">
+<thead>
+            <tr>
+                <th scope="col"><input type="checkbox" name="allCheck"></th>
+                <th scope="col">썸네일</th>
+                <th scope="col">도서명</th>
+                <th scope="col">저자</th>
+                <th scope="col">수량</th>
+                <th scope="col">가격</th>
+                <th scope="col">결제상태</th>
+            </tr>
+</thead>
+<tbody>
 <c:forEach var="ordU" items="${orderListUser}">
 <tr>
 <td><input class="delBox" type="checkbox" name="delCheck" value="${ordU.stock_number}"></td>
@@ -70,14 +83,13 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
 </c:choose>
 </tr>
 </c:forEach>
-<tr>
-<td><input id="delUBtn" type="button" value="삭제"></td>
-</tr>
+</tbody>
 </table>
 </div>
-</form>
-<button id="payBtn" onclick="requestPay()">결제하기</button>
-
+<div class="d-flex">
+    <input name="order" class="btn btn-primary"  id="delUBtn" type="button" value="주문목록 삭제">
+	<button id="payBtn" class="btn btn-success" onclick="requestPay()" >결제하기</button>
+	</div>
 <%		int totalPrice=0;
 		int totalCount=0;
 for(int i=0; i<odu.size();i++) {
@@ -187,11 +199,9 @@ IMP.init("imp46250334");
 // }
 })
 })
-
-
-
-
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <%@include file="footer.jsp" %>
 </html>

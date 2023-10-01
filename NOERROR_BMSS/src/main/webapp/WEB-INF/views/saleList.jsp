@@ -19,7 +19,6 @@ h4{
 }
 </style>
 <meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <title>판매도서 목록</title>
 </head>
 <%@include file="header.jsp" %>
@@ -47,8 +46,8 @@ h4{
 
 
 
-
-
+<button type="button" class="btn btn-primary">Primary</button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 <%@include file="footer.jsp" %>

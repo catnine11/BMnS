@@ -130,26 +130,60 @@ public class OrderController {
 		
 		@PostMapping("/addOrder.do")
 		@ResponseBody
-		public int addOrder(@RequestParam ("chkArray[]")List<String> chkArray ,HttpSession session) {
+		public int addOrder(@RequestParam (value="chkArray[]",required = false)List<String> chkArray ,HttpSession session) {
 			System.out.println(chkArray);
+			if(chkArray==null) {
+				return -2;
+			}
 			
-			OrderVo vo = new OrderVo();	
 			int n=0;
 			UserVo  id	=	(UserVo)session.getAttribute("loginVo");
+			OrderVo vo = new OrderVo();	
+
+			
+			session.setMaxInactiveInterval(1800);
+
+
 				
 			System.out.println(id);
-				vo.setUser_id(id.getUser_id());
-//			
-			for (String string : chkArray) {
-				vo.setStock_number(Integer.parseInt(string));
-				 n =	odao.addOrder(vo);
-				 n++;
-			}
-				System.out.println(n);
-			
-			return n;
-			
+//				vo.setUser_id(id.getUser_id());
+		List<OrderVo>	oderListU	=odao.getOrderUser(String.valueOf(id.getUser_id()));
+				
+//현재 주문목록에 동일한 stocknumber를 가진 주문이 있다면 등록하지않고 alert 띄우기		
+		vo.setUser_id(id.getUser_id());
+		if(oderListU.size()!=0) {
+		for (OrderVo orderVo : oderListU) {
+			int orderStockNumber = orderVo.getStock_number();
+		    boolean stNumIsc = true;
+		    
+		    System.out.println(orderStockNumber);
+		    
+		    for (String string : chkArray) {
+		        if (orderStockNumber == Integer.parseInt(string)) {
+		        	stNumIsc = false;
+		            break; // 이 부분에서 내부 for 루프를 종료하고 외부 for 루프로 이동
+		        
+		        }
+		    }
+
+		    if (stNumIsc) {
+		    	  vo.setStock_number(orderStockNumber);
+			        n = odao.addOrder(vo);
+			        n++;
+			        System.out.println(n+"stnumisc 부분");
+		    } 
 		}
+		}else {
+				for (String string : chkArray) {
+					System.out.println(chkArray);
+					vo.setStock_number(Integer.parseInt(string));
+				n=	odao.addOrder(vo);
+				n++;
+				 System.out.println(n+"else문 for문");
+				}
+		}
+		System.out.println(n+"@@@@@@@@@@@@@@@@@@@@@@@@@");
+		return n;
 		
-		
+		}	
 }

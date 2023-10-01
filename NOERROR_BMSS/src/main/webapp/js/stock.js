@@ -33,21 +33,19 @@ $(document).ready(function(){
  	$("#stockDel").html("");
  		html="";
 html+=""
-html+="	<table>                                                                                                     ";
+html+="		<table id='container' class='table table-bordered'>                                                                                                  ";
+html+="		<thead>                                                                                                 ";
 html+="		<tr>                                                                                                    ";
-html+="			<td><input type='checkbox' name='allChk'></td>                                                      ";
-html+="			<td>재고번호</td>                                                                                   ";
-html+="			<td>도서명</td>                                                                                     ";
-html+="			<td>도서상태</td>                                                                                   ";
+html+="			<th>재고번호</th>                                                                                   ";
+html+="			<th>도서명</th>                                                                                     ";
+html+="			<th>도서상태</th>                                                                                   ";
 //html+="			<td>판매가능 여부</td>                                                                              ";
-html+="			<td>도서 가격</td>                                                                                  ";
+html+="			<th>도서 가격</th>                                                                                  ";
 html+="		</tr>                                                                                                   ";
+html+="		</thead>                                                                                                   ";
+html+="		<tbody>                                                                                                   ";
 		for (let obj of data)    {   
-			
-		
-		   
 html+="			<tr class='delTr'>                                                                                                ";
-html+="				<td><input class='delChk' type='checkbox' name='delChk' value='"+obj.book_code+"'></td>                                                       ";
 html+="				<td class='stockNum'>"+obj.stock_number+"</td>                                                     ";
 html+="				<td>"+obj.status_title+"</td>                                                                      ";
 html+=`<td><select class='changeBookStatus' name='status_code'>                                        
@@ -64,9 +62,15 @@ html+="				<td><input class='chPrice' type='button' value='가격 변경'></td> 
 html+="			</tr>                                                                                               ";
  
  }                                                                                         
-html+="	<tr>	<td><input id='delButton' type='button' value='삭제' ></td></tr>                                                   ";
+html+="		</tbody>";
 html+="		</table>                                                                                                ";
- 	
+ 
+// html += "<style>";
+//html += "#container { margin: 100px auto; text-align: center; }";
+//html += ".table-bordered th, .table-bordered td { text-align: center; }";
+//html += ".table-bordered th { background-color: #f2f2f2; }";
+//html += ".table-bordered select, .table-bordered input { width: 100%; }";
+//html += "</style>";	
  $("#stockDel").html(html);	
  	
 //       stockLogic(html);
