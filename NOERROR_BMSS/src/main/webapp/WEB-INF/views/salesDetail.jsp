@@ -37,9 +37,8 @@ margin-bottom: 20px;
 
 #addOrder,#purchase{ 
  position: relative;  
- top:350px; 
+ top:370px; 
  } 
-
 .stNum{
 position:relative;
 top:220px;
