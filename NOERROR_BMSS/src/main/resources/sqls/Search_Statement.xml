@@ -34,7 +34,7 @@ INSERT INTO BOOKINFO
 AUTHOR,GENRE_CODE,PUBLISHER,
 PRICE,PUBLISH_DATE,THUMBNAIL)
 VALUES(BOOK_CODE.NEXTVAL, #{isbn}, #{title}
-,#{author},400,#{publisher},
+,#{author},800,#{publisher},
 #{price},#{publish_date},#{thumbnail})
 </insert>
 

@@ -86,11 +86,16 @@ public class BookManageController {
 	@GetMapping(value = "/bookDetail.do")
 	public String bookDetailStatus(Model model, String book_code) {
 		log.info("Welcome BookManageController 도서상세화면창 이동");
-		log.info("Welcome BookManageController 북코드 {}",book_code );		
-		BookInfoVo detail= service.getOneBookStatus(book_code);
+		log.info("Welcome BookManageController 북코드 {}",book_code );
+		
+		BookInfoVo detail = service.getOneBook(book_code);
+		BookInfoVo detailStatus= service.getOneBookStatus(book_code);
 //		List<Book_StatusVo> detailList = service.getOneBookStatus(book_code);
+		
 		model.addAttribute("detail", detail);
 		System.out.println("\n\n" + detail);
+		model.addAttribute("status", detailStatus);
+		System.out.println("\n\n" + detailStatus);
 		
 		return "bookDetail";
 	}

@@ -17,14 +17,14 @@ body {
 <body>
 
 <a id="payInfo2"></a>
-	<h2><a href="./adminPage.do">관리자페이지</a></h2>
+<!-- 	<h2><a href="./adminPage.do">관리자페이지</a></h2> -->
 <%-- ${sessionScope.loginVo} --%>
 <!-- <hr> -->
 <%-- ${sessionScope.info } --%>
 
 	<div style="background-color: #D9E5FF">
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
 
@@ -33,22 +33,22 @@ body {
 			<a href="./askBoardList.do">문의게시판</a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
 			<form id="search">
@@ -64,39 +64,39 @@ body {
 		<div>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 		<div>
-			<a>아 귀찮다</a>
+			<a> </a>
 		</div>
 	</div>
 
 	<div>
 		<ul>
-			<li>바로가기이미지랑 뭐넣을지 정해야함</li>
-			<li>고민중</li>
-			<li>고민중</li>
+			<li>.</li>
+			<li> </li>
+			<li> </li>
 		</ul>
 	</div>
 	<input id="enroll" type="text">
