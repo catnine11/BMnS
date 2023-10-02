@@ -63,7 +63,6 @@
 </head>
 <%@include file="header.jsp" %>
 <body>
-${detail}
 <%-- ${sessionScope.loginVo} --%>
 <input type="hidden" name="loginVo" value="${sessionScope.loginVo}">
 <input type="hidden" name="user_auth" class="user_auth" value="${sessionScope.loginVo.user_auth}">
@@ -75,6 +74,7 @@ ${detail}
 		<h2>상세정보</h2>
 	</div>
 	<div class="">
+<%-- 		${detail} --%>
 		<div class="outline">
 			<div class="bookinfo">
 				<div class="thumb">
@@ -119,7 +119,14 @@ ${detail}
 						<ul>
 							<li>
 								<strong>분류기호</strong>
-								&nbsp;&nbsp; 한국십진분류법 : ${detail.genre_code}
+								<c:choose>
+									<c:when test="${detail.genre_code==0}">
+									&nbsp;&nbsp; 한국십진분류법 : 000
+									</c:when>
+									<c:otherwise>
+									&nbsp;&nbsp; 한국십진분류법 : ${detail.genre_code}
+									</c:otherwise>
+								</c:choose>
 							</li>
 							<li>
 								 ${detail.genre_name}
@@ -167,6 +174,12 @@ ${detail}
 <!-- 				System.out.println("현재시간"+currentDate); -->
 <!-- 			%> -->
 			<input type="hidden" class="nowDate" value="${currentDate}">
+<%-- 			${status} --%>
+				<c:choose>
+					<c:when test="${empty status}">
+						<b>현재 대출 또는 예약 가능한 책이 없습니다.</b>
+					</c:when>
+				<c:otherwise>
 				
 				<table>
 					<tbody id="borrowStatus">
@@ -179,12 +192,12 @@ ${detail}
 							<th>예약상태</th>
 							<th class="adminOnly">도서상태변경</th>
 						</tr>
-						<c:forEach  var="d" items="${detail.bsVo}">
+						<c:forEach  var="d" items="${status.bsVo}">
 							<c:choose>
 							<c:when test="${sessionScope.loginVo.user_auth=='A'}">
 								<tr>
 									<td class="adminOnly book_seq">${d.book_seq}</td>
-									<td>${detail.genre_name}</td>
+									<td>${status.genre_name}</td>
 									<td class="adminOnly status_code">${d.status_code}</td>
 									<td>${d.borrow_status}</td>
 									<td>${d.return_date}</td>
@@ -204,7 +217,7 @@ ${detail}
 								<c:if test="${d.status_code=='A'}">
 									<tr>
 										<td class="adminOnly">${d.book_seq}</td>
-										<td>${detail.genre_name}</td>
+										<td>${status.genre_name}</td>
 										<td class="adminOnly">${d.status_code}</td>
 										<td>
 											<c:choose>
@@ -214,7 +227,7 @@ ${detail}
  											</c:choose>
  											<c:choose>
 											<c:when test="${d.borrow_status == 'N' || d.borrow_status == null}">
-												<input type="hidden" name="borrow_title" class="borrow_title" value="${detail.title}">
+												<input type="hidden" name="borrow_title" class="borrow_title" value="${status.title}">
 												<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
 												<input type="hidden" name="reserve_user" class="reserve_user" value="${d.user_id}">
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
@@ -235,7 +248,7 @@ ${detail}
 											<c:if test="${d.reserve_status == 'N' || d.reserve_status == null}">
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
 												<input type="hidden" name="borrow_status" class="borrow_status" value="${d.borrow_status}">
-												<input type="hidden" name="reserve_title" class="reserve_title" value="${detail.title}">
+												<input type="hidden" name="reserve_title" class="reserve_title" value="${status.title}">
 												<input type="button" class="requestReserve" value="예약신청">
 		 									</c:if>
 										</td>
@@ -247,6 +260,8 @@ ${detail}
 						</c:forEach>
 					</tbody>
 				</table>
+				</c:otherwise>
+				</c:choose>
 				</div>
 				<div id="modalReserver" class="modal">
 					<div class="modal-content">
