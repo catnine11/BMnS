@@ -31,15 +31,20 @@
 					<tr>
 						<td style="width: 10%" class="text-center">${lists.ask_seq}</td>
 						<td style="width: 10%" class="text-center">${lists.user_name}</td>
-						<td style="width: 40%; cursor: pointer;" class="text-center" onclick="location.href='./detailAskBoard.do?ask_seq=${lists.ask_seq}&ask_title=${lists.ask_title }'&pay_seq=${pay_seq}">${lists.ask_title}</td>
+						 <td style="width: 40%; cursor: pointer;" class="text-center" onclick="location.href='./detailAskBoard.do?ask_seq=${lists.ask_seq}&ask_title=${lists.ask_title }&pay_seq=${sessionScope.pSeq}'">${lists.ask_title}</td>
 						<td style="width: 20%" class="text-center">${lists.ask_regdate}</td>
 					</tr>
 				</c:forEach>
 
 			</tbody>
 		</table>
+			<input type="hidden" id="pSeq" value="${pSeq}">
 
 	</div>
 </body>
 <%@include file="footer.jsp"%>
+<script type="text/javascript">
+        var pSeq = $("#pSeq").val();
+        console.log("pSeq 값: ", pSeq);
+</script>
 </html>

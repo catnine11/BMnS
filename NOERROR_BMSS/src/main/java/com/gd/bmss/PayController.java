@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,15 +121,18 @@ public class PayController {
 	 * 결제취소
 	 */
 	@RequestMapping(value = "/canclePay.do")
-	public String canclePay() {
+	public String canclePay(String pay_seq, HttpSession session) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제취소문의 이동 canclePay @@@@@@@@@@@@@@@@@@@@@@");
+		session.setAttribute("pSeq",pay_seq);
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@결제취소게시글작성 이동중 pSeq값 확인 {}@@@@@@@@@@@@@@@@@@@@@@@@@",pay_seq);
 		return "writeAskBoard";
 	}
 	
 	@RequestMapping(value = "/canclePayInfo.do", method = RequestMethod.POST)
-	public String testCancelPaymentAlreadyCancelledImpUid(HttpSession session, String pay_seq) {
+	@ResponseBody
+	public String testCancelPaymentAlreadyCancelledImpUid(HttpSession session, HttpServletRequest req) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제환불기능 testCancelPaymentAlreadyCancelledImpUid @@@@@@@@@@@@@@@@@@@@@@");
-		String seq = pay_seq;
+		String seq = req.getParameter("pay_seq");
 		String imp_uid = service.findImpUID(seq);
         String test_already_cancelled_imp_uid = imp_uid;
         CancelData cancel_data = new CancelData(test_already_cancelled_imp_uid, true); //imp_uid를 통한 전액취소

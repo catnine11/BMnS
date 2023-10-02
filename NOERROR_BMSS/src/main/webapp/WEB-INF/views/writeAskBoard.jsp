@@ -18,7 +18,7 @@
 	<div id="container">
 		<h2>문의하기 글작성</h2>
 		<form action="./write.do" method="post">
-			<input type="hidden" name="pay_seq" value="${pay_seq}"> <!-- 9월27일 여기까지함 pay_seq넘겨줘야 취소가능 -->
+			<input type="hidden" id="pSeq" name="pay_seq" value="${pSeq}"> 
 			<input  type="text" name="title" placeholder="제목">
 			<textarea id="editor" name="content"></textarea> <!-- CKEditor가 생성되면서 hidden 처리됨, DB에 CKEditor data를 전송하기 위해 담는 그릇, id 및 name 필수 -->
 		</form>

@@ -121,21 +121,8 @@
 <!-- 결제상태변경 -->
 <update id="okPayStatusChange">
 	UPDATE BOOK_PAY
-	 <set>
-        <if test="pay_status == 1">
-          SET  PAY_STATUS = 2,
-        </if>
-        <if test="pay_status == 2">
-          SET  PAY_STATUS = 3,
-        </if>
-        <if test="pay_status == 3">
-          SET  PAY_STATUS =4,
-        </if>
-        <if test="pay_status == 4">
-           SET PAY_STATUS = 5
-        </if>
-      </set>
-	WHERE PAY_SEQ =#{pay_seq}
+	SET PAY_STATUS = 5
+    WHERE PAY_SEQ =#{pay_seq}
 </update>
 <!-- 관리자 회원의 결제대기 확인 -->
 <select id="selectStatusNum2" resultType="UserVo">
