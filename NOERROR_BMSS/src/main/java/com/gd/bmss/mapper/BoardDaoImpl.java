@@ -42,7 +42,12 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 
 	@Override
-	public List<AskBoardVo> askBoardList() {
-		return sql.selectList("com.gd.bmss.mapper.BoardDaoImpl.askBoardList");
+	public List<AskBoardVo> askBoardList(Map<String,Object> map) {
+		return sql.selectList("com.gd.bmss.mapper.BoardDaoImpl.askBoardList",map);
+	}
+	
+	@Override
+	public int countAskBoard() {
+		return sql.selectOne("com.gd.bmss.mapper.BoardDaoImpl.countAskBoard");
 	}
 }

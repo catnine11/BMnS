@@ -5,24 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-html{
-	height: 100%;
-	width: 100%;
-	display: block;
-	min-height: 100%;
-	max-width: 100%;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 80%;
 }
-	body{
-		margin: 0px;
-	}
 
-	footer{
+#body-wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+#body-content {
+    margin-top: 100px;
+}
+
+footer {
 	background-color: #f6f6f6;
-	width: 100%;
+    width: 100%;
+    position: absolute;  
     bottom: 0;
     left: 0;
-	height: 250px;
-/* 	position: absolute; */
 }
 #ft_last{
 	margin: 0px;
@@ -45,6 +48,8 @@ img{
 </style>
 </head>
 <body>
+<div id="body-wrapper">
+<div id="body-content">
 	<footer> 
 		<div id="fmenu"><img class="logo" src="./img/BMSS아이콘.png">NOERROR 책check</div><br>
 	
@@ -53,5 +58,7 @@ img{
 	
 	
 	</footer>
+</div>
+</div>
 </body>
 </html>
