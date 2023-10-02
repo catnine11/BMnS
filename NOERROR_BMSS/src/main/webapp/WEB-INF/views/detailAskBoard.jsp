@@ -38,8 +38,8 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
+값:${boardVo.pay_seq}
 	<div id="divOne">
-	<input type="hidden" id="seq" name="pay_seq" value="${p_seq }">
         <table class="cell" border="1">
                 <tr class="article-title">
                     <th>번호</th>
@@ -61,6 +61,8 @@
                     <td colspan="4">${boardVo.ask_contents}</td>
                 </tr>
         </table>
+	<input type="hidden" id="pSeq" name="pay_seq" value="${boardVo.pay_seq}">
+	
 		<input id="listBtn" type="button" onclick="location.href='./askBoardList.do'" value="목록보기" >
 		<c:choose>
 		<c:when test="${loginVo.user_id eq boardVo.user_id}">
@@ -75,14 +77,14 @@
 </body>
 <%@include file="footer.jsp"%>
 <script type="text/javascript">
-var seq = document.getElementById("seq").value;
-console.log("pay_seq 값 : ",seq);
 function cancle(){
+	var seq = $("#pSeq").val();
+console.log("pay_seq 값 : ",seq);
 	 $.ajax({
 		 type:"post",
 		 url:"./canclePayInfo.do",
 		 data:{
-			 pay_seq : "${pay_seq}"
+			 pay_seq : seq
 		 },
 		 success:function(result){
 			console.log(result);

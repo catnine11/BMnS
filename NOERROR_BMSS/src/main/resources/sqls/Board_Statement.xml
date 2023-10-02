@@ -101,8 +101,8 @@
 		SELECT ASK_SEQ.NEXTVAL AS ASK_SEQ FROM DUAL
 </selectKey>
 	INSERT INTO ASK_BOARD
-		(ASK_SEQ, ASK_TITLE, ASK_CONTENTS, ASK_REGDATE, USER_ID, DELFLAG,USER_NAME)
-	VALUES(#{ask_seq}, #{ask_title}, #{ask_contents}, SYSDATE , #{user_id}, 'N' ,(SELECT USER_NAME FROM BOOK_USERINFO bu WHERE bu.USER_ID=#{user_name}))
+		(ASK_SEQ, ASK_TITLE, ASK_CONTENTS, ASK_REGDATE, USER_ID, DELFLAG,PAY_SEQ,USER_NAME)
+	VALUES(#{ask_seq}, #{ask_title}, #{ask_contents}, SYSDATE , #{user_id}, 'N' ,#{pay_seq},(SELECT USER_NAME FROM BOOK_USERINFO bu WHERE bu.USER_ID=#{user_name}))
 </insert>
 
 <!-- 작성완료시 결제상태변경 -->
@@ -119,7 +119,7 @@
 
 <!-- 상세보기게시판 -->
 <select id="detailAskBoard" resultType="AskBoardVo">
-	SELECT ASK_SEQ ,ASK_TITLE ,ASK_CONTENTS, ASK_REGDATE ,DELFLAG ,USER_ID ,USER_NAME 
+	SELECT ASK_SEQ ,ASK_TITLE ,ASK_CONTENTS, ASK_REGDATE ,DELFLAG ,USER_ID ,USER_NAME ,PAY_SEQ
 		FROM ASK_BOARD  
 	WHERE ASK_SEQ =#{ask_seq}
 </select>

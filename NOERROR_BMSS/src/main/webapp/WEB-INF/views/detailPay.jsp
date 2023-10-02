@@ -20,16 +20,15 @@
 	${detailPay.payVo[0].pay_time}<br>
 	<input type="button" value="결제취소" onclick="canclePay()">
 	
-	
 </body>
 <%@include file="footer.jsp"%>
 <script type="text/javascript">
-		var seq = '${detailPay.payVo[0].pay_seq}';
-		console.log("seq값",seq);
+		var pay_seq = '${detailPay.payVo[0].pay_seq}';
+		console.log("seq값",pay_seq);
 	function canclePay(){
 		var cs = confirm("결제취소는 취소문의를 통해 가능합니다 \n 결제 취소 하시겠습니까?");
 		if (cs) {
-			location.href='./canclePay.do?pay_seq='+seq;
+			location.href='./canclePay.do?pay_seq='+pay_seq;
 		} else {
 		  location.href='./detailUser.do';
 		}

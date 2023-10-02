@@ -23,6 +23,7 @@ public class AskBoardVo {
 	private String delflag;
 	
 	
+	private int pay_seq;
 	private String user_name;
 	
 }
