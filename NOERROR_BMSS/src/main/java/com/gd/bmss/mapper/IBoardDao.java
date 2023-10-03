@@ -24,6 +24,7 @@ public interface IBoardDao {
 	public int updatePayStatus(String seq);
 	
 	//문의게시판 상세보기
-	public List<AskBoardVo> askBoardList();
+	public List<AskBoardVo> askBoardList(Map<String,Object> map);
+	public int countAskBoard();
 	
 }

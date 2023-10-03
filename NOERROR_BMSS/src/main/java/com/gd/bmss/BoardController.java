@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.service.IBoardService;
 import com.gd.bmss.vo.AskBoardVo;
+import com.gd.bmss.vo.PageVo;
 import com.gd.bmss.vo.UserVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -109,10 +111,29 @@ public class BoardController {
 	 * 게시판리스트페이지
 	 */
 	@RequestMapping(value = "/askBoardList.do")
-	public String askBoardList(Model model, HttpSession session) {
-	    List<AskBoardVo> lists = service.askBoardList();
-	    model.addAttribute("lists", lists);
-	    model.addAttribute("pSeq", session.getAttribute("pSeq"));
+	public String askBoardList(Model model, HttpSession session, @RequestParam(defaultValue = "1")String page) {
+		log.info("@@@@@@@@@@@@@@@게시판리스트보기 이동 askBoardList 받은 page값 : {} @@@@@@@@@@@@@@",page);
+	    PageVo pageVo = new PageVo();
+	    pageVo.setTotalCount(service.countAskBoard());
+	    pageVo.setCountList(5);
+	    pageVo.setCountPage(5);
+	    pageVo.setTotalPage(pageVo.getTotalCount());
+	    if(Integer.parseInt(page)>pageVo.getTotalPage()) {
+			page = ""+pageVo.getTotalPage();
+		}
+	    pageVo.setPage(Integer.parseInt(page));
+	    pageVo.setStartPage(Integer.parseInt(page));
+	    pageVo.setEndPage(Integer.parseInt(page));
+	    log.info("@@@@@@@@@@@@@@@@@@@@@page : {}@@@@@@@@@@@@@@@@@@@@@@@@@",pageVo);
+	    Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start",(pageVo.getPage()*pageVo.getCountList()-(pageVo.getCountList()-1)));
+		map.put("end", (pageVo.getPage()*pageVo.getCountList()));
+
+		List<AskBoardVo> lists = service.askBoardList(map);
+		model.addAttribute("lists", lists);
+		model.addAttribute("pSeq", session.getAttribute("pSeq"));
+	    model.addAttribute("pageVo", pageVo);
+	    
 	    return "askBoardList";
 	}
 	

@@ -16,5 +16,6 @@ public interface IBoardService {
 	
 	public int updatePayStatus(String seq);
 	
-	public List<AskBoardVo> askBoardList();
+	public List<AskBoardVo> askBoardList(Map<String,Object> map);
+	public int countAskBoard();
 }

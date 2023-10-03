@@ -46,8 +46,14 @@ public class BoardServiceImpl implements IBoardService {
 	}
 	
 	@Override
-	public List<AskBoardVo> askBoardList() {
+	public List<AskBoardVo> askBoardList(Map<String,Object> map) {
 		log.info("@@@@@@@@@@@@@@@ 문의게시판리스트보기 askBoardList @@@@@@@@@@@@@@@");
-		return dao.askBoardList();
+		return dao.askBoardList(map);
+	}
+	
+	@Override
+	public int countAskBoard() {
+		log.info("@@@@@@@@@@@@@@@ 문의게시판개수 countAskBoard @@@@@@@@@@@@@@@");
+		return dao.countAskBoard();
 	}
 }

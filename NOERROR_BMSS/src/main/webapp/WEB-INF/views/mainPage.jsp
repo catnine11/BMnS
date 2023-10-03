@@ -17,11 +17,6 @@ body {
 <body>
 
 <a id="payInfo2"></a>
-<!-- 	<h2><a href="./adminPage.do">관리자페이지</a></h2> -->
-<%-- ${sessionScope.loginVo} --%>
-<!-- <hr> -->
-<%-- ${sessionScope.info } --%>
-
 	<div style="background-color: #D9E5FF">
 		<div>
 			<a> </a>
@@ -103,9 +98,9 @@ body {
 	<input id="enrollBtn" type="button" value="책등록" >
 	<script type="text/javascript" src="./js/search.js"></script>
 	
+<%@include file="footer.jsp" %>
 </body>
 
-<%@include file="footer.jsp" %>
 <script type="text/javascript">
 console.log(localStorage.getItem('payInfo'));
 </script>

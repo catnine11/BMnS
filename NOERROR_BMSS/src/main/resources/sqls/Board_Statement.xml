@@ -132,12 +132,27 @@
 	</update>
 	
 	<!-- 문의게시판리스트 -->
-	<select id="askBoardList" resultType="AskBoardVo">
-	SELECT ab.ASK_SEQ ,ab.ASK_TITLE ,ab.ASK_CONTENTS, ab.ASK_REGDATE ,ab.DELFLAG ,ab.USER_ID ,ab.USER_NAME,bu.USER_ID,bu.USER_NAME,bu.USER_email 
-		FROM ASK_BOARD ab
-		JOIN BOOK_USERINFO bu
-		ON ab.USER_ID = bu.USER_ID  
-	WHERE ab.DELFLAG = 'N'
+	<select id="askBoardList" resultType="AskBoardVo" >
+    SELECT * 
+    FROM (
+        SELECT ROWNUM AS rm, 
+               ab.ASK_SEQ, ab.ASK_TITLE, ab.ASK_CONTENTS, ab.ASK_REGDATE, 
+               ab.DELFLAG, ab.USER_ID, ab.USER_NAME, bu.USER_ID AS BU_USER_ID,
+               bu.USER_NAME AS BU_USER_NAME, bu.USER_email
+        FROM ASK_BOARD ab
+        JOIN BOOK_USERINFO bu ON ab.USER_ID = bu.USER_ID  
+        WHERE ab.DELFLAG = 'N'
+        ORDER BY ab.ASK_SEQ DESC)
+    <if test="user_auth == 'U' ">
+    WHERE DELFLAG = 'N'
+    </if>
+    WHERE rm <![CDATA[>=]]> #{start} AND rm <![CDATA[<=]]> #{end}
+</select>
+	
+	<select id="countAskBoard" resultType="java.lang.Integer">
+		SELECT COUNT(*) 
+		FROM ASK_BOARD
+		WHERE DELFLAG='N'
 	</select>
 
 	<!-- 내가 쓴 문의게시판리스트 -->

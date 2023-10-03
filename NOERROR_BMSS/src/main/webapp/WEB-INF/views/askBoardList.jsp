@@ -40,7 +40,40 @@
 		</table>
 			<input type="hidden" id="pSeq" value="${pSeq}">
 
+<div id="paging" style="margin-left: auto; margin-right: auto; text-align: center;">
+		<c:if test="${pageVo.totalPage > 1}">
+            <ul class="pagination justify-content-center">
+                <c:if test="${pageVo.startPage > 1}">
+                    <li class="page-item"><a class="page-link" href="./askBoardList.do?page=1">처음</a></li>
+                </c:if>
+                <c:choose>
+            <c:when test="${pageVo.startPage > 5}">
+                <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${pageVo.startPage-5}">◁</a></li>
+            </c:when>
+        </c:choose>
+                <c:forEach begin="${pageVo.startPage}" end="${pageVo.endPage}" var="i">
+                    <c:choose>
+                        <c:when test="${i == pageVo.page}">
+                            <li class="page-item active"><span class="page-link">${i}</span></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${i}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                
+		<c:if test="${pageVo.endPage < pageVo.totalPage}">
+            <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${pageVo.startPage+pageVo.countPage}">▷</a></li>
+        </c:if>
+                <c:if test="${pageVo.endPage < pageVo.totalPage}">
+                    <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${pageVo.totalPage}">마지막</a></li>
+                </c:if>
+            </ul>
+        </c:if>
+</div>
 	</div>
+	
+	
 </body>
 <%@include file="footer.jsp"%>
 <script type="text/javascript">
