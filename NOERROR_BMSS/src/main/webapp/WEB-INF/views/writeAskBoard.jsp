@@ -19,11 +19,13 @@
 		<h2>문의하기 글작성</h2>
 		<form action="./write.do" method="post">
 			<input type="hidden" id="pSeq" name="pay_seq" value="${pSeq}"> 
-			<input  type="text" name="title" placeholder="제목">
+			<input  type="text" name="title" placeholder="제목" style="margin-bottom: 5px; padding-right: 300px; height: 40px;">
 			<textarea id="editor" name="content"></textarea> <!-- CKEditor가 생성되면서 hidden 처리됨, DB에 CKEditor data를 전송하기 위해 담는 그릇, id 및 name 필수 -->
 		</form>
-		<div class="btn"><input type="button" onclick="writeBoard()" value="글쓰기"></div>
-		<div class="btn"><input type="button" onclick="location.href='./canclePay.do'" value="목록보기"></div>
+		<div id="button">
+		<div class="btn"><input id="글쓰기" type="button" onclick="writeBoard()" value="글쓰기"></div>
+		<div class="btn"><input id="목록" type="button" onclick="location.href='./canclePay.do'" value="목록보기"></div>
+		</div>
 	</div>
 <script type="text/javascript" src="./lib/ckeditor5-39.0.1/build/ckeditor.js"></script> <!-- CKEditor 기본 js -->
 <script type="text/javascript" src="./js/script.js"></script> <!-- CKEditor sample 코드, editor 생성 -->

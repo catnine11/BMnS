@@ -51,6 +51,7 @@ main .ck-editor[role='application'] .ck.ck-content,
     position: relative;
 	width: 100%;
 	justify-content: center;
+	margin: 30px;
 }
 
 /* --------- DECOUPLED (DOCUMENT) BUILD. ---------------------------------------------*/
@@ -242,7 +243,7 @@ body[data-editor='InlineEditor'] .collaboration-demo__row {
 	min-width: 220px;
 	margin: 0 10px;
 	border-radius: 4px;
-	border: 1px solid var(--ck-color-toolbar-border)
+	border: 1px solid var(--ck-color-toolbar-border);
 }
 
 .collaboration-demo__share button,
@@ -449,7 +450,6 @@ main .message h2 {
 }
 
 .centered {
-	/* Hide overlapping comments. */
 	overflow: hidden;
 	max-width: var(--ck-sample-container-width);
 	margin: 0 auto;
@@ -463,15 +463,16 @@ main .message h2 {
 
 .btn {
 	cursor: pointer;
-	padding: 8px 16px;
-	font-size: 1rem;
+	padding: 20px 30px;
+	font-size: 1em;
 	user-select: none;
 	border-radius: 4px;
 	transition: color .2s ease-in-out,background-color .2s ease-in-out,border-color .2s ease-in-out,opacity .2s ease-in-out;
 	background-color: var(--ck-sample-color-button-blue);
 	border-color: var(--ck-sample-color-button-blue);
-	color: var(--ck-sample-color-white);
+	color: #CCC;
 	display: inline-block;
+	border-color: #ccc;
 }
 
 .btn--tiny {
@@ -479,12 +480,6 @@ main .message h2 {
 	font-size: .8rem;
 }
 
-footer {
-	margin: calc(2*var(--ck-sample-base-spacing)) var(--ck-sample-base-spacing);
-	font-size: .8em;
-	text-align: center;
-	color: rgba(0,0,0,.4);
-}
 
 /* --------- RWD --------------------------------------------------------------------------------------------------- */
 @media screen and ( max-width: 800px ) {
@@ -507,5 +502,19 @@ footer {
 	main .message h2 {
 		font-size: 1.5em;
 	}
+}
+#container{
+	margin: 50px;
+}
+#글쓰기, #목록{
+	margin-left: 30%;
+	background-color: white;
+	border-color: #ccc;
+	padding: 20px 30px;
+	width: 260px;
+}
+#button{
+	margin-top: 20px;
+	margin-left: 15%;	
 }
 

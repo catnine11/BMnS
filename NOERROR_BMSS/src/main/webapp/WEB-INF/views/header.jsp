@@ -78,6 +78,11 @@ img{
 .nav-menu{
 margin-bottom: 20px;
 }
+#loginInfo{
+	text-decoration: none;
+	color: black;
+	cursor: default;
+}
 </style>
 <%
 	UserVo loginVo = (UserVo)session.getAttribute("loginVo");
@@ -90,8 +95,6 @@ margin-bottom: 20px;
 </head>
 <body>
 	<header>
-	고유번호 | 이름&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 구분<br>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginVo.user_id} &nbsp;| ${sessionScope.loginVo.user_name} | ${loginVo.user_email} | ${loginVo.gubun}
 		<div id="snb">
 			<div id="siteMenu" class="siteMenu">
 				<div class="site">
@@ -102,7 +105,8 @@ margin-bottom: 20px;
 						<a id="login" href="./login.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">로그인</a>
 						<%
 					}else{
-						%>						
+						%>	
+ 						<a id="loginInfo">${loginVo.user_name }님</a> 
 						<a id="logout" href="./logout.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">로그아웃</a>
 						<%
 					}
