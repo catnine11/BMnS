@@ -24,10 +24,10 @@ table, th, tr, td{
 	text-align: center;
 }
 
-/* input[type="button"]{ */
+input[type="button"]{
+	color: #fefefe;
 	
-	
-/* } */
+}
 
 
 
