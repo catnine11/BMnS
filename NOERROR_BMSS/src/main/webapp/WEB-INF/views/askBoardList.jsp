@@ -11,6 +11,17 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+	#tr-hover:hover {
+    background-color: #F5EFFB;
+}
+#pgl:focus,#pgl:hover{
+background-color: #F5EFFB; border-color: #F5EFFB;
+}
+#pgi:hover, #pgi>span{
+background-color: #D0A9F5; border-color: #D0A9F5;
+}
+</style>
 </head>
 <%@include file="header.jsp"%>
 <body>
@@ -40,33 +51,33 @@
 		</table>
 			<input type="hidden" id="pSeq" value="${pSeq}">
 
-<div id="paging" style="margin-left: auto; margin-right: auto; text-align: center;">
+<div id="paging"  style="margin-left: auto; margin-right: auto; text-align: center;">
 		<c:if test="${pageVo.totalPage > 1}">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center" id="pg" style="background-color: #F5EFFB; border-color: #F5EFFB;">
                 <c:if test="${pageVo.startPage > 1}">
-                    <li class="page-item"><a class="page-link" href="./askBoardList.do?page=1">처음</a></li>
+                    <li class="page-item"><a  id="pgl" class="page-link" href="./askBoardList.do?page=1">처음</a></li>
                 </c:if>
                 <c:choose>
             <c:when test="${pageVo.startPage > 5}">
-                <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${pageVo.startPage-5}">◁</a></li>
+                <li class="page-item"><a  id="pgl" class="page-link" href="./askBoardList.do?page=${pageVo.startPage-5}">◁</a></li>
             </c:when>
         </c:choose>
                 <c:forEach begin="${pageVo.startPage}" end="${pageVo.endPage}" var="i">
                     <c:choose>
                         <c:when test="${i == pageVo.page}">
-                            <li class="page-item active"><span class="page-link">${i}</span></li>
+                            <li id="pgi" class="page-item active"><span  id="pgl" class="page-link">${i}</span></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${i}">${i}</a></li>
+                            <li class="page-item"><a  id="pgl" class="page-link" href="./askBoardList.do?page=${i}">${i}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
                 
 		<c:if test="${pageVo.endPage < pageVo.totalPage}">
-            <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${pageVo.startPage+pageVo.countPage}">▷</a></li>
+            <li class="page-item"><a id="pgl" class="page-link" href="./askBoardList.do?page=${pageVo.startPage+pageVo.countPage}">▷</a></li>
         </c:if>
                 <c:if test="${pageVo.endPage < pageVo.totalPage}">
-                    <li class="page-item"><a class="page-link" href="./askBoardList.do?page=${pageVo.totalPage}">마지막</a></li>
+                    <li class="page-item"><a  id="pgl" class="page-link" href="./askBoardList.do?page=${pageVo.totalPage}">마지막</a></li>
                 </c:if>
             </ul>
         </c:if>
