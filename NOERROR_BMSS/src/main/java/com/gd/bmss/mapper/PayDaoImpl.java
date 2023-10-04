@@ -48,8 +48,8 @@ public class PayDaoImpl implements IPayDao {
 	}
 	
 	@Override
-	public List<PayVo> getAllPay(int id) {
-		return sql.selectList("com.gd.bmss.mapper.PayDaoImpl.getAllPay",id);
+	public List<PayVo> getAllPay(Map<String,Object> map) {
+		return sql.selectList("com.gd.bmss.mapper.PayDaoImpl.getAllPay",map);
 	}
 
 	@Override
@@ -65,5 +65,10 @@ public class PayDaoImpl implements IPayDao {
 	@Override
 	public String findImpUID(String seq) {
 		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.findImpUID",seq);
+	}
+	
+	@Override
+	public int countPayInfo(UserVo id) {
+		return sql.selectOne("com.gd.bmss.mapper.PayDaoImpl.countPayInfo",id);
 	}
 }

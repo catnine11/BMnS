@@ -39,4 +39,6 @@ public class UserVo {
 	private List<OrderVo> orderVo;
 	private List<PayVo> payVo;
 	private List<AskBoardVo> askVo;
+	
+	private String thumbnail;
 }

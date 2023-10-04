@@ -39,7 +39,7 @@
 			<tbody>
 
 				<c:forEach var="lists" items="${lists}"  varStatus="vs">
-					<tr>
+					<tr id="tr-hover">
 						<td style="width: 10%" class="text-center">${lists.pay_seq}</td>
 						<td style="width: 10%" class="text-center">${loginVo.user_name}</td>
 						<td style="width: 20%" class="text-center">${loginVo.user_email}</td>
@@ -47,20 +47,48 @@
 						<td style="width: 10%" class="text-center">${lists.pay_money}</td>
 						<td style="width: 20%" class="text-center">${lists.pay_time}</td>
 						<td style="width: 10%" class="text-center">${psVo}</td>
-						<td style="width: 10%" class="text-center"><input type="button" value="결제상세" onclick="location.href='detailPay.do?pay_seq=${lists.pay_seq}'"></td>
+						<td style="width: 10%" class="text-center"><input class="custom-btn btn-8"  type="button" value="결제상세" onclick="location.href='detailPay.do?pay_seq=${lists.pay_seq}'"></td>
 					</tr>
 				</c:forEach>
 
 			</tbody>
 		</table>
-
-		<p class="text-center">
-
-
-			<a class="text-reset" href="/boardChat?requestedPage="></a>&nbsp;&nbsp;
-
-		</p>
 	</div>
+	
+	
+	<div id="paging"  style="margin-left: auto; margin-right: auto; text-align: center;">
+		<c:if test="${pPageVo.totalPage > 1}">
+            <ul class="pagination justify-content-center" id="pg" style="background-color: #F5EFFB; border-color: #F5EFFB;">
+                <c:if test="${pPageVo.startPage > 1}">
+                    <li class="page-item"><a  id="pgl" class="page-link" href="./payInfo.do?page=1">처음</a></li>
+                </c:if>
+                <c:choose>
+            <c:when test="${pPageVo.startPage > 5}">
+                <li class="page-item"><a  id="pgl" class="page-link" href="./payInfo.do?page=${pPageVo.startPage-5}">◁</a></li>
+            </c:when>
+        </c:choose>
+                <c:forEach begin="${pPageVo.startPage}" end="${pPageVo.endPage}" var="i">
+                    <c:choose>
+                        <c:when test="${i == pPageVo.page}">
+                            <li id="pgi" class="page-item active"><span  id="pgl" class="page-link">${i}</span></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a  id="pgl" class="page-link" href="./payInfo.do?page=${i}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                
+		<c:if test="${pPageVo.endPage < pPageVo.totalPage}">
+            <li class="page-item"><a id="pgl" class="page-link" href="./payInfo.do?page=${pPageVo.startPage+pPageVo.countPage}">▷</a></li>
+        </c:if>
+                <c:if test="${pPageVo.endPage < pPageVo.totalPage}">
+                    <li class="page-item"><a  id="pgl" class="page-link" href="./payInfo.do?page=${pPageVo.totalPage}">마지막</a></li>
+                </c:if>
+            </ul>
+        </c:if>
+</div>
+	
+	
 </body>
 <%@include file="footer.jsp"%>
 </html>

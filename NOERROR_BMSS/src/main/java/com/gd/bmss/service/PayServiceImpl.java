@@ -53,9 +53,9 @@ public class PayServiceImpl implements IPayService {
 
 	
 	@Override
-	public List<PayVo> getAllPay(int id) {
+	public List<PayVo> getAllPay(Map<String,Object> map) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 결제내역리스트조회 getAllPay @@@@@@@@@@@@@@@@@@@");
-		return dao.getAllPay(id);
+		return dao.getAllPay(map);
 	}
 
 	@Override
@@ -74,5 +74,11 @@ public class PayServiceImpl implements IPayService {
 	public String findImpUID(String seq) {
 		log.info("@@@@@@@@@@@@@@@@@@@ 아임포트고유아이디조회 findImpUID @@@@@@@@@@@@@@@@@@@");
 		return dao.findImpUID(seq);
+	}
+	
+	@Override
+	public int countPayInfo(UserVo id) {
+		log.info("@@@@@@@@@@@@@@@@@@@ 결제내역카운트조회 countPayInfo @@@@@@@@@@@@@@@@@@@");
+		return dao.countPayInfo(id);
 	}
 }
