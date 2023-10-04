@@ -34,6 +34,11 @@ public class SearchDaoImpl implements ISearchDao {
 		
 		return n>0?true:false;
 	}
+	@Override
+	public List<BookInfoVo> searchPagingB(Map<String, Object> map) {
+	List<BookInfoVo>	list=sql.selectList(NS+"searchPagingB",map);
+		return list;
+	}
 	
 
 }

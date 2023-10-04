@@ -1,3 +1,4 @@
+<%@page import="com.gd.bmss.vo.Paging_Vo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,7 +10,7 @@
 <style type="text/css">
 .background-cover {
 	margin-left:20px;
-	float:left;
+/* 	float:left; */
     background-size: cover;
     width: 102px; /* 원하는 너비 조절 */
     height: 120px; /* 원하는 높이 조절 */
@@ -17,15 +18,33 @@
 h4{
 	margin:0 auto;
 }
+table{
+margin-left: 100px;
+margin-top:20px;
+margin-bottom: 10px;
+height: 150px;
+}
+.container {
+  display: flex;
+  flex-direction: column; /* 세로로 배치하고 싶을 때 */
+  border: 2px solid black;
+  width:300px;
+  padding:10px;
+}
 </style>
 <meta charset="UTF-8">
 <title>판매도서 목록</title>
 </head>
 <%@include file="header.jsp" %>
 
+<% Paging_Vo p =(Paging_Vo) request.getAttribute("page"); %>
 <body>
-<c:forEach items="${saleList}" var="s" varStatus="loop">
-  <table>
+<%-- ${saleList} --%>
+
+
+
+<c:forEach items="${lists}" var="s" varStatus="loop">
+  <table class="container">
     <tr>
       <td class="background-cover" style="background-image: url('${s.thumbnail}');" data-alt="${s.title}"></td>
       <td>
@@ -42,7 +61,60 @@ h4{
   </table>
 </c:forEach>
 
+<!-- 왼쪽 오른쪽 표시 -->
+<div style="font-size:30px;text-align: center;">
+<% if(p.getStartPage()>1){
+%>
+<a href="./getSellableStock.do?page=1">◁◁</a>
+<% 
+	
+}
 
+if(p.getPage()>1){
+	if(p.getStartPage()-p.getCountPage()<=0){
+		%>
+		<a href="./getSellableStock.do?page=1">◁</a>
+		<% 
+
+	}else{
+		%>
+		<a href="./getSellableStock.do?page=<%=p.getStartPage()-p.getCountPage()%>">◁</a>
+		<% 
+	}
+}
+	%>
+	<!-- 페이지번호 -->
+	<%
+	for(int i=p.getStartPage(); i<=p.getEndPage();i++){
+		
+		%>
+		<a href="./getSellableStock.do?page=<%=i%>">&nbsp;&nbsp;<%=i%>&nbsp;&nbsp;</a>
+		<%
+	}
+	%>
+	
+	<!-- 그림표지 -->
+	<%
+		if(p.getPage()<p.getTotalPage()){
+			if(p.getStartPage()+p.getCountPage()>p.getTotalPage()){
+			
+			%>
+			<a href="./getSellableStock.do?page=<%=p.getTotalPage() %>">▶</a>
+			<% 
+			
+		}else{
+			%>
+			<a href="./getSellableStock.do?page=<%=p.getStartPage()+p.getCountPage()%>">▶</a>
+			<% 
+		}
+		}
+	if(p.getEndPage()<p.getTotalPage()){
+		%>
+		<a href="./getSellableStock.do?page=<%=p.getTotalPage()%>">▶▶</a>
+		<% 
+	}
+	%>
+</div>
 
 
 

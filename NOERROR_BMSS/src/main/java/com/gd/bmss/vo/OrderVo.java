@@ -31,7 +31,10 @@ public class OrderVo {
 	private String thumbnail     ;
 	private String genre_code    ;
 	private String author        ;
-
+	
+	private String user_name;
+	private String user_email;
+	private String book_seq;
 		
 	private List<PayVo> payVo;
 	private int book_code;

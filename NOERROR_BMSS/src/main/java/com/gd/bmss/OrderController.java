@@ -1,6 +1,6 @@
 package com.gd.bmss;
 
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import com.gd.bmss.mapper.IOrderDao;
 import com.gd.bmss.mapper.IStockDao;
 import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.OrderVo;
-import com.gd.bmss.vo.StockVo;
+import com.gd.bmss.vo.Paging_Vo;
 import com.gd.bmss.vo.UserVo;
 
 
@@ -109,10 +109,43 @@ public class OrderController {
 //		}
 		//판매 가능한 도서를 유저가 조회하는 메소드
 		@RequestMapping(value="/getSellableStock.do")
-		public String getSellableStock(Model model) {
+		public String getSellableStock(Model model ,@RequestParam (name="page",required =false,defaultValue = "1") int selectPage
+				) {
+		
+			System.out.println(selectPage+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			
+			
 			
 	List<BookInfoVo>	list=	sdao.getSellableStock();
 			model.addAttribute("saleList",list);
+			
+			Paging_Vo p = new Paging_Vo();
+			//총개시물의 갯수
+			p.setTotalCount(list.size());
+			//출력될 게시물의개수
+			p.setCountList(3);
+			//화면에 몇개의 페이지를 보여줄지
+			p.setCountPage(3);
+			//총페이지 개수 이미 countList를 4로 설정 해줬으니까 totalcount(12)만 
+			//설정해주면 토탈페이지는 정해지는데 토탈 카운트도 위에서 설정 해줬으니 get으로 가져올 수 있음
+			p.setTotalPage(p.getTotalCount());
+			//현재 페이지번호
+			p.setPage(selectPage);
+			//시작 페이지번호
+			p.setStartPage(selectPage);
+			//끝페이지
+			p.setEndPage(p.getCountPage());
+			//보여지는 게시물의 첫번째와 마지막을 설정하는 것 
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("first",p.getPage()*p.getCountList()-(p.getCountList()-1));//
+			map.put("last", p.getPage()*p.getCountList());//현재페이지
+			//출력(게시글,페이지객체)
+		List<BookInfoVo> lists	=sdao.sellStockPaging(map);
+			
+		model.addAttribute("lists",lists);
+		model.addAttribute("page",p);
+			//
+			
 			return"saleList";
 			
 		}

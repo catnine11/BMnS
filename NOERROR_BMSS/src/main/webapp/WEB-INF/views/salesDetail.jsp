@@ -20,6 +20,17 @@ width:450px;
 }
 strong{
 margin:10px 35px auto;
+font-size: 20px;
+
+}
+.container .tit{
+    position: relative;
+    padding: 10px 15px;
+    font-weight: 600;
+    font-size: 1.154em;
+    line-height: 1.3;
+    background-color: #f4f4f4;
+
 }
 
 .background-cover {
@@ -53,7 +64,41 @@ height:20px;
 <%@include file="header.jsp"%>
 
 <body>
-
+<div class="resultViewDetail">
+							<div class="tit"><h4>왜 어떤 정치인은 다른 정치인보다 위험한가</h4></div>
+							<div class="resultBookInfo">
+								<div class="thumb">
+									<div class="cover"><span class="img"><img src="https://www.library.kr/attachfile/DRMContent/ebook/4801187064993/L4801187064993.jpg" alt="왜 어떤 정치인은 다른 정치인보다 위험한가"></span></div>
+								</div>
+								<div class="bookDataWrap">
+									<p class="ebookSupport">
+									
+										<span class="ico kyobo"><b class="blind">교보</b></span>
+									
+									
+									
+									
+										
+										
+											<span class="ico ebook"><b class="blind">전자책</b></span>
+										
+									
+									</p>
+									<ul class="sdot-list">
+										<li>저자 : <a href="/cyber/ebook/ebookList.do?searchCondition=AUTHOR&amp;searchKeyword=제임스 길리건&amp;serviceTypePc=PC&amp;serviceTypeMobile=PC_MOBILE_TABLET" class="writer">제임스 길리건</a></li>
+										<li>출판사 : <a href="/cyber/ebook/ebookList.do?searchCondition=PUBLISHER&amp;searchKeyword=교양인&amp;serviceTypePc=PC&amp;serviceTypeMobile=PC_MOBILE_TABLET" class="publisher">교양인</a></li>
+										<li>출판연도 : 20230808</li>
+										<li>파일형식 : EPUB</li>
+										<li>ISBN : </li>
+										<li>별점 : <span class="ratingStar"><span style="width:0%;"></span></span> 리뷰(0)</li>
+										<li>도서현황 : 대출(5/5) , 예약(20/20)</li>
+										
+											<li>예약가능일 : 2023-10-03</li>
+										
+									</ul>
+								</div>
+							</div>
+						</div>
 
 
 
@@ -62,7 +107,7 @@ height:20px;
 		<c:set var="sd" value="${salesDetail}"></c:set>
 	<div id="container">
 <%-- 	<%for (i=0; i<list.size(); i++){%> --%>
-		<div><strong class="tit" style="font-size:26px">${sd[0].title}</strong></div>
+		<div><strong class="tit" >${sd[0].title}</strong></div>
 		<div>
 					 <div class="background-cover" style="background-image: url('${sd[0].thumbnail}');" data-alt="${sd[0].title}"></div>	
 				

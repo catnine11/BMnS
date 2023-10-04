@@ -3,7 +3,7 @@
 <mapper  namespace="com.gd.bmss.mapper.SearchDaoImpl">
 
 <select id="searchBooks" resultType="BInfoVo" >
-  SELECT BOOK_CODE,TITLE,AUTHOR,BOOK_CODE,
+  SELECT BOOK_CODE,TITLE,AUTHOR,
 PUBLISHER,THUMBNAIL,ISBN FROM BOOKINFO b
   WHERE
   <choose>
@@ -16,10 +16,29 @@ PUBLISHER,THUMBNAIL,ISBN FROM BOOKINFO b
         <when test="column == 'ISBN'">
       b.ISBN LIKE '%' || #{isbn} || '%'
     </when>
-    <otherwise>
-    </otherwise>
   </choose>
 </select>
+
+<select id="searchPagingB" resultType="BInfoVo">
+SELECT BOOK_CODE,TITLE,AUTHOR,PUBLISHER,THUMBNAIL,ISBN
+FROM(SELECT BOOK_CODE,TITLE,AUTHOR,PUBLISHER,THUMBNAIL,ISBN,
+ROW_NUMBER() OVER(ORDER BY TITLE) RN
+  FROM BOOKINFO b
+  WHERE
+  <choose>
+    <when test="column == 'TITLE'">
+      b.TITLE LIKE '%' || #{title} || '%'
+    </when>
+    <when test="column == 'AUTHOR'">
+      b.AUTHOR LIKE '%' || #{author} || '%'
+    </when>
+        <when test="column == 'ISBN'">
+      b.ISBN LIKE '%' || #{isbn} || '%'
+    </when>
+  </choose>
+   )WHERE RN BETWEEN #{first} AND #{last}
+</select>
+
 <select id="searchUser"  resultType="UserVo">
 SELECT USER_ID, UPPER(USER_NAME) AS USER_NAME, USER_EMAIL,
   USER_PHONE, USER_ADDRESS, PENALTY_DATE,GUBUN,

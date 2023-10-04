@@ -5,30 +5,59 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>유저 주문 상세</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+
+td,th{
+text-align: center;
+}
+</style>
 </head>
 <body>
-<table id="container">
+<div id="container">
+<table class="table">
+<thead>
 <tr>
-
-<td>주문번호</td>
-<td>아이디</td>
-<td>재고번호</td>
-<td>수량</td>
-<td>가격</td>
-<td>결제상태</td>
-<td>주소</td>
+<th>주문번호</th>
+<th>ID</th>
+<th>이름</th>
+<th>재고번호</th>
+<th>관리번호</th>
+<th>수량</th>
+<th>가격</th>
+<th>결제상태</th>
+<th>주소</th>
 </tr>
-
+</thead>
 <c:forEach var="d" items="${detail}">
 <tr>
 <td>${d.order_seq}</td>
 <td>${d.user_id}</td>
-<td>${d.stock_number}</td>
+<td>${d.user_name}</td>
 <td class="stNum">${d.stock_number}</td>
+<td class="stNum">${d.book_seq}</td>
 <td>${d.order_quantity}</td>
 <td>${d.order_price}</td>
-<td>주문완료</td>
+<c:choose>
+<c:when test="${d.pay_status==1}">
+<td>주문 대기</td>
+</c:when>
+
+<c:when test="${d.pay_status==2}">
+<td>결제대기</td>
+</c:when>
+<c:when test="${d.pay_status==3}">
+<td>결제완료</td>
+</c:when>
+
+<c:when test="${d.pay_status==4}">
+<td>결제취소대기</td>
+</c:when>
+<c:when test="${d.pay_status==5}">
+<td>결제취소</td>
+</c:when>
+</c:choose>
 <td>${d.user_address}</td>
 <td>${d.order_date}</td>
 </tr>
@@ -36,6 +65,7 @@
 </c:forEach>
 
 </table>
-
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
