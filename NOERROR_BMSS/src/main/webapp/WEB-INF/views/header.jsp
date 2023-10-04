@@ -112,6 +112,7 @@ margin-bottom: 20px;
 					}else if(loginVo.getUser_auth().equalsIgnoreCase("A")){
 						%>	
 						<a id = "admin" href = "./adminPage.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">회원관리</a>
+						<a class = "admin" href = "./bookListAdmin.do" style="text-decoration: none; font-size: 20px; margin-right: 5px; color: black;">도서관리</a>
 						<%
 					}else{
 						%>

@@ -78,20 +78,81 @@ $(document).ready(function(){
 });
 
 
+window.onload = function(){
+	var div = document.getElementById("borrowAllUserNow");
+	var a = document.getElementById("showBorrowAllUserNow");
+	
+	a.onclick=function(event){
+//		event.preventDefault();
+		var currentUrl = window.location.href;
+		
+		if(!currentUrl.endsWith('/borrowAllUserNow.do')){
+		}else{
+			if(div.style.display == "none"){
+				div.style.display = "block";
+				event.preventDefault();
+			}else{
+				div.style.display = "none";
+				event.preventDefault();
+			}
+			
+		}
+	}
+	
+	const urlParams = new URLSearchParams(window.location.search);
+	const showDiv = urlParams.get('showDiv');
+	const showDiv2 = urlParams.get('showDiv2');
+
+  // showDiv 값이 'true'인 경우 div를 보이게 함
+	if (showDiv === 'true') {
+	const div1 = document.getElementById('borrowOneUserNow');
+		if (div1) {
+		div1.style.display = 'block';
+		}
+	}
+	
+	if (showDiv2 === 'true') {
+	const div2 = document.getElementById('borrowOneUserHistory');
+		if (div2) {
+		div2.style.display = 'block';
+		}
+	}
+  
+	var reservediv = document.getElementById("getAllReserveNow");
+	var reservea = document.getElementById("showgetAllReserveNow");
+	
+	reservea.onclick=function(event){
+//		event.preventDefault();
+		var currentUrl = window.location.href;
+		
+		if(!currentUrl.endsWith('/getAllReserveNow.do')){
+		}else{
+			if(reservediv.style.display == "none"){
+				reservediv.style.display = "block";
+				event.preventDefault();
+			}else{
+				reservediv.style.display = "none";
+				event.preventDefault();
+			}
+			
+		}
+	}
+  
+  
+	
+}
+
+
+
 $(document).ready(function(){
 	
-	
-//		$("#borrowOneUserNow").hide();
-	
 	$(".detailUserBorrow").click(function(event){
-		
-//		$("#borrowOneUserNow").show();
 		
 		var userId = $(this).closest("td").find(".user_id").val();
     	console.log(userId);
     	
-	    location.href ="./borrowOneUserNow.do?user_id=" + userId;
-		
+//	    location.href ="./borrowOneUserNow.do?user_id=" + userId;
+	    location.href ="./borrowOneUserNow.do?showDiv=true&user_id=" + userId;
 	});
 	
 	

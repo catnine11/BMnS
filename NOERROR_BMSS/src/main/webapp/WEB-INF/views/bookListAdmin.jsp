@@ -12,7 +12,9 @@
 		text-align: center;
 	}
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	function genreList(){
 		var selectedGenre = $("#genreSelect").val();
@@ -131,7 +133,7 @@
 								<td>${book.publisher}</td>
 								<td>${book.publish_date}</td>
 								<td>
-									<input type="button" value="도서 상세" onclick="getDetail(${book.book_code})">
+									<input type="button" value="도서 상세" onclick="getDetail(${book.book_code})" class=" btn btn-info btn-sm">
 								</td>
 							</tr>
 						</c:forEach>
