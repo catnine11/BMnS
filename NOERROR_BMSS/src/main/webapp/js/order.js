@@ -113,6 +113,7 @@ $(document).ready(function(){
        $(".bookChk:checked").each(function(){
 		chkArray.push($(this).val());
 })
+console.log(chkArray);
  $.ajax({
 	type:"post",
 	url:"./addOrder.do",

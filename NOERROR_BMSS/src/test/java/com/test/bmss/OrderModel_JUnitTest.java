@@ -139,10 +139,10 @@ public class OrderModel_JUnitTest {
 		 
 	}
 	
-//	@Test
+	@Test
 	public void addOrder() {
 		OrderVo vo = new OrderVo();
-		vo.setStock_number(11);
+		vo.setStock_number(13);
 		vo.setUser_id(2);
 		
 		odao.addOrder(vo);
@@ -289,7 +289,7 @@ public void inStockPaging() {
 	
 }
 	
-	@Test
+//	@Test
 public void searchPagingB() {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
