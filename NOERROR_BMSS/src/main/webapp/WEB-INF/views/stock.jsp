@@ -9,13 +9,8 @@
 <head>
 
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <title>재고</title>
 </head>
 
@@ -35,7 +30,6 @@ table {
 		<div class="row">
 			<div class="col-sm-6">
 
-				<h1>재고</h1>
 
 				<div>
 					<form>
@@ -46,10 +40,10 @@ table {
 							</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="a" items="${list}">
+							<c:forEach varStatus="vs" var="a" items="${list}">
 								<tr>
 									<td class="detailTD"><input type="hidden"class="booksDetail" name="booksDetail" value="${a.book_code}">
-										${a.status_title}</td>
+									${vs.index+1}.${a.status_title}</td>
 									<td>
 									<td><input type="hidden" class="statCode" value="${status_code}"></td>
 								</tr>

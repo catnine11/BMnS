@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.bmss.mapper.IStockDao;
 import com.gd.bmss.service.IStockService;
+import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.Book_StatusVo;
+import com.gd.bmss.vo.Paging_Vo;
 import com.gd.bmss.vo.StockVo;
 
 @Controller
@@ -132,11 +134,39 @@ public class StockController {
 
 	}
 	@RequestMapping(value="/cronStockList.do",method = RequestMethod.GET)
-	public String cronStockList(Model model) {
+	public String cronStockList(Model model,@RequestParam (name="page",required =false,defaultValue = "1") int selectPage
+			,HttpSession session) {
 		
 	List<StockVo>	list	=dao.getInStock();
 		
 		model.addAttribute("getInStock",list);
+		
+		Paging_Vo p = new Paging_Vo();
+		//총개시물의 갯수
+		p.setTotalCount(list.size());
+		//출력될 게시물의개수
+		p.setCountList(7);
+		//화면에 몇개의 페이지를 보여줄지
+		p.setCountPage(3);
+		//총페이지 개수 이미 countList를 4로 설정 해줬으니까 totalcount(12)만 
+		//설정해주면 토탈페이지는 정해지는데 토탈 카운트도 위에서 설정 해줬으니 get으로 가져올 수 있음
+		p.setTotalPage(p.getTotalCount());
+		//현재 페이지번호
+		p.setPage(selectPage);
+		//시작 페이지번호
+		p.setStartPage(selectPage);
+		//끝페이지
+		p.setEndPage(p.getCountPage());
+		//보여지는 게시물의 첫번째와 마지막을 설정하는 것 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("first",p.getPage()*p.getCountList()-(p.getCountList()-1));//
+		map.put("last", p.getPage()*p.getCountList());//현재페이지
+		//출력(게시글,페이지객체)
+	List<StockVo> lists	=dao.inStockPaging(map);
+		
+	model.addAttribute("lists",lists);
+	model.addAttribute("page",p);
+		
 		
 		return "inStock";
 		

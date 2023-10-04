@@ -17,7 +17,9 @@
 <%@include file="header.jsp"%>
 <body>
 <input type="hidden" id="loginVo" value="${loginVo}">
+
 <div><a href="./oderListUser.do?user=${loginVo.user_id}">유저주문 조회</a></div>
+
 	<div style="margin-left: 5%; margin-right: 5%;">
 	<h2>내 정보</h2>
 		<table class="table table-hover" style="margin-top: 5%; border-top: 2px solid #e1e1e1">

@@ -107,6 +107,20 @@ public List<BookInfoVo> getSalesDetail(String seq) {
 	return sql.selectList(NS+"getSalesDetail",seq);
 }
 
+
+@Override
+public List<BookInfoVo> sellStockPaging(Map<String, Object> map) {
+List<BookInfoVo> list	=sql.selectList(NS+"sellStockPaging",map);
+	return list;
+}
+
+
+@Override
+public List<StockVo> inStockPaging(Map<String, Object> map) {
+	List<StockVo> list	=sql.selectList(NS+"inStockPaging",map);
+	return list;
+}
+
 //@Override
 //public List<StockVo> normalToStockst() {
 //		sql.update(NS+"normalToStocks")	;

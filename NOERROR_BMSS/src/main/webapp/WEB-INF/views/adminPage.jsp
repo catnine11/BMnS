@@ -11,19 +11,12 @@
 <meta charset="UTF-8">
 <title>회원관리</title>
 <link rel="stylesheet" href="./css/adminPage.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src="https://unpkg.com/ionicons@4.4.1/dist/ionicons.js"></script>
 </head>
 <%@include file="header.jsp"%>
 <body>
-	<a href="./stocklist.do">재고목록</a>
-	<a href="./orderlist.do">주문목록</a>
-	<a href="./cronStockList.do">재고대기목록</a>
 
 	<a href="./bookListAdmin.do">도서관리</a>
 	<a href="./borrowUserList.do">회원대출관리</a>
