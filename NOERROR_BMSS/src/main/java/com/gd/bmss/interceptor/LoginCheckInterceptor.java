@@ -19,9 +19,9 @@ public class LoginCheckInterceptor implements AsyncHandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		log.info("!@#!@#!@#인터셉터 시작, 로그인 Session 확인 존재 true / 없으면 false logout.do 호출!@#!@#!@#");
+		log.info("@@@@@@@@@@@@@@@@@인터셉터 시작, 로그인 Session 확인 존재 true / 없으면 false logout.do 호출@@@@@@@@@@@@@@@@@");
 		if(request.getSession().getAttribute("loginVo") == null) {
-			log.info("!@#!@#!@#로그인 정보가 없습니다!@#!@#!@#");
+			log.info("@@@@@@@@@@@@@@@@로그인 정보가 없습니다@@@@@@@@@@@@@@@@@@@");
 			response.sendRedirect("./logout.do");
 			return false;
 		}

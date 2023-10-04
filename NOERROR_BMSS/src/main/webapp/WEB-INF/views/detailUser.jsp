@@ -9,11 +9,104 @@
 <meta charset="UTF-8">
 <title>내정보</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript" src="./js/payment.js"></script>
 </head>
+<style type="text/css">
+#tr-hover:hover {
+    background-color: #F5EFFB;
+}
+.frame {
+  width: 90%;
+  margin: 40px auto;
+  text-align: center;
+}
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-8 {
+  background-color: #f0ecfc;
+background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-8 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-8:before, .btn-8:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #c797eb;
+  transition: all 0.3s ease;
+}
+.btn-8:before{
+   height: 0%;
+   width: 2px;
+}
+.btn-8:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-8:hover:before {
+  height: 100%;
+}
+.btn-8:hover:after {
+  width: 100%;
+}
+.btn-8:hover{
+  background: transparent;
+}
+.btn-8 span:hover{
+  color: #c797eb;
+}
+.btn-8 span:before,
+.btn-8 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #c797eb;
+  transition: all 0.3s ease;
+}
+.btn-8 span:before {
+  width: 2px;
+  height: 0%;
+}
+.btn-8 span:after {
+  height: 2px;
+  width: 0%;
+}
+.btn-8 span:hover:before {
+  height: 100%;
+}
+.btn-8 span:hover:after {
+  width: 100%;
+}
+</style>
 <%@include file="header.jsp"%>
 <body>
 <input type="hidden" id="loginVo" value="${loginVo}">
@@ -37,7 +130,7 @@
 			</thead>
 			<tbody>
 
-					<tr>
+					<tr id="tr-hover">
 						<!-- 				<td style="width: 5%"><a class="text-reset">asdasd</a></td> -->
 						<td style="width: 10%" class="text-center">${loginVo.user_name}</td>
 						<td style="width: 20%" class="text-center">${loginVo.user_email}</td>
@@ -55,21 +148,17 @@
 						</c:choose>
 						<td style="width: 3%" class="text-center">
 
-						<input type="button" value="내 서재" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'"> 
-            <input type="button" value="결제정보" onclick="location.href='./payInfo.do'"></td>
+						<input type="button" class="custom-btn btn-8" value="내 서재" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'" style="width: 70px; height: 35px;">  
+           				<input type="button" class="custom-btn btn-8" value="결제정보" onclick="location.href='./payInfo.do'" style="width: 70px; height: 35px;"></td>
 
 					</tr>
 			</tbody>
 		</table>
 
-		<p class="text-center">
-				<button id="modifyBtn" name="modify" onclick="location.href='./modifyUser.do'">정보수정</button>
-				<button id="deleteBtn" name="delete" onclick="location.href='./deleteUser.do'">회원탈퇴</button>
-			<a class="text-reset" href="/boardChat?requestedPage="></a>&nbsp;&nbsp;
+		<p class="text-center frame">
+				<button id="modifyBtn" name="modify" class="custom-btn btn-8" onclick="location.href='./modifyUser.do'"><span>정보수정</span></button>
+				<button id="deleteBtn" name="delete" class="custom-btn btn-8" onclick="location.href='./deleteUser.do'"><span>회원탈퇴</span></button>
 		</p>
-		
-<!--     <a href="./myLibrary.do">내 서재</a> -->
-    
 
 	</div>
 </body>

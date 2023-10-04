@@ -21,8 +21,11 @@ body {
     letter-spacing: -0.25px;
     box-sizing: border-box;
     margin: 0;
+    margin-top: 30px;
     padding: 0;
     border: 0;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
 .shortcutList{
 	    -webkit-text-size-adjust: 100%;
@@ -77,7 +80,7 @@ body {
 <body>
 
 <a id="payInfo2"></a>
-	<div style="background-color: #D9E5FF; padding-bottom: 100px;">
+	<div style="background-color: #F5EFFB; padding-bottom: 100px;">
 		<div>
 			<form id="search">
 				<select name="selectOpt">

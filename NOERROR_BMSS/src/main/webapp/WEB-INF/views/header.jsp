@@ -9,8 +9,9 @@
 	#snb {
 	position: relative;
 	background: #fff;
-	border-bottom: 1px solid #e1e1e1;
+ 	border-bottom: 1px solid #e1e1e1; 
 	padding-bottom: 40px;
+	padding-top: 20px;
 }
 
 .site {
