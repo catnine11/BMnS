@@ -18,8 +18,8 @@
 <%@include file="header.jsp"%>
 <body>
 
-	<a href="./bookListAdmin.do">도서관리</a>
-	<a href="./borrowUserList.do">회원대출관리</a>
+<!-- 	<a href="./bookListAdmin.do">도서관리</a> -->
+<!-- 	<a href="./borrowUserList.do">회원대출관리</a> -->
 	
 	<form>
     <div class="search" style="float: right; margin-right: 5%; margin-top: 5%; margin-bottom: 5px;">
@@ -71,8 +71,8 @@
 						</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
 						<td style="width: 3%" class="text-center">
-						<input	type="button" value="대출정보" onclick="location.href='./borrowOneUserNow.do?user_id=${lists.user_id}'"> 
-						<input	type="button" value="예약정보" onclick="location.href='./getAllReserveNow.do'"> 
+						<input	type="button" value="대출현황" onclick="location.href='./borrowOneUserNow.do?showDiv=true&user_id=${lists.user_id}'"> 
+						<input	type="button" value="대출내역" onclick="location.href='./borrowOneUserHistory.do?showDiv2=true&user_id=${lists.user_id}'"> 
 						<input	type="button" value="결제정보" onclick="location.href='#'"></td>
 					</tr>
 				</c:forEach>

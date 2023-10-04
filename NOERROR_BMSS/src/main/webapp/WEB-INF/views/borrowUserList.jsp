@@ -46,11 +46,12 @@
 		<h2>현황</h2>
 			<div>
 				<h3>대출현황</h3>
-				<div id="borrowAllUserNow">
-				<p><a href="./borrowAllUserNow.do">전체회원</a></p>
+				<p><a href="./borrowAllUserNow.do" id="showBorrowAllUserNow">전체회원</a></p>
+<!-- 				<p><a href="#" id="showBorrowAllUserNow">전체회원</a></p> -->
+				<div id="borrowAllUserNow" style="display:none;">
 					<input type="button" id="returnBook" value="반납">
 <%-- 					${borrowNow} --%>
-					<table>
+					<table class="table table-hover">
 						<tbody>
 							<tr>
 								<th>
@@ -116,7 +117,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div id="borrowOneUserNow" >
+				<div id="borrowOneUserNow" style = "display: none;">
 <%-- 				<p><a href="./borrowOneUserNow.do?user_id=${borrow.user_id}">특정회원</a></p> --%>
 <%-- 					${borrowOneNow} --%>
 <%-- 					${condition} --%>
@@ -134,10 +135,10 @@
 					<p>
 						<c:if test="${condition.OVERDUE >0}">
 							<b>${borrowOneNow[0].user_id} 회원의 패널티 기간 :</b>
-							<span style="color: indigo;">${borrowOneNow[0].penalty_date}</span>까지
+							<span style="color: indigo;">${borrowOneNow[0].penalty_date}</span>
 						</c:if>
 					</p>
-					<table>
+					<table class="table table-hover">
 						<tbody>
 							<tr>
 								<th>회원아이디</th>
@@ -185,7 +186,7 @@
 									</td>
 									<td>
 <%-- 										${borrow.penalty_date} --%>
-										<input type="hidden" class="user_id" name="user_id" value="${b.user_id}">
+										<input type="hidden" class="user_id" name="user_id" value="${borrow.user_id}">
 									</td>
 								</tr>
 							</c:forEach>
@@ -195,10 +196,10 @@
 			</div>
 			<div>
 				<h3>예약현황</h3>
-				<p><a href="./getAllReserveNow.do">예약현황</a></p>
-				<div id="getAllReserveNow">
+				<p><a href="./getAllReserveNow.do" id="showgetAllReserveNow">예약현황</a></p>
+				<div id="getAllReserveNow" style="display:none;">
 <%-- 				${reserveList} --%>
-					<table>
+					<table class="table table-hover">
 						<tbody>
 							<tr>
 								<th>관리번호</th>
@@ -214,7 +215,7 @@
 								<td>${book.reserve_title}</td>
 								<td>${book.user_id}</td>
 								<td>
-								${book.return_date}
+									${book.return_date}
 								</td>
 								<td>${book.resvVo.user_id}</td>
 								<td>${book.reserve_date}</td>
@@ -227,46 +228,81 @@
 		</div>
 		<div>
 		<h2>내역</h2>
-			<div>
+<!-- 			<div> -->
+<%-- 				<p><a href="./borrowOneUserHistory.do?user_id=${sessionScope.loginVo.user_id}">대출내역</a></p> --%>
+				<div id="borrowOneUserHistory" style="display: none;">
 				<h3>대출내역</h3>
-<%-- 				<p><a href="./myBorrowHistory.do?user_id=${sessionScope.loginVo.user_id}">대출내역</a></p> --%>
-<!-- 				<div id="myBorrowHistory"> -->
-<!-- 					<table> -->
-<!-- 						<tbody> -->
-<!-- 							<tr> -->
-<!-- 								<th>제목</th> -->
-<!-- 								<th>저자</th> -->
-<!-- 								<th>출판사</th> -->
-<!-- 								<th>장르</th> -->
-<!-- 								<th>대출일</th> -->
-<!-- 								<th>반납(예정)일</th> -->
-<!-- 								<th>대출상태</th> -->
-<!-- 							</tr> -->
-<%-- 							<c:forEach var="book" items="${borrowHistory}"> --%>
-<%-- 							<c:forEach var="b" items="${book.bsVo}"> --%>
-<!-- 							<tr> -->
-<%-- 								<td>${b.borrow_title}</td> --%>
-<%-- 								<td>${book.author}</td> --%>
-<%-- 								<td>${book.publisher}</td> --%>
-<%-- 								<td>${book.genre_name}</td> --%>
-<%-- 								<td>${b.start_date}</td> --%>
-<%-- 								<td>${b.return_date}</td> --%>
-<%-- 								<td><c:choose> --%>
-<%-- <%-- 								<td>${b.borrow_status}</td> --%> --%>
-<%-- 									<c:when test="${b.borrow_status=='Y'}"> --%>
-<!-- 										<p style="color: red;">대출중</p> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<p>반납완료</p> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose></td> --%>
-<!-- 							</tr> -->
-<%-- 							</c:forEach> --%>
-<%-- 							</c:forEach> --%>
-<!-- 						</tbody> -->
-<!-- 					</table> -->
-<!-- 				</div> -->
-			</div>
+<%-- 				${borrowOneAll} --%>
+					<p>
+						<b>${borrowOneAll[0].user_id} 회원의 패널티 여부 :</b>
+						<c:choose>
+							<c:when test="${condition.OVERDUE >0}">
+								<span style="color: red">있음</span>
+							</c:when>
+							<c:otherwise>
+								<span style="color: black;">없음</span>
+							</c:otherwise>
+						</c:choose>
+					</p>
+					<p>
+						<c:if test="${condition.OVERDUE >0}">
+							<b>${borrowOneAll[0].user_id} 회원의 패널티 기간 :</b>
+							<span style="color: indigo;">${borrowOneAll[0].penalty_date}</span>
+						</c:if>
+					</p>
+					<table class="table table-hover">
+						<tbody>
+							<tr>
+								<th>회원아이디</th>
+								<th>관리번호</th>
+								<th>도서제목</th>
+								<th>대출일</th>
+								<th>반납(예정)일</th>
+								<th>대출상태</th>
+							</tr>
+							<c:forEach var="borrow" items="${borrowOneAll}">
+							<tr>
+								<td>${borrow.user_id}</td>
+									<td>${borrow.book_seq}</td>
+									<td>${borrow.borrow_title}</td>
+									<td>${borrow.start_date}</td>
+									<td>
+									<%
+									    // 현재 날짜를 가져옵니다.
+									    Date currentDate = new Date();
+									    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+									    String formattedCurrentDate = sdf.format(currentDate);
+									    pageContext.setAttribute("currentDate", formattedCurrentDate);
+// 									    System.out.println("현재시간"+currentDate);
+									%>
+									<c:choose>
+										<c:when test="${borrow.return_date < currentDate && borrow.borrow_status=='Y'}">
+											<span style="color: red;"> ${borrow.over_return}일 연체중</span>
+<%-- 											<p>${b.return_date}예정,<br><span style="color: red;"> 연체중</span></p> --%>
+										</c:when>
+										<c:when test="${borrow.return_date >= currentDate && borrow.borrow_status=='Y'}">
+											<span style="color: "> ${borrow.return_date}</span>
+<%-- 											<p>${b.return_date}예정,<br><span style="color: red;"> 연체중</span></p> --%>
+										</c:when>
+										<c:otherwise>
+											<p style="color: ">${borrow.return_date}</p>
+										</c:otherwise>
+									</c:choose>
+									</td>
+									<td> <c:choose>
+										<c:when test="${borrow.borrow_status=='Y'}">
+											대출중
+										</c:when>
+										<c:otherwise>
+											반납완료
+										</c:otherwise>
+									</c:choose></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+<!-- 			</div> -->
 		</div>
 	</div>
 </div>

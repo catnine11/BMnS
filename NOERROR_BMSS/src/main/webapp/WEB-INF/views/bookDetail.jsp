@@ -9,32 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>NOERROR 책 상세페이지</title>
-<style type="text/css">
-/* 	#thumbnail{ */
-/* 		height: 250px; */
-/* 		width: 200px; */
-/* 		padding: 10px; */
-/* 		margin-top: 20px; */
-/* 	} */
-	
-/* 	li{ */
-/* 		list-style: none; */
-/* 	} */
-	
-/* 	.info> ul> li{ */
-/* 		display: inline; */
-/* 	} */
-	
-/* 	.info> ul> li:not(:last-child)::after { */
-/*         content: " | "; */
-/*         color: #ccc; */
-/* 	} */
-	
-/* 	table, th, tr, td{ */
-/* 		text-align: center; */
-/* 	} */
-	
-</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/bookDetail.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -58,7 +32,6 @@
 // 		}
 // 	}
 // }
-
 </script>
 </head>
 <%@include file="header.jsp" %>
@@ -82,7 +55,7 @@
 				</div>
 				<div class="binfo">
 					<div class="adminOnly">
-						<input type="button" name="" value="도서정보수정" class="">
+<!-- 						<input type="button" name="" value="도서정보수정" class=""> -->
 					</div>
 					<div class="title">
 						<b>${detail.title}</b>
@@ -165,18 +138,10 @@
 <%-- 				${detail}<br> --%>
 <%-- 				${detail.bsVo}<br> --%>
 
-<%-- 			<% --%>
-<!-- 				// 현재 날짜를 가져옵니다. -->
-<!-- 				Date currentDate = new Date(); -->
-<!-- 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); -->
-<!-- 				String formattedCurrentDate = sdf.format(currentDate); -->
-<!-- 				pageContext.setAttribute("currentDate", formattedCurrentDate); -->
-<!-- 				System.out.println("현재시간"+currentDate); -->
-<!-- 			%> -->
 			<input type="hidden" class="nowDate" value="${currentDate}">
 <%-- 			${status} --%>
 				<c:choose>
-					<c:when test="${empty status}">
+					<c:when test="${empty status && sessionScope.loginVo.user_auth!='A'}">
 						<b>현재 대출 또는 예약 가능한 책이 없습니다.</b>
 					</c:when>
 				<c:otherwise>
@@ -192,9 +157,10 @@
 							<th>예약상태</th>
 							<th class="adminOnly">도서상태변경</th>
 						</tr>
-						<c:forEach  var="d" items="${status.bsVo}">
+<%-- 						<c:forEach  var="d" items="${status.bsVo}"> --%>
 							<c:choose>
 							<c:when test="${sessionScope.loginVo.user_auth=='A'}">
+								<c:forEach  var="d" items="${detail.bsVo}">
 								<tr>
 									<td class="adminOnly book_seq">${d.book_seq}</td>
 									<td>${status.genre_name}</td>
@@ -212,8 +178,10 @@
 										</select>
 									</td>
 								</tr>
+								</c:forEach>
 							</c:when>
 							<c:otherwise>
+							<c:forEach  var="d" items="${status.bsVo}">
 								<c:if test="${d.status_code=='A'}">
 									<tr>
 										<td class="adminOnly">${d.book_seq}</td>
@@ -231,7 +199,7 @@
 												<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
 												<input type="hidden" name="reserve_user" class="reserve_user" value="${d.user_id}">
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
-												<input type="button" class="requestBorrow" value="대출신청">
+												<input type="button" class="requestBorrow btn btn-info btn-sm" value="대출신청">
  											</c:when>
  											</c:choose>
 										</td>
@@ -249,15 +217,16 @@
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
 												<input type="hidden" name="borrow_status" class="borrow_status" value="${d.borrow_status}">
 												<input type="hidden" name="reserve_title" class="reserve_title" value="${status.title}">
-												<input type="button" class="requestReserve" value="예약신청">
+												<input type="button" class="requestReserve btn btn-success btn-sm" value="예약신청">
 		 									</c:if>
 										</td>
 										<td class="adminOnly"></td>
 									</tr>
-								</c:if>					
+								</c:if>		
+								</c:forEach>			
 							</c:otherwise>
 							</c:choose>
-						</c:forEach>
+<%-- 						</c:forEach> --%>
 					</tbody>
 				</table>
 				</c:otherwise>

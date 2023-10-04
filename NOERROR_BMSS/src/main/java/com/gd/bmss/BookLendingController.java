@@ -134,6 +134,10 @@ public class BookLendingController {
 		List<BorrowVo> borrowList = service.getOneBorrowHistory(user_id);
 		model.addAttribute("borrowOneAll", borrowList);
 		
+		String userId = Integer.toString(user_id);
+		Map<String, Object> condition = service.borrowCondition(userId);
+		model.addAttribute("condition", condition);
+		
 		return "borrowUserList";
 	}
 	
