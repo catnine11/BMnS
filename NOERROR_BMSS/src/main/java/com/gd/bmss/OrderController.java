@@ -194,7 +194,7 @@ public class OrderController {
 		    for (String string : chkArray) {
 		        if (orderStockNumber == Integer.parseInt(string)) {
 		        	stNumIsc = false;
-		            break; // 이 부분에서 내부 for 루프를 종료하고 외부 for 루프로 이동
+		            break; 
 		        
 		        }
 		    }
