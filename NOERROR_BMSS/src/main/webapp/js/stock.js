@@ -40,7 +40,7 @@ html+="			<th>재고번호</th>                                                 
 html+="			<th>도서명</th>                                                                                     ";
 html+="			<th>도서상태</th>                                                                                   ";
 //html+="			<td>판매가능 여부</td>                                                                              ";
-html+="			<th>도서 가격</th>                                                                                  ";
+html+="			<th class='col-sm-1'>도서 가격</th>                                                                                  ";
 html+="		</tr>                                                                                                   ";
 html+="		</thead>                                                                                                   ";
 html+="		<tbody>                                                                                                   ";

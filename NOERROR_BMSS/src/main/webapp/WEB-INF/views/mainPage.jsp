@@ -57,8 +57,8 @@ body {
 					<option class="searchOption" value="AUTHOR">저자</option>
 					<option class="searchOption" value="ISBN">ISBN</option>
 				</select> 
-				<input id="booksearch"   type="text" name="inputVal">
-				<button id="srcBtn" type="button">검색</button>
+				<input id="booksearch"   type="text" name="inputVal" placeholder="검색어를 입력하세요">
+				<button id="srcBtn" type="button">도서검색</button>
 			</form>
 		</div>
 		<div>

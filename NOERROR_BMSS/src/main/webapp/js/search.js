@@ -12,7 +12,7 @@ $(document).ready(function(){
 		}else{
 			var frm = document.forms[0];
 			frm.action="./searchBooks.do";
-			frm.method="post";
+			frm.method="get";
 			frm.submit();	
 			
 		}
@@ -32,7 +32,7 @@ $(document).ready(function () {
       } else {
         var frm = document.forms[0];
         frm.action = "./searchBooks.do";
-        frm.method = "post";
+        frm.method = "get";
         frm.submit();
       }
     }
@@ -58,7 +58,7 @@ $(document).ready(function () {
       } else {
         var frm = $("form:first");
         frm.attr("action", "./searchUsers.do");
-        frm.attr("method", "post");
+        frm.attr("method", "get");
         frm.submit();
       }
     }

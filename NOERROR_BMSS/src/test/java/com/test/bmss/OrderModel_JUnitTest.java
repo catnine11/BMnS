@@ -45,6 +45,7 @@ public class OrderModel_JUnitTest {
 	@Autowired
 	private IOrderDao odao;
 	
+	
 //	@Test
 	public void test() {
 		
@@ -265,13 +266,43 @@ public void getSalesDetail() {
 	
 }
 	
-	@Test
-public void bookSave() {
+//	@Test
+public void sellStockPaging() {
 		
-	List<BookInfoVo>list	=sdao.saveBook();
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("first", "1");
+		map.put("last", "6");
+	List<BookInfoVo> list=	dao.sellStockPaging(map);
+	assertEquals(6, list.size());
 	
 }
+
+	
+//	@Test
+public void inStockPaging() {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("first", "1");
+		map.put("last", "7");
+	List<StockVo> list=	dao.inStockPaging(map);
+	assertEquals(7, list.size());
+	
+}
+	
+	@Test
+public void searchPagingB() {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("column", "TITLE");
+		map.put("title", "멸망");
+		map.put("first", "1");
+		map.put("last", "7");
+		List<BookInfoVo>	list=sdao.searchPagingB(map);
+	assertNotNull(list);
+	
+}
+	
 	
 	
 }

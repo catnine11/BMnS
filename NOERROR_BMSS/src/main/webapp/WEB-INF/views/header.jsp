@@ -82,6 +82,11 @@ margin-bottom: 20px;
 <%
 	UserVo loginVo = (UserVo)session.getAttribute("loginVo");
 %>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
 	<header>
@@ -133,12 +138,30 @@ margin-bottom: 20px;
 
 					<li><a class="navtab" id="navdrop" href="#">자료검색</a></li>
 					<li><a class="navtab" id="navdrop" href="./bookListUser.do">신착도서</a></li>
+					 <%if(loginVo!=null && loginVo.getUser_auth().equalsIgnoreCase("A")){ %>
+		  <li class="dropdown">
+                <a class="navtab dropdown-toggle" id="navdrop" data-toggle="dropdown" href="./getSellableStock.do">재고 및 주문<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <li role="presentation"><a href="./stocklist.do">재고목록</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a href="./cronStockList.do">재고대기목록</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a href="./orderlist.do">주문목록</a></li>
+                    <li role="presentation" class="divider"></li>
+                </ul>
+            </li>
+            <%}else if(loginVo!=null && loginVo.getUser_auth().equalsIgnoreCase("U")){  %>
+					<li><a class="navtab" id="navdrop" href="./oderListUser.do?user=${loginVo.user_id}">주문 조회</a></li>
+				<%}%>
+				<%if(!(loginVo!=null && loginVo.getUser_auth().equalsIgnoreCase("A"))){ %>
 					<li><a class="navtab" id="navdrop" href="./getSellableStock.do">판매도서목록</a></li>
-					<li><a class="navtab" id="navdrop" href="#">도서관소개</a></li>
+				<%} %>
 					<li></li>
 				</ul>
 			</div>
 		</nav>
+		<script type="text/javascript"
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</header>
 </body>
 </html>

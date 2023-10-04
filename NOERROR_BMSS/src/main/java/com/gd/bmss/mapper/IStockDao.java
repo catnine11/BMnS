@@ -28,5 +28,7 @@ public interface IStockDao {
 	public List<StockVo> booksDetail(String seq);
 	public List<BookInfoVo> getSalesDetail(String seq);
 	
+	public List<BookInfoVo>sellStockPaging(Map<String, Object>map);
+	public List<StockVo>inStockPaging(Map<String, Object>map);
 	
 }

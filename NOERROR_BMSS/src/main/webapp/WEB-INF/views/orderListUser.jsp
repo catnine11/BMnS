@@ -21,8 +21,12 @@ List<OrderVo> odu = (List<OrderVo>) request.getAttribute("orderListUser");
 .d-flex{
 margin:20px auto;
 justify-content: center;
-gap:50px;
+gap:30px;
 }
+td{
+text-align: center;
+}
+
 </style>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -42,14 +46,14 @@ gap:50px;
 <div id="container">
 <table class="table">
 <thead>
-            <tr>
-                <th scope="col"><input type="checkbox" name="allCheck"></th>
-                <th scope="col">썸네일</th>
-                <th scope="col">도서명</th>
-                <th scope="col">저자</th>
-                <th scope="col">수량</th>
-                <th scope="col">가격</th>
-                <th scope="col">결제상태</th>
+            <tr class="thClas">
+                <th scope="col" style="text-align: center;"><input type="checkbox" name="allCheck"></th>
+                <th scope="col" style="text-align: center;">썸네일</th>
+                <th scope="col" style="text-align: center;">도서명</th>
+                <th scope="col" style="text-align: center;">저자</th>
+                <th scope="col" style="text-align: center;">수량</th>
+                <th scope="col" style="text-align: center;">가격</th>
+                <th scope="col" style="text-align: center;">결제상태</th>
             </tr>
 </thead>
 <tbody>
@@ -79,7 +83,6 @@ gap:50px;
 <c:when test="${ordU.pay_status==5}">
 <td>결제취소</td>
 </c:when>
-
 </c:choose>
 </tr>
 </c:forEach>
