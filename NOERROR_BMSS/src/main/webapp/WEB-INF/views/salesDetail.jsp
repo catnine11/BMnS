@@ -13,34 +13,33 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style type="text/css">
 #container{
-margin:20px 0px 0px 200px;
+margin:20px 0px 0px 680px;
 border:2px solid black;
 height:420px;
-width:450px;
+width:500px;
+text-align: left;
 }
 strong{
 margin:10px 35px auto;
-font-size: 20px;
-
-}
-.container .tit{
-    position: relative;
-    padding: 10px 15px;
-    font-weight: 600;
-    font-size: 1.154em;
-    line-height: 1.3;
-    background-color: #f4f4f4;
+text-align:center;
+font-size: 15px;
 
 }
 
 .background-cover {
 	float:left;
     background-size: cover;
-    width: 200px; /* 원하는 너비 조절 */
-    height: 300px; /* 원하는 높이 조절 */
+    width: 150px; /* 원하는 너비 조절 */
+    height: 250px; /* 원하는 높이 조절 */
     
 }
 .auth,.publ,.date,.isbn,.bPrice{
+margin-left:180px;
+margin-bottom: 20px;
+
+}
+
+.bookChk{
 margin-left:180px;
 margin-bottom: 20px;
 
@@ -56,6 +55,13 @@ top:220px;
 width:50px;
 height:20px;
 }
+.d-flex{
+margin-top: 40px;
+}
+.d-flex #addOrder{
+margin-left: 20px;
+
+}
 
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -64,42 +70,6 @@ height:20px;
 <%@include file="header.jsp"%>
 
 <body>
-<div class="resultViewDetail">
-							<div class="tit"><h4>왜 어떤 정치인은 다른 정치인보다 위험한가</h4></div>
-							<div class="resultBookInfo">
-								<div class="thumb">
-									<div class="cover"><span class="img"><img src="https://www.library.kr/attachfile/DRMContent/ebook/4801187064993/L4801187064993.jpg" alt="왜 어떤 정치인은 다른 정치인보다 위험한가"></span></div>
-								</div>
-								<div class="bookDataWrap">
-									<p class="ebookSupport">
-									
-										<span class="ico kyobo"><b class="blind">교보</b></span>
-									
-									
-									
-									
-										
-										
-											<span class="ico ebook"><b class="blind">전자책</b></span>
-										
-									
-									</p>
-									<ul class="sdot-list">
-										<li>저자 : <a href="/cyber/ebook/ebookList.do?searchCondition=AUTHOR&amp;searchKeyword=제임스 길리건&amp;serviceTypePc=PC&amp;serviceTypeMobile=PC_MOBILE_TABLET" class="writer">제임스 길리건</a></li>
-										<li>출판사 : <a href="/cyber/ebook/ebookList.do?searchCondition=PUBLISHER&amp;searchKeyword=교양인&amp;serviceTypePc=PC&amp;serviceTypeMobile=PC_MOBILE_TABLET" class="publisher">교양인</a></li>
-										<li>출판연도 : 20230808</li>
-										<li>파일형식 : EPUB</li>
-										<li>ISBN : </li>
-										<li>별점 : <span class="ratingStar"><span style="width:0%;"></span></span> 리뷰(0)</li>
-										<li>도서현황 : 대출(5/5) , 예약(20/20)</li>
-										
-											<li>예약가능일 : 2023-10-03</li>
-										
-									</ul>
-								</div>
-							</div>
-						</div>
-
 
 
 <a href="javascript:history.back(-1);">뒤로가기</a>
@@ -107,13 +77,13 @@ height:20px;
 		<c:set var="sd" value="${salesDetail}"></c:set>
 	<div id="container">
 <%-- 	<%for (i=0; i<list.size(); i++){%> --%>
-		<div><strong class="tit" >${sd[0].title}</strong></div>
+		<div><strong class="tit" style="text-align: center;" >${sd[0].title}</strong></div>
 		<div>
 					 <div class="background-cover" style="background-image: url('${sd[0].thumbnail}');" data-alt="${sd[0].title}"></div>	
 				
 	<div class="d-flex">
     <input name="order" class="btn btn-primary" id="addOrder" type="button" value="주문목록에 담기">
-    <input name="pay" class="btn btn-success" id="purchase" type="button" value="바로구매">
+<!--     <input name="pay" class="btn btn-success" id="purchase" type="button" value="바로구매"> -->
 	</div>
 						
 		<ul>
@@ -123,172 +93,23 @@ height:20px;
   <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${sd[0].publish_date}" var="pDate"></fmt:parseDate>
   <fmt:formatDate pattern="yyyy-MM-dd" value="${pDate}"/>
   </c:set>
+<li class="date">출판연도:${frmDate}</li>
+<li class="isbn">ISBN:${sd[0].isbn}</li>	
 <%
     for(int i=0; i<list.size(); i++){
 %>
-       <li> <input class="bookChk" type="checkbox" value="<%= list.get(i).getStock_number() %>">목록<%=i+1%></li>
+       <li> <input style="margin-left: 50px;" class="bookChk" type="checkbox" value="<%= list.get(i).getStock_number() %>">판매목록<%=i+1%>&nbsp;가격:<%=list.get(i).getBook_price()%></li>
       <li>  <input class="price" type="hidden" value="<%=list.get(i).getBook_price() %>" ></li>
 <%
     }
 %>
-<li class="date">출판연도:${frmDate}</li>
-<li class="isbn">ISBN:${sd[0].isbn}</li>	
-<li class="bPrice">가격:${sd[0].book_price}</li>	
 		</ul>
 		</div>
 		
-		
-<!-- 		<div><input type="button" value="주문목록에 담기"></div> -->
 	</div>
 	
 <script type="text/javascript" src="./js/order.js"></script>
 
-
-
-
-
-
-<script type="text/javascript">
-// var totalPrice=0;
-// var totalCount=0;
-// for(var i=0; i<$("");i++) {
-// var price=	list.get(i).getBook_price();
-// var quantity=	list.get(i).getOrder_quantity();
-// var bookPrice=	price*quantity;
-
-// totalPrice += bookPrice; 
-// totalCount+=quantity;
-
-//체크된 사이즈로 해야됨
-$(document).ready(function(){
-	$("#purchase").click(function(){
-		var purchaseChk= new Array();//선택된수량
-		var price = new Array();//선택된 가격
-		
-		$(".bookChk:checked").each(function(){
-			purchaseChk.push($(this).val());
-		})
-	
-		$(".price").each(function(){
-		price.push($(this).val());	
-		})
-		
-		console.log(price);
-		
-// 		for (var i = 0; i < purchaseChk.length; i++) {
-// 				var array_element = array[i];
-				
-// 			}
-// 			console.log(purchaseChk.length);
-			console.log(purchaseChk);
-		
-// 	console.log(purchaseChk);
-	})
-	
-})
-
-
-
-
-
-
-
-
-
-<%-- var totalPrice=<%=totalPrice%> --%>
-<%-- var totalCount=<%=totalCount%> --%>
-
-
-$(document).ready(function(){
-
-$("#payBtn").click(function(){
-	console.log(totalPrice);
-	console.log(totalCount);
-	var thumbNail=new Array();
-	var stock_num=new Array();
-	var title=new Array();
-
-	$(".delBox:checked").each(function(){
-var	thumb=	$(this).closest('tr').find('.background-cover').attr('data-alt');
-var stNum=	$(this).val();
-var tit = $(this).closest('tr').find('.tit').text();		
- 	
-	thumbNail.push(thumb);
-	stock_num.push(stNum);
-	title.push(tit);
-		
-	
-	console.log(thumbNail)
-	console.log(stock_num)
-	console.log(title)
-	
-	
-var email = '${loginVo.user_email}';
-var name = '${loginVo.user_name}';
-var address = '${loginVo.user_address}';
-var phone = '${loginVo.user_phone}';
-var merchant_uid = merchant_uid + 1;
-<%-- var point = <%=totalPrice%> --%>
-var IMP = window.IMP;
-IMP.init("imp46250334");
-// function requestPay() {
-    IMP.request_pay(
-        {
-            pg: "kakaopay", 
-            pay_method: "kakaopay", 
-            merchant_uid: merchant_uid,
-            name: tit,
-            amount: point,
-            buyer_email: email,
-            buyer_name: name,
-            buyer_tel: phone,
-            buyer_addr: address,
-            buyer_postcode: '4868282',
-        },
-        function (rsp) {
-            console.log(rsp);
-            console.log(point);
-            if (rsp.success) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid+"\n";
-                msg += '거래ID : ' + rsp.merchant_uid+"\n";
-                msg += '결제 금액 : ' + rsp.paid_amount+"\n";
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-                alert(msg);
-                var pay_method = rsp.pay_method;
-                var amount = rsp.paid_amount;
-                var imp_uid = rsp.imp_uid;
-                $.ajax({
-                    type: "POST",
-                    url: "./payForm.do",
-                    data: {
-                        amount: amount,
-                        pay_method: pay_method,
-                        imp_uid:imp_uid
-                    },
-                    success: function(data) {
-                        console.log('성공',data);
-                        localStorage.setItem('payInfo',data);
-                        location.href='./payInfo.do'; 
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('에러 :', status, error);
-                    }
-                });
-            } else {
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-                console.log('결제실패');
-                alert(msg);
-            }
-        }
-    );
-	})
-// }
-})
-})
-
-</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
