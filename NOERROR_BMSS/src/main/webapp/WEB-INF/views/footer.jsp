@@ -12,7 +12,7 @@ html, body {
 }
 
 #body-wrapper {
-    min-height: 100%;
+    min-height: 70%;
     position: relative;
 }
 

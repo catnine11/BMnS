@@ -17,14 +17,6 @@
 <%@include file="header.jsp"%>
 <body>
 <input type="hidden" id="loginVo" value="${loginVo}">
-<c:choose>
-<c:when test="${loginVo eq null}">
-<button style="display: none;" id="pay_btn" onclick="requestPay()">결제하기</button>
-</c:when>
-<c:otherwise>
-<button id="pay_btn" onclick="requestPay()">결제하기</button>
-</c:otherwise>
-</c:choose>
 <div><a href="./oderListUser.do?user=${loginVo.user_id}">유저주문 조회</a></div>
 	<div style="margin-left: 5%; margin-right: 5%;">
 	<h2>내 정보</h2>

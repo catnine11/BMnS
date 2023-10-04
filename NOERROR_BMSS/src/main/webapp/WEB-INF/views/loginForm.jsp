@@ -18,7 +18,7 @@
 <style type="text/css">
 html,body {
   position: relative;
-  min-height: 100vh;
+  min-height: 80%;
   background-color: #E1E8EE;
   align-items: center;
   justify-content: center;
@@ -35,7 +35,7 @@ html,body {
   overflow: hidden;
   margin-left: 35%;
   margin-bottom: 30px;
-  margin-top: 30px;
+  margin-top: 100px;
   
   &::after {
     content: '';
@@ -282,6 +282,10 @@ html,body {
     }
   }
 }
+#googleImg{
+	height: 50px;
+	width: 260px;
+}
 </style>
 <%
 		URLVo vo = new URLVo();
@@ -306,12 +310,12 @@ html,body {
   <button type="button" class="submit-btn" onclick="findPassword()">비밀번호 찾기</button>
   <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px; margin-bottom: 15px;" src="./img/kakao.png" onclick="location.href='<%=vo.getKakaoUrl()+"&client_id="+cvo.getKakaoClientID()+"&redirect_uri="+vo.getKakaoRedirect()+"&state="+state%>'"><br>
   <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px; margin-bottom: 15px;"src="./img/btnW_완성형.png" onclick="location.href='<%=vo.getNaverUrl()+"&client_id="+cvo.getNaverClientID()+"&redirect_uri="+vo.getNaverRedirect()+"&state="+state%>'"><br>
-  <img style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px;" src="./img/googlel.png" onclick="location.href='<%=vo.getGoogleUrl()+"&client_id="+cvo.getGoogleClientID()+"&redirect_uri="+vo.getGoogleRedirect()+"&state="+state%>'"><br>
+  <img id="googleImg" style="cursor:pointer; height: 50px; width: 260px; border-radius: 15px; margin-top:0px;" src="./img/구글그림.png" onclick="location.href='<%=vo.getGoogleUrl()+"&client_id="+cvo.getGoogleClientID()+"&redirect_uri="+vo.getGoogleRedirect()+"&state="+state%>'"><br>
   </div>
   </form>
   </div>
-<%@include file="footer.jsp"%>
 </body>
+<%@include file="footer.jsp"%>
 <script type="text/javascript">
 	function findEmail(){
 		var width = '450';

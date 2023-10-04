@@ -15,7 +15,7 @@
 
 html,body {
   position: relative;
-  min-height: 100vh;
+  min-height: 80%;
   background-color: #E1E8EE;
   align-items: center;
   justify-content: center;
@@ -33,7 +33,7 @@ html,body {
   overflow: hidden;
   margin-left: 35%;
   margin-bottom: 30px;
-  margin-top: 30px;
+  margin-top: 100px;
   
   &::after {
     content: '';
