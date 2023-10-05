@@ -60,4 +60,29 @@ public class BookManageDaoImpl implements IBookManageDao {
 		return session.update(NS+"updateBook", infoVo);
 	}
 
+	@Override
+	public List<BookInfoVo> getAllBookUserPaging(Map<String, Object>map) {
+		return session.selectList(NS+"getAllBookUserPaging", map);
+	}
+
+	@Override
+	public List<BookInfoVo> getAllBookUserGenrePaging(Map<String, Object>map) {
+		return session.selectList(NS+"getAllBookUserGenrePaging", map);
+	}
+
+	@Override
+	public List<BookInfoVo> getAllBookAdminPaging(Map<String, Object>map) {
+		return session.selectList(NS+"getAllBookAdminPaging", map);
+	}
+
+	@Override
+	public int countBook() {
+		return session.selectOne(NS+"countBook");
+	}
+
+	@Override
+	public int countGenreBook(String genre_name) {
+		return session.selectOne(NS+"countGenreBook", genre_name);
+	}
+
 }

@@ -40,7 +40,9 @@
   		display: none; 
  	}
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	function genreList(){
 		var selectedGenre = $("#genreSelect").val();
@@ -126,6 +128,51 @@
 		</c:forEach>
 		</ul>
 	</div>
+	
+<%-- 	${p } --%>
+	<div style="text-align: center">
+        <ul class="pagination pagination-lg">
+            <c:if test="${p.startPage > 1}">
+                <li><a href="./bookListUser.do?page=1">◁</a></li>
+            </c:if>
+            <c:if test="${p.startPage>1}">
+				<c:choose>
+					<c:when test="${p.startPage-p.countPage <=0}">
+						<li><a href="./bookListUser.do?page=1">◀</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="./bookListUser.do?page=${p.startPage-p.countPage}">◀</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+            
+            <c:forEach var="pageNum" begin="${p.startPage}" end="${p.endPage}" step="1">
+                <c:choose>
+                    <c:when test="${pageNum == p.page}">
+                        <li class="active"><a href="./bookListUser.do?page=${pageNum}">${pageNum}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="./bookListUser.do?page=${pageNum}">${pageNum}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            
+            <c:if test="${p.endPage < p.totalPage}">
+                <c:choose>
+					<c:when test="${p.startPage+p.countPage > p.totalPage}">
+						<li><a href="./bookListUser.do?page=${p.totalPage}">▶</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="./bookListUser.do?page=${p.startPage+p.countPage}">▶</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+			
+			<c:if test="${p.endPage < p.totalPage}">               
+			 <li><a href="./bookListUser.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li>
+            </c:if>
+        </ul>
+    </div>
 		
 </div>
 

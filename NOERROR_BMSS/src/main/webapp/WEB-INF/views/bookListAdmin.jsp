@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/search.js"></script>
 <script type="text/javascript">
 	function genreList(){
 		var selectedGenre = $("#genreSelect").val();
@@ -82,7 +83,16 @@
 <%@include file="header.jsp" %>
 <body>
 	<div class="container">
+	<div class="insertBook">
+		<h4>도서등록</h4>
+		<div>
+		<input id="enroll" type="text">
+		<input id="enrollBtn" type="button" value="책등록" >
+	</div>
+	
+	</div>
 		<div class="selectGenre">
+		<p></p>
 			<select id="genreSelect" class="Genre" name="selectedGenre" onchange="genreList()">
 				<option>전체</option>
 				<option>총류</option>

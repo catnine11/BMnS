@@ -92,20 +92,15 @@ body {
 				<button id="srcBtn" type="button">도서검색</button>
 			</form>
 		</div>
-<div>
-	<input id="enroll" type="text">
-	<input id="enrollBtn" type="button" value="책등록" >
-	<script type="text/javascript" src="./js/search.js"></script>
-</div>
 	
 	</div>
 	<div class="shortcutZone">
 					<div class="shortcutList">
 						<div class="item1"><a href="./askBoardList.do"><span><img src="./img/3746544_board_cooking_cutting_kitchen_knife_icon.png"> 문의게시판</span></a></div>
 						<div class="item2"><a href="/"><span>주문현황</span></a></div>
-						<div class="item3"><a href="/"><span>도서보기</span></a></div>
-						<div class="item4"><a href="/"><span>대출현황</span></a></div>
-						<div class="item5"><a href="/"><span>예약현황</span></a></div>
+						<div class="item3"><a href="./bookListUser.do"><span>도서보기</span></a></div>
+						<div class="item4"><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}"><span>대출현황</span></a></div>
+						<div class="item5"><a href="./myReserve.do?user_id=${sessionScope.loginVo.user_id}"><span>예약현황</span></a></div>
 						<div class="item6"><a href="/"><span>???</span></a></div>
 					</div>
 				</div>

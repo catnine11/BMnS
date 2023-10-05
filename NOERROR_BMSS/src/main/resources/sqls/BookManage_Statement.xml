@@ -47,7 +47,6 @@
 <!-- 	<result column="RESERVE_STATUS" property="reserve_status"/> -->
 <!-- </resultMap> -->
 
-
 <!-- 전체조회(장르별) /회원 -->
 <select id="getAllBookUser" resultMap="bInfoMap">
 	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE
@@ -57,6 +56,19 @@
 			USING (GENRE_CODE)
 		)
 	ORDER BY PUBLISH_DATE DESC 
+</select>
+<select id="getAllBookUserPaging" resultMap="bInfoMap">
+	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE
+	FROM (
+		SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE
+			,ROW_NUMBER () OVER (ORDER BY PUBLISH_DATE) AS RN
+			FROM (
+					SELECT GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, THUMBNAIL, BOOK_CODE
+					FROM BOOKINFO b JOIN BOOK_GENRE bg 
+					USING (GENRE_CODE)
+				)
+<!-- 			ORDER BY PUBLISH_DATE DESC  -->
+	) WHERE RN BETWEEN #{first} AND #{last}
 </select>
 
 <select id="getAllBookUserGenre" resultMap="bInfoMap">
@@ -69,6 +81,20 @@
 	WHERE GENRE_NAME = #{genre_name}
 	ORDER BY PUBLISH_DATE DESC 
 </select>
+<select id="getAllBookUserGenrePaging" resultMap="bInfoMap">
+	SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE
+	FROM(
+		SELECT GENRE_NAME, THUMBNAIL , AUTHOR, TITLE, PUBLISHER, BOOK_CODE, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE
+			,ROW_NUMBER () OVER (ORDER BY PUBLISH_DATE) AS RN
+			FROM (
+					SELECT GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, PUBLISH_DATE, THUMBNAIL, BOOK_CODE
+					FROM BOOKINFO b JOIN BOOK_GENRE bg 
+					USING (GENRE_CODE)
+				)
+			WHERE GENRE_NAME = #{genre_name}
+	<!-- 	ORDER BY PUBLISH_DATE DESC  -->
+	) WHERE RN BETWEEN #{first} AND #{last}
+</select>
 
 <!-- 전체조회(장르별) /관리자 -->
 <select id="getAllBookAdmin" resultMap="bInfoMap">
@@ -76,6 +102,16 @@
 	FROM BOOKINFO b JOIN BOOK_GENRE bg 
 	USING (GENRE_CODE)
 	ORDER BY BOOK_CODE, GENRE_CODE 
+</select>
+<select id="getAllBookAdminPaging" resultMap="bInfoMap">
+	SELECT BOOK_CODE, GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE, THUMBNAIL
+	FROM(
+		SELECT BOOK_CODE, GENRE_CODE, GENRE_NAME, ISBN, TITLE, AUTHOR, PUBLISHER, TO_CHAR(PUBLISH_DATE,'YYYY-MM-DD') AS PUBLISH_DATE, THUMBNAIL
+			,ROW_NUMBER () OVER (ORDER BY PUBLISH_DATE) AS RN
+			FROM BOOKINFO b JOIN BOOK_GENRE bg 
+			USING (GENRE_CODE)
+			ORDER BY BOOK_CODE, GENRE_CODE 
+	) WHERE RN BETWEEN #{first} AND #{last}
 </select>
 
 <!-- 상세조회 -->
@@ -159,11 +195,19 @@ SELECT bi.BOOK_CODE, bs.BOOK_SEQ, STATUS_CODE,THUMBNAIL,
 <!-- 	</foreach> -->
 </update>
 
+<select id="countBook" resultType="java.lang.Integer">
+	SELECT COUNT(*) 
+	FROM BOOKINFO
+</select>
+<select id="countGenreBook" resultType="java.lang.Integer">
+	SELECT COUNT(*) 
+	FROM BOOKINFO
+	WHERE GENRE_NAME = #{genre_name}
+</select>
+
 <!-- 도서등록 -->
 <insert id="insertBookInfo">
-	INSERT INTO BOOK_STATUS
-	(BOOK_SEQ, STATUS_TITLE, STATUS_CODE, BOOK_CODE)
-	VALUES(BOOK_SEQ.NEXTVAL, #{status_title}, 'A' , #{book_code});
+	
 </insert>
 
 
@@ -176,7 +220,9 @@ SELECT bi.BOOK_CODE, bs.BOOK_SEQ, STATUS_CODE,THUMBNAIL,
 
 <!-- 도서상태에 도서등록(도서상세 1개당 도서 여러권) -->
 <insert id="insertBook">
-
+	INSERT INTO BOOK_STATUS
+	(BOOK_SEQ, STATUS_TITLE, STATUS_CODE, BOOK_CODE)
+	VALUES(BOOK_SEQ.NEXTVAL, #{status_title}, 'A' , #{book_code});
 </insert>
 
 <!-- 크롤링 후 도서상태 변경 -->

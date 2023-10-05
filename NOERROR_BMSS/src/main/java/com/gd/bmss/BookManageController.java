@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gd.bmss.service.IBookManageService;
 import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.Book_StatusVo;
+import com.gd.bmss.vo.Paging_Vo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,27 +46,85 @@ public class BookManageController {
 	/*
 	 * 회원의 장르별 전체 조회
 	 */
+//	@GetMapping(value = "/bookListUser.do")
+//	public String bookListUser(Model model) {
+//		log.info("Welcome BookManageController 회원의 도서전체조회창 이동");
+//		List<BookInfoVo> lists = service.getAllBookUser();
+//		model.addAttribute("lists", lists);
+//		
+//		return "bookListUser";
+//	}
+	
 	@GetMapping(value = "/bookListUser.do")
-	public String bookListUser(Model model) {
+	public String bookListUser(Model model, @RequestParam (name="page", defaultValue = "1") int selectPage) {
 		log.info("Welcome BookManageController 회원의 도서전체조회창 이동");
-		List<BookInfoVo> lists = service.getAllBookUser();
+//		List<BookInfoVo> lists = service.getAllBookUserPaging();
+//		model.addAttribute("lists", lists);
+		
+		Paging_Vo p = new Paging_Vo();
+		p.setTotalCount(service.countBook());
+		p.setCountList(10);
+		p.setCountPage(5);
+		p.setTotalPage(p.getTotalCount());
+		p.setPage(selectPage);
+		p.setStartPage(selectPage);
+		p.setEndPage(selectPage);
+		
+		log.info("$$$$$$$$ 현재 페이지 $$$$$$$$" + selectPage);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("first",(p.getPage()*p.getCountList()-(p.getCountList()-1)));
+		map.put("last", (p.getPage()*p.getCountList()));
+		
+		List<BookInfoVo> lists = service.getAllBookUserPaging(map);
 		model.addAttribute("lists", lists);
+		model.addAttribute("p",p);
 		
 		return "bookListUser";
 	}
 	
 	@PostMapping(value = "/bookListGenre.do")
 	@ResponseBody
-	public Map<String, Object> bookListGenre(Model model, @RequestParam String selectedGenre) {
+	public Map<String, Object> bookListGenre(Model model, @RequestParam String selectedGenre, @RequestParam (name="page", defaultValue = "1") int selectPage) {
 		log.info("Welcome BookManageController 도서전체조회창-장르별 조회");
 		log.info("Welcome BookManageController  선택된장르 {}", selectedGenre);
 		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("selectGenre", genreLists);
+		
+		Paging_Vo p = new Paging_Vo();
+		p.setTotalCount(service.countBook());
+		p.setCountList(10);
+		p.setCountPage(5);
+		p.setTotalPage(p.getTotalCount());
+		p.setPage(selectPage);
+		p.setStartPage(selectPage);
+		p.setEndPage(selectPage);
+		
+		log.info("$$$$$$$$ 현재 페이지 $$$$$$$$" + selectPage);
+		map.put("first",(p.getPage()*p.getCountList()-(p.getCountList()-1)));
+		map.put("last", (p.getPage()*p.getCountList()));
+		
+		List<BookInfoVo> lists = service.getAllBookUserGenrePaging(map);
+		model.addAttribute("lists", lists);
+		model.addAttribute("p",p);
+		
+		
 		return map;
 	}
 	
+//	@PostMapping(value = "/bookListGenre.do")
+//	@ResponseBody
+//	public Map<String, Object> bookListGenre(Model model, @RequestParam String selectedGenre) {
+//		log.info("Welcome BookManageController 도서전체조회창-장르별 조회");
+//		log.info("Welcome BookManageController  선택된장르 {}", selectedGenre);
+//		List<BookInfoVo> genreLists = service.getAllBookUserGenre(selectedGenre);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("selectGenre", genreLists);
+//		return map;
+//	}
+//	
 	/*
 	 * 관리자의 장르별 전체 조회
 	 */
