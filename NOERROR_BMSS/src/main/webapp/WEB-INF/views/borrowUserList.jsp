@@ -15,6 +15,7 @@
 </head>
 <%@include file="header.jsp" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/button.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/borrowUserList.js"></script>
@@ -43,7 +44,6 @@
 <div class="container">
 	<div>
 		<div>
-		<h2>현황</h2>
 			<div>
 				<h3>대출현황</h3>
 				<p><a href="./borrowAllUserNow.do" id="showBorrowAllUserNow">전체회원</a></p>
@@ -53,7 +53,7 @@
 <%-- 					${borrowNow} --%>
 					<table class="table table-hover">
 						<tbody>
-							<tr>
+							<tr class="tr-hover">
 								<th>
 									<input type="checkbox" name="allChk" id="allChk">
 								</th>
@@ -66,7 +66,7 @@
 								<th>회원상세현황</th>
 							</tr>
 							<c:forEach var="borrow" items="${borrowNow}">
-								<tr>
+								<tr class="tr-hover">
 									<td>
 										<input type="checkbox" class="chkBooks" name="chkBooks" value="${borrow.book_seq}">
 										<input type="hidden" class="book_seq" value="${borrow.book_seq}">
@@ -140,7 +140,7 @@
 					</p>
 					<table class="table table-hover">
 						<tbody>
-							<tr>
+							<tr class="tr-hover">
 								<th>회원아이디</th>
 								<th>관리번호</th>
 								<th>도서제목</th>
@@ -149,7 +149,7 @@
 								<th>연장여부</th>
 							</tr>
 							<c:forEach var="borrow" items="${borrowOneNow}">
-								<tr>
+								<tr class="tr-hover">
 									<td>${borrow.user_id}</td>
 									<td>${borrow.book_seq}</td>
 									<td>${borrow.borrow_title}</td>
@@ -201,7 +201,7 @@
 <%-- 				${reserveList} --%>
 					<table class="table table-hover">
 						<tbody>
-							<tr>
+							<tr class="tr-hover">
 								<th>관리번호</th>
 								<th>도서제목</th>
 								<th>대출회원아이디</th>
@@ -210,7 +210,7 @@
 								<th>예약일</th>
 							</tr>
 							<c:forEach var="book" items="${reserveList}">
-							<tr>
+							<tr class="tr-hover">
 								<td>${book.book_seq}</td>
 								<td>${book.reserve_title}</td>
 								<td>${book.user_id}</td>
@@ -227,7 +227,6 @@
 			</div>
 		</div>
 		<div>
-		<h2>내역</h2>
 <!-- 			<div> -->
 <%-- 				<p><a href="./borrowOneUserHistory.do?user_id=${sessionScope.loginVo.user_id}">대출내역</a></p> --%>
 				<div id="borrowOneUserHistory" style="display: none;">
@@ -252,7 +251,7 @@
 					</p>
 					<table class="table table-hover">
 						<tbody>
-							<tr>
+							<tr class="tr-hover">
 								<th>회원아이디</th>
 								<th>관리번호</th>
 								<th>도서제목</th>
@@ -261,7 +260,7 @@
 								<th>대출상태</th>
 							</tr>
 							<c:forEach var="borrow" items="${borrowOneAll}">
-							<tr>
+							<tr class="tr-hover">
 								<td>${borrow.user_id}</td>
 									<td>${borrow.book_seq}</td>
 									<td>${borrow.borrow_title}</td>

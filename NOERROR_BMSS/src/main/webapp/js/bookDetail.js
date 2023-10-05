@@ -175,7 +175,7 @@ $(document).ready(function(){
 				console.log("user_id "+user_id+"의 도서 book_seq "+book_seq+" 예약신청");
 				
 				if(penalty_date>currentDate){
-					alert('연체회원입니다. '+penalty_val+'일까지 도서를 대출할 수 없습니다');
+					alert('연체회원입니다. '+penalty_val+'일까지 도서를 예약할 수 없습니다');
 					return false;
 				}else{
 					
@@ -227,7 +227,7 @@ $(document).ready(function(){
 			}
 			
 		}else{
-			alert('대출은 회원만 가능합니다. 로그인해주세요');
+			alert('예약은 회원만 가능합니다. 로그인해주세요');
 			location.href="./login.do";
 		}
 		

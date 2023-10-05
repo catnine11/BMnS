@@ -67,6 +67,31 @@ public class BookManageServiceImpl implements IBookManageService {
 		return dao.updateBook(infoVo);
 	}
 
+	@Override
+	public List<BookInfoVo> getAllBookUserPaging(Map<String, Object> map) {
+		return dao.getAllBookUserPaging(map);
+	}
+
+	@Override
+	public List<BookInfoVo> getAllBookUserGenrePaging(Map<String, Object> map) {
+		return dao.getAllBookUserGenrePaging(map);
+	}
+
+	@Override
+	public List<BookInfoVo> getAllBookAdminPaging(Map<String, Object> map) {
+		return dao.getAllBookAdminPaging(map);
+	}
+
+	@Override
+	public int countBook() {
+		return dao.countBook();
+	}
+
+	@Override
+	public int countGenreBook(int genre_code) {
+		return dao.countGenreBook(genre_code);
+	}
+
 	
 	
 }
