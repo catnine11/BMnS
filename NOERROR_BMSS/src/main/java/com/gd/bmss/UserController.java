@@ -141,7 +141,7 @@ public class UserController {
 	@RequestMapping(value = "/afterLogin.do",method = RequestMethod.POST)
 	public String loginSession(HttpSession session, HttpServletResponse response) throws IOException {
 		if(session.getAttribute("loginVo") == null) {
-			SpringUtils.servletAlert(response, "잘못된 접근입니다", "loginForm.do");
+			SpringUtils.servletAlert(response, "잘못된 접근입니다", "login.do");
 			return "";
 		} else {
 			return "redirect:/http://localhost:8080/NOERROR_BMSS";

@@ -164,6 +164,7 @@ SELECT * FROM (
         JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
     WHERE 
         bu.USER_ID = #{user_id}	
+        ORDER BY bp2.PAY_SEQ DESC
 )
 WHERE rm BETWEEN #{start} AND #{end}
 </select>
@@ -190,7 +191,7 @@ WHERE rm BETWEEN #{start} AND #{end}
 
 <!-- 결제상세조회 -->
 <select id="detailPay"  resultMap="UserVoMap">
-	SELECT bu.*,bp2.PAY_SEQ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.PAY_MONEY,bp2.PAY_METHOD,bp2.PAY_TIME,b.THUMBNAIL
+	SELECT bu.*,bp2.PAY_SEQ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.PAY_MONEY,bp2.PAY_METHOD,bp2.PAY_TIME
 FROM BOOK_USERINFO bu 
 	JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
 	JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 

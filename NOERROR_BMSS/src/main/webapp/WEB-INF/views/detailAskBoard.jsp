@@ -38,7 +38,6 @@
 </head>
 <%@include file="header.jsp"%>
 <body>
-값:${boardVo.pay_seq}
 	<div id="divOne">
         <table class="cell" border="1">
                 <tr class="article-title">
@@ -89,7 +88,7 @@ console.log("pay_seq 값 : ",seq);
 		 success:function(result){
 			console.log(result);
 			alert("환불되었습니다");
-			location.href="./payInfo.do";
+			location.href="./askBoardList.do";
 			 
 		 }
 	 })

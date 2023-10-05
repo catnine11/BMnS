@@ -136,8 +136,16 @@ margin-left: 350px;
 <!-- 						<div class="item6"><a href="/"><span>???</span></a></div> -->
 					</div>
 				</div>
+
 				<script type="text/javascript" src="./js/search.js"></script>
+
 <%@include file="footer.jsp" %>
+<script type="text/javascript">
+function getDetail(book_code){
+	
+	location.href ='./bookDetail.do?book_code='+book_code;
+}
+</script>
 </body>
 
 </html>

@@ -81,6 +81,32 @@ public class BookManageController {
 		
 		return "bookListUser";
 	}
+	@GetMapping(value = "/")
+	public String bookList(Model model, @RequestParam (name="page", defaultValue = "1") int selectPage) {
+		log.info("Welcome BookManageController 회원의 도서전체조회창 이동");
+//		List<BookInfoVo> lists = service.getAllBookUserPaging();
+//		model.addAttribute("lists", lists);
+		
+		Paging_Vo p = new Paging_Vo();
+		p.setTotalCount(service.countBook());
+		p.setCountList(5);
+		p.setCountPage(0);
+		p.setTotalPage(p.getTotalCount());
+		p.setPage(selectPage);
+		p.setStartPage(selectPage);
+		p.setEndPage(selectPage);
+		
+		log.info("$$$$$$$$ 현재 페이지 $$$$$$$$" + selectPage);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("first",(p.getPage()*p.getCountList()-(p.getCountList()-1)));
+		map.put("last", (p.getPage()*p.getCountList()));
+		
+		List<BookInfoVo> lists = service.getAllBookUserPaging(map);
+		model.addAttribute("lists", lists);
+		model.addAttribute("p",p);
+		
+		return "mainPage";
+	}
 	
 	@PostMapping(value = "/bookListGenre.do")
 	@ResponseBody
