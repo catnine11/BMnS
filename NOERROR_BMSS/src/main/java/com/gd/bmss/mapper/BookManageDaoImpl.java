@@ -81,8 +81,8 @@ public class BookManageDaoImpl implements IBookManageDao {
 	}
 
 	@Override
-	public int countGenreBook(String genre_name) {
-		return session.selectOne(NS+"countGenreBook", genre_name);
+	public int countGenreBook(int genre_code) {
+		return session.selectOne(NS+"countGenreBook", genre_code);
 	}
 
 }

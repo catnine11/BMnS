@@ -33,6 +33,6 @@ public interface IBookManageService {
 		
 	
 	public int countBook();
-	public int countGenreBook(String genre_name);
+	public int countGenreBook(int genre_code);
 	
 }

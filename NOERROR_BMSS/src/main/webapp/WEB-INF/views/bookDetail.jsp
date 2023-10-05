@@ -14,25 +14,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/bookDetail.js"></script>
-<script type="text/javascript">
-// var loginVo = ${sessionScope.loginVo}
-// window.onload = function () {
-
-// 	var adminOnlyElements = document.getElementsByClassName("adminOnly");
-// 	var userAuth = "${sessionScope.loginVo.user_auth}";
-// // 	console.log("userAuth: " + userAuth);
-
-// 	if (userAuth != 'A') {
-// 		for (var i = 0; i < adminOnlyElements.length; i++) {
-// 			adminOnlyElements[i].style.display = "none";
-// 		}
-// 	}else{
-// 		for (var i = 0; i < adminOnlyElements.length; i++) {
-// 			adminOnlyElements[i].style.display = "";
-// 		}
-// 	}
-// }
-</script>
 </head>
 <%@include file="header.jsp" %>
 <body>
@@ -55,7 +36,7 @@
 				</div>
 				<div class="binfo">
 					<div class="adminOnly">
-<!-- 						<input type="button" name="" value="도서정보수정" class=""> -->
+<!-- 						<input type="button" name="" value="도서정보수정" class="custom-btn btn-8"> -->
 					</div>
 					<div class="title">
 						<b>${detail.title}</b>
@@ -199,7 +180,7 @@
 												<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
 												<input type="hidden" name="reserve_user" class="reserve_user" value="${d.user_id}">
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
-												<input type="button" class="requestBorrow btn btn-info btn-sm" value="대출신청">
+												<input type="button" class="requestBorrow custom-btn btn-8 btn-sm" value="대출신청">
  											</c:when>
  											</c:choose>
 										</td>
@@ -217,7 +198,7 @@
 												<input type="hidden" name="book_seq" class="book_seq" value="${d.book_seq}">
 												<input type="hidden" name="borrow_status" class="borrow_status" value="${d.borrow_status}">
 												<input type="hidden" name="reserve_title" class="reserve_title" value="${status.title}">
-												<input type="button" class="requestReserve btn btn-success btn-sm" value="예약신청">
+												<input type="button" class="requestReserve custom-btn btn-8 btn-sm" value="예약신청">
 		 									</c:if>
 										</td>
 										<td class="adminOnly"></td>
@@ -235,8 +216,8 @@
 				<div id="modalReserver" class="modal">
 					<div class="modal-content">
 						<p>예약한 도서를 대출하시겠습니까?</p>
-						<button id="nextButton">Y</button>
-						<button onclick="closeModal()">N</button>
+						<button id="nextButton" class="custom-btn btn-8">Y</button>
+						<button onclick="closeModal()" class="custom-btn btn-8">N</button>
 					</div>
 				</div>
 			</div>

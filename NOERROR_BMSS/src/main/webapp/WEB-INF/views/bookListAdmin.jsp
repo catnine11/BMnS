@@ -10,16 +10,49 @@
 <style type="text/css">
 	table{
 		text-align: center;
+		margin-top: 40px;
 	}
+	
+/* 	.selectBox { */
+/*   position: relative; */
+/*   width: 150px; */
+/*   height: 35px; */
+/*   margin: 3px; */
+/*   border-radius: 4px; */
+/*   border: 2px solid lightcoral; */
+/* } */
+/* .selectBox .select { */
+/*   width: inherit; */
+/*   height: inherit; */
+/*   background: transparent; */
+/*   border: 0 none; */
+/*   outline: 0 none; */
+/*   padding: 0 5px; */
+/*   position: relative; */
+/*   z-index: 3;  */
+/* } */
+/* .selectBox .select option { */
+/*   background: lightcoral; */
+/*   color: #fff; */
+/*   padding: 3px 0; */
+/*   font-size: 16px; */
+/* } */
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/button.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/search.js"></script>
 <script type="text/javascript">
-	function genreList(){
+	function genreList(pageNum){
 		var selectedGenre = $("#genreSelect").val();
 		console.log(selectedGenre);
+		
+// 		var select = document.getElementById("genreSelect");
+// 		var idx = select.selectedIndex;
+// 		var opt = select.options[idx];
+// 		var selectedGenre =opt.text;
+// 		console.log(selectedGenre);
 		
 		if(selectedGenre =="전체"){
 			window.location.href="./bookListAdmin.do";
@@ -28,7 +61,8 @@
 		$.ajax({
 			url: "./bookListGenre.do",
 			type: "post",
-			data: {selectedGenre: selectedGenre},
+			data: {selectedGenre: selectedGenre,
+					page: pageNum},
 			dataType: "json",
 			success: function (data) {
 				console.log(data);
@@ -38,13 +72,13 @@
 				
 				$("#bookList").html("");
 				var html = "";
-				html+="<table> ";
+				html+="<table class='table table-hover'> ";
 				html+="<tbody> ";
 				
 				for (var i = 0; i < data.selectGenre.length; i++) {
 					var book = data.selectGenre[i];
 				
-				html+="		<tr>      ";
+				html+="		<tr id='tr-hover'>      ";
 				html+="			<td>  ";
 				html+="				<input type='checkbox' name='chkBook' value='"+book.book_code+"'>";
 				html+="			</td>  ";
@@ -58,7 +92,7 @@
 				html+="			<td>"+book.publisher+"</td> ";
 				html+="			<td>"+book.publish_date+"</td>";
 				html+="			<td>                         ";
-				html+="				<input type='button' value='도서 상세' onclick='getDetail("+book.book_code+")'>";  
+				html+="				<input type='button'  class='custom-btn btn-8' value='도서 상세' onclick='getDetail("+book.book_code+")'>";  
 				html+="			</td>                        ";
 				html+="		</tr>                            ";
 				}
@@ -86,14 +120,13 @@
 	<div class="insertBook">
 		<h4>도서등록</h4>
 		<div>
-		<input id="enroll" type="text">
-		<input id="enrollBtn" type="button" value="책등록" >
+			<input id="enroll" type="text">
+			<input id="enrollBtn" type="button" class="custom-btn btn-8" value="책등록" >
+		</div>
 	</div>
-	
-	</div>
-		<div class="selectGenre">
-		<p></p>
-			<select id="genreSelect" class="Genre" name="selectedGenre" onchange="genreList()">
+	<p></p>
+		<div class="selectGenre selectBox">
+			<select id="genreSelect" class="Genre select" name="selectedGenre" onchange="genreList()">
 				<option>전체</option>
 				<option>총류</option>
 				<option>철학</option>
@@ -108,9 +141,9 @@
 			</select>
 		</div>
 		<form action="./changeGenre.do" id="genreChangeForm" method="post" onsubmit="return changeGenre();">
-			<div>
 			<h3>장르를 변경할 도서를 체크하고 변경버튼을 눌러주세요</h3>
-				<select id="genreChange" class="Genre" name="selectedChangeGenre">
+			<div class="selectBox">
+				<select id="genreChange" class="Genre select" name="selectedChangeGenre">
 <!-- 					<option value="">전체</option> -->
 					<option value="000">총류</option>
 					<option value="100">철학</option>
@@ -123,13 +156,13 @@
 					<option value="800">문학</option>
 					<option value="900">역사</option>
 				</select>
-				<button type="submit">장르변경</button>
+				<button type="submit"  class="custom-btn btn-8">장르변경</button>
 			</div>
 			<div id="bookList">
-				<table>
+				<table class="table table-hover">
 					<tbody>
 						<c:forEach items="${lists}" var="book">
-							<tr>
+							<tr id="tr-hover">
 								<td>
 									<input type="checkbox" name="chkBook" value="${book.book_code}">
 								</td>
@@ -143,13 +176,57 @@
 								<td>${book.publisher}</td>
 								<td>${book.publish_date}</td>
 								<td>
-									<input type="button" value="도서 상세" onclick="getDetail(${book.book_code})" class=" btn btn-info btn-sm">
+									<input type="button"  class="custom-btn btn-8 btn-sm" value="도서 상세" onclick="getDetail(${book.book_code})">
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
+			<%-- 	${p } --%>
+		<div style="text-align: center;" class="frame">
+	        <ul class="paging ">
+	            <c:if test="${p.startPage > 1}">
+	                <li><a href="./bookListAdmin.do?page=1">◁</a></li>
+	            </c:if>
+	            <c:if test="${p.startPage>1}">
+					<c:choose>
+						<c:when test="${p.startPage-p.countPage <=0}">
+							<li><a href="./bookListAdmin.do?page=1">◀</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="./bookListAdmin.do?page=${p.startPage-p.countPage}">◀</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+	            
+	            <c:forEach var="pageNum" begin="${p.startPage}" end="${p.endPage}" step="1">
+	                <c:choose>
+	                    <c:when test="${pageNum == p.page}">
+	                        <li class="active"><a href="./bookListAdmin.do?page=${pageNum}">${pageNum}</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                        <li><a href="./bookListAdmin.do?page=${pageNum}">${pageNum}</a></li>
+	                    </c:otherwise>
+	                </c:choose>
+	            </c:forEach>
+	            
+	            <c:if test="${p.endPage < p.totalPage}">
+	                <c:choose>
+						<c:when test="${p.startPage+p.countPage > p.totalPage}">
+							<li><a href="./bookListAdmin.do?page=${p.totalPage}">▶</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="./bookListAdmin.do?page=${p.startPage+p.countPage}">▶</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+				
+				<c:if test="${p.endPage < p.totalPage}">               
+				 <li><a href="./bookListAdmin.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li>
+	            </c:if>
+	        </ul>
+	    </div>
 		</form>
 	</div>
 </body>

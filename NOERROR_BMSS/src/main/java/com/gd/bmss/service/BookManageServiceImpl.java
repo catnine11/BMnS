@@ -88,8 +88,8 @@ public class BookManageServiceImpl implements IBookManageService {
 	}
 
 	@Override
-	public int countGenreBook(String genre_name) {
-		return dao.countGenreBook(genre_name);
+	public int countGenreBook(int genre_code) {
+		return dao.countGenreBook(genre_code);
 	}
 
 	

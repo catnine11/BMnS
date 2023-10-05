@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <title>NOERROR 책check 내 서재</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/button.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/myLibrary.js"></script>
@@ -18,6 +19,22 @@
 	table, tr, th, td{
 		text-align: center;
 	}
+	tr.tr-hover:hover {
+    background-color: #F5EFFB;
+}
+	div>p>a {
+    color:  #B398DA;
+    text-decoration: none;
+}
+	td>a {
+    color: #7266A8 ;
+    text-decoration: none;
+}
+
+	div>p>a:hover{
+	text-decoration: none;
+	}
+
 	/* 모달 전체 화면 뒷 배경 */
 .modal {
   display: none;
@@ -89,7 +106,7 @@
 <!-- 							</tr> -->
 							<c:forEach var="book" items="${borrowNow}">
 							<c:forEach var="b" items="${book.bsVo}">
-							<tr>
+							<tr class="tr-hover">
 								<td> <a href="./bookDetail.do?book_code=${book.book_code}">
 									<img alt="${b.borrow_title}" src="${book.thumbnail}">
 								</a></td>
@@ -160,7 +177,7 @@
 <!-- 							</tr> -->
 							<c:forEach var="book" items="${reserveList}">
 							<c:forEach var="r" items="${book.bsVo}">
-							<tr>
+							<tr id="tr-hover">
 								<td> <a href="./bookDetail.do?book_code=${book.book_code}">
 									<img alt="${b.borrow_title}" src="${book.thumbnail}">
 								</a></td>
@@ -240,7 +257,7 @@
 <!-- 							</tr> -->
 							<c:forEach var="book" items="${borrowHistory}">
 							<c:forEach var="b" items="${book.bsVo}">
-							<tr>
+							<tr class="tr-hover">
 								<td> <a href="./bookDetail.do?book_code=${book.book_code}">
 									<img alt="${b.borrow_title}" src="${book.thumbnail}">
 								</a></td>
