@@ -77,7 +77,7 @@ $(document).ready(function(){
         $.ajax({
             method: "GET",
             url: "https://dapi.kakao.com/v3/search/book",
-            data: { query: $("#enroll").val() },
+            data: { query: $("#enroll").val(),size:20},
             headers: { "Authorization": "KakaoAK deebb5b9fe3604c7cbb30baeb31b856e" },
             success: function(res) {
                fn_aa(res);

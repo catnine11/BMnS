@@ -101,7 +101,7 @@ margin-left: 350px;
       <tr>
         <td>
           <select name="selectOpt" class="form-select input-lg">
-            <option class="searchOption" value="TITLE">제목</option>
+            <option class="searchOption" value="TITLE">도서명</option>
             <option class="searchOption" value="AUTHOR">저자</option>
             <option class="searchOption" value="ISBN">ISBN</option>
           </select>
@@ -121,7 +121,7 @@ margin-left: 350px;
 	<div class="shortcutZone">
 					<div class="shortcutList">
 						<div class="item1"><a href="./askBoardList.do"><span><img src="./img/3746544_board_cooking_cutting_kitchen_knife_icon.png"> 문의게시판</span></a></div>
-						<div class="item2"><a href="/"><span>주문현황</span></a></div>
+						<div class="item2"><a href="./orderlist.do"><span><img src="./img/ordercurrent.png">주문현황</span></a></div>
 						<div class="item3"><a href="./bookListUser.do"><span>도서보기</span></a></div>
 						<c:choose>
 						<c:when test="${empty sessionScope.loginVo.user_id}">
