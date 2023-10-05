@@ -118,11 +118,11 @@
 <body>
 	<div class="container">
 	<div class="insertBook">
-		<h4>도서등록</h4>
-		<div>
-			<input id="enroll" type="text">
-			<input id="enrollBtn" type="button" class="custom-btn btn-8" value="책등록" >
-		</div>
+<!-- 		<h4>도서등록</h4> -->
+<!-- 		<div> -->
+<!-- 			<input id="enroll" type="text"> -->
+<!-- 			<input id="enrollBtn" type="button" class="custom-btn btn-8" value="책등록" > -->
+<!-- 		</div> -->
 	</div>
 	<p></p>
 		<div class="selectGenre selectBox">
@@ -183,7 +183,7 @@
 					</tbody>
 				</table>
 			</div>
-			<%-- 	${p } --%>
+<%-- 				${p } --%>
 		<div style="text-align: center;" class="frame">
 	        <ul class="paging ">
 	            <c:if test="${p.startPage > 1}">
@@ -223,7 +223,8 @@
 				</c:if>
 				
 				<c:if test="${p.endPage < p.totalPage}">               
-				 <li><a href="./bookListAdmin.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li>
+<%-- 				 <li><a href="./bookListAdmin.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li> --%>
+				 <li><a href="./bookListAdmin.do?page=${p.totalPage}">▷</a></li>
 	            </c:if>
 	        </ul>
 	    </div>

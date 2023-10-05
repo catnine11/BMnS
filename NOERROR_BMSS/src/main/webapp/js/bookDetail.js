@@ -34,6 +34,7 @@ $(document).ready(function(){
 				data:{book_seq:book_seq,status_code:status_code},
 				success:function(){
 					alert("도서상태 변경을 완료했습니다.");
+					location.reload();
 				},
 				error:function(){
 					alert("도서상태 변경에 실패했습니다.");

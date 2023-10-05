@@ -157,7 +157,8 @@
 						<li><a href="./bookListUser.do?page=1">◀</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="./bookListUser.do?page=${p.startPage-p.countPage}">◀</a></li>
+<%-- 						<li><a href="./bookListUser.do?page=${p.startPage-p.countPage}">◀</a></li> --%>
+						<li><a href="./bookListUser.do?page=${p.page-p.countPage}">◀</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
@@ -186,6 +187,7 @@
 			
 			<c:if test="${p.endPage < p.totalPage}">               
 			 <li><a href="./bookListUser.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li>
+<%-- 			 <li><a href="./bookListUser.do?page=${p.totalPage}">▷</a></li> --%>
             </c:if>
         </ul>
     </div>

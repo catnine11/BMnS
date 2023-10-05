@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +75,7 @@ body {
     font-weight: 500;
     color: #333;
 }
+    
 </style>
 </head>
 <%@include file="header.jsp"%>
@@ -99,9 +101,17 @@ body {
 						<div class="item1"><a href="./askBoardList.do"><span><img src="./img/3746544_board_cooking_cutting_kitchen_knife_icon.png"> 문의게시판</span></a></div>
 						<div class="item2"><a href="/"><span>주문현황</span></a></div>
 						<div class="item3"><a href="./bookListUser.do"><span>도서보기</span></a></div>
-						<div class="item4"><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}"><span>대출현황</span></a></div>
-						<div class="item5"><a href="./myReserve.do?user_id=${sessionScope.loginVo.user_id}"><span>예약현황</span></a></div>
-						<div class="item6"><a href="/"><span>???</span></a></div>
+						<c:choose>
+						<c:when test="${empty sessionScope.loginVo.user_id}">
+							<div class="item4"><a href="./login.do"><span>대출현황</span></a></div>
+							<div class="item5"><a href="./login.do"><span>예약현황</span></a></div>
+						</c:when>
+						<c:otherwise>
+							<div class="item4"><a href="./myBorrowNow.do?user_id=${sessionScope.loginVo.user_id}"><span>대출현황</span></a></div>
+							<div class="item5"><a href="./myReserve.do?user_id=${sessionScope.loginVo.user_id}"><span>예약현황</span></a></div>
+						</c:otherwise>
+						</c:choose>
+<!-- 						<div class="item6"><a href="/"><span>???</span></a></div> -->
 					</div>
 				</div>
 <%@include file="footer.jsp" %>
