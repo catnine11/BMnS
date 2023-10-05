@@ -119,6 +119,10 @@ a {
 	background-color: #F5EFFB;
 }
 
+.paging li.active a{
+	background-color: rgb(187, 167, 233);
+}
+
 	.selectBox {
   position: relative;
   width: 150px;

@@ -183,7 +183,7 @@
 					</tbody>
 				</table>
 			</div>
-			<%-- 	${p } --%>
+<%-- 				${p } --%>
 		<div style="text-align: center;" class="frame">
 	        <ul class="paging ">
 	            <c:if test="${p.startPage > 1}">
@@ -223,7 +223,8 @@
 				</c:if>
 				
 				<c:if test="${p.endPage < p.totalPage}">               
-				 <li><a href="./bookListAdmin.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li>
+<%-- 				 <li><a href="./bookListAdmin.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li> --%>
+				 <li><a href="./bookListAdmin.do?page=${p.totalPage}">▷</a></li>
 	            </c:if>
 	        </ul>
 	    </div>

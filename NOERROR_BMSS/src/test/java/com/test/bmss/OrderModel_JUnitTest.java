@@ -217,7 +217,7 @@ List<StockVo> list	=dao.booksDetail("7");
 	map.put("column", "TITLE");
 	map.put("title", "위화도");
 	
-	List<BookInfoVo> list	=sdao.searchBooks(map);
+	List<BookInfoVo> list	=sdao.BookCount(map);
 		
 		assertEquals(1, list.size());
 	

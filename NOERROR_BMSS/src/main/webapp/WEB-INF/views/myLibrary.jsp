@@ -10,15 +10,49 @@
 <head>
 <meta charset="UTF-8">
 <title>NOERROR 책check 내 서재</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/button.css">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/myLibrary.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style type="text/css">
 	table, tr, th, td{
 		text-align: center;
 	}
+	
+	/* 모달 전체 화면 뒷 배경 */
+#modalReserver.modal {
+  display: none;
+  position: fixed;
+	top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* 모달 내용 */
+#modalReserver>div.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  opacity: 80%;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 모달 버튼 스타일 */
+#modalReserver.modal>button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+	
 	tr.tr-hover:hover {
     background-color: #F5EFFB;
 }
@@ -34,45 +68,12 @@
 	div>p>a:hover{
 	text-decoration: none;
 	}
-
-	/* 모달 전체 화면 뒷 배경 */
-.modal {
-  display: none;
-  position: fixed;
-	top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  opacity: 80%;
-  border-radius: 5px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.modal>button {
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.modal>button:hover {
-  background-color: #0056b3;
-}
+	
 </style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/myLibrary.js"></script>
+
 </head>
 <%@include file="header.jsp" %>
 <body>
@@ -124,9 +125,9 @@
 									    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 									    String formattedCurrentDate = sdf.format(currentDate);
 									    pageContext.setAttribute("currentDate", formattedCurrentDate);
-// 									    System.out.println("현재시간"+currentDate);
-									    
+									    System.out.println("현재시간"+formattedCurrentDate);
 									%>
+<%-- 									${b.return_date}  ${currentDate} ${b.borwVo.over_return} --%>
 									<c:choose>
 										<c:when test="${b.return_date < currentDate && b.borrow_status=='Y'}">
 											<span style="color: red;"> ${b.borwVo.over_return}일 연체중</span>
@@ -141,16 +142,17 @@
 										</c:otherwise>
 									</c:choose>
 								</td>
-								<td><c:choose>
-	<%-- 								<td>${b.renew}</td> --%>
-										<c:when test="${b.renew=='Y'}">
+								<td>
+									<c:choose>
+										<c:when test="${b.renew=='Y'}" >
 											<p style="color: red;">연장불가</p>
 										</c:when>
 										<c:otherwise>
 											<input type="hidden" class="book_seq" value="${b.book_seq}">
-											<input type="button" class="renew" value="연장">
+											<input type="button" class="renew custom-btn btn-8 btn-sm" value="연장">
 										</c:otherwise>
-									</c:choose></td>
+									</c:choose>
+								</td>
 							</tr>
 							</c:forEach>
 							</c:forEach>
@@ -208,7 +210,7 @@
 											<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
 											<input type="hidden" name="reserve_user" class="reserve_user" value="${r.user_id}">
 											<input type="hidden" name="book_seq" class="book_seq" value="${r.book_seq}">
-											<input type="button" class="requestBorrow" value="대출신청">
+											<input type="button" class="requestBorrow custom-btn btn-8 btn-sm" value="대출신청">
 										</c:when>
 										<c:otherwise>
 											<p style="color: black;">${r.return_date}예정</p>
@@ -219,7 +221,7 @@
 									<c:if test="${r.reserve_status=='Y'}">
 										<input type="hidden" name="book_seq" class="book_seq" value="${r.book_seq}">
 										<input type="hidden" name="user_id" class="user_id" value="${sessionScope.loginVo.user_id}">
-										<input type="button" class="cancelReserve" value="예약취소">
+										<input type="button" class="cancelReserve custom-btn btn-8 btn-sm" value="예약취소">
 									</c:if>
 								</td>
 							</tr>
@@ -230,8 +232,8 @@
 					<div id="modalReserver" class="modal">
 					<div class="modal-content">
 						<p>예약한 도서를 대출하시겠습니까?</p>
-						<button id="nextButton">Y</button>
-						<button onclick="closeModal()">N</button>
+						<button id="nextButton" class="custom-btn btn-8 btn-sm">Y</button>
+						<button onclick="closeModal()" class="custom-btn btn-8 btn-sm">N</button>
 					</div>
 				</div>
 				</div>
@@ -309,7 +311,7 @@
 				</div>
 			</div>
 			<div>
-				<p><a href="">희망도서신청</a></p>
+<!-- 				<p><a href="">희망도서신청</a></p> -->
 				<div id="">
 				
 				</div>
