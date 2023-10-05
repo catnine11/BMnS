@@ -118,11 +118,11 @@
 <body>
 	<div class="container">
 	<div class="insertBook">
-<!-- 		<h4>도서등록</h4> -->
-<!-- 		<div> -->
-<!-- 			<input id="enroll" type="text"> -->
-<!-- 			<input id="enrollBtn" type="button" class="custom-btn btn-8" value="책등록" > -->
-<!-- 		</div> -->
+		<h4>도서등록</h4>
+		<div>
+			<input id="enroll" type="text">
+			<input id="enrollBtn" type="button" class="custom-btn btn-8" value="책등록" >
+		</div>
 	</div>
 	<p></p>
 		<div class="selectGenre selectBox">
