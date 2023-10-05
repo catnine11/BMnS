@@ -2,6 +2,7 @@ package com.gd.bmss;
 
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gd.bmss.mapper.IOrderDao;
-import com.gd.bmss.mapper.IStockDao;
+import com.gd.bmss.service.IOderService;
+import com.gd.bmss.service.IStockService;
 import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.OrderVo;
 import com.gd.bmss.vo.Paging_Vo;
@@ -27,12 +28,12 @@ import com.gd.bmss.vo.UserVo;
 
 @Controller
 public class OrderController {
+
 	@Autowired
-	private IOrderDao odao;
+	private IOderService oService;
 	
 	@Autowired
-	private IStockDao sdao;
-	
+	private	IStockService sService;
 	/**
 	 * 관리자가 볼 수 있는 모든 유저들의 주문목록
 	 * @param model
@@ -41,7 +42,7 @@ public class OrderController {
 		@GetMapping("/orderlist.do")
 		public String orderPage(Model model) {
 			
-		List<OrderVo> oderList	=odao.getAllOrder();
+		List<OrderVo> oderList	=oService.getAllOrder();
 			model.addAttribute("oderList",oderList);
 		return"orderUser";
 		}
@@ -49,7 +50,7 @@ public class OrderController {
 		
 		
 		/**
-		 * 주문 목록삭제 현재 admin에 있음
+		 * 주문 목록삭제 
 		 * @param model
 		 * @return
 		 */
@@ -61,7 +62,7 @@ public class OrderController {
 			int n =0;
 			if(delCheck!=null) {
 				
-				n =		odao.delOrders(delCheck);
+				n =		oService.delOrders(delCheck);
 			}
 			
 			
@@ -79,7 +80,7 @@ public class OrderController {
 		
 		@RequestMapping(value = "/orderDetail.do",method =RequestMethod.GET )
 		public String getDetailOrder(String id,Model model) {
-		List<OrderVo> list=	odao.getDetailOrder(id);
+		List<OrderVo> list=	oService.getDetailOrder(id);
 		model.addAttribute("detail",list);	
 		return"orderDetail";
 		}
@@ -95,7 +96,7 @@ public class OrderController {
 		@RequestMapping(value="/oderListUser.do",method = RequestMethod.GET)
 		public String getOrderUser(String user,Model model) {
 			System.out.println(user+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		List<OrderVo>	list=odao.getOrderUser(user);
+		List<OrderVo>	list=oService.getOrderUser(user);
 		model.addAttribute("orderListUser",list);	
 		
 		return"orderListUser";
@@ -104,7 +105,7 @@ public class OrderController {
 		
 //		@RequestMapping(value="./oderListUser",method = RequestMethod.GET)
 //		public String getOrderUser(String user) {
-//			odao.getOrderUser(getOrderUser());
+//			oService.getOrderUser(getOrderUser());
 //			return "orderUser";
 //		}
 		//판매 가능한 도서를 유저가 조회하는 메소드
@@ -116,7 +117,7 @@ public class OrderController {
 			
 			
 			
-	List<BookInfoVo>	list=	sdao.getSellableStock();
+	List<BookInfoVo>	list=	sService.getSellableStock();
 			model.addAttribute("saleList",list);
 			
 			Paging_Vo p = new Paging_Vo();
@@ -140,7 +141,7 @@ public class OrderController {
 			map.put("first",p.getPage()*p.getCountList()-(p.getCountList()-1));//
 			map.put("last", p.getPage()*p.getCountList());//현재페이지
 			//출력(게시글,페이지객체)
-		List<BookInfoVo> lists	=sdao.sellStockPaging(map);
+		List<BookInfoVo> lists	=sService.sellStockPaging(map);
 			
 		model.addAttribute("lists",lists);
 		model.addAttribute("page",p);
@@ -155,7 +156,7 @@ public class OrderController {
 		//판매 가능한 도서의 상세를 유저가 조회하는기능
 		@RequestMapping(value="/salesDetail.do",method = RequestMethod.GET)
 		public String salesDetail(Model model,String book_code) {
-			List<BookInfoVo>	list=	sdao.getSalesDetail(book_code);
+			List<BookInfoVo>	list=	sService.getSalesDetail(book_code);
 						model.addAttribute("salesDetail",list);
 			
 				return "salesDetail";
@@ -180,7 +181,7 @@ public class OrderController {
 				
 			System.out.println(id);
 //				vo.setUser_id(id.getUser_id());
-		List<OrderVo>	oderListU	=odao.getOrderUser(String.valueOf(id.getUser_id()));
+		List<OrderVo>	oderListU	=oService.getOrderUser(String.valueOf(id.getUser_id()));
 				
 //현재 주문목록에 동일한 stocknumber를 가진 주문이 있다면 등록하지않고 alert 띄우기		
 		vo.setUser_id(id.getUser_id());
@@ -201,7 +202,7 @@ public class OrderController {
 
 		    if (stNumIsc) {
 		    	  vo.setStock_number(orderStockNumber);
-			        n = odao.addOrder(vo);
+			        n = oService.addOrder(vo);
 			        n++;
 			        System.out.println(n+"stnumisc 부분");
 		    } 
@@ -210,7 +211,7 @@ public class OrderController {
 				for (String string : chkArray) {
 					System.out.println(chkArray);
 					vo.setStock_number(Integer.parseInt(string));
-				n=	odao.addOrder(vo);
+				n=	oService.addOrder(vo);
 				n++;
 				 System.out.println(n+"else문 for문");
 				}

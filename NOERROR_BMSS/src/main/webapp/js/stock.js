@@ -1,4 +1,4 @@
-// SPA 및 셀렉트 input 태그 로직 처리 메소드
+// 재고목록 상세조회  SPA구현하는 함수 
 $(document).ready(function(){
 	$(".detailTD").on("click",function(){
     var seq = $(this).closest('td').find(".booksDetail").val();
@@ -10,22 +10,6 @@ $(document).ready(function(){
       data: {seq:seq},
       dataType: "json",
       success: function(data){
-	// new Array(); length 
-	//json 객체 
-//	  console.log(data.length)
-//	  console.log(data[0]);
-//	  for(let obj of data){
-//			console.log(obj.stock_number,
-//			obj.sell_status,
-//			obj.book_seq,
-//			obj.book_price,
-//			obj.status_title,
-//			obj.status_code,
-//			obj.book_code)
-//		}
-//		
-		
-	  
 
 	
 
@@ -36,11 +20,10 @@ html+=""
 html+="		<table id='container' class='table table-bordered'>                                                                                                  ";
 html+="		<thead>                                                                                                 ";
 html+="		<tr>                                                                                                    ";
-html+="			<th>재고번호</th>                                                                                   ";
-html+="			<th>도서명</th>                                                                                     ";
-html+="			<th>도서상태</th>                                                                                   ";
-//html+="			<td>판매가능 여부</td>                                                                              ";
-html+="			<th class='col-sm-1'>도서 가격</th>                                                                                  ";
+html+="			<th class='col-lg-3'>재고번호</th>                                                                                   ";
+html+="			<th class='col-lg-5'>도서명</th>                                                                                     ";
+html+="			<th class='col-lg-3'>도서상태</th>                                                                                   ";
+html+="			<th class='col-lg-1'>도서 가격</th>                                                                                  ";
 html+="		</tr>                                                                                                   ";
 html+="		</thead>                                                                                                   ";
 html+="		<tbody>                                                                                                   ";
@@ -52,28 +35,17 @@ html+=`<td><select class='changeBookStatus' name='status_code'>
     <option value='A' ${obj.status_code == 'A' ? "selected" : ""}>일반</option>
     <option value='B' ${obj.status_code == 'B' ? "selected" : ""}>재고</option>
 </select></td>`;
-//html+=`<td><select class='sellStatus' name='sellStatus'>                                              
-//    <option value='N' ${obj.sell_status == 'N' ? 'selected' : ''}>판매불가</option>          
-//    <option value='Y' ${obj.sell_status == 'Y' ? 'selected' : ''}>판매가능</option>           
-//</select></td>`;                                                                             
-html += `<td><input class='price' type='number' name='price' value='${obj.book_price}'}></td>`;
+html += `<td><input style='width:70px;' class='price' type='number' name='price' value='${obj.book_price}'}></td>`;
 html+="					<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>";                                                             
-html+="				<td><input class='chPrice' type='button' value='가격 변경'></td>                                ";
+html+="				<td><input class='btn btn-success' type='button' value='가격 변경'></td>                                ";
 html+="			</tr>                                                                                               ";
  
  }                                                                                         
 html+="		</tbody>";
 html+="		</table>                                                                                                ";
  
-// html += "<style>";
-//html += "#container { margin: 100px auto; text-align: center; }";
-//html += ".table-bordered th, .table-bordered td { text-align: center; }";
-//html += ".table-bordered th { background-color: #f2f2f2; }";
-//html += ".table-bordered select, .table-bordered input { width: 100%; }";
-//html += "</style>";	
  $("#stockDel").html(html);	
  	
-//       stockLogic(html);
       },
       error: function(){
       }
@@ -81,58 +53,19 @@ html+="		</table>                                                               
   })
 });
 
-//재고 디테일 로직 함수 
-function stockLogic(){
-	
-	   	$(".changeBookStatus, .sellStatus, .price").each(function(){
-		var status=	$(this).closest("tr").find('.changeBookStatus');
-//		var sellStatus =	$(this).closest("tr").find('.sellStatus');
-		var price=$(this).closest("tr").find('.price')
-		var btn=$(this).closest("tr").find(".chPirce");
-//		console.log("책상태",status);
-//		console.log("판매상태",sellStatus);
-//		console.log("가격인풋",price);
-	//재고 로직 판매 불가일떄는 가격이 있어도  괜찮지 않을까 ? 실시간으로 적영되는 방법 물어보기
-	if (status.val() === 'B' && sellStatus.val() === 'Y') {
-        price.prop("readonly", false);
-        status.prop("disabled",true);
-    } else {
-        price.prop("readonly", true);
-    }
-    
-     if (status.val() === 'B') {
-        sellStatus.prop("disabled", false);
-    } else {
-        sellStatus.prop("disabled", true);
-    }
-    
-    if(status.val() !== 'B'&& sellStatus.val() !== 'Y'){
-	btn.disabled=true;
-}	
-})
-}
 
 
-
-
-
-
-
-
-
-	///도서 가격 변경 메소드 		
-			$("#stockDel").on("click", "input.chPrice", function() {
+	///관리자의 도서 가격 변경함수		
+			$("#stockDel").on("click", "input.btn.btn-success", function() {
     	var price= $(this).closest('tr').find('.price').val() 
 		var stockNum=$(this).closest('tr').find('.stockNum').text();
-//    console.log(stockNum); 
-    // console.log(price); 
 
     $.ajax({
         url: "./changePrice.do",
         type: "post",
         data: {
             stockNum: stockNum,
-            price: price // 변경된 부분
+            price: price
         },
         dataType: 'json',
         success: function(data) {
@@ -147,44 +80,13 @@ function stockLogic(){
 });
 			
 			
-	//도서 판매 여부 변경 메소드 N->Y Y->N
-//		$("#stockDel").on("change","select.sellStatus",function(){
-//			var status=$(this).closest("tr").find(".sellStatus").find("option:selected").val();
-//			var num =$(this).closest("tr").find(".book_seq").val();
-//			console.log(status)
-//			console.log(num);
-//			$.ajax({
-//			method : "post",
-//			url : "./changeStatus.do",
-//			data : {
-//				status :status,
-//				num :num
-//			},
-//			success : function(data) {
-//				 console.log (data);
-//				 console.log(data.status);
-//				alert("도서 판매여부가 변경되었습니다.");
-//			},
-//			error : function() {
-//				alert("판매여부 변경실패 ");
-//			}
-//
-//		})
-//			
-//		})
-		
-
-
-//	<td><input class='book_seq' type='hidden' value='"+obj.book_seq+"'></td>"; 
-//도서 상태 변경 메소드 
+	
+//관리자의 도서 상태 변경 함수 
 		$("#stockDel").on("change","select.changeBookStatus",function(){
 			var status_code=$(this).closest('tr').find('.changeBookStatus').find("option:selected").val();
 			var book_seq=$(this).closest("tr").find(".book_seq").val();
 			var book_tr=$(this).closest('tr');
 			
-//			console.log("도서상태 : ", status_code);
-//			console.log("도서seq: ",book_seq);
-//			console.log("도서tr: ",book_tr);
 			$.ajax({
 				method:"post",
 				url:"./chageBookStatus.do",
@@ -207,7 +109,7 @@ function stockLogic(){
 		})
 		
 		
-
+//삭제 체크박스 전체체크 메소드
 	$(document).ready(function(){
 		$("input[name='allChk']").click(function(event){
 			
@@ -243,78 +145,7 @@ function stockLogic(){
 
 
 
-	$(document).on('click', 'input#delButton', function() {
-    var checkedNums = new Array();
-    $('input[name="delChk"]:checked').each(function() {
-        checkedNums.push($(this).closest('tr').find('.stockNum').text());//체크된 값을 
- 		
- });
- console.log(checkedNums);
-  $.ajax({
-	type:"post",
-	url:"./stocksDel.do",
-	data:{"checkedNums":checkedNums},
-	
-	success:function(data){
-//		console.log(data.result);
-//		console.log(data);
-//		console.log(checkedNums.length);
-		if(data.result!=checkedNums.length){
-		alert("판매 가능 목록을 같이 선택 하셨습니다.");
-		}else{
-		 $('input[name="delChk"]:checked').each(function() {
-                // 가장 가까운 '.delTr' 클래스를 가진 tr 요소를 찾아서 제거합니다.
-                $(this).closest('.delTr').remove();
-			alert("삭제를 완료 했습니다.");
-            });
-            }
-		
-		
-	},
-	
-	error:function(){
-		alert("주문에 추가 되었거나 가격을 확인하세요");
-	}
-	
-})
-    
-   
 
-    
-   
-   
-});
-
-
-//재고 대상목록 삭제 
-
-
-
-//$(document).ready(function(){
-//    $(".InStockStatus").on("change",  function(){
-//        console.log($(this));
-//        var status_code = $(this).closest('tr').find('.InStockStatus').find("option:selected").val();
-//        var book_seq = $(this).closest("tr").find(".book_seq").text(); // 수정: .val() -> .text()
-//        
-//        console.log("도서상태 : ", status_code);
-//        console.log("도서seq: ", book_seq);
-//        
-//        $.ajax({
-//            method: "post",
-//            url: "./chageBookStatus.do",
-//            data: {book_seq: book_seq, status_code: status_code},
-//            success:function(){
-//                alert("도서상태 변경을 완료했습니다.");
-//                if(status_code != "B"){
-//                    // 삭제 처리 등 추가 작업
-//                }
-//            },
-//            error:function(){
-//                alert("도서상태 변경에 실패했습니다.");
-//            }
-//        });
-//    });
-//});
 
 //재고대상 목록의  상태변경  
 $(document).ready(function(){
@@ -353,6 +184,7 @@ $(document).ready(function(){
 	
 })
 
+//관리자의 재고목록 대상 삭제 함수
 $(document).ready(function(){
 	$('#inStockDel').click(function(){
 		var checkedNums=new Array();
@@ -361,6 +193,9 @@ $(document).ready(function(){
 			checkedNums.push($(this).closest('tr').find('.stockNum').val());
 		})
 		console.log(checkedNums);
+		var result=confirm("삭제하시겠습니까?");
+		if(result){
+			
 		$.ajax({
 		type:"post",
 		url:"./stocksDel.do",
@@ -378,9 +213,16 @@ $(document).ready(function(){
 			alert('재고목록 대상에서 제외되었습니다');	
 			
 			
+		},
+		error:function(data){
+			
 		}
 			
 		})
+		    } else {
+        // 사용자가 "아니오" 버튼을 클릭한 경우
+        alert('삭제를 취소하셨습니다.');
+    }
 		
 		
 	})
@@ -399,36 +241,3 @@ $(document).ready(function(){
 
 
 
-//
-//	html+="				<td><input type='checkbox' name='delChk'                                                      ";
-//	$(document).on('click','input#delButton',function(){
-//	console.log($(this).closest('tr').find('.delChk').val());
-//	var frm = document.forms[0];
-//	var delChk = document.getElementsByName("delChk");
-//	console.log($("input:checkbox[name=delChk]:checked").length);
-//	let jQueryCnt =$("input:checkbox[name=delChk]:checked").length;
-//	let cnt =0;
-//	console.log(delChk.length)
-//	for(let i=0; i<delChk.length;i++){
-//		console.log(delChk[i].checked)
-//		if(delChk[i].checked){
-//			return false;
-//			cnt++;
-//		}
-//	}
-//	
-//	if(jQueryCnt>0){ // 한개도 체크가 안되었을때
-//		frm.action="./stocksDel.do";
-//		frm.method="post";
-//		return false;
-//		frm.submit();	
-//	}else{
-//		alert("체크항목은 필수 입니다");
-//		return false;
-//	}
-//	
-//
-//
-//
-//		
-//	})

@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper  namespace="com.gd.bmss.mapper.SearchDaoImpl">
 
-<select id="searchBooks" resultType="BInfoVo" >
-  SELECT BOOK_CODE,TITLE,AUTHOR,
-PUBLISHER,THUMBNAIL,ISBN FROM BOOKINFO b
-  WHERE
+<select id="BookCount" resultType="BInfoVo" >
+    SELECT DISTINCT b.BOOK_CODE
+    FROM BOOKINFO b
+    JOIN BOOK_STATUS bs ON b.BOOK_CODE = bs.BOOK_CODE 
+    WHERE
   <choose>
     <when test="column == 'TITLE'">
       b.TITLE LIKE '%' || #{title} || '%'
@@ -17,28 +18,31 @@ PUBLISHER,THUMBNAIL,ISBN FROM BOOKINFO b
       b.ISBN LIKE '%' || #{isbn} || '%'
     </when>
   </choose>
+  AND STATUS_CODE  IN ('A','B')
 </select>
 
 <select id="searchPagingB" resultType="BInfoVo">
-SELECT BOOK_CODE,TITLE,AUTHOR,PUBLISHER,THUMBNAIL,ISBN
-FROM(SELECT BOOK_CODE,TITLE,AUTHOR,PUBLISHER,THUMBNAIL,ISBN,
-ROW_NUMBER() OVER(ORDER BY TITLE) RN
-  FROM BOOKINFO b
-  WHERE
-  <choose>
-    <when test="column == 'TITLE'">
-      b.TITLE LIKE '%' || #{title} || '%'
-    </when>
-    <when test="column == 'AUTHOR'">
-      b.AUTHOR LIKE '%' || #{author} || '%'
-    </when>
-        <when test="column == 'ISBN'">
-      b.ISBN LIKE '%' || #{isbn} || '%'
-    </when>
-  </choose>
-   )WHERE RN BETWEEN #{first} AND #{last}
+SELECT DISTINCT BOOK_CODE,TITLE,AUTHOR,PUBLISHER,THUMBNAIL,ISBN
+FROM (
+    SELECT DISTINCT b.BOOK_CODE,TITLE,AUTHOR,PUBLISHER,THUMBNAIL,ISBN,
+    ROW_NUMBER() OVER(ORDER BY TITLE) RN
+    FROM BOOKINFO b
+    JOIN BOOK_STATUS bs ON b.BOOK_CODE = bs.BOOK_CODE 
+    WHERE 
+        <choose>
+            <when test="column == 'TITLE'">
+                b.TITLE LIKE '%' || #{title} || '%'
+            </when>
+            <when test="column == 'AUTHOR'">
+                b.AUTHOR LIKE '%' || #{author} || '%'
+            </when>
+            <when test="column == 'ISBN'">
+                b.ISBN LIKE '%' || #{isbn} || '%'
+            </when>
+        </choose>
+        AND bs.STATUS_CODE IN ('A','B')
+) WHERE RN BETWEEN #{first} AND #{last}
 </select>
-
 <select id="searchUser"  resultType="UserVo">
 SELECT USER_ID, UPPER(USER_NAME) AS USER_NAME, USER_EMAIL,
   USER_PHONE, USER_ADDRESS, PENALTY_DATE,GUBUN,

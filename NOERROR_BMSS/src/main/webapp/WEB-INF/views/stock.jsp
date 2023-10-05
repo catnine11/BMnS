@@ -21,6 +21,9 @@ table {
 	margin: 100px auto;
 	text-align: center;
 }
+.detailTD{
+color: #5A508C;
+}
 </style>
 <body>
 

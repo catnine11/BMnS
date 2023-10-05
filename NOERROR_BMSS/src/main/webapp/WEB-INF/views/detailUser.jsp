@@ -111,7 +111,6 @@ background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
 <body>
 <input type="hidden" id="loginVo" value="${loginVo}">
 
-<div><a href="./oderListUser.do?user=${loginVo.user_id}">유저주문 조회</a></div>
 
 	<div style="margin-left: 5%; margin-right: 5%;">
 	<h2>내 정보</h2>

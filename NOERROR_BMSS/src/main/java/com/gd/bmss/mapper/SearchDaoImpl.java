@@ -18,8 +18,8 @@ public class SearchDaoImpl implements ISearchDao {
 	private SqlSessionTemplate sql;
 	private final String NS="com.gd.bmss.mapper.SearchDaoImpl.";
 	@Override
-	public List<BookInfoVo> searchBooks(Map<String, Object> map) {
-			List<BookInfoVo> list	=sql.selectList(NS+"searchBooks",map);
+	public List<BookInfoVo> BookCount(Map<String, Object> map) {
+			List<BookInfoVo> list	=sql.selectList(NS+"BookCount",map);
 		return list;
 	}
 	@Override

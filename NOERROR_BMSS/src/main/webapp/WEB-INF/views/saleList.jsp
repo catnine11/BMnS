@@ -31,6 +31,17 @@ height: 150px;
   width:300px;
   padding:10px;
 }
+
+.pa{
+color: #7266A8;  
+}
+
+.pdiv{
+font-size:30px;
+text-align: center;
+
+}
+
 </style>
 <meta charset="UTF-8">
 <title>판매도서 목록</title>
@@ -43,29 +54,28 @@ height: 150px;
 
 
 
-<c:forEach items="${lists}" var="s" varStatus="loop">
+<c:forEach items="${lists}" var="s" >
   <table class="container">
     <tr>
       <td class="background-cover" style="background-image: url('${s.thumbnail}');" data-alt="${s.title}"></td>
       <td>
-       <h4><a href="./salesDetail.do?book_code=${s.book_code}">${loop.index + 1}. ${s.title}</a><br></h4> 
-        ${s.author}(저자)<br>
+       <h4><a class="pa" href="./salesDetail.do?book_code=${s.book_code}">&nbsp;&nbsp;${s.title}</a><br></h4> 
+      &nbsp;&nbsp;${s.author}(저자)<br>
        <c:set var="formattedDate">
          <fmt:parseDate value="${s.publish_date}" pattern="yyyy-MM-dd HH:mm:ss" var="pDate" />
          <fmt:formatDate value="${pDate}" pattern="yyyy-MM-dd" />
        </c:set>
-       ${s.publisher}|${formattedDate}<br>
-<%--         가격:${s.book_price}원 --%>
+     &nbsp;&nbsp;${s.publisher}|${formattedDate}<br>
       </td>
     </tr>
   </table>
 </c:forEach>
 
 <!-- 왼쪽 오른쪽 표시 -->
-<div style="font-size:30px;text-align: center;">
+<div class="pdiv">
 <% if(p.getStartPage()>1){
 %>
-<a href="./getSellableStock.do?page=1">◁◁</a>
+<a class="pa" href="./getSellableStock.do?page=1">◁◁</a>
 <% 
 	
 }
@@ -73,12 +83,12 @@ height: 150px;
 if(p.getPage()>1){
 	if(p.getStartPage()-p.getCountPage()<=0){
 		%>
-		<a href="./getSellableStock.do?page=1">◁</a>
+		<a class="pa" href="./getSellableStock.do?page=1">◁</a>
 		<% 
 
 	}else{
 		%>
-		<a href="./getSellableStock.do?page=<%=p.getStartPage()-p.getCountPage()%>">◁</a>
+		<a class="pa" href="./getSellableStock.do?page=<%=p.getStartPage()-p.getCountPage()%>">◁</a>
 		<% 
 	}
 }
@@ -88,7 +98,7 @@ if(p.getPage()>1){
 	for(int i=p.getStartPage(); i<=p.getEndPage();i++){
 		
 		%>
-		<a href="./getSellableStock.do?page=<%=i%>">&nbsp;&nbsp;<%=i%>&nbsp;&nbsp;</a>
+		<a  class="pa" href="./getSellableStock.do?page=<%=i%>">&nbsp;&nbsp;<%=i%>&nbsp;&nbsp;</a>
 		<%
 	}
 	%>
@@ -99,18 +109,18 @@ if(p.getPage()>1){
 			if(p.getStartPage()+p.getCountPage()>p.getTotalPage()){
 			
 			%>
-			<a href="./getSellableStock.do?page=<%=p.getTotalPage() %>">▶</a>
+			<a class="pa" href="./getSellableStock.do?page=<%=p.getTotalPage() %>">▶</a>
 			<% 
 			
 		}else{
 			%>
-			<a href="./getSellableStock.do?page=<%=p.getStartPage()+p.getCountPage()%>">▶</a>
+			<a class="pa" href="./getSellableStock.do?page=<%=p.getStartPage()+p.getCountPage()%>">▶</a>
 			<% 
 		}
 		}
 	if(p.getEndPage()<p.getTotalPage()){
 		%>
-		<a href="./getSellableStock.do?page=<%=p.getTotalPage()%>">▶▶</a>
+		<a class="pa" href="./getSellableStock.do?page=<%=p.getTotalPage()%>">▶▶</a>
 		<% 
 	}
 	%>

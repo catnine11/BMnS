@@ -9,7 +9,7 @@ import com.gd.bmss.vo.BookDto;
 
 public interface ISearchDao {
 
-	public List<BookInfoVo>searchBooks(Map<String, Object>map);
+	public List<BookInfoVo>BookCount(Map<String, Object>map);
 	public List<UserVo>searchUser(Map<String, Object>map);
 	public boolean saveBook(BookDto dto);
 	public List<BookInfoVo>searchPagingB(Map<String, Object>map);
