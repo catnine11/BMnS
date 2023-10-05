@@ -104,7 +104,31 @@ body {
 						<div class="item6"><a href="/"><span>???</span></a></div>
 					</div>
 				</div>
+				
+				
+				<div id="bookList">
+		<ul class="imgList">
+		<c:forEach items="${lists}" var="book">
+			<li>
+				<div class="over">
+					<strong>${book.title}</strong>
+					<span>${book.author}</span>
+					<p>${book.publisher}</p>
+				</div>
+				<a>
+					<img id="thumbnail" src="${book.thumbnail}" onclick="getDetail('${book.book_code}')">
+				</a>
+			</li>
+		</c:forEach>
+		</ul>
+	</div>
 <%@include file="footer.jsp" %>
+<script type="text/javascript">
+function getDetail(book_code){
+	
+	location.href ='./bookDetail.do?book_code='+book_code;
+}
+</script>
 </body>
 
 </html>
