@@ -90,6 +90,7 @@
 	<result property="user_email" column="USER_EMAIL"/>
 	<result property="user_phone" column="USER_PHONE"/>
 	<result property="gubun" column="GUBUN"/>
+	<result property="thumbnail" column="THUMBNAIL"/>
 	<collection property="borwVo" resultMap="borrowMap"/>
 	<collection property="resvVo" resultMap="reserveMap"/>
 	<collection property="orderVo" resultMap="OrderVoMap"/>
@@ -148,19 +149,36 @@ WHERE PAY_SEQ=#{pay_seq}
 		FROM BOOK_PAY
 </select>
 
-
+<!-- 결제리스트조회 -->
 <select id="getAllPay" resultMap="PayVoMap">
-	SELECT bu.*,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.PAY_SEQ,bp2.PAY_MONEY,bp2.PAY_TIME,bp2.PAY_METHOD,bp2.PAY_STATUS
-FROM BOOK_USERINFO bu 
-	JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
-	JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
-	JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
-	JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
-	JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
-	JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
-WHERE bu.USER_ID  =#{user_id}	
-ORDER BY PAY_SEQ DESC
+SELECT * FROM (
+    SELECT 
+        bu.*, b.TITLE, bo.ORDER_PRICE, bo.ORDER_QUANTITY, bp.PAY_TITLE, bp2.PAY_SEQ, bp2.PAY_MONEY, bp2.PAY_TIME, bp2.PAY_METHOD, bp2.PAY_STATUS, ROW_NUMBER() OVER (ORDER BY bp2.PAY_SEQ DESC) AS rm
+    FROM 
+        BOOK_USERINFO bu 
+        JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
+        JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
+        JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
+        JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
+        JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
+        JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
+    WHERE 
+        bu.USER_ID = #{user_id}	
+)
+WHERE rm BETWEEN #{start} AND #{end}
 </select>
+
+<select id="countPayInfo" resultType="java.lang.Integer">
+		SELECT COUNT(*) 
+		FROM BOOK_USERINFO bu 
+        JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
+        JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 
+        JOIN BOOK_STATUS bs2 ON bs2.BOOK_SEQ = bs.BOOK_SEQ 
+        JOIN BOOKINFO b ON b.BOOK_CODE = bs2.BOOK_CODE 
+        JOIN BOOK_PAYSTATUS bp ON bp.PAY_STATUS = bo.PAY_STATUS 
+        JOIN BOOK_PAY bp2 ON bp2.PAY_STATUS = bp.PAY_STATUS 
+		WHERE bu.USER_ID = #{user_id}
+	</select>
 
 <!-- 결제상태 조회 -->
 <select id="getPayStatus" resultType="java.lang.String">
@@ -172,7 +190,7 @@ ORDER BY PAY_SEQ DESC
 
 <!-- 결제상세조회 -->
 <select id="detailPay"  resultMap="UserVoMap">
-	SELECT bu.*,bp2.PAY_SEQ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.PAY_MONEY,bp2.PAY_METHOD,bp2.PAY_TIME
+	SELECT bu.*,bp2.PAY_SEQ,b.TITLE ,bo.ORDER_PRICE,bo.ORDER_QUANTITY  ,bp.PAY_TITLE , bp2.PAY_MONEY,bp2.PAY_METHOD,bp2.PAY_TIME,b.THUMBNAIL
 FROM BOOK_USERINFO bu 
 	JOIN BOOK_ORDER bo ON bu.USER_ID = bo.USER_ID 
 	JOIN BOOK_STOCK bs ON bo.STOCK_NUMBER = bs.STOCK_NUMBER 

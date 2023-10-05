@@ -17,12 +17,14 @@ public interface IPayService {
 	
 	public PayVo selectPayInfo(int seq);
 	
-	public List<PayVo> getAllPay(int id);
+	public List<PayVo> getAllPay(Map<String,Object> map);
 	
 	public String getPayStatus(int seq);
 	
 	public UserVo detailPay(Map<String, Object>map);
 	
 	public String findImpUID(String seq);
+	
+	public int countPayInfo(UserVo id);
 	
 }

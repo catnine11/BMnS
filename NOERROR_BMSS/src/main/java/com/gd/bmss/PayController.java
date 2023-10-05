@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gd.bmss.service.IBoardService;
 import com.gd.bmss.service.IPayService;
+import com.gd.bmss.vo.PageVo;
 import com.gd.bmss.vo.PayStatusVo;
 import com.gd.bmss.vo.PayVo;
 import com.gd.bmss.vo.UserVo;
@@ -87,16 +93,35 @@ public class PayController {
 	 * 결제정보조회리스트
 	 */
 	@RequestMapping(value = "/payInfo.do")
-	public String payInfo(HttpSession session, Model model) {
+	public String payInfo(HttpSession session, Model model, @RequestParam(defaultValue = "1")String page) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@ 결제정보(리스트)조회 이동 payInfo @@@@@@@@@@@@@@@@@@@@@@");
 		UserVo loginVo = (UserVo) session.getAttribute("loginVo");
-		List<PayVo> payVo = (List<PayVo>)service.getAllPay(loginVo.getUser_id());
+		PageVo pageVo = new PageVo();
+		
+	    pageVo.setTotalCount(service.countPayInfo((UserVo)session.getAttribute("loginVo")));
+	    pageVo.setCountList(5);
+	    pageVo.setCountPage(5);
+	    pageVo.setTotalPage(pageVo.getTotalCount());
+	    if(Integer.parseInt(page)>pageVo.getTotalPage()) {
+			page = ""+pageVo.getTotalPage();
+		}
+	    pageVo.setPage(Integer.parseInt(page));
+	    pageVo.setStartPage(Integer.parseInt(page));
+	    pageVo.setEndPage(Integer.parseInt(page));
+	    log.info("@@@@@@@@@@@@@@@@@@@@@page : {}@@@@@@@@@@@@@@@@@@@@@@@@@",pageVo);
+	    Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start",(pageVo.getPage()*pageVo.getCountList()-(pageVo.getCountList()-1)));
+		map.put("end", (pageVo.getPage()*pageVo.getCountList()));
+		map.put("user_id", loginVo.getUser_id());
+		
+		List<PayVo> payVo = (List<PayVo>)service.getAllPay(map);
 		System.out.println(payVo);
 		for(int i= 0; i<payVo.size(); i++) {
 			int a = payVo.get(i).getPay_seq();
 			model.addAttribute("psVo",service.getPayStatus(a));
 		}
 		model.addAttribute("lists",payVo);
+		model.addAttribute("pPageVo", pageVo);
 		return "payInfo";
 	}
 	
@@ -113,8 +138,8 @@ public class PayController {
 		map.put("user_id", id.getUser_id());
 		service.detailPay(map);
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@상세조회값 : {} @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",service.detailPay(map));
-		model.addAttribute("detailPay",service.detailPay(map));
-		session.setAttribute("pSeq", pay_seq);
+	    model.addAttribute("detailPay",service.detailPay(map));
+	    session.setAttribute("pSeq", pay_seq);
 		return "detailPay";
 	}
 	/*
