@@ -73,25 +73,47 @@ body {
     font-size: 1.222em;
     font-weight: 500;
     color: #333;
+    
+    
+
+}
+#srcBtn{
+margin-left:0px;
+
+}
+#search{
+
+margin-left: 350px;
 }
 </style>
+
 </head>
 <%@include file="header.jsp"%>
 <body>
 
 <a id="payInfo2"></a>
 	<div style="background-color: #F5EFFB; padding-bottom: 100px;">
-		<div>
-			<form id="search">
-				<select name="selectOpt">
-					<option class="searchOption" value="TITLE">제목</option>
-					<option class="searchOption" value="AUTHOR">저자</option>
-					<option class="searchOption" value="ISBN">ISBN</option>
-				</select> 
-				<input id="booksearch"   type="text" name="inputVal" placeholder="검색어를 입력하세요">
-				<button id="srcBtn" type="button">도서검색</button>
-			</form>
-		</div>
+<div class="container text-center">
+  <form id="search">
+    <table>
+      <tr>
+        <td>
+          <select name="selectOpt" class="form-select input-lg">
+            <option class="searchOption" value="TITLE">제목</option>
+            <option class="searchOption" value="AUTHOR">저자</option>
+            <option class="searchOption" value="ISBN">ISBN</option>
+          </select>
+        </td>
+        <td>
+          <input id="booksearch" class="form-control input-lg" type="text" name="inputVal" placeholder="검색어를 입력하세요">
+        </td>
+        <td>
+          <button style="height:46px;" id="srcBtn" class="btn btn-success" type="button">도서검색</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
 	
 	</div>
 	<div class="shortcutZone">
@@ -104,6 +126,7 @@ body {
 						<div class="item6"><a href="/"><span>???</span></a></div>
 					</div>
 				</div>
+				<script type="text/javascript" src="./js/search.js"></script>
 <%@include file="footer.jsp" %>
 </body>
 

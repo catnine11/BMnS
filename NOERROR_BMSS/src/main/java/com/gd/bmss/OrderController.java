@@ -169,55 +169,15 @@ public class OrderController {
 			if(chkArray==null) {
 				return -2;
 			}
-			
 			int n=0;
 			UserVo  id	=	(UserVo)session.getAttribute("loginVo");
 			OrderVo vo = new OrderVo();	
-
-			
-			session.setMaxInactiveInterval(1800);
-
-
-				
-			System.out.println(id);
-//				vo.setUser_id(id.getUser_id());
-		List<OrderVo>	oderListU	=oService.getOrderUser(String.valueOf(id.getUser_id()));
-				
-//현재 주문목록에 동일한 stocknumber를 가진 주문이 있다면 등록하지않고 alert 띄우기		
-		vo.setUser_id(id.getUser_id());
-		if(oderListU.size()!=0) {
-		for (OrderVo orderVo : oderListU) {
-			int orderStockNumber = orderVo.getStock_number();
-		    boolean stNumIsc = true;
-		    
-		    System.out.println(orderStockNumber);
-		    
-		    for (String string : chkArray) {
-		        if (orderStockNumber == Integer.parseInt(string)) {
-		        	stNumIsc = false;
-		            break; 
-		        
-		        }
-		    }
-
-		    if (stNumIsc) {
-		    	  vo.setStock_number(orderStockNumber);
-			        n = oService.addOrder(vo);
-			        n++;
-			        System.out.println(n+"stnumisc 부분");
-		    } 
-		}
-		}else {
-				for (String string : chkArray) {
-					System.out.println(chkArray);
-					vo.setStock_number(Integer.parseInt(string));
-				n=	oService.addOrder(vo);
-				n++;
-				 System.out.println(n+"else문 for문");
+			vo.setUser_id(id.getUser_id());
+				for (String stNum : chkArray) {
+					vo.setStock_number(Integer.parseInt(stNum));
+					oService.addOrder(vo);
+					n++;
 				}
-		}
-		System.out.println(n+"@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return n;
-		
-		}	
+		}
 }
