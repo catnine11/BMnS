@@ -17,6 +17,11 @@ text-align: center;
 
 }
 
+.paginga{
+color: #7266A8;  
+text-decoration: none;
+}
+
 </style>
 </head>
 <%@include file="header.jsp"%>
@@ -48,14 +53,14 @@ text-align: center;
 <td class="book_seq">${g.book_seq}</td>
 </tr>
 </c:forEach>
-<tr><td><input id="inStockDel" type="button" value="삭제"> </td></tr>
+<tr><td><input id="inStockDel" class="btn btn-danger" type="button" value="삭제"> </td></tr>
 </table>
 </div>
 
 <div style="font-size:30px;text-align: center;">
 <% if(p.getStartPage()>1){
 %>
-<a href="./cronStockList.do?page=1">◁◁</a>
+<a href="./inStock.do?page=1">◁◁</a>
 <% 
 	
 }
@@ -63,12 +68,12 @@ text-align: center;
 if(p.getPage()>1){
 	if(p.getStartPage()-p.getCountPage()<=0){
 		%>
-		<a href="./cronStockList.do?page=1">◁</a>
+		<a class="paginga" href="./inStock.do?page=1">◁</a>
 		<% 
 
 	}else{
 		%>
-		<a href="./cronStockList.do?page=<%=p.getStartPage()-p.getCountPage()%>">◁</a>
+		<a class="paginga" href="./inStock.do?page=<%=p.getStartPage()-p.getCountPage()%>">◁</a>
 		<% 
 	}
 }
@@ -78,7 +83,7 @@ if(p.getPage()>1){
 	for(int i=p.getStartPage(); i<=p.getEndPage();i++){
 		
 		%>
-		<a href="./cronStockList.do?page=<%=i%>">&nbsp;&nbsp;<%=i%>&nbsp;&nbsp;</a>
+		<a class="paginga" href="./inStock.do?page=<%=i%>">&nbsp;&nbsp;<%=i%>&nbsp;&nbsp;</a>
 		<%
 	}
 	%>
@@ -89,18 +94,18 @@ if(p.getPage()>1){
 			if(p.getStartPage()+p.getCountPage()>p.getTotalPage()){
 			
 			%>
-			<a href="./cronStockList.do?page=<%=p.getTotalPage() %>">▶</a>
+			<a class="paginga" href="./inStock.do?page=<%=p.getTotalPage() %>">▶</a>
 			<% 
 			
 		}else{
 			%>
-			<a href="./cronStockList.do?page=<%=p.getStartPage()+p.getCountPage()%>">▶</a>
+			<a class="paginga" href="./inStock.do?page=<%=p.getStartPage()+p.getCountPage()%>">▶</a>
 			<% 
 		}
 		}
 	if(p.getEndPage()<p.getTotalPage()){
 		%>
-		<a href="./cronStockList.do?page=<%=p.getTotalPage()%>">▶▶</a>
+		<a class="paginga" href="./inStock.do?page=<%=p.getTotalPage()%>">▶▶</a>
 		<% 
 	}
 	%>

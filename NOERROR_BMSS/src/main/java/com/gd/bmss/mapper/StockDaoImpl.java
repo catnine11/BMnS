@@ -79,11 +79,6 @@ List<StockVo> lists =	sql.selectList(NS+"booksDetail",seq);
 }
 
 
-@Override
-public int addStocks(List<String> list) {
-int n =	sql.insert(NS+"addStocks",list);
-	return n;
-}
 
 @Override
 	public List<StockVo> getInStock() {

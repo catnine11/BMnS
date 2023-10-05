@@ -3,37 +3,32 @@ package com.gd.bmss.service;
 import java.util.List;
 import java.util.Map;
 
+import com.gd.bmss.vo.BookInfoVo;
 import com.gd.bmss.vo.Book_StatusVo;
 import com.gd.bmss.vo.StockVo;
 
 public interface IStockService {
 	
-
-		/**
-		 * 크론을 위한 메소드  실행순서 
-		 * 1 selectStockable,addStock,3normalToStock
-		 * @return
-		 */
 	public List<Book_StatusVo>selectStockable();
 	public int addStock(StockVo seq);
 	public int normalToStocks();
-	
-	public int cron();
-	
-	/**
-	 *  cronStock selectStockable과 normalToStocks를 합친것 
-	 *  현재문제 업데이트보다 insert가 먼저 되야하는데 insert 도 selectStockable 이 필요함
-	 * 
-	 * 	 */
-//	public int cronStock(StockVo seq);
-	
 	public int  stocksDel(List<String> stock_number);
 	public List<StockVo>getStocks();
 	public int priceChange(Map<String, String> map);
-	/**
-	 * 일반 상태를 재고상태로 변경해주는  메소드
-	 */
 
+	public int cron();
 	
+	public List<StockVo>getInStock();
 
+	public List<BookInfoVo>getSellableStock();
+	
+	
+	public boolean normalToStock(Book_StatusVo vo);
+	
+	public List<StockVo> booksDetail(String seq);
+	public List<BookInfoVo> getSalesDetail(String seq);
+	
+	public List<BookInfoVo>sellStockPaging(Map<String, Object>map);
+	public List<StockVo>inStockPaging(Map<String, Object>map);
+	
 }

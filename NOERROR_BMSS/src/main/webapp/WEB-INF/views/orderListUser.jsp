@@ -90,7 +90,7 @@ text-align: center;
 </table>
 </div>
 <div class="d-flex">
-    <input name="order" class="btn btn-primary"  id="delUBtn" type="button" value="주문목록 삭제">
+    <input name="order" class="btn btn-danger"  id="delUBtn" type="button" value="주문목록 삭제">
 	<button id="payBtn" class="btn btn-success" onclick="requestPay()" >결제하기</button>
 	</div>
 <%		int totalPrice=0;

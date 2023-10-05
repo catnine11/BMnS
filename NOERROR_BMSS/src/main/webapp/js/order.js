@@ -30,37 +30,6 @@ $(document).ready(function(){
 	
 })
 
-//관리자 주문내역을 삭제 하는 함수;
-
-$(document).on('click', 'input#delBtn', function(){
-    var checkedOrder = new Array();
-    $("input[name='delCheck']:checked").each(function(){
-//	console.log( $(this).closest('tr').find('.stNum').text());
-	console.log($(this));
-        checkedOrder.push($(this).closest('tr').find('.stNum').text());
-    console.log(checkedOrder);
-    });
-    console.log(checkedOrder);
-    $.ajax({
-        type: 'post',
-        url: './delOrder.do',
-        data: {'checkedOrder': checkedOrder},
-        success: function(data){
-		console.log(data.oderdel);
-		$('input.delBox:checked').each(function(){
-		
-		$(this).closest('tr').remove();		
-			
-	
-		})		
-			alert("주문을 삭제 했습니다.");	
-        },
-        error: function(){
-            alert("최소 하나이상의 도서를  체크해 주세요");
-        }
-    });
-});
-
 
 
 
@@ -74,6 +43,9 @@ $(document).on('click', 'input#delUBtn', function(){
     });
     console.log(checkedOrder);
 //    return false;
+var result=confirm("삭제하시겠습니까?");
+		if(result){
+			
     $.ajax({
         type: 'post',
         url: './delOrder.do',
@@ -94,6 +66,10 @@ $(document).on('click', 'input#delUBtn', function(){
           
         }
     });
+     } else {
+        // 회원이 "아니오" 버튼을 클릭한 경우
+        alert('삭제를 취소하셨습니다.');
+    }
 });
 
 
@@ -105,7 +81,7 @@ function dtWindow(id){
 
 
 
-//유저가 주문하기
+//유저가 주문을 주문목록에 추가하는 함수
 	
 $(document).ready(function(){
     $("#addOrder").click(function(){

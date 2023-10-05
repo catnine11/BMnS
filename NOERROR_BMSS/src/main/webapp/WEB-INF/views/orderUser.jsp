@@ -13,15 +13,17 @@
 <title>회원 전체주문</title>
 <style type="text/css">
 td,th{
+font-size:20px;
 text-align: center;
 }
-
+.detailWindow{
+color: #7266A8;  
+}
 
 </style>
 
 </head>
 <body>
-${oderList[0]}
 <div id="container">
 <table class="table table-sm">
 <thead>

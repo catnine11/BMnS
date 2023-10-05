@@ -142,7 +142,6 @@ margin-bottom: 20px;
 
 					<li class="nav-menu"><a id="imgMenu" class="menu" href="/NOERROR_BMSS" ><img class="logo" src="./img/BMSS아이콘.png"></a><a id="imenu" class="menu" href="/NOERROR_BMSS" >NOERROR 책check</a></li>
 
-					<li><a class="navtab" id="navdrop" href="#">자료검색</a></li>
 					<li><a class="navtab" id="navdrop" href="./bookListUser.do">신착도서</a></li>
 					 <%if(loginVo!=null && loginVo.getUser_auth().equalsIgnoreCase("A")){ %>
 		  <li class="dropdown">
@@ -150,7 +149,7 @@ margin-bottom: 20px;
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                     <li role="presentation"><a href="./stocklist.do">재고목록</a></li>
                     <li role="presentation" class="divider"></li>
-                    <li role="presentation"><a href="./cronStockList.do">재고대기목록</a></li>
+                    <li role="presentation"><a href="./inStock.do">재고대상 목록</a></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a href="./orderlist.do">주문목록</a></li>
                     <li role="presentation" class="divider"></li>

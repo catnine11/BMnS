@@ -19,49 +19,43 @@ height:420px;
 width:500px;
 text-align: left;
 }
-strong{
-margin:10px 35px auto;
+.sttit .tit{
+margin:0px 35px 0px 50px;
 text-align:center;
 font-size: 15px;
 
 }
-
+/* .sttit */
 .background-cover {
 	float:left;
     background-size: cover;
-    width: 150px; /* 원하는 너비 조절 */
+    width: 170px; /* 원하는 너비 조절 */
     height: 250px; /* 원하는 높이 조절 */
-    
+/*     margin:20px;  */
+margin-left: 20px;
 }
-.auth,.publ,.date,.isbn,.bPrice{
-margin-left:180px;
+.auth,.publ,.date,.isbn{
+margin-left:200px;
 margin-bottom: 20px;
+margin-top:10px;
 
 }
 
 .bookChk{
-margin-left:180px;
 margin-bottom: 20px;
+/* clear: both; */
 
 }
+.uldiv{
 
-#addOrder,#purchase{ 
- position: relative;  
- top:370px; 
- } 
-.stNum{
-position:relative;
-top:220px;
-width:50px;
-height:20px;
+margin-top: 40px;
+
 }
 .d-flex{
-margin-top: 40px;
+margin-top: 60px;
+ justify-content: center;
 }
-.d-flex #addOrder{
-margin-left: 20px;
 
-}
 
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -76,36 +70,41 @@ margin-left: 20px;
 <!-- 저자 출판사 출판연돈 isbn  -->
 		<c:set var="sd" value="${salesDetail}"></c:set>
 	<div id="container">
-<%-- 	<%for (i=0; i<list.size(); i++){%> --%>
-		<div><strong class="tit" style="text-align: center;" >${sd[0].title}</strong></div>
-		<div>
+		<div class="sttit" ><strong class="tit" >${sd[0].title}</strong></div>
+		<div id="bglidiv">
 					 <div class="background-cover" style="background-image: url('${sd[0].thumbnail}');" data-alt="${sd[0].title}"></div>	
 				
-	<div class="d-flex">
-    <input name="order" class="btn btn-primary" id="addOrder" type="button" value="주문목록에 담기">
-<!--     <input name="pay" class="btn btn-success" id="purchase" type="button" value="바로구매"> -->
-	</div>
-						
+	<div class="uldiv">				
 		<ul>
-		<li class="auth">저자:${sd[0].author}</li>
- <li class="publ">출판사:${sd[0].publisher}</li>
+		<li class="auth"><div>저자:${sd[0].author}</div></li>
+ <li class="publ"><div>출판사:${sd[0].publisher}</div></li>
   <c:set var="frmDate" >
   <fmt:parseDate pattern="yyyy-MM-dd HH:mm:ss" value="${sd[0].publish_date}" var="pDate"></fmt:parseDate>
   <fmt:formatDate pattern="yyyy-MM-dd" value="${pDate}"/>
   </c:set>
-<li class="date">출판연도:${frmDate}</li>
-<li class="isbn">ISBN:${sd[0].isbn}</li>	
+<li class="date"><div>출판연도:${frmDate}</div></li>
+<li class="isbn"><div>ISBN:${sd[0].isbn}</div></li>	
 <%
     for(int i=0; i<list.size(); i++){
 %>
-       <li> <input style="margin-left: 50px;" class="bookChk" type="checkbox" value="<%= list.get(i).getStock_number() %>">판매목록<%=i+1%>&nbsp;가격:<%=list.get(i).getBook_price()%></li>
+	
+       <li ><input style="margin-left: 30px" class="bookChk" type="checkbox" value="<%= list.get(i).getStock_number() %>">&nbsp;판매목록<%=i+1%>&nbsp;가격:<%=list.get(i).getBook_price()%></li>
       <li>  <input class="price" type="hidden" value="<%=list.get(i).getBook_price() %>" ></li>
+	
 <%
     }
 %>
+
 		</ul>
+
+		</div>
 		</div>
 		
+	</div>
+	
+	<div class="d-flex">
+    <input name="order" class="btn btn-success" id="addOrder" type="button" value="주문목록에 담기">
+<!--     <input name="pay" class="btn btn-success" id="purchase" type="button" value="바로구매"> -->
 	</div>
 	
 <script type="text/javascript" src="./js/order.js"></script>

@@ -44,9 +44,9 @@ SELECT ORDER_SEQ,A.STOCK_NUMBER, ORDER_QUANTITY , ORDER_PRICE,USER_EMAIL,USER_NA
   ON A.USER_ID=B.USER_ID  JOIN BOOK_STOCK bs ON A.STOCK_NUMBER =BS.STOCK_NUMBER  WHERE A.USER_ID=#{user_id}
 </select>
 
-<update id="updateAddr">
-UPDATE BOOK_USERINFO SET USER_ADDRESS=#{address} WHERE USER_ID =#{id}
-</update>
+<!-- <update id="updateAddr"> -->
+<!-- UPDATE BOOK_USERINFO SET USER_ADDRESS=#{address} WHERE USER_ID =#{id} -->
+<!-- </update> -->
 
 <delete id="delOrder">
 DELETE FROM BOOK_ORDER bo WHERE STOCK_NUMBER =#{stock_number}
