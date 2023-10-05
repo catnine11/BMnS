@@ -14,6 +14,101 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="https://unpkg.com/ionicons@4.4.1/dist/ionicons.js"></script>
+<style type="text/css">
+.frame {
+  width: 90%;
+  margin: 40px auto;
+  text-align: center;
+}
+.custom-btn {
+  width: 90px;
+  height: 35px;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-8 {
+  background-color: #f0ecfc;
+background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-8 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-8:before, .btn-8:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #c797eb;
+  transition: all 0.3s ease;
+}
+.btn-8:before{
+   height: 0%;
+   width: 2px;
+}
+.btn-8:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-8:hover:before {
+  height: 100%;
+}
+.btn-8:hover:after {
+  width: 100%;
+}
+.btn-8:hover{
+  background: transparent;
+}
+.btn-8 span:hover{
+  color: #c797eb;
+}
+.btn-8 span:before,
+.btn-8 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #c797eb;
+  transition: all 0.3s ease;
+}
+.btn-8 span:before {
+  width: 2px;
+  height: 0%;
+}
+.btn-8 span:after {
+  height: 2px;
+  width: 0%;
+}
+.btn-8 span:hover:before {
+  height: 100%;
+}
+.btn-8 span:hover:after {
+  width: 100%;
+}
+
+a {
+    color: #B398DA;
+    text-decoration: none;
+}
+</style>
 </head>
 <%@include file="header.jsp"%>
 <body>
@@ -56,7 +151,7 @@
  				%> 
 				
 				<c:forEach var="lists" items="${lists}"  varStatus="vs">
-					<tr>
+					<tr >
 						<!-- 				<td style="width: 5%"><a class="text-reset">asdasd</a></td> -->
 						<td style="width: 7%" class="text-center">${lists.user_id}</td>
 						<td style="width: 10%" class="text-center">${lists.user_name}</td>
@@ -71,9 +166,9 @@
 						</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
 						<td style="width: 3%" class="text-center">
-						<input	type="button" value="대출현황" onclick="location.href='./borrowOneUserNow.do?showDiv=true&user_id=${lists.user_id}'"> 
-						<input	type="button" value="대출내역" onclick="location.href='./borrowOneUserHistory.do?showDiv2=true&user_id=${lists.user_id}'"> 
-						<input	type="button" value="결제정보" onclick="location.href='#'"></td>
+						<input	type="button" value="대출현황" class="custom-btn btn-8 btn-sm"  onclick="location.href='./borrowOneUserNow.do?showDiv=true&user_id=${lists.user_id}'"> 
+						<input	type="button" value="대출내역" class="custom-btn btn-8 btn-sm" onclick="location.href='./borrowOneUserHistory.do?showDiv2=true&user_id=${lists.user_id}'"> 
+						<input	type="button" value="결제정보" class="custom-btn btn-8 btn-sm" onclick="location.href='#'"></td>
 					</tr>
 				</c:forEach>
 
