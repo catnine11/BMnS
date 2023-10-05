@@ -37,6 +37,52 @@
 <!--  </task:scheduled-tasks> -->
 
 
+<mvc:interceptors>
+	<mvc:interceptor>
+		<!-- interceptor를 통해서 로그인 Session을 확인하게 되는 URL -->
+		<mvc:mapping path="/writeAsk.do"/>
+		<mvc:mapping path="/write.do"/>
+		<mvc:mapping path="/updateForm.do"/>
+		<mvc:mapping path="/getContent.do"/>
+		<mvc:mapping path="/updateAskBoard.do"/>
+		<mvc:mapping path="/payForm.do"/>
+		<mvc:mapping path="/payInfo.do"/>
+		<mvc:mapping path="/detailPay.do"/>
+		<mvc:mapping path="/canclePay.do"/>
+		<mvc:mapping path="/canclePayInfo.do"/>
+		<mvc:mapping path="/adminPage.do"/>
+		<mvc:mapping path="/afterLogin.do"/>
+		<mvc:mapping path="/detailUser.do"/>
+		<mvc:mapping path="/modifyUser.do"/>
+		<mvc:mapping path="/pwdChk.do"/>
+		<mvc:mapping path="/modifyInfo.do"/>
+		<mvc:mapping path="/deleteUser.do"/>
+		<mvc:mapping path="/delUserForm.do"/>
+		<mvc:mapping path="/deleteUserForm.do"/>
+		<!-- 제외되는 URL -->
+		<mvc:exclude-mapping path="/loginForm.do"/>
+		<mvc:exclude-mapping path="/login.do"/>
+		<mvc:exclude-mapping path="/join.do"/>
+		<mvc:exclude-mapping path="/join2.do"/>
+		<mvc:exclude-mapping path="/regist.do"/>
+		<mvc:exclude-mapping path="/loginCheck.do"/>
+		<mvc:exclude-mapping path="/findPassword.do"/>
+		<mvc:exclude-mapping path="/findEmail.do"/>
+		<!-- interceptor를 통해서 Session을 확인하는 Bean 클래스 -->
+		<bean class="com.gd.bmss.interceptor.LoginCheckInterceptor"/>
+	</mvc:interceptor>
+	<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+		<property name="cacheSeconds" value="0"/>
+		<property name="useExpiresHeader" value="true"/>
+		<property name="useCacheControlHeader" value="true"/>
+		<property name="useCacheControlNoStore" value="true"/>
+		<property name="cacheMappings">
+			<props>
+				<prop key="/images/**">86400</prop>
+			</props>
+		</property>
+	</bean>
+</mvc:interceptors>
 
 
 
