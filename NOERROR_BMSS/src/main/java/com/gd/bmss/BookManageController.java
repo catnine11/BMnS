@@ -43,6 +43,17 @@ public class BookManageController {
 	
 	/////////////////////////////////////////
 	
+//	@GetMapping(value = "/")
+//	String mainBook(Model model) {
+//		log.info("Welcome BookManageController 메인에 도서뿌리기");
+//		
+//		List<BookInfoVo> lists = service.getAllBookUser();
+//		model.addAttribute("book", lists);
+//		
+//		return "mainPage";
+//	}
+	
+	
 	/*
 	 * 회원의 장르별 전체 조회
 	 */
