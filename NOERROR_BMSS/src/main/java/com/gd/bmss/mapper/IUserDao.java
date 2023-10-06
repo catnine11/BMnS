@@ -43,7 +43,7 @@ public interface IUserDao {
 		public UserVo detailUser(int id);
 		
 	//Email찾기
-		public String findEmail(Map<String, Object> map);
+		public List<String> findEmail(Map<String, Object> map);
 		
 	//비밀번호찾기
 		public String findPassword(Map<String,Object> map);
@@ -55,6 +55,6 @@ public interface IUserDao {
 		public int deleteUser(int id);
 	
 	//탈퇴시 연체,예약,대출조회
-		public UserVo getNotDelUser(int id);
+		public List<UserVo> getNotDelUser(int id);
 		
 }

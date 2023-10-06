@@ -47,7 +47,7 @@
 						<td style="width: 10%" class="text-center">${lists.pay_money}</td>
 						<td style="width: 20%" class="text-center">${lists.pay_time}</td>
 						<td style="width: 10%" class="text-center">${psVo}</td>
-						<td style="width: 10%" class="text-center"><input class="custom-btn btn-8"  type="button" value="결제상세" onclick="location.href='detailPay.do?pay_seq=${lists.pay_seq}'"></td>
+						<td style="width: 10%" class="text-center"><input class="custom-btn btn-8"  type="button" value="결제취소" onclick="location.href='detailPay.do?pay_seq=${lists.pay_seq}'"></td>
 					</tr>
 				</c:forEach>
 

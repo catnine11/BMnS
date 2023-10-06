@@ -1,6 +1,7 @@
 package com.gd.bmss.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -58,7 +59,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public String findEmail(Map<String, Object> map) {
+	public List<String> findEmail(Map<String, Object> map) {
 		log.info("@@@@@@@@@@@@@@ 이메일찾기 findEmail@@@@@@@@@@@@@@@@");
 		return dao.findEmail(map);
 	}
@@ -88,7 +89,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserVo getNotDelUser(int id) {
+	public List<UserVo> getNotDelUser(int id) {
 		log.info("@@@@@@@@@@@@@@ 회원탈퇴 -> 연체,예약,패널티 회원조회 getNotDelUser @@@@@@@@@@@@@@@@");
 		return dao.getNotDelUser(id);
 	}

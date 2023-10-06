@@ -58,7 +58,6 @@
 		<mvc:mapping path="/modifyInfo.do"/>
 		<mvc:mapping path="/deleteUser.do"/>
 		<mvc:mapping path="/delUserForm.do"/>
-		<mvc:mapping path="/deleteUserForm.do"/>
 		<!-- 제외되는 URL -->
 		<mvc:exclude-mapping path="/loginForm.do"/>
 		<mvc:exclude-mapping path="/login.do"/>
@@ -68,6 +67,8 @@
 		<mvc:exclude-mapping path="/loginCheck.do"/>
 		<mvc:exclude-mapping path="/findPassword.do"/>
 		<mvc:exclude-mapping path="/findEmail.do"/>
+		<mvc:exclude-mapping path="/deleteUserForm.do"/>
+		
 		<!-- interceptor를 통해서 Session을 확인하는 Bean 클래스 -->
 		<bean class="com.gd.bmss.interceptor.LoginCheckInterceptor"/>
 	</mvc:interceptor>

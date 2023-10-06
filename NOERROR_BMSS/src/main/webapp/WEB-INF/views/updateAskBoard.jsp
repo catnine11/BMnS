@@ -20,7 +20,7 @@
 		<form action="./updateAskBoard.do" method="post" >
 			<input type="hidden" id="ask_seq" name="ask_seq" value="${ask_seq}">
 			<input type="text" id="ask_title" name="ask_title" value="${ask_title}">
-			<textarea id="editor" name="ask_contents"></textarea>
+			<textarea id="editor" name="ask_contents"><c:out value="${content}" escapeXml="false" /></textarea>
 		</form>
 		<div class="btn"><input type="button" onclick="updateBoard()" value="수정하기"></div>
 	</div>

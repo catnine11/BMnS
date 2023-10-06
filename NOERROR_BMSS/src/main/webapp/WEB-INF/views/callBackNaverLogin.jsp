@@ -14,7 +14,7 @@
     String clientSecret = "zMspC2QK0c";
     String code = request.getParameter("code");
     String state = request.getParameter("state");
-    String redirectURI = URLEncoder.encode("http://localhost:8080/NOERROR_BMSS/callBackNaverLogin.do", "UTF-8");
+    String redirectURI = URLEncoder.encode("http://localhost:8099/NOERROR_BMSS/callBackNaverLogin.do", "UTF-8");
     String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"
     
         + "&client_id=" + clientId

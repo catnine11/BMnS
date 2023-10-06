@@ -302,7 +302,7 @@ html,body {
       <div class="container" style="padding: 0px;">
     <div class="btn btn__secondary" style="background-color: #E1E8EE;" onclick="phoneChk()"><p style="margin: 0px; font-size: 10px; color: #999">휴대폰인증</p></div>
 	</div>
-      <input type="text" class="input" id="birth" name="user_birth" placeholder="생년월일 8자리" >
+      <input type="text" class="input" id="birth" name="user_birth" placeholder="생년월일 8자리 ex)19990101" >
       <input type="text" class="input" id="address" name="user_address" readonly placeholder="주소" />
       <input type="text" class="input" id="dAddress" name="addressDetail" placeholder="상세주소" />
     </div>

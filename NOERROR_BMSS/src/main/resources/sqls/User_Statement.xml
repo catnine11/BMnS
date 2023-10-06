@@ -60,7 +60,7 @@
 <select id="checkEmail" resultType="java.lang.Integer">
 	SELECT COUNT(SOCIAL_EMAIL)
 FROM(SELECT DISTINCT SOCIAL_EMAIL
-			FROM (SELECT SOCIAL_EMAIL FROM BOOK_SOCIALINFO))
+			FROM (SELECT SOCIAL_EMAIL FROM BOOK_SOCIALINFO WHERE SOCIAL_GUBUN=#{social_gubun}))
 WHERE SOCIAL_EMAIL = #{social_email}
 </select>
 
@@ -131,7 +131,7 @@ WHERE USER_ID = #{user_id}
 <select id="findEmail" resultType="java.lang.String" parameterType="java.util.Map">
 	SELECT USER_EMAIL 
 		FROM BOOK_USERINFO
-	WHERE USER_NAME =#{user_name} AND USER_PHONE =#{user_phone}
+	WHERE USER_NAME =#{user_name} AND USER_PHONE =#{user_phone} AND GUBUN='nomal'
 </select>
 
 <!-- PASSWORD찾기 -->
@@ -167,7 +167,7 @@ WHERE USER_EMAIL =#{user_email} AND USER_PHONE =#{user_phone}
 	<collection property="resvVo" resultMap="ReserveVoMap"/>
 </resultMap>
 <select id="getNotDelUser" resultMap="UserVoMap">
-	SELECT bu.*, bb.BORROW_STATUS ,br.RESERVE_STATUS 
+	SELECT bu.*,bb.BORROW_STATUS ,br.RESERVE_STATUS 
 	FROM BOOK_USERINFO bu 
 	JOIN BOOK_RESERVE br 
 	ON bu.USER_ID =br.USER_ID 
