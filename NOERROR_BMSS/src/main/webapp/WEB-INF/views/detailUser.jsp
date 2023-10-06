@@ -13,7 +13,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script type="text/javascript" src="./js/payment.js"></script>
 </head>
 <style type="text/css">
 #tr-hover:hover {
@@ -148,7 +147,7 @@ background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
 						<td style="width: 3%" class="text-center">
 
 						<input type="button" class="custom-btn btn-8" value="내 서재" onclick="location.href='./myLibrary.do?user_id=${sessionScope.loginVo.user_id}'" style="width: 70px; height: 35px;">  
-           				<input type="button" class="custom-btn btn-8" value="결제정보" onclick="location.href='./payInfo.do'" style="width: 70px; height: 35px;"></td>
+           				<input type="button" class="custom-btn btn-8" value="결제내역" onclick="location.href='./payInfo.do'" style="width: 70px; height: 35px;"></td>
 
 					</tr>
 			</tbody>

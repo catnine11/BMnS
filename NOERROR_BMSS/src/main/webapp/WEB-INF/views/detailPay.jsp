@@ -17,19 +17,27 @@
 	min-width: 100%;
  }
 </style>
+<link rel="stylesheet" href="./css/adminPage.css">
 </head>
 <%@include file="header.jsp"%>
 <body>
-	<table>
+	<table  class="table table-hover" style="margin-top: 5%;">
 	<tr>
-	<td class="background-cover" style="background-image: url('${detailPay.thumbnail}');" data-alt="${s.title}"></td>
-	</tr>
+					<th scope="col" class="text-center">결제번호</th>
+					<th scope="col" class="text-center">결제금액</th>
+					<th scope="col" class="text-center">결제방법</th>
+					<th scope="col" class="text-center">결제시간</th>
+					<th scope="col" class="text-center"></th>
+				</tr>
+	<tr id="tr-hover">
+						<td style="width: 10%" class="text-center">${detailPay.payVo[0].pay_seq}</td>
+						<td style="width: 20%" class="text-center">${detailPay.payVo[0].pay_money}</td>
+						<td style="width: 10%" class="text-center">${detailPay.payVo[0].pay_method}</td>
+						<td style="width: 30%" class="text-center">${detailPay.payVo[0].pay_time}</td>
+						<td style="width: 10%" class="text-center"><input class="custom-btn btn-8"  type="button" value="결제취소"  onclick="canclePay()"></td>
+					</tr>
+	
 	</table>
-	${detailPay.payVo[0].pay_seq}<br>
-	${detailPay.payVo[0].pay_money}<br>
-	${detailPay.payVo[0].pay_method}<br>
-	${detailPay.payVo[0].pay_time}<br>
-	<input type="button" value="결제취소" onclick="canclePay()">
 	
 </body>
 <%@include file="footer.jsp"%>

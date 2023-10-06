@@ -2,6 +2,7 @@ package com.gd.bmss;
 
 import java.security.Provider.Service;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -148,12 +149,12 @@ public class MsgController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_name", name);
 		map.put("user_phone", phone);
-		String email = service.findEmail(map);
+		List<String> email = service.findEmail(map);
 		if (storedCode != null && storedCode.equals(confirmNum)) {
 			session.removeAttribute("randomCode");
 			session.removeAttribute("phone");
 			
-			return (email == null)?"":email;
+			return (email == null)?"":email.toString();
 		} else {
 			return "Error";
 		}
@@ -167,7 +168,7 @@ public class MsgController {
 	public String findPassword(@RequestParam String confirmNum, String email, String phone, HttpSession session) {
 		log.info("@@@@@@@@@@@@@@@@@@@ findPassword 비밀번호찾기 이동함@@@@@@@@@@@@@@@@");
 		String storedCode = (String) session.getAttribute("randomCode");
-		String randomPwd = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10);
+		String randomPwd = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10)+"!";
 		 MimeMessage message = mailSender.createMimeMessage();
 		    
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -185,7 +186,7 @@ public class MsgController {
 		        messageHelper.setTo(email);
 		        messageHelper.setSubject("Bmss 책check 회원님의 비밀번호가 변경되었습니다");
 
-		        String content = "회원님의 변경된 비밀번호\n\n\t\t\t\t\t\t"+randomPwd+"!\t\t입니다"+"\n\n변경된 비밀번호로 로그인 해주세요";
+		        String content = "회원님의 변경된 비밀번호\n\n\t\t\t\t\t\t"+randomPwd+"\t\t입니다"+"\n\n변경된 비밀번호로 로그인 해주세요";
 		        log.info("@@@@@@@@@@@@@@@@@@randomPwd값 : {}@@@@@@@@@@@@@@@@@@@@@",randomPwd );
 		        messageHelper.setText(content, false);
 

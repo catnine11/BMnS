@@ -1,5 +1,6 @@
 package com.gd.bmss.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.gd.bmss.vo.SocialVo;
@@ -19,7 +20,7 @@ public interface IUserService {
 	
 	public int emailCheck(String email);
 	
-	public String findEmail(Map<String, Object> map);
+	public List<String> findEmail(Map<String, Object> map);
 	
 	public String findPassword(Map<String, Object> map);
 	
@@ -29,5 +30,5 @@ public interface IUserService {
 	
 	public int deleteUser(int id);
 	
-	public UserVo getNotDelUser(int id);
+	public List<UserVo> getNotDelUser(int id);
 }
