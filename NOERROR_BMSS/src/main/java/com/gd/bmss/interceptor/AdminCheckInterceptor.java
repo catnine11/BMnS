@@ -12,18 +12,18 @@ import com.gd.bmss.SpringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 /*
- * 로그인 Session확인
+ * Admin Session확인
  */
 @Slf4j
-public class LoginCheckInterceptor implements AsyncHandlerInterceptor {
+public class AdminCheckInterceptor implements AsyncHandlerInterceptor {
 
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		log.info("@@@@@@@@@@@@@@@@@인터셉터 시작, 로그인 Session 확인 존재 true / 없으면 false logout.do 호출@@@@@@@@@@@@@@@@@");
-		if(request.getSession().getAttribute("loginVo") == null) {
-			log.info("@@@@@@@@@@@@@@@@로그인 정보가 없습니다@@@@@@@@@@@@@@@@@@@");
+		log.info("@@@@@@@@@@@@@@@@@인터셉터 시작, Admin Session 확인 존재 true / 없으면 false logout.do 호출@@@@@@@@@@@@@@@@@");
+		if(request.getSession().getAttribute("loginVo") != "A" || request.getSession().getAttribute("loginVo") == null) {
+			log.info("@@@@@@@@@@@@@@@@관리자만 접속가능합니다. @@@@@@@@@@@@@@@@@@@");
 			SpringUtils.servletAlert(response, "접근이 제한된 페이지 입니다.", "logout.do");
 			return false;
 		}

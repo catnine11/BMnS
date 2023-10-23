@@ -125,8 +125,7 @@ public class UserController {
 		map.put("user_password", pwd);
 		UserVo loginVo = service.login(map);
 		if(loginVo == null) {
-			resp.setContentType("text/html; charset=utf-8;");
-	    	resp.getWriter().println("<script>alert('이메일 또는 비밀번호를 확인해 주세요.'); location.href='./login.do';</script>");
+			SpringUtils.servletAlert(resp, "이메일 또는 비밀번호를 확인해 주세요", "login.do");
 			return null;
 		}else {
 			session.setAttribute("loginVo", loginVo);
