@@ -72,6 +72,21 @@
 		<!-- interceptor를 통해서 Session을 확인하는 Bean 클래스 -->
 		<bean class="com.gd.bmss.interceptor.LoginCheckInterceptor"/>
 	</mvc:interceptor>
+	<mvc:interceptor>
+		<mvc:mapping path="/adminPage.do"/>
+		<mvc:mapping path="/borrowOneUserNow.do"/>
+		<mvc:mapping path="/borrowAllUserNow.do"/>
+		<mvc:mapping path="/getAllReserveNow.do"/>
+		<mvc:mapping path="/borrowOneUserHistory.do"/>
+		<mvc:mapping path="/stocklist.do"/>
+		<mvc:mapping path="/bookListAdmin.do"/>
+		<mvc:mapping path="/bookDetail.do"/>
+		<mvc:mapping path="/inStock.do"/>
+		<mvc:mapping path="/orderlist.do"/>
+		<mvc:mapping path="/orderDetail.do"/>
+		<mvc:exclude-mapping path=""/>
+		<bean class="com.gd.bmss.interceptor.AdminCheckInterceptor"/>
+	</mvc:interceptor>
 	<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
 		<property name="cacheSeconds" value="0"/>
 		<property name="useExpiresHeader" value="true"/>
@@ -79,7 +94,7 @@
 		<property name="useCacheControlNoStore" value="true"/>
 		<property name="cacheMappings">
 			<props>
-				<prop key="/images/**">86400</prop>
+				<prop key="/img/**">86400</prop>
 			</props>
 		</property>
 	</bean>
