@@ -57,15 +57,16 @@
                     <td>${boardVo.ask_regdate}</td>
                 </tr>
                 <tr class="article-body" style="height: 600px; ">
-                    <td colspan="4">${boardVo.ask_contents}</td>
+                    <td colspan="4">${content}</td>
                 </tr>
         </table>
+        <input type="hidden" name="content" value="${boardVo.ask_contents}">
 	<input type="hidden" id="pSeq" name="pay_seq" value="${boardVo.pay_seq}">
 	
 		<input id="listBtn" type="button" onclick="location.href='./askBoardList.do'" value="목록보기" >
 		<c:choose>
 		<c:when test="${loginVo.user_id eq boardVo.user_id}">
-		<input id="modiBtn" type="button" onclick="location.href='./updateForm.do?ask_seq=${ask_seq}&ask_title=${ask_title}'" value="수정하기" style="margin-top: 0px;">
+		<input id="modiBtn" type="button" onclick="location.href='./updateForm.do?ask_seq=${ask_seq}&ask_title=${ask_title}&content=${content}'" value="수정하기" style="margin-top: 0px;">
 		</c:when>
 		<c:when test="${loginVo.user_auth eq 'A'}">
 		<input id="cancleBtn" type="button" value="결제취소승인" onclick="cancle()">

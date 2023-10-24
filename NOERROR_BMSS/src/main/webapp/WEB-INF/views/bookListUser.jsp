@@ -30,16 +30,23 @@
 		
 	}
 	
- 	.imgList li .over{
- 		position: absolute;
- 		top: 0;
- 		left: 0;
- 		bottom: 0;
- 		padding: 20%;
- 		width: 100px;
- 		text-align: center;
-  		display: none; 
- 	}
+ 	div.over {
+    padding-right: 220px;
+    padding-top: 130px;
+    padding-bottom: 130px;
+}
+.imgList li .over {
+    position: absolute;
+    top: -30px;
+    left: 70px;
+    bottom: 0;
+    padding: 10%;
+    width: 400px;
+    font-family: sans-serif;
+    font-size: larger;
+    /* text-align: center; */
+    /* display: none; */
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/button.css">
@@ -84,8 +91,8 @@
 				html+="<ul class='imgList'>";
 				html+="<li>";
 				html+="	<div class='over'>";
-				html+="		<strong>"+book.title+"</strong>";
-				html+="		<span>"+book.author+"</span>";
+				html+="		<strong>"+book.title+"</strong><br>";
+				html+="		<span>"+book.author+"</span><br>";
 				html+="		<p>"+book.publisher+"</p>";
 				html+="	</div>";
 				html+="	<a>";
@@ -133,8 +140,8 @@
 		<c:forEach items="${lists}" var="book">
 			<li>
 				<div class="over">
-					<strong>${book.title}</strong>
-					<span>${book.author}</span>
+					<strong>${book.title}</strong><br>
+					<span>${book.author}</span><br>
 					<p>${book.publisher}</p>
 				</div>
 				<a>
@@ -157,7 +164,8 @@
 						<li><a href="./bookListUser.do?page=1">◀</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="./bookListUser.do?page=${p.startPage-p.countPage}">◀</a></li>
+<%-- 						<li><a href="./bookListUser.do?page=${p.startPage-p.countPage}">◀</a></li> --%>
+						<li><a href="./bookListUser.do?page=${p.page-p.countPage}">◀</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
@@ -186,6 +194,7 @@
 			
 			<c:if test="${p.endPage < p.totalPage}">               
 			 <li><a href="./bookListUser.do?page=${p.totalPage - p.totalPage%p.countPage+1}">▷</a></li>
+<%-- 			 <li><a href="./bookListUser.do?page=${p.totalPage}">▷</a></li> --%>
             </c:if>
         </ul>
     </div>

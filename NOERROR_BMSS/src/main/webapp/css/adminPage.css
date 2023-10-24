@@ -707,7 +707,7 @@ html {
     background-color: #F5EFFB;
 }
 #pgl:focus,#pgl:hover{
-background-color: #F5EFFB; border-color: #F5EFFB;
+background-color: #D0A9F5; border-color: #D0A9F5;
 }
 #pgi:hover, #pgi>span{
 background-color: #D0A9F5; border-color: #D0A9F5;

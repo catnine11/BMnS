@@ -14,9 +14,9 @@ public class URLVo {
 	private String googleUrl="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=profile%20email&access_type=offline";
 	
 	//리다이렉트 URL
-	private String naverRedirect = "http://localhost:8080/NOERROR_BMSS/callBackNaverLogin.do";
-	private String kakaoRedirect = "http://localhost:8080/NOERROR_BMSS/callBackKAKAOLogin.do";
-	private String googleRedirect = "http://localhost:8080/NOERROR_BMSS/callbackgoogle.do";
+	private String naverRedirect = "http://localhost:8099/NOERROR_BMSS/callBackNaverLogin.do";
+	private String kakaoRedirect = "http://localhost:8099/NOERROR_BMSS/callBackKAKAOLogin.do";
+	private String googleRedirect = "http://localhost:8099/NOERROR_BMSS/callbackgoogle.do";
 
 	//토큰 요청 URL
 	private String getNaverTokenUrl="https://nid.naver.com/oauth2.0/token?grant_type=authorization_code";

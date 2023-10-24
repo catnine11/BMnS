@@ -295,7 +295,7 @@
         var noagree = document.querySelector('#noagree');
         noagree.addEventListener('click', () => {
             if (confirm('정말로 동의하지 않으시겠습니다까?')) {
-                location.href='http://localhost:8080/NOERROR_BMSS';
+                location.href='http://localhost:8099/NOERROR_BMSS';
             }
         });
         

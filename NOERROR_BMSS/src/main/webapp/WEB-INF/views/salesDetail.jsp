@@ -103,7 +103,7 @@ margin-top: 60px;
 	</div>
 	
 	<div class="d-flex">
-    <input name="order" class="btn btn-success" id="addOrder" type="button" value="주문목록에 담기">
+    <input name="order" class="btn btn-success" id="addOrder" type="button" value="주문목록 추가">
 <!--     <input name="pay" class="btn btn-success" id="purchase" type="button" value="바로구매"> -->
 	</div>
 	

@@ -39,7 +39,7 @@ color: #7266A8;
 </tr>
 </thead>
 <tbody>
-<c:forEach var="o" items="${oderList}">
+<c:forEach varStatus="vs" var="o" items="${oderList}">
 <tr>
 <td>${o.order_seq}</td>
 <td><a class="detailWindow" href="#" onclick="dtWindow(${o.user_id});return false;" >${o.user_id}</a></td>

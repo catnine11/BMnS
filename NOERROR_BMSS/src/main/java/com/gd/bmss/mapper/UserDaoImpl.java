@@ -62,8 +62,8 @@ public class UserDaoImpl implements IUserDao {
 	}
 
 	@Override
-	public String findEmail(Map<String, Object> map) {
-		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.findEmail",map);
+	public List<String> findEmail(Map<String, Object> map) {
+		return sql.selectList("com.gd.bmss.mapper.UserDaoImpl.findEmail",map);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class UserDaoImpl implements IUserDao {
 	}
 
 	@Override
-	public UserVo getNotDelUser(int id) {
-		return sql.selectOne("com.gd.bmss.mapper.UserDaoImpl.getNotDelUser",id);
+	public List<UserVo> getNotDelUser(int id) {
+		return sql.selectList("com.gd.bmss.mapper.UserDaoImpl.getNotDelUser",id);
 	}
 }

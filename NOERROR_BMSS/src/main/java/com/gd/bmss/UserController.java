@@ -93,7 +93,7 @@ public class UserController {
 		            return "redirect:/login.do";
 		        } else {
 		            response.setContentType("text/html; charset=utf-8;");
-		            response.getWriter().println("<script>alert('회원가입에 실패 하셨습니다'); location.href='http://localhost:8080/NOERROR_BMSS';</script>");
+		            response.getWriter().println("<script>alert('회원가입에 실패 하셨습니다'); location.href='http://localhost:8099/NOERROR_BMSS';</script>");
 		            return null;
 		        }
 		    }else {
@@ -143,7 +143,7 @@ public class UserController {
 			SpringUtils.servletAlert(response, "잘못된 접근입니다", "login.do");
 			return "";
 		} else {
-			return "redirect:/http://localhost:8080/NOERROR_BMSS";
+			return "redirect:/http://localhost:8099/NOERROR_BMSS";
 		}
 	}
 	@GetMapping("/logout.do")
@@ -259,24 +259,31 @@ public class UserController {
 		log.info("@@@@@@@@@@@@@@@회원탈퇴폼 실행 @@@@@@@@@@@@@@@");
 		UserVo loginVo = (UserVo) session.getAttribute("loginVo");
 		int n = loginVo.getUser_id();
-		UserVo result = service.getNotDelUser(n);
-		log.info("@@@@@@@@@@@@@@@ result 값 : {}@@@@@@@@@@@@@@@",result);
-		if(result != null) {
+		List<UserVo> result = service.getNotDelUser(n);
+		log.info("@@@@@@@@@@@@@@@ result 값 : {}@@@@@@@@@@@@@@@",service.getNotDelUser(n));
+		if(!result.isEmpty() && 
+			    !result.get(0).getBorwVo().isEmpty() && 
+			    !result.get(0).getResvVo().isEmpty() &&
+			    "Y".equalsIgnoreCase(result.get(0).getBorwVo().get(0).getBorrow_status()) &&
+			    "Y".equalsIgnoreCase(result.get(0).getResvVo().get(0).getReserve_status())) {
+//			log.info("@@@@@@@@@@@@@@@ status 값 : {}, /// {}@@@@@@@@@@@@@@@",result.get(0).getBorwVo().get(0).getBorrow_status(),result.get(0).getResvVo().get(0).getReserve_status());
+			resp.setContentType("text/html; charset=utf-8;");
+			resp.getWriter().println("<script>alert('회원탈퇴중 오류가 발생했습니다. 연체 또는 대출된 도서가 있습니다'); location.href='./detailUser.do';</script>");
+			return null;
+		}else {
 			int m = service.deleteUser(n);
+			log.info("@@@@@@@@@@@@@@@ m 값 : {}@@@@@@@@@@@@@@@",m);
 			if(m>0) {
 				session.removeAttribute("loginVo");
 				resp.setContentType("text/html; charset=utf-8;");
-				resp.getWriter().println("<script>alert('탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.'); location.href='http://localhost:8080/NOERROR_BMSS';</script>");
+				resp.getWriter().println("<script>alert('탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.'); location.href='http://localhost:8099/NOERROR_BMSS';</script>");
 				return null;
 			}else {
 				resp.setContentType("text/html; charset=utf-8;");
-		    	resp.getWriter().println("<script>alert('회원탈퇴중 오류가 발생했습니다'); location.href='./detailUser.do';</script>");
+				resp.getWriter().println("<script>alert('회원탈퇴중 오류가 발생했습니다. 연체 또는 대출된 도서가 있습니다'); location.href='./detailUser.do';</script>");
 				return null;
 			}
-		}else {
-			resp.setContentType("text/html; charset=utf-8;");
-	    	resp.getWriter().println("<script>alert('회원탈퇴중 오류가 발생했습니다'); location.href='./detailUser.do';</script>");
-			return null;
+			
 		}
 	}
-}
+	}

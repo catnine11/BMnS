@@ -14,6 +14,7 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script src="https://unpkg.com/ionicons@4.4.1/dist/ionicons.js"></script>
+
 </head>
 <%@include file="header.jsp"%>
 <body>
@@ -56,7 +57,7 @@
  				%> 
 				
 				<c:forEach var="lists" items="${lists}"  varStatus="vs">
-					<tr>
+					<tr id="tr-hover">
 						<!-- 				<td style="width: 5%"><a class="text-reset">asdasd</a></td> -->
 						<td style="width: 7%" class="text-center">${lists.user_id}</td>
 						<td style="width: 10%" class="text-center">${lists.user_name}</td>
@@ -71,9 +72,8 @@
 						</td>
 						<td style="width: 10%" class="text-center">${lists.gubun}</td>
 						<td style="width: 3%" class="text-center">
-						<input	type="button" value="대출현황" onclick="location.href='./borrowOneUserNow.do?showDiv=true&user_id=${lists.user_id}'"> 
-						<input	type="button" value="대출내역" onclick="location.href='./borrowOneUserHistory.do?showDiv2=true&user_id=${lists.user_id}'"> 
-						<input	type="button" value="결제정보" onclick="location.href='#'"></td>
+						<input	type="button" value="대출현황" class="custom-btn btn-8 btn-sm"  onclick="location.href='./borrowOneUserNow.do?showDiv=true&user_id=${lists.user_id}'"> 
+						<input	type="button" value="대출내역" class="custom-btn btn-8 btn-sm" onclick="location.href='./borrowOneUserHistory.do?showDiv2=true&user_id=${lists.user_id}'"> 
 					</tr>
 				</c:forEach>
 

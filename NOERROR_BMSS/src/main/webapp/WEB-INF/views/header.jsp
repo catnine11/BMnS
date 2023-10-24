@@ -156,11 +156,9 @@ margin-bottom: 20px;
                 </ul>
             </li>
             <%}else if(loginVo!=null && loginVo.getUser_auth().equalsIgnoreCase("U")){  %>
-					<li><a class="navtab" id="navdrop" href="./oderListUser.do?user=${loginVo.user_id}">주문 조회</a></li>
+					<li><a class="navtab" id="navdrop" href="./oderListUser.do?user=${loginVo.user_id}">주문내역 조회</a></li>
 				<%}%>
-				<%if(!(loginVo!=null && loginVo.getUser_auth().equalsIgnoreCase("A"))){ %>
 					<li><a class="navtab" id="navdrop" href="./getSellableStock.do">판매도서목록</a></li>
-				<%} %>
 					<li></li>
 				</ul>
 			</div>

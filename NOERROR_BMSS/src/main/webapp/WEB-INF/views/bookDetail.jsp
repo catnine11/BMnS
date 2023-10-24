@@ -149,8 +149,8 @@
 									<td>${d.borrow_status}</td>
 									<td>${d.return_date}</td>
 									<td>${d.reserve_status}</td>
-									<td class="adminOnly">
-										<select class="changeBookStatus" name="status_code">                                        
+									<td class="adminOnly selectBox">
+										<select class="changeBookStatus select" name="status_code">                                        
 											<option value="A" ${d.status_code =="A"? "selected": ""}>일반</option>
 											<option value="B" ${d.status_code =="B"? "selected": ""}>재고</option>
 											<option value="C" ${d.status_code =="C"? "selected": ""}>분실</option>

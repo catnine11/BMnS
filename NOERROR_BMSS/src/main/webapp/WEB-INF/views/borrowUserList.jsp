@@ -23,10 +23,10 @@
 	table, tr, th, td{
 		text-align: center;
 	}
-/* 	#borrowOneUserNow { */
-/*     display: none;  */
-/* 	} */
-	
+
+	table{
+		margin-top: 30px;
+	}	
 	
 </style>
 </head>
@@ -49,7 +49,7 @@
 				<p><a href="./borrowAllUserNow.do" id="showBorrowAllUserNow">전체회원</a></p>
 <!-- 				<p><a href="#" id="showBorrowAllUserNow">전체회원</a></p> -->
 				<div id="borrowAllUserNow" style="display:none;">
-					<input type="button" id="returnBook" value="반납">
+					<input type="button" id="returnBook" class="custom-btn btn-8 btn-sm" value="반납">
 <%-- 					${borrowNow} --%>
 					<table class="table table-hover">
 						<tbody>
@@ -108,7 +108,7 @@
 									</td>
 									<td>
 										<input type="hidden" name="user_id" class="user_id" value="${borrow.user_id}">
-										<input type="button" class="detailUserBorrow" value="회원대출상세">
+										<input type="button" class="detailUserBorrow custom-btn btn-8 btn-sm" value="회원대출상세">
 <!-- 										<input type="button" class="detailUserBorrow" value="회원대출상세" onclick="location.href='./borrowOneUserNow.do'"> -->
 <%-- 										<input type="button" class="detailUserBorrow" value="회원상세" onclick="oneUserborrowNow(${borrow.user_id})"> --%>
 									</td>

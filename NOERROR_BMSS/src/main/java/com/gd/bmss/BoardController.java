@@ -1,5 +1,7 @@
 package com.gd.bmss;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,37 +44,41 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/write.do")
-	public String write(String content, String title, Model model, HttpSession session) {
+	public String write(String content, String title, Model model, HttpSession session) throws UnsupportedEncodingException {
 		log.info("@@@@@@@@@@@@@@@새문의글 입력 write : {},{}@@@@@@@@@@@@@@@",content+"/",title); /* html이 아니라 마크다운 언어로 전달되면 플러그인에  markdown이 있는지 확인 */
 		Map<String, Object>map = new HashMap<String, Object>();
-		String escapedContent = StringEscapeUtils.escapeHtml4(content); /* html tag를 escape 처리함 : '<' -> '&lt;' , commons-lang에도 있지만 Deprecated 됨 */
-		log.info("@@@@@@@@@@@@@@@RequestMapping.POST write escapedContent : {}@@@@@@@@@@@@@@@",escapedContent);
+//		String escapedContent = StringEscapeUtils.escapeHtml4(content); /* html tag를 escape 처리함 : '<' -> '&lt;' , commons-lang에도 있지만 Deprecated 됨 */
+		String unescapedContent = StringEscapeUtils.unescapeHtml4(content);
+		log.info("@@@@@@@@@@@@@@@RequestMapping.POST write escapedContent : {}@@@@@@@@@@@@@@@",unescapedContent);
 		UserVo loginVo = (UserVo)session.getAttribute("loginVo");
 		int userId = loginVo.getUser_id();
 		map.put("pay_seq", session.getAttribute("pSeq"));
-		map.put("ask_contents", escapedContent);
+		map.put("ask_contents", unescapedContent);
+//		title = URLEncoder.encode(title,"utf-8");
 		map.put("ask_title", title);
 		map.put("user_id", userId);
 		map.put("user_name", userId);
 		int n = service.insertAskBoard(map);
 		if(n>0) {
 			service.updatePayStatus((String)session.getAttribute("pSeq"));
+			model.addAttribute("insertBoard",n);
 		}
 		System.out.println("n 값 :" + n);
-		return (n==0)?"canclePay":"redirect:/detailAskBoard.do?ask_seq="+n+"&ask_title="+title+"&pay_seq="+session.getAttribute("pSeq"); 
+		return (n==0)?"askBoardList":"redirect:/detailAskBoard.do?ask_seq="+n+"&ask_title="+title+"&pay_seq="+session.getAttribute("pSeq"); 
 	}
 	
 	/*
 	 * 문의게시판상세조회
 	 */
 	@RequestMapping(value="/detailAskBoard.do")
-	public String detail(String ask_seq, String ask_title,String pay_seq,Model model,HttpSession session) {
+	public String detail(String ask_seq, String content,String ask_title,String pay_seq,Model model,HttpSession session) {
 		log.info("@@@@@@@@@@@@@@@상세보기로 이동 detail : {} @@@@@@@@@@@@@@@",ask_seq);
 		System.out.printf("@@@@@@@@@@@@@@@@@@@@@@상세이동@@@@@@@@@@@@@@@@@@@@"+ask_seq+"@@@@@@"+pay_seq+"@@@@@@@@@@@@\n");
-		AskBoardVo content = service.detailAskBoard(ask_seq);
-		log.info("@@@@@@@@@@@@@@@상세보기 값 : {} @@@@@@@@@@@@@@@", content);
-		String unescapedContent = StringEscapeUtils.unescapeHtml4(content + "");
-	    model.addAttribute("boardVo", content);
+		AskBoardVo contents = service.detailAskBoard(ask_seq);
+		log.info("@@@@@@@@@@@@@@@상세보기 값 : {} @@@@@@@@@@@@@@@", contents.getAsk_contents());
+		String unescapedContent = StringEscapeUtils.unescapeHtml4(content);
+	    model.addAttribute("boardVo", contents);
+	    model.addAttribute("content", contents.getAsk_contents());
 	    model.addAttribute("ask_contents", unescapedContent);
 	    model.addAttribute("ask_seq", ask_seq);
 	    model.addAttribute("ask_title", ask_title);
@@ -81,10 +87,11 @@ public class BoardController {
 	
 	/* updateForm으로 이동 */
 	@RequestMapping(value="/updateForm.do")
-	public String updateForm(String ask_seq,String ask_title, Model model) {
+	public String updateForm(String ask_seq,String ask_title,String content, Model model) {
 		log.info("@@@@@@@@@@@@@@@문의게시판 수정 updateForm : {} / {} @@@@@@@@@@@@@@@",ask_seq,ask_title);
 		model.addAttribute("ask_seq",ask_seq);		
 		model.addAttribute("ask_title",ask_title);		
+		model.addAttribute("content",content);		
 		return "updateAskBoard";
 	}
 	
